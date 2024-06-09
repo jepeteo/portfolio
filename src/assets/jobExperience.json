@@ -1,0 +1,66 @@
+[
+    {
+        "title": "Senior Full Stack Web Developer",
+        "company": "Freelancer",
+        "location": "Greece (Remote)",
+        "from": "01-2011",
+        "to": "Present",
+        "description": "I work as a Freelance Full Stack Web Developer as parallel job. I usually create custom websites based on WordPress as well as re-design existing ones and apply custom modifications. Usually I am responsible for domain registration, hosting accounts, front-end & back-end development & optimization, regular (full & incremental) website & server backups, WordPress core & plugins updates, tech support & troubleshooting. I am also accustomed to work with Linux servers (CentOS & Alma Linux) and with WHM/cPanel & Plesk. Lately I am actively focused on new projects based on Laravel and React."
+    },
+    {
+        "title": "Senior Full Stack Web Developer & Server Administrator",
+        "company": "Global Touch",
+        "location": "Athens, Greece (Remote)",
+        "from": "02-2024",
+        "to": "06-2024",
+        "description": "Website & Ecommerce construction based on WordPress CMS | Customization of plugins & themes for custom functionality | Bulk import of products into e-shops | Interface e-shops with banks for online payments | Interface e-shops with courier companies | Interface e-shops with Skroutz and configuration of exported XML | Configuration of websites & e-shops for compatibility with WCAG 2.0 AA (Accessibility) | Troubleshooting of websites & e-shops | Technical support of websites & e-shops (updates, changes & additions) | Cleaning of viruses & malware on infected websites | Migrating websites and e-shops to another server | Server Administration (troubleshooting, new account creation, issuing security certificates, monitoring logs) | Solving email related problems | Fixes and additions to non-WordPress based websites and e-shops | Construction of custom solutions for businesses"
+    },
+    {
+        "title": "Full Stack Web Developer & Server Administrator",
+        "company": "Greekonline",
+        "location": "Athens, Greece (On-site & Remote)",
+        "from": "10-2015",
+        "to": "07-2023",
+        "description": "I played a crucial role in the extensive overhaul of the company's website, involving improvements to both its front-end and back-end components. My responsibilities extended to ensuring the website's security, conducting thorough traffic analysis using tools like Google Analytics, optimizing the database performance, and implementing effective search engine optimization (SEO) strategies. Moreover, I created customized websites from scratch and redisgined existing ones for the company's diverse clientele. The majority of these projects were centered on the WordPress and WooCommerce platforms, showcasing my proficiency in these technologies. I also created custom CRM solutions for the company as well as its clients. Lastly, my responsibilities as a system and server administrator involved the meticulous management of the company's hosting servers. This included tasks such as server maintenance, monitoring, and optimization to ensure optimal performance and reliability."
+    },
+    {
+        "title": "Full Stack Web Developer",
+        "company": "RedTech",
+        "location": "Nafplio, Greece (On-site & Remote)",
+        "from": "03-2019",
+        "to": "05-2020",
+        "description": "Design and develop a new Eshop based on WordPress / Woocommerce. Add B2B capabilities and develop custom solutions. Also in charge of product addition, inventory management and order processing as well as user management."
+    },
+    {
+        "title": "Full Stack Web Developer",
+        "company": "Net Experience",
+        "location": "Athens, Greece (On-site & Remote)",
+        "from": "07-2012",
+        "to": "08-2014",
+        "description": "Managed hosting and domains as well as working on both front-end and back-end development. I was responsible for maintaining regular backups, updates and providing support / troubleshooting when needed. I also gained expertise in server administration using WHM/cPanel and Plesk, and I became proficient in various content management systems (CMS)."
+    },
+    {
+        "title": "IT System Administrator",
+        "company": "PVP Internet Cafe",
+        "location": "Nafplio, Greece (On-site)",
+        "from": "08-2010",
+        "to": "01-2011",
+        "description": "Software & Hardware Updates, Daily Backups, Network Maintenance, Tech Support, DeepFreeze."
+    },
+    {
+        "title": "IT System Administrator",
+        "company": "Bit Ya Bit Internet Cafe",
+        "location": "Perama, Greece (On-site)",
+        "from": "05-2007",
+        "to": "08-2009",
+        "description": "Software & Hardware Updates, Daily Backups, Network Maintenance, Tech Support, DeepFreeze."
+    },
+    {
+        "title": "IT System Administrator",
+        "company": "Click n Surf Internet Cafe",
+        "location": "Korydallos, Greece (On-site)",
+        "from": "10-2006",
+        "to": "08-2007",
+        "description": "Software & Hardware Updates, Daily Backups, Network Maintenance, Tech Support."
+    }
+]

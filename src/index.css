@@ -1,0 +1,289 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --font-default: system-ui, sans-serif;
+    --font-sora: "Sora", sans-serif;
+    --font-code: "Source Code Pro", monospace;
+
+    --col1: #f4f8ff;
+    --col2: #e4e8ef;
+    --col3: #162432;
+    --col4: #243248;
+    --col5: #2370aa;
+}
+
+* {
+    scroll-behavior: smooth;
+}
+
+@layer base {
+    html {
+        scroll-padding-top: 100px;
+    }
+
+    body {
+        background: var(--col1);
+        color: var(--col3);
+        transition-property: background, color;
+        transition-duration: .25s;
+        transition-timing-function: ease-in-out;
+    }
+
+    body.dark {
+        background: var(--col3);
+        color: var(--col1);
+    }
+
+    body {
+        background: linear-gradient(315deg, var(--col1) 3%, #aaddff 56%, var(--col1) 98%);
+        animation: gradient 16s ease infinite;
+        background-size: 400% 400%;
+        background-attachment: fixed;
+    }
+
+    body.dark {
+
+        background: linear-gradient(315deg, var(--col3) 3%, #324856 56%, var(--col3) 98%);
+        animation: gradient 16s ease infinite;
+        background-size: 400% 400%;
+        background-attachment: fixed;
+    }
+
+    /*Skills*/
+
+    .skill--container {
+        z-index: 1;
+        background: linear-gradient(22deg, var(--col1), var(--col2), var(--col1));
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .dark .skill--container {
+        background: linear-gradient(22deg, #061014, #121828, #061014);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .skill--container h3 {
+        color: var(--col5);
+    }
+
+    .skill {
+        border: 1px solid var(--col3);
+    }
+
+    .dark .skill {
+        border: 1px solid var(--col1);
+    }
+
+    .skill:hover {
+        background-color: var(--col3);
+        color: var(--col1);
+        transition-property: background-color, color;
+        transition-duration: .25s;
+        transition-timing-function: ease-in-out;
+    }
+
+    .dark .skill:hover {
+        background-color: var(--col1);
+        color: var(--col3);
+    }
+
+    .skill--description {
+        position: fixed;
+        padding: .8rem;
+        color: var(--col1);
+        margin: 10px 0 0 -1px;
+        background-color: var(--col3);
+        width: 320px;
+        transform: translate(-16px, calc(-100% - 50px));
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.25s ease-in-out;
+        z-index: 1000;
+    }
+
+    .dark .skill--description {
+        color: var(--col3);
+        background-color: var(--col1);
+    }
+
+    li:hover .skill--description {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    /* Input effects */
+    input,
+    textarea {
+        transition-property: background, border;
+        transition-duration: .25s;
+    }
+
+    input:focus-visible,
+    textarea:focus-visible {
+        outline: none;
+        border: none;
+        border-bottom: 1px solid var(--col5);
+    }
+
+    /* Animated text*/
+    .typed-text {
+        color: var(--col5);
+    }
+
+    /* Dark / light switch */
+    .toggle-darklight {
+        outline: none;
+        transition-property: transform filter;
+        transition-duration: .175s;
+        transition-timing-function: ease-in-out;
+        filter: drop-shadow(0 0 8px #fff);
+    }
+
+    .toggle-darklight:hover {
+        transform: rotate(360deg);
+        transition-property: transform filter;
+        transition-duration: .175s;
+        transition-timing-function: ease-in-out;
+        filter: drop-shadow(0 0 2px #fff);
+    }
+
+    /* Contact */
+    .connect a {
+        background-color: var(--col1);
+        border: 1px solid var(--col3);
+        transition: border-radius 0.25s ease-in-out;
+    }
+
+    .connect a:hover {
+        border-radius: 0;
+    }
+
+    .dark .connect a {
+        background-color: var(--col1);
+    }
+
+    .btn-contact {
+        background-color: var(--col5);
+        color: var(--col1);
+        transition: background-color, color;
+        transition-duration: .25s;
+        transition-timing-function: ease-in;
+    }
+
+    .btn-contact:hover {
+        background-color: var(--col4);
+        color: var(--col1);
+    }
+
+    /* Menu */
+    .slide-menu {
+        background-color: var(--col2);
+        color: var(--col3);
+        transition: all;
+        transition-duration: .25s;
+        transition-timing-function: ease-in;
+    }
+
+    .dark .slide-menu {
+        background-color: var(--col4);
+        color: var(--col1);
+    }
+
+    .menu-ham {
+        background-color: var(--col3);
+    }
+
+    .menu-item {
+        padding: .8rem .5rem;
+        color: var(--col1);
+
+        &:hover {
+            border-bottom: 2px solid var(--col3);
+            color: var(--col1);
+        }
+    }
+
+    .dark .menu-item:hover {
+        border-bottom: 2px solid var(--col5);
+    }
+}
+
+
+/* Animations */
+@keyframes appear {
+    from {
+        opacity: 0;
+        scale: 0.5;
+    }
+
+    to {
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+.scroll-appear {
+    animation: appear ease-out;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+    z-index: 2;
+}
+
+@keyframes appearFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50%)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0)
+    }
+}
+
+.scroll-appear-fromleft {
+    animation: appearFromLeft ease-out;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+    z-index: 2;
+}
+
+@keyframes appearFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(50%)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0)
+    }
+}
+
+.scroll-appear-fromright {
+    animation: appearFromRight ease-out;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+    z-index: 1;
+}
+
+
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
