@@ -1,10 +1,10 @@
 import TypedText from "./TypedText"
-import programmer from "../assets/images/programmer.webp"
+import programmer from "/src/assets/images/programmer.webp"
 
 export default function Hero() {
   return (
     <section className="container flex flex-col items-center justify-between min-h-[80vh] lg:flex-row">
-      <div className="">
+      <div className="exit">
         <p className="py-4">
           <TypedText />
         </p>

@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import sun from "../assets/images/sun.svg"
-import moon from "../assets/images/moon.svg"
+import sun from "/src/assets/images/sun.svg"
+import moon from "/src/assets/images/moon.svg"
 
 export default function Nav({ toggleDarkMode, darkMode }) {
   const [isOpen, setIsOpen] = React.useState(false)
