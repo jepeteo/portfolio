@@ -111,7 +111,7 @@ export default function Contact() {
             errors={state.errors}
           />
           <button
-            className="btn-contact w-56 self-end p-4 mt-8"
+            className="btn-contact w-full self-end p-4 mt-8 md:w-56"
             disabled={state.submitting}
           >
             Send
