@@ -1,5 +1,6 @@
 {
   "homepage": "https://jepeteo.github.io/portfolio/",
+  "base": "/portfolio/",
   "name": "portfolio",
   "private": true,
   "version": "0.0.1",
