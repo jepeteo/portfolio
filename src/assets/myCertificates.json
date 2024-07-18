@@ -3,102 +3,180 @@
     "certName": "Building Modern Projects with React",
     "certUrl": "https://www.linkedin.com/learning/certificates/6470bf53b83d7e6e1b61b2acddc19b6657422e8f10214c4c70ae6152d37e3bfc?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "React Hooks",
     "certUrl": "https://www.linkedin.com/learning/certificates/871bc943e9eaf6fe87ebdad34e5d9b2dafe69dff59bb979ce11a0a4ba49a7980?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "React.js Essential Training",
     "certUrl": "https://www.linkedin.com/learning/certificates/4d6946287ff87436c491db93c1c53af844b5725ace9c663fead0d042c2ac9a99?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "React.js: Building an Interface",
     "certUrl": "https://www.linkedin.com/learning/certificates/9f6500c8ad25ee8abac0df8ccecb8f175fdc4c42c6915468afa7912e92fb8436?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "React: Accessibility",
     "certUrl": "https://www.linkedin.com/learning/certificates/532d7325734a344aae3bdffd27f7ecc5702914389e7ffc1f1dffe476ede597b7?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "React: Creating and Hosting a Full-Stack Site",
     "certUrl": "https://www.linkedin.com/learning/certificates/5fc4b80892321b4be5714b38d9afb792c87cc07452c63a24c01c1e50388e8a9b?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "Shopify Essential Training",
     "certUrl": "https://www.linkedin.com/learning/certificates/e8e3070d4b795966d780f9b4cd1f37d6e8b9b3babbe9f471691a97e470514bec?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "A Quick Start Guide to Programming in Python",
     "certUrl": "https://www.linkedin.com/learning/certificates/039d0390acb2adbfdc3f2585efde17c5bea99ebeab326936422d17701002454b?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "Hands-On Introduction: Python",
     "certUrl": "https://www.linkedin.com/learning/certificates/06caba61e7d0d83e43bbbb342d4b6ba757444e81fc8a840bf45803f37c390979?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "Level Up: Python",
     "certUrl": "https://www.linkedin.com/learning/certificates/642089d3799f4acbb3dd036fdad77a24154b84ae4f355ae3e5662ae0fe42fc81?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "Programming Concepts for Python",
     "certUrl": "https://www.linkedin.com/learning/certificates/b1ab77ae2d9b2a1dc4b87db53dccccb48defa8499d1d652bf0af5bab504483c3?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "Programming Foundations: Beyond the Fundamentals",
     "certUrl": "https://www.linkedin.com/learning/certificates/2672e3ff728cf107bd5e457c0003056f6007ec3d6dac449ed7f91f78e7654f18?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "Programming Foundations: Fundamentals",
     "certUrl": "https://www.linkedin.com/learning/certificates/23ea0a7fc9be39f20217ee2bcc8f19b17be7498a4d5fb03c368dbeabc644752b?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "Python Essential Training",
     "certUrl": "https://www.linkedin.com/learning/certificates/53c1d4177d42bc7917564bfdaeecd9563fcd1ad2cdb510153384993cdf03267c?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "JavaScript Algorithms and Data Structures",
     "certUrl": "https://freecodecamp.org/certification/thmentis/javascript-algorithms-and-data-structures",
     "certImg": "free_code_camp_logo.jpeg",
-    "visible": true
+    "certVisible": true
   },
   {
     "certName": "Marketing on Instagram",
     "certUrl": "https://www.linkedin.com/learning/certificates/27e20a7924aeb2d441a2f997f581977c27b29d561940674923b5b122390357c2?trk=backfilled_certificate&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": false
+    "certVisible": true
   },
   {
     "certName": "Designing Websites for Performance",
     "certUrl": "https://www.linkedin.com/learning/certificates/e622a73a95963b0613addd5df582d237fa11d784c5df3e2ada5d54b34a76d37d?trk=backfilled_certificate&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
-    "visible": true
+    "certVisible": true
+  },
+  {
+    "certName": "GDPR Compliance: Essential Training",
+    "certUrl": "https://www.linkedin.com/learning/certificates/aec94a00fe54703c49a0bc85c415d5014dc8cb0bda6b50cc324c36f5e92b983c?trk=backfilled_certificate&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BpZM6NKWMQey2u0%2FGJtYACA%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Ethical Hacking: Wireless Networks",
+    "certUrl": "https://www.linkedin.com/learning/certificates/71609b1cdf57fb5714735f563becf687764396d0421d934b6774a4ca00b897af?trk=backfilled_certificate&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BpZM6NKWMQey2u0%2FGJtYACA%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Facebook for Business",
+    "certUrl": "http://www.linkedin.com/learning/facebook-for-business",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Migrating from Gmail and Google Calendar to Outlook",
+    "certUrl": "https://www.linkedin.com/learning/certificates/591f878e7896afa20138a2e05911bb9d6ebc85b732681d69cd0d2ecc328bb3ba?trk=backfilled_certificate&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BAsVMLzDcQsK5f8tJ%2Bkh%2B6g%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Apache Web Server: Administration",
+    "certUrl": "https://www.linkedin.com/learning/certificates/80a0898beed4f1cc2781c094fdb201fc6743bcfd462ebbf3a1a432e54ecc37c7?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BAsVMLzDcQsK5f8tJ%2Bkh%2B6g%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Access 2016: Advanced Tips and Tricks",
+    "certUrl": "https://www.linkedin.com/learning/certificates/6cbbb7a2b639f8b48e245b6e7bba716bb6a7386d93d82771335f7aad3b3f5a98?trk=backfilled_certificate&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BAsVMLzDcQsK5f8tJ%2Bkh%2B6g%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Learning Access 2016",
+    "certUrl": "http://www.lynda.com//Security-tutorials/Introduction-Ethical-Hacking/455716-2.html",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Introduction to Ethical Hacking",
+    "certUrl": "https://www.linkedin.com/learning/certificates/e622a73a95963b0613addd5df582d237fa11d784c5df3e2ada5d54b34a76d37d?trk=backfilled_certificate&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "WordPress Plugins: Analytics",
+    "certUrl": "http://www.lynda.com//WordPress-tutorials/WordPress-Plugins-Analytics/163114-2.html",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Up and Running with CentOS Linux",
+    "certUrl": "http://www.lynda.com/ViewCertificate/E1D48F1AEA7C46BC9A926A6DFA856055?utm_source=linkedin&utm_medium=sharing&utm_campaign=certificate",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Google Tag Manager (V2) Essential Training",
+    "certUrl": "http://www.lynda.com/ViewCertificate/1CF24B5AD00344C780CDD68D347425EC?utm_source=linkedin&utm_medium=sharing&utm_campaign=certificate",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "SEO Fundamentals",
+    "certUrl": "http://www.lynda.com//Marketing-Enterprise-Marketing-tutorials/SEO-Fundamentals/187858-2.html",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Analyzing Your Website to Improve SEO",
+    "certUrl": "http://www.lynda.com//Marketing-Small-Business-Marketing-tutorials/Analyzing-Your-Website-Improve-SEO/82409-2.html",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
   }
 ]
