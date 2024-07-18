@@ -1,6 +1,8 @@
 # Portfolio
 
-This is my personal portfolio website built with React and Vite.
+This is my personal portfolio website built with React, Tailwind and Vite.
+
+You can view it at [jepeteo.github.io/portfolio/](https://jepeteo.github.io/portfolio/)
 
 ## Features
 
