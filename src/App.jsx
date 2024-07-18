@@ -6,9 +6,10 @@ import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Bio from "./components/Bio"
+import Certificates from "./components/Certificates"
 
-import 'flowbite';
-import 'flowbite/dist/flowbite.css';
+import "flowbite"
+import "flowbite/dist/flowbite.css"
 
 function App() {
   const [darkMode, setDarkMode] = React.useState(true)
@@ -31,6 +32,7 @@ function App() {
       <Bio />
       <Skills />
       <Experience />
+      <Certificates />
       <Contact />
       <Footer />
     </div>
