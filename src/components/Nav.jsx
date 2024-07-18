@@ -11,6 +11,7 @@ export default function Nav({ toggleDarkMode, darkMode }) {
     { href: "#top", text: "Home" },
     { href: "#skills", text: "Skills" },
     { href: "#experience", text: "Experience" },
+    { href: "#certificates", text: "Certificates" },
     { href: "#contact", text: "Contact" },
   ]
 
