@@ -60,6 +60,11 @@
         z-index: 1;
         background: linear-gradient(22deg, var(--col1), var(--col2), var(--col1));
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        transition: z-index .25s ease;
+    }
+
+    .skill--container:hover {
+        z-index: 100;
     }
 
     .dark .skill--container {
@@ -116,18 +121,32 @@
         opacity: 1;
     }
 
-    /* Input effects */
-    input,
-    textarea {
-        transition-property: background, border;
-        transition-duration: .25s;
-    }
 
-    input:focus-visible,
-    textarea:focus-visible {
-        outline: none;
-        border: none;
-        border-bottom: 1px solid var(--col5);
+    #contact {
+
+        /* Input effects */
+        & input,
+        textarea {
+            transition-property: background, border;
+            transition-duration: .25s;
+            border: 0;
+            border-bottom: 1px solid;
+        }
+
+        & input:focus,
+        textarea:focus {
+            outline: none;
+            border: none;
+            box-shadow: none;
+            border-bottom: 1px solid var(--col5);
+        }
+
+        & input:focus-visible,
+        textarea:focus-visible {
+            outline: none;
+            border: none;
+            border-bottom: 1px solid var(--col5);
+        }
     }
 
     /* Animated text*/
