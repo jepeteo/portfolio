@@ -1,11 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-import plugin from "tailwindcss/plugin";
+import plugin from "tailwindcss/plugin"
 
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
     "./public/assets/**/*.{js,ts,jsx,tsx}",
+    "node_modules/flowbite-react/lib/esm/**/*.js",
   ],
 
   theme: {
@@ -17,7 +18,7 @@ export default {
           3: "#243248",
         },
         stroke: {
-          1: "#2428232",
+          1: "#242832",
         },
         n: {
           1: "#FFFFFF",
@@ -36,9 +37,9 @@ export default {
         },
       },
       fontFamily: {
-        default: ['system-ui', 'sans-serif'],
-        sora: ['Sora', 'sans-serif'],
-        code: ['Source Code Pro', 'monospace']
+        default: ["system-ui", "sans-serif"],
+        sora: ["Sora", "sans-serif"],
+        code: ["Source Code Pro", "monospace"],
       },
       letterSpacing: {
         tagline: ".15em",
@@ -70,8 +71,9 @@ export default {
     },
   },
   plugins: [
+    require("flowbite/plugin"),
     plugin(function ({ addBase, addComponents, addUtilities }) {
-      addBase({});
+      addBase({})
       addComponents({
         ".container": {
           "@apply max-w-[77.5rem] mx-auto p-6 md:p-10 lg:p-15 xl:max-w-[87.5rem]":
@@ -81,8 +83,7 @@ export default {
           "@apply text-5xl font-bold": {},
         },
         ".tagline": {
-          "@apply text-xs tracking-tagline uppercase":
-            {},
+          "@apply text-xs tracking-tagline uppercase": {},
         },
         ".quote": {
           "@apply font-code text-lg leading-normal": {},
@@ -90,12 +91,12 @@ export default {
         ".button": {
           "@apply font-code text-xs font-bold uppercase tracking-wider": {},
         },
-      });
+      })
       addUtilities({
         ".tap-highlight-color": {
           "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
         },
-      });
+      })
     }),
   ],
-};
+}

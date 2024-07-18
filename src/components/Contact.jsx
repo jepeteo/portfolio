@@ -101,6 +101,7 @@ export default function Contact() {
           <textarea
             placeholder="Message"
             className="w-full p-4 bg-transparent border-b"
+            rows="4"
             name="message"
             value={formData.message}
             onChange={handleChange}

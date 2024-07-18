@@ -7,6 +7,9 @@ import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Bio from "./components/Bio"
 
+import 'flowbite';
+import 'flowbite/dist/flowbite.css';
+
 function App() {
   const [darkMode, setDarkMode] = React.useState(true)
   const toggleDarkMode = () => {

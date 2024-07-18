@@ -33,7 +33,7 @@
         "skillName": "Python",
         "category": "Programming Languages",
         "description": "An interpreted, high-level and general-purpose programming language.",
-        "visible": false
+        "visible": true
     },
     {
         "skillName": "C",
@@ -51,13 +51,13 @@
         "skillName": "Pascal",
         "category": "Programming Languages",
         "description": "A procedural programming language, designed in 1968–1969 and published in 1970 by Niklaus Wirth as a small and efficient language intended to encourage good programming practices using structured programming and data structuring.",
-        "visible": true
+        "visible": false
     },
     {
         "skillName": "Delphi",
         "category": "Programming Languages",
         "description": "An integrated development environment (IDE) for rapid application development of desktop, mobile, web, and console software, developed by Embarcadero Technologies.",
-        "visible": true
+        "visible": false
     },
     {
         "skillName": "VBScript",
