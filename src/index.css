@@ -306,3 +306,17 @@
         background-position: 0% 0%;
     }
 }
+
+@keyframes scrollImage {
+    0% {
+        background-position-y: 0;
+    }
+
+    50% {
+        background-position-y: 100%;
+    }
+}
+
+.animate-scrollImage:hover {
+    animation: scrollImage 10s linear infinite;
+}

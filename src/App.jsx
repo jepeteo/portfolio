@@ -7,6 +7,7 @@ import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Bio from "./components/Bio"
 import Certificates from "./components/Certificates"
+import Projects from "./components/Projects"
 
 import "flowbite"
 import "flowbite/dist/flowbite.css"
@@ -33,6 +34,7 @@ function App() {
       <Skills />
       <Experience />
       <Certificates />
+      <Projects />
       <Contact />
       <Footer />
     </div>
