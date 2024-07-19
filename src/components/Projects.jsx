@@ -2,39 +2,54 @@ import { useState } from "react"
 import myProjects from "./../assets/myProjects.json"
 
 const Projects = () => {
-  const [projectType, setProjectType] = useState("null")
+  const [projectType, setProjectType] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const projectsPerPage = 8
 
-  const projects = myProjects
-    .filter((project) => projectType === null || project.prType === projectType)
-    .map((project) => {
-      return (
-        <div key={project.prName}>
-          <a
-            href={project.prUrl}
-            className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
-          >
-            <div
-              className="bg-cover w-full rounded-md h-56 animate-scrollImage"
-              style={{
-                backgroundImage: `url(images/projects/${project.prImageSlug}.png)`,
-              }}
-              alt={project.prName}
-            ></div>
-            <div className="flex flex-col justify-between p-4">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                {project.prName}
-              </h5>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 pb-4 border-b border-slate-600">
-                {project.prDescription}
-              </p>
-              <div className="border rounded-xl w-20 py-1 text-center text-sm bg-slate-700 ml-auto">
-                {project.prType}
-              </div>
+  const filteredProjects = myProjects.filter(
+    (project) => projectType === null || project.prType === projectType
+  )
+
+  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage)
+
+  const displayProjects = filteredProjects.slice(
+    (currentPage - 1) * projectsPerPage,
+    currentPage * projectsPerPage
+  )
+
+  const goToPage = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
+
+  const projects = displayProjects.map((project) => {
+    return (
+      <div key={project.prName}>
+        <a
+          href={project.prUrl}
+          className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+        >
+          <div
+            className="bg-cover w-full rounded-md h-56 animate-scrollImage"
+            style={{
+              backgroundImage: `url(images/projects/${project.prImageSlug}.png)`,
+            }}
+            alt={project.prName}
+          ></div>
+          <div className="flex flex-col justify-between p-4">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              {project.prName}
+            </h5>
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 pb-4 border-b border-slate-600">
+              {project.prDescription}
+            </p>
+            <div className="border rounded-xl min-w-16 px-2 py-1 text-center text-sm bg-slate-700 ml-auto">
+              {project.prType}
             </div>
-          </a>
-        </div>
-      )
-    })
+          </div>
+        </a>
+      </div>
+    )
+  })
 
   return (
     <section className="container" id="projects">
@@ -42,19 +57,37 @@ const Projects = () => {
       <div className="flex gap-4 justify-center">
         <button
           className="border rounded-xl w-20 py-1 text-center text-sm bg-slate-700"
-          onClick={() => setProjectType(null)}
+          onClick={() => {
+            setProjectType(null)
+            setCurrentPage(1)
+          }}
         >
           All
         </button>
         <button
           className="border rounded-xl w-20 py-1 text-center text-sm bg-slate-700"
-          onClick={() => setProjectType("Blog")}
+          onClick={() => {
+            setProjectType("Blog")
+            setCurrentPage(1)
+          }}
         >
           Blog
         </button>
         <button
           className="border rounded-xl w-20 py-1 text-center text-sm bg-slate-700"
-          onClick={() => setProjectType("E-Shop")}
+          onClick={() => {
+            setProjectType("Dynamic Site")
+            setCurrentPage(1)
+          }}
+        >
+          Dynamic
+        </button>
+        <button
+          className="border rounded-xl w-20 py-1 text-center text-sm bg-slate-700"
+          onClick={() => {
+            setProjectType("E-Shop")
+            setCurrentPage(1)
+          }}
         >
           E-Shop
         </button>
@@ -63,6 +96,20 @@ const Projects = () => {
       <ul className="grid my-8 gap-x-6 gap-y-4 md:grid-cols-2 xl:grid-cols-4">
         {projects}
       </ul>
+
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            className={`border rounded-xl w-12 py-1 text-center text-sm bg-slate-700 mx-1 ${
+              currentPage === index + 1 ? "bg-gray-900 text-white" : ""
+            }`}
+            onClick={() => goToPage(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </section>
   )
 }
