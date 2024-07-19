@@ -1,0 +1,18 @@
+[
+  {
+    "prName": "Jepeteo.com",
+    "prUrl": "https://jepeteo.com",
+    "prImageSlug": "jepeteo",
+    "prDescription": "A personal blog site about tech, movies and space news.",
+    "prType": "Blog",
+    "prTags": "From scratch"
+
+  },
+  {
+    "prName": "Antoninas",
+    "prUrl": "https://antoninas.gr",
+    "prImageSlug": "antoninas",
+    "prDescription": "A clothing e-shop with a variety of products for women.",
+    "prType": "E-Shop"
+  }
+]
