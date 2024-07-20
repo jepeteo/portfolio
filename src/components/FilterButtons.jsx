@@ -16,6 +16,7 @@ const FilterButtons = ({ setProjectType, setCurrentPage }) => {
             setProjectType(type)
             setCurrentPage(1)
           }}
+          aria-label={`Filter ${label} projects`}
         >
           {label}
         </button>

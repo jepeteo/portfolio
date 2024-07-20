@@ -23,8 +23,8 @@ const Projects = () => {
     goToPage,
   } = usePagination(filteredProjects, projectsPerPage)
 
-  const projects = displayProjects.map((project) => {
-    return (
+  const memoizedProjects = useMemo(() => {
+    return displayProjects.map((project) => (
       <div key={project.prName}>
         <a
           href={project.prUrl}
@@ -35,7 +35,8 @@ const Projects = () => {
             style={{
               backgroundImage: `url(images/projects/${project.prImageSlug}.png)`,
             }}
-            alt={project.prName}
+            role="img"
+            aria-label={`Snapshot of project ${project.prName}`}
           ></div>
           <div className="flex flex-col justify-between p-4">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -50,8 +51,8 @@ const Projects = () => {
           </div>
         </a>
       </div>
-    )
-  })
+    ))
+  }, [displayProjects])
 
   return (
     <section className="container" id="projects">
@@ -62,22 +63,26 @@ const Projects = () => {
       />
 
       <ul className="grid my-8 gap-x-6 gap-y-4 md:grid-cols-2 xl:grid-cols-3">
-        {projects}
+        {memoizedProjects}
       </ul>
-
-      <div className="flex justify-center mt-4">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index}
-            className={`border rounded-xl w-12 py-1 text-center text-sm bg-slate-700 mx-1 ${
-              currentPage === index + 1 ? "bg-gray-900 text-white" : ""
-            }`}
-            onClick={() => goToPage(index + 1)}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
+      <nav aria-label="Project page navigation">
+        <ul className="flex justify-center mt-4">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <li key={index}>
+              <button
+                className={`border rounded-xl w-12 py-1 text-center text-sm bg-slate-700 mx-1 ${
+                  currentPage === index + 1 ? "bg-gray-900 text-white" : ""
+                }`}
+                onClick={() => goToPage(index + 1)}
+                aria-label={`Go to page ${index + 1}`}
+                aria-current={currentPage === index + 1 ? "page" : undefined}
+              >
+                {index + 1}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </section>
   )
 }
