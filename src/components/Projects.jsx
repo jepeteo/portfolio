@@ -1,5 +1,6 @@
 import { useState } from "react"
 import myProjects from "./../assets/myProjects.json"
+import FilterButtons from "./FilterButtons"
 
 const Projects = () => {
   const [projectType, setProjectType] = useState(null)
@@ -9,6 +10,7 @@ const Projects = () => {
   const filteredProjects = myProjects.filter(
     (project) => projectType === null || project.prType === projectType
   )
+  //   .filter((project) => project.prEmployer != "employer")
 
   const totalPages = Math.ceil(filteredProjects.length / projectsPerPage)
 
@@ -54,46 +56,12 @@ const Projects = () => {
   return (
     <section className="container" id="projects">
       <h2 className="text-5xl font-bold">Projects</h2>
-      <div className="flex gap-4 justify-center">
-        <button
-          className="border rounded-xl w-20 py-1 text-center text-sm bg-slate-700"
-          onClick={() => {
-            setProjectType(null)
-            setCurrentPage(1)
-          }}
-        >
-          All
-        </button>
-        <button
-          className="border rounded-xl w-20 py-1 text-center text-sm bg-slate-700"
-          onClick={() => {
-            setProjectType("Blog")
-            setCurrentPage(1)
-          }}
-        >
-          Blog
-        </button>
-        <button
-          className="border rounded-xl w-20 py-1 text-center text-sm bg-slate-700"
-          onClick={() => {
-            setProjectType("Dynamic Site")
-            setCurrentPage(1)
-          }}
-        >
-          Dynamic
-        </button>
-        <button
-          className="border rounded-xl w-20 py-1 text-center text-sm bg-slate-700"
-          onClick={() => {
-            setProjectType("E-Shop")
-            setCurrentPage(1)
-          }}
-        >
-          E-Shop
-        </button>
-      </div>
+      <FilterButtons
+        setProjectType={setProjectType}
+        setCurrentPage={setCurrentPage}
+      />
 
-      <ul className="grid my-8 gap-x-6 gap-y-4 md:grid-cols-2 xl:grid-cols-4">
+      <ul className="grid my-8 gap-x-6 gap-y-4 md:grid-cols-2 xl:grid-cols-3">
         {projects}
       </ul>
 
