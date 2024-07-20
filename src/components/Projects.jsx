@@ -1,27 +1,27 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import myProjects from "./../assets/myProjects.json"
 import FilterButtons from "./FilterButtons"
+import usePagination from "./../hooks/usePagination"
 
 const Projects = () => {
   const [projectType, setProjectType] = useState(null)
-  const [currentPage, setCurrentPage] = useState(1)
   const projectsPerPage = 8
 
-  const filteredProjects = myProjects.filter(
-    (project) => projectType === null || project.prType === projectType
-  )
-  //   .filter((project) => project.prEmployer != "employer")
-
-  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage)
-
-  const displayProjects = filteredProjects.slice(
-    (currentPage - 1) * projectsPerPage,
-    currentPage * projectsPerPage
+  const filteredProjects = useMemo(
+    () =>
+      myProjects.filter(
+        (project) => projectType === null || project.prType === projectType
+        //   .filter((project) => project.prEmployer != "employer")
+      ),
+    [projectType]
   )
 
-  const goToPage = (pageNumber) => {
-    setCurrentPage(pageNumber)
-  }
+  const {
+    displayItems: displayProjects,
+    currentPage,
+    totalPages,
+    goToPage,
+  } = usePagination(filteredProjects, projectsPerPage)
 
   const projects = displayProjects.map((project) => {
     return (
@@ -58,7 +58,7 @@ const Projects = () => {
       <h2 className="text-5xl font-bold">Projects</h2>
       <FilterButtons
         setProjectType={setProjectType}
-        setCurrentPage={setCurrentPage}
+        setCurrentPage={() => goToPage(1)}
       />
 
       <ul className="grid my-8 gap-x-6 gap-y-4 md:grid-cols-2 xl:grid-cols-3">
