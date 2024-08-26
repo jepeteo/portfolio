@@ -1,10 +1,19 @@
 [
   {
-    "prName": "Jepeteo",
-    "prUrl": "https://jepeteo.com",
-    "prImageSlug": "jepeteo",
-    "prDescription": "A personal blog site about tech, movies and space news.",
-    "prType": "Blog",
+    "prName": "Notes App",
+    "prUrl": "https://jepeteo.github.io/notes-app/",
+    "prImageSlug": "jepenotes",
+    "prDescription": "A simple notes application made with React and Tailwind.",
+    "prType": "App",
+    "prTags": "From scratch",
+    "prEmployer": "fl"
+  },
+  {
+    "prName": "Kariera in Sports",
+    "prUrl": "https://karierainsports.gr",
+    "prImageSlug": "karierainsports",
+    "prDescription": "A job posting  / searching site with subscription and blog capabilities.",
+    "prType": "Dynamic",
     "prTags": "From scratch",
     "prEmployer": "fl"
   },
@@ -14,6 +23,15 @@
     "prImageSlug": "antoninas",
     "prDescription": "A clothing e-shop with a variety of products for women.",
     "prType": "E-Shop",
+    "prEmployer": "fl"
+  },
+  {
+    "prName": "Jepeteo",
+    "prUrl": "https://jepeteo.com",
+    "prImageSlug": "jepeteo",
+    "prDescription": "A personal blog site about tech, movies and space news.",
+    "prType": "Blog",
+    "prTags": "From scratch",
     "prEmployer": "fl"
   },
   {
