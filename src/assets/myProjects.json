@@ -1,5 +1,14 @@
 [
   {
+    "prName": "Color Palette Generator",
+    "prUrl": "https://jepeteo.github.io/react-color-palette-generator/",
+    "prImageSlug": "palettegenerator",
+    "prDescription": "A react based application that generates color palettes based on the color you choose.",
+    "prType": "App",
+    "prTags": "From scratch",
+    "prEmployer": "fl"
+  },
+  {
     "prName": "Notes App",
     "prUrl": "https://jepeteo.github.io/notes-app/",
     "prImageSlug": "jepenotes",
