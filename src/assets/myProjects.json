@@ -60,5 +60,68 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron"
+  },
+  {
+    "prName": "Linari",
+    "prUrl": "https://e-linari.gr/",
+    "prImageSlug": "linari",
+    "prDescription": "Linen eshop with a variety of products.",
+    "prType": "E-Shop",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Idea & Fos",
+    "prUrl": "https://idea-fos.gr/",
+    "prImageSlug": "ideafos",
+    "prDescription": "Lighting & Luminaire eshop with a variety of over 10000 products.",
+    "prType": "E-Shop",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Tech Nik",
+    "prUrl": "https://tech-nik.gr/",
+    "prImageSlug": "technik",
+    "prDescription": "Automation & garage doors eshop. ",
+    "prType": "E-Shop",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Laoulakos Flowers",
+    "prUrl": "https://www.e-laoulakosflowers.gr/",
+    "prImageSlug": "laoulakos",
+    "prDescription": "Flower eshop for every occasion. ",
+    "prType": "E-Shop",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Perla Boutique",
+    "prUrl": "https://perlaboutique.gr/",
+    "prImageSlug": "perlaboutique",
+    "prDescription": "Fashion clothes eshop redisgn in Opencart. ",
+    "prType": "E-Shop",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Saratsopoulou Optics",
+    "prUrl": "https://saratsopoulou.gr/",
+    "prImageSlug": "saratsopoulou",
+    "prDescription": "Glasses and sunglasses eshop with a great variety. ",
+    "prType": "E-Shop",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Agricultural Machines Tampakakis",
+    "prUrl": "https://tampakakis.com/",
+    "prImageSlug": "tampakakis",
+    "prDescription": "Glasses and sunglasses eshop with a great variety. ",
+    "prType": "E-Shop",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
   }
 ]
