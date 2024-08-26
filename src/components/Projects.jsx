@@ -42,7 +42,7 @@ const Projects = () => {
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               {project.prName}
             </h5>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 pb-4 border-b border-slate-600">
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 pb-2 border-b border-slate-600 md:leading-tight md:min-h-12">
               {project.prDescription}
             </p>
             <div className="border rounded-xl min-w-16 px-2 py-1 text-center text-sm bg-slate-700 ml-auto">
@@ -66,7 +66,7 @@ const Projects = () => {
       <ul className="grid my-8 gap-x-6 gap-y-4 md:grid-cols-2 xl:grid-cols-3">
         {memoizedProjects}
       </ul>
-      <nav aria-label="Project page navigation">
+      <nav aria-label="Projects navigation">
         <ul className="flex justify-center mt-4">
           {Array.from({ length: totalPages }, (_, index) => (
             <li key={index}>

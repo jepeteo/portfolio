@@ -1,5 +1,41 @@
 [
   {
+    "certName": "Learning Next.js (2022)",
+    "certUrl": "https://www.linkedin.com/learning/certificates/05ba6d373c657cfa8ac827ef5c298bb2a642a406a1a94c8ca030af4822424e7d?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BUvusm%2F9oT2WTie7f41O38w%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Learning Redux Toolkit",
+    "certUrl": "https://www.linkedin.com/learning/certificates/89d71e9a61cc5f468c90a062ae4089f2672d323a3d66b462eb359d1d17d3ed26?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BUvusm%2F9oT2WTie7f41O38w%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Node.js Essential Training",
+    "certUrl": "https://www.linkedin.com/learning/certificates/c1a6bd91d8498c38ce763674219c200a37c06a62ef0eadcdf2b4a6ea738d62e6?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BUvusm%2F9oT2WTie7f41O38w%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Node.js: Web Servers, Tests, and Deployment",
+    "certUrl": "https://www.linkedin.com/learning/certificates/7c22b17042d69d379ce0b839692f1b144ff2028f48c80660cfb97fd812322dd4?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BUvusm%2F9oT2WTie7f41O38w%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "Building Modern Projects with React",
+    "certUrl": "https://www.linkedin.com/learning/certificates/6470bf53b83d7e6e1b61b2acddc19b6657422e8f10214c4c70ae6152d37e3bfc?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
+    "certName": "React: Server-Side Rendering",
+    "certUrl": "https://www.linkedin.com/learning/certificates/c56a46b3a41476f18bc1a1488bf61f9368daf6b2b1ba957cb4a585f748ea92fc?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BUvusm%2F9oT2WTie7f41O38w%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
     "certName": "Building Modern Projects with React",
     "certUrl": "https://www.linkedin.com/learning/certificates/6470bf53b83d7e6e1b61b2acddc19b6657422e8f10214c4c70ae6152d37e3bfc?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BuBeWGc%2BcRIWxJjznYN0gZg%3D%3D",
     "certImg": "linkedin_logo.jpeg",
