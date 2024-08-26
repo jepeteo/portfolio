@@ -12,6 +12,7 @@ export default function Nav({ toggleDarkMode, darkMode }) {
     { href: "#skills", text: "Skills" },
     { href: "#experience", text: "Experience" },
     { href: "#certificates", text: "Certificates" },
+    { href: "#projects", text: "Projects" },
     { href: "#contact", text: "Contact" },
   ]
 
@@ -28,7 +29,7 @@ export default function Nav({ toggleDarkMode, darkMode }) {
           </ul>
         )}
 
-        <ul className="hidden md-menu md:flex md-static gap-6 mr-4">
+        <ul className="hidden md-menu md:flex md:static gap-2 mr-4 xl:gap-4">
           {links.map((link) => (
             <li key={link.text}>
               <a className="menu-item" href={link.href}>
