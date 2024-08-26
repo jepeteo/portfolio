@@ -5,7 +5,7 @@ import usePagination from "./../hooks/usePagination"
 
 const Projects = () => {
   const [projectType, setProjectType] = useState(null)
-  const projectsPerPage = 8
+  const projectsPerPage = 9
 
   const filteredProjects = useMemo(
     () =>
@@ -33,7 +33,7 @@ const Projects = () => {
           <div
             className="bg-cover w-full rounded-md h-56 animate-scrollImage"
             style={{
-              backgroundImage: `url(images/projects/${project.prImageSlug}.png)`,
+              backgroundImage: `url(images/projects/${project.prImageSlug}.webp)`,
             }}
             role="img"
             aria-label={`Snapshot of project ${project.prName}`}
