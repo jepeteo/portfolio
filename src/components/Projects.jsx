@@ -57,6 +57,7 @@ const Projects = () => {
   return (
     <section className="container" id="projects">
       <h2 className="text-5xl font-bold">Projects</h2>
+
       <FilterButtons
         setProjectType={setProjectType}
         setCurrentPage={() => goToPage(1)}
