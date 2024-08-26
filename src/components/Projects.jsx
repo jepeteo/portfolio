@@ -38,11 +38,11 @@ const Projects = () => {
             role="img"
             aria-label={`Snapshot of project ${project.prName}`}
           ></div>
-          <div className="flex flex-col justify-between p-4">
+          <div className="flex flex-col justify-between p-4 w-full">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               {project.prName}
             </h5>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 pb-2 border-b border-slate-600 md:leading-tight md:min-h-12">
+            <p className=" mb-3 font-normal text-gray-700 dark:text-gray-400 pb-2 border-b border-slate-600 md:leading-tight md:min-h-12">
               {project.prDescription}
             </p>
             <div className="border rounded-xl min-w-16 px-2 py-1 text-center text-sm bg-slate-700 ml-auto">
