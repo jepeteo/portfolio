@@ -123,5 +123,68 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gron"
+  },
+  {
+    "prName": "Ohrofeo",
+    "prUrl": "https://www.ohrofeo.gr/",
+    "prImageSlug": "ohrofeo",
+    "prDescription": "Eshop about jewelry and other products.",
+    "prType": "E-Shop",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "DK Photos",
+    "prUrl": "https://www.dkphotos.gr/",
+    "prImageSlug": "dkphotos",
+    "prDescription": "Professional Photography website.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Transport Ballalas",
+    "prUrl": "https://www.metaforiki-skopelou.gr/",
+    "prImageSlug": "metaforikiskopelou",
+    "prDescription": "Transport company Ballalas in Skopelos website.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Aggelikas",
+    "prUrl": "https://aggelikas.gr/",
+    "prImageSlug": "aggelikas",
+    "prDescription": "Manufacture and installation of energy efficient aluminium frames company website.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Mitsidis Group",
+    "prUrl": "https://aggelikas.gr/",
+    "prImageSlug": "aggelikas",
+    "prDescription": "Professional bakery & confectionery equipment company website.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "SMS Metal",
+    "prUrl": "https://sms-metal.gr/",
+    "prImageSlug": "smsmetal",
+    "prDescription": "Metal & aluminium closets & lockers company website.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Athens Italian Interpreters",
+    "prUrl": "https://aii.gr/",
+    "prImageSlug": "aii",
+    "prDescription": "Conference interpreter, European Parliament translator, Professor of Italian Language.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
   }
 ]
