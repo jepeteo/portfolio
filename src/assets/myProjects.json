@@ -366,5 +366,86 @@
     "prType": "Dynamic",
     "prTags": "From scratch",
     "prEmployer": "gron"
+  },
+  {
+    "prName": "Mpompolakis - Ladias",
+    "prUrl": "https://lbmetal.gr/",
+    "prImageSlug": "lbmetal",
+    "prDescription": "Machine shop - Metal Processing.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "VIP Fitness",
+    "prUrl": "https://www.vip-fitness-mihabodytec.gr/",
+    "prImageSlug": "vipfitness",
+    "prDescription": "Gym website- Recreate & Redesign from Joomla to Wordpress.",
+    "prType": "Dynamic",
+    "prTags": "Redisgn",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Konstantinos Taoulas",
+    "prUrl": "https://ctlaw.gr/",
+    "prImageSlug": "taoulas",
+    "prDescription": "Law Office website.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Cylinder Master",
+    "prUrl": "https://cylindermaster.gr/",
+    "prImageSlug": "cylidermaster",
+    "prDescription": "Manufacture & repair of hydraulic cylinders.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Manos Power Coffee",
+    "prUrl": "https://manospowercoffee.gr/",
+    "prImageSlug": "manospowercoffee",
+    "prDescription": "Coffee shop website.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Papalias Andreas ",
+    "prUrl": "https://teletes-papaliasandreas.gr/",
+    "prImageSlug": "papalias",
+    "prDescription": "Funeral home website.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Limobus",
+    "prUrl": "https://limobus.gr/",
+    "prImageSlug": "limobus",
+    "prDescription": "Private tours & excursions company website.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Kaptan Giorgis",
+    "prUrl": "https://kaptangiorgis.gr/",
+    "prImageSlug": "kaptangiorgis",
+    "prDescription": "Wholesale - Retail trade of seafood.",
+    "prType": "Dynamic",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "GVF",
+    "prUrl": "https://www.gvf.gr/",
+    "prImageSlug": "gvf",
+    "prDescription": "V-Strom Flagship Greek fan website.",
+    "prType": "Dynamic",
+    "prTags": "Redesign",
+    "prEmployer": "gron"
   }
 ]
