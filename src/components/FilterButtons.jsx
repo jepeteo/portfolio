@@ -5,6 +5,7 @@ const FilterButtons = ({ setProjectType, setCurrentPage }) => {
     { type: "Blog", label: "Blog" },
     { type: "Dynamic Site", label: "Dynamic" },
     { type: "E-Shop", label: "E-Shop" },
+    { type: "Static", label: "Static" },
   ]
 
   return (
