@@ -447,5 +447,41 @@
     "prType": "Dynamic",
     "prTags": "Redesign",
     "prEmployer": "gron"
+  },
+  {
+    "prName": "Compass Technology Solutions",
+    "prUrl": "https://www.compasstechnologysolutions.eu/",
+    "prImageSlug": "compass",
+    "prDescription": "Technical consultancy services on a wide range of electrical installations.",
+    "prType": "Static",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Kyriakakis",
+    "prUrl": "https://www.epiplomena-diamerismata-kyriakakis.gr/",
+    "prImageSlug": "kiriakakis",
+    "prDescription": "Apartments for rent in Evia, Greece.",
+    "prType": "Static",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Nikolopoulou Vanessa",
+    "prUrl": "https://www.odontiatros-pallini.gr/",
+    "prImageSlug": "odontiatros-pallini",
+    "prDescription": "Dental Surgeon website.",
+    "prType": "Static",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Xatzivasileiadis Iordanis",
+    "prUrl": "https://www.ofthalmiatros-edessa.gr/",
+    "prImageSlug": "ofthalmiatros-edessa",
+    "prDescription": "Model opthalmology clinic website.",
+    "prType": "Static",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
   }
 ]
