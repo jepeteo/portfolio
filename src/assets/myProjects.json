@@ -618,5 +618,77 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron"
+  },
+  {
+    "prName": "Metalogy Construction",
+    "prUrl": "https://www.metalogy-construction.gr/",
+    "prImageSlug": "metalogy-construction",
+    "prDescription": "Custom metal construction company website.",
+    "prType": "Static",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Me-Nou Ad Creations",
+    "prUrl": "https://www.me-nou.gr/",
+    "prImageSlug": "me-nou",
+    "prDescription": "Original Promotional items.",
+    "prType": "Static",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Printing Office Kordatzakis",
+    "prUrl": "https://typografeio-kordatzakis.gr/",
+    "prImageSlug": "typografeio-kordatzakis",
+    "prDescription": "Printing office website.",
+    "prType": "Static",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Fire Protection ALFA",
+    "prUrl": "https://www.alfa-texnikografeio-kos.gr/",
+    "prImageSlug": "alfa-texnikografeio-kos",
+    "prDescription": "Technical design office - Fire Protection.",
+    "prType": "Static",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Plant Nursery",
+    "prUrl": "https://www.fytorioveroia.gr/",
+    "prImageSlug": "fytorioveroia",
+    "prDescription": "Plant nursery website.",
+    "prType": "Static",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Troxeio Karamanis",
+    "prUrl": "https://www.troxeio.gr/",
+    "prImageSlug": "troxeio",
+    "prDescription": "Metal grinding website.",
+    "prType": "Static",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Lux Vip Apartments",
+    "prUrl": "https://www.luxvipapartments.com/",
+    "prImageSlug": "luxvipapartments",
+    "prDescription": "Apartments to rent, in Thessaloniki.",
+    "prType": "Static",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
+  },
+  {
+    "prName": "Studios Lydia",
+    "prUrl": "https://www.studioslydia.gr/",
+    "prImageSlug": "studioslydia",
+    "prDescription": "Studios to rent, in Pieria.",
+    "prType": "Static",
+    "prTags": "From scratch",
+    "prEmployer": "gron"
   }
 ]
