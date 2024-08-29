@@ -793,7 +793,7 @@
     "prUrl": "https://www.artandwork.gr",
     "prImageSlug": "artandwork",
     "prDescription": "A digital platform showcasing and selling contemporary art pieces from various artists.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -803,7 +803,7 @@
     "prUrl": "https://www.bamboo-store.com",
     "prImageSlug": "bamboo-store",
     "prDescription": "An e-commerce site specializing in eco-friendly bamboo products for home and personal use.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -823,7 +823,7 @@
     "prUrl": "https://www.bymkyriakidou.gr",
     "prImageSlug": "bymkyriakidou",
     "prDescription": "An online boutique featuring designer clothing and accessories for women.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -833,7 +833,7 @@
     "prUrl": "https://www.chaloulakos-home.com",
     "prImageSlug": "chaloulakos-home",
     "prDescription": "A home decor and furniture e-commerce site offering a variety of stylish products for interior design.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -853,7 +853,7 @@
     "prUrl": "https://www.coffeetrade.gr",
     "prImageSlug": "coffeetrade",
     "prDescription": "An online coffee shop selling a variety of coffee beans, equipment, and accessories.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -893,7 +893,7 @@
     "prUrl": "https://www.dancohome.gr",
     "prImageSlug": "dancohome",
     "prDescription": "An e-commerce site selling home decor, furniture, and lifestyle products.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -923,7 +923,7 @@
     "prUrl": "https://www.dktelecomeshop.gr",
     "prImageSlug": "dktelecomeshop",
     "prDescription": "An e-commerce site offering telecommunications products and services.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -953,7 +953,7 @@
     "prUrl": "https://www.elenamaidoni.com",
     "prImageSlug": "elenamaidoni",
     "prDescription": "A personal website for a fashion designer showcasing her collections and services.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -983,7 +983,7 @@
     "prUrl": "https://www.eshop-art.gr",
     "prImageSlug": "eshop-art",
     "prDescription": "An e-commerce site selling various art pieces and supplies.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1013,7 +1013,7 @@
     "prUrl": "https://www.goforpharmacy.gr",
     "prImageSlug": "goforpharmacy",
     "prDescription": "An online pharmacy selling medications and health-related products.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1053,7 +1053,7 @@
     "prUrl": "https://www.ioraikali.gr",
     "prImageSlug": "ioraikali",
     "prDescription": "An online jewelry store selling handmade pieces inspired by Greek culture.",
-    "prType": "Dynamic",
+    "prType": "E-shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1073,7 +1073,7 @@
     "prUrl": "https://www.izaboutique.gr",
     "prImageSlug": "izaboutique",
     "prDescription": "An online fashion boutique selling women's clothing and accessories.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1103,7 +1103,7 @@
     "prUrl": "https://www.megishoptic.gr",
     "prImageSlug": "megishoptic",
     "prDescription": "An optical store website offering eyewear and related services.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1113,7 +1113,7 @@
     "prUrl": "https://www.mizodunamiki.gr",
     "prImageSlug": "mizodunamiki",
     "prDescription": "A company website specializing in industrial equipment and machinery.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1123,7 +1123,7 @@
     "prUrl": "https://www.musicalparadise.com",
     "prImageSlug": "musicalparadise",
     "prDescription": "An online music store selling instruments, equipment, and accessories.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1143,7 +1143,7 @@
     "prUrl": "https://www.oikanos.gr",
     "prImageSlug": "oikanos",
     "prDescription": "An online marketplace for handmade and artisanal products from Greek creators.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1183,7 +1183,7 @@
     "prUrl": "https://www.santoriniphotoshoot.com",
     "prImageSlug": "santoriniphotoshoot",
     "prDescription": "",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1203,7 +1203,7 @@
     "prUrl": "https://www.specilook.gr",
     "prImageSlug": "specilook",
     "prDescription": "An online optical store offering a wide range of eyewear and related products.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1223,7 +1223,7 @@
     "prUrl": "https://www.thessgreeneshop.gr",
     "prImageSlug": "thessgreeneshop",
     "prDescription": "An e-commerce site selling eco-friendly and sustainable products.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1233,7 +1233,7 @@
     "prUrl": "https://www.toxasapiko.gr",
     "prImageSlug": "toxasapiko",
     "prDescription": "A traditional Greek taverna website showcasing their menu and ambiance.",
-    "prType": "Dynamic",
+    "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
