@@ -6,7 +6,8 @@
     "prDescription": "A react based application that generates color palettes based on the color you choose.",
     "prType": "App",
     "prTags": "From scratch",
-    "prEmployer": "fl"
+    "prEmployer": "fl",
+    "prFeatured": true
   },
   {
     "prName": "Notes App",
@@ -15,7 +16,8 @@
     "prDescription": "A simple notes application made with React and Tailwind.",
     "prType": "App",
     "prTags": "From scratch",
-    "prEmployer": "fl"
+    "prEmployer": "fl",
+    "prFeatured": true
   },
   {
     "prName": "Kariera in Sports",
@@ -24,7 +26,8 @@
     "prDescription": "A job posting  / searching site with subscription and blog capabilities.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "fl"
+    "prEmployer": "fl",
+    "prFeatured": true
   },
   {
     "prName": "Antoninas",
@@ -32,7 +35,8 @@
     "prImageSlug": "antoninas",
     "prDescription": "A clothing e-shop with a variety of products for women.",
     "prType": "E-Shop",
-    "prEmployer": "fl"
+    "prEmployer": "fl",
+    "prFeatured": false
   },
   {
     "prName": "Jepeteo",
@@ -41,7 +45,8 @@
     "prDescription": "A personal blog site about tech, movies and space news.",
     "prType": "Blog",
     "prTags": "From scratch",
-    "prEmployer": "fl"
+    "prEmployer": "fl",
+    "prFeatured": false
   },
   {
     "prName": "Prionotainies",
@@ -50,7 +55,8 @@
     "prDescription": "An eshop for a company that sells saw blades.",
     "prType": "E-Shop",
     "prTags": "From scratch",
-    "prEmployer": "glbt"
+    "prEmployer": "glbt",
+    "prFeatured": false
   },
   {
     "prName": "Greekonline",
@@ -59,7 +65,8 @@
     "prDescription": "One of the best business directories in Greece.",
     "prType": "Dynamic Site",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Linari",
@@ -68,7 +75,8 @@
     "prDescription": "Linen eshop with a variety of products.",
     "prType": "E-Shop",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Idea & Fos",
@@ -77,7 +85,8 @@
     "prDescription": "Lighting & Luminaire eshop with a variety of over 10000 products.",
     "prType": "E-Shop",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Tech Nik",
@@ -86,7 +95,8 @@
     "prDescription": "Automation & garage doors eshop. ",
     "prType": "E-Shop",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Laoulakos Flowers",
@@ -95,7 +105,8 @@
     "prDescription": "Flower eshop for every occasion. ",
     "prType": "E-Shop",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Perla Boutique",
@@ -104,7 +115,8 @@
     "prDescription": "Fashion clothes eshop redisgn in Opencart. ",
     "prType": "E-Shop",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Saratsopoulou Optics",
@@ -113,7 +125,8 @@
     "prDescription": "Glasses and sunglasses eshop with a great variety. ",
     "prType": "E-Shop",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Agricultural Machines Tampakakis",
@@ -122,7 +135,8 @@
     "prDescription": "Glasses and sunglasses eshop with a great variety. ",
     "prType": "E-Shop",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Ohrofeo",
@@ -131,7 +145,8 @@
     "prDescription": "Eshop about jewelry and other products.",
     "prType": "E-Shop",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "DK Photos",
@@ -140,7 +155,8 @@
     "prDescription": "Professional Photography website.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Transport Ballalas",
@@ -149,7 +165,8 @@
     "prDescription": "Transport company Ballalas in Skopelos website.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Aggelikas",
@@ -158,7 +175,8 @@
     "prDescription": "Manufacture and installation of energy efficient aluminium frames company website.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Mitsidis Group",
@@ -167,7 +185,8 @@
     "prDescription": "Professional bakery & confectionery equipment company website.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "SMS Metal",
@@ -176,7 +195,8 @@
     "prDescription": "Metal & aluminium closets & lockers company website.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Athens Italian Interpreters",
@@ -185,7 +205,8 @@
     "prDescription": "Conference interpreter, European Parliament translator, Professor of Italian Language.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "My Kos Driver",
@@ -194,7 +215,8 @@
     "prDescription": "Transfer services around the island of Kos.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "MG Speed Experts",
@@ -203,7 +225,8 @@
     "prDescription": "Motorcycle rentals in Kos.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Kalivas Service",
@@ -212,7 +235,8 @@
     "prDescription": "Maintenance of boilers & furnaces in Athens.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "POETEK",
@@ -221,7 +245,8 @@
     "prDescription": "Panhellenic Federation of Professionals of Technical Combustion Installations.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Nautilos Nave",
@@ -230,7 +255,8 @@
     "prDescription": "Ship & Boat Construction - Repairs. Pipe & Metalwork services.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Marvim",
@@ -239,7 +265,8 @@
     "prDescription": "Pipe & metal sheet services.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Ariston",
@@ -248,7 +275,8 @@
     "prDescription": "Yacht Painting services.",
     "prType": "Dynamic",
     "prTags": "Redesign",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Shipboiler",
@@ -257,7 +285,8 @@
     "prDescription": "General Ship Repairs - Boiler Retubing.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Piccard Hellas Divers CO",
@@ -266,7 +295,8 @@
     "prDescription": "Underwater operations.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Ploutis Antonis",
@@ -275,7 +305,8 @@
     "prDescription": "Shipbuilder Antonis Ploutis website.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "O Nasos",
@@ -284,7 +315,8 @@
     "prDescription": "Butcher shop website.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Rodi & Meli",
@@ -293,7 +325,8 @@
     "prDescription": "Restaurant website in Thessaloniki, Greece.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Xafis",
@@ -302,7 +335,8 @@
     "prDescription": "Clothes laundry & presses.",
     "prType": "Dynamic",
     "prTags": "Redesign",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Stimex",
@@ -311,7 +345,8 @@
     "prDescription": "Carpet cleaners company website.",
     "prType": "Dynamic",
     "prTags": "Redesign",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Kokkolios Fruits",
@@ -320,7 +355,8 @@
     "prDescription": "Imports & Exports of Fruit company.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Amigdala",
@@ -329,7 +365,8 @@
     "prDescription": "Processing and marketing of nuts.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Eleni",
@@ -338,7 +375,8 @@
     "prDescription": "Pastry shop in Thessaloniki.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Funeral Home",
@@ -347,7 +385,8 @@
     "prDescription": "Funeral home & incineration services.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "G. Katsantoni",
@@ -356,7 +395,8 @@
     "prDescription": "Reflexologist - Muscoloskeletal therapist - Specialized in Nutritional Temperamental Analysis.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "H.N.P. Law Office",
@@ -365,7 +405,8 @@
     "prDescription": "Law Office website.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Mpompolakis - Ladias",
@@ -374,7 +415,8 @@
     "prDescription": "Machine shop - Metal Processing.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "VIP Fitness",
@@ -383,7 +425,8 @@
     "prDescription": "Gym website- Recreate & Redesign from Joomla to Wordpress.",
     "prType": "Dynamic",
     "prTags": "Redisgn",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Konstantinos Taoulas",
@@ -392,7 +435,8 @@
     "prDescription": "Law Office website.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Cylinder Master",
@@ -401,7 +445,8 @@
     "prDescription": "Manufacture & repair of hydraulic cylinders.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Manos Power Coffee",
@@ -410,7 +455,8 @@
     "prDescription": "Coffee shop website.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Papalias Andreas ",
@@ -419,7 +465,8 @@
     "prDescription": "Funeral home website.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Limobus",
@@ -428,7 +475,8 @@
     "prDescription": "Private tours & excursions company website.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Kaptan Giorgis",
@@ -437,7 +485,8 @@
     "prDescription": "Wholesale - Retail trade of seafood.",
     "prType": "Dynamic",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "GVF",
@@ -446,7 +495,8 @@
     "prDescription": "V-Strom Flagship Greek fan website.",
     "prType": "Dynamic",
     "prTags": "Redesign",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Compass Technology Solutions",
@@ -455,7 +505,8 @@
     "prDescription": "Technical consultancy services on a wide range of electrical installations.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Kyriakakis",
@@ -464,7 +515,8 @@
     "prDescription": "Apartments for rent in Evia, Greece.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Nikolopoulou Vanessa",
@@ -473,7 +525,8 @@
     "prDescription": "Dental Surgeon website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Xatzivasileiadis Iordanis",
@@ -482,7 +535,8 @@
     "prDescription": "Model opthalmology clinic website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Aitheria Elaia",
@@ -491,7 +545,8 @@
     "prDescription": "Αssential oils website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Taxi & Van ",
@@ -500,7 +555,8 @@
     "prDescription": "Taxi & Van driver website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Ira Metaforiki",
@@ -509,7 +565,8 @@
     "prDescription": "National transportation & moving services company website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Metaxas",
@@ -518,7 +575,8 @@
     "prDescription": "Road Αssistance company website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Metaxas",
@@ -527,7 +585,8 @@
     "prDescription": "Road Αssistance company website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Tzilitoudis Service",
@@ -536,7 +595,8 @@
     "prDescription": "Car repair shop company website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Terzidis - Dreliozi",
@@ -545,7 +605,8 @@
     "prDescription": "Law office website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Christos Petkos",
@@ -554,7 +615,8 @@
     "prDescription": "Law office website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Chef Katramis",
@@ -563,7 +625,8 @@
     "prDescription": "Chef's website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Psixos Renovations",
@@ -572,7 +635,8 @@
     "prDescription": "Building renovation services company website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Ergongas",
@@ -581,7 +645,8 @@
     "prDescription": "Electromechanical Projects, Water supply - Heating - Natural gas.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Kyklotherm",
@@ -590,7 +655,8 @@
     "prDescription": "Heating - Cooling - LPG - Natural gas.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Star Tech",
@@ -599,7 +665,8 @@
     "prDescription": "Computer, laptop, smartphone repair services.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Hipro.Mac PC",
@@ -608,7 +675,8 @@
     "prDescription": "Computer repair services.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Skargas",
@@ -617,7 +685,8 @@
     "prDescription": "Installation & Repair of Boilers.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Metalogy Construction",
@@ -626,7 +695,8 @@
     "prDescription": "Custom metal construction company website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Me-Nou Ad Creations",
@@ -635,7 +705,8 @@
     "prDescription": "Original Promotional items.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Printing Office Kordatzakis",
@@ -644,7 +715,8 @@
     "prDescription": "Printing office website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Fire Protection ALFA",
@@ -653,7 +725,8 @@
     "prDescription": "Technical design office - Fire Protection.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Plant Nursery",
@@ -662,7 +735,8 @@
     "prDescription": "Plant nursery website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Troxeio Karamanis",
@@ -671,7 +745,8 @@
     "prDescription": "Metal grinding website.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Lux Vip Apartments",
@@ -680,7 +755,8 @@
     "prDescription": "Apartments to rent, in Thessaloniki.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   },
   {
     "prName": "Studios Lydia",
@@ -689,6 +765,7 @@
     "prDescription": "Studios to rent, in Pieria.",
     "prType": "Static",
     "prTags": "From scratch",
-    "prEmployer": "gron"
+    "prEmployer": "gron",
+    "prFeatured": false
   }
 ]
