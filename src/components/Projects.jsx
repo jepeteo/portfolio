@@ -7,14 +7,17 @@ const Projects = () => {
   const [projectType, setProjectType] = useState(null)
   const projectsPerPage = 9
 
-  const filteredProjects = useMemo(
-    () =>
-      myProjects.filter(
+  const filteredProjects = useMemo(() => {
+    const featured = myProjects.filter((project) => project.prFeatured)
+    const nonFeatured = myProjects
+      .filter((project) => project.prFeatured === false)
+      .filter(
         (project) => projectType === null || project.prType === projectType
-        //   .filter((project) => project.prEmployer != "employer")
-      ),
-    [projectType]
-  )
+      )
+      .sort((a, b) => a.prName.localeCompare(b.prName))
+
+    return [...featured, ...nonFeatured]
+  }, [projectType])
 
   const {
     displayItems: displayProjects,
