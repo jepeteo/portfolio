@@ -24,7 +24,7 @@
     "prUrl": "https://karierainsports.gr",
     "prImageSlug": "karierainsports",
     "prDescription": "A job posting and searching platform specifically for sports-related careers in Greece.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "fl",
     "prFeatured": true
@@ -43,7 +43,7 @@
     "prUrl": "https://jepeteo.com",
     "prImageSlug": "jepeteo",
     "prDescription": "A personal blog covering topics in technology, movies, and space news.",
-    "prType": "Blog",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "fl",
     "prFeatured": false
@@ -153,7 +153,7 @@
     "prUrl": "https://www.dkphotos.gr/",
     "prImageSlug": "dkphotos",
     "prDescription": "A professional photography portfolio showcasing a range of photographic services and styles.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -163,7 +163,7 @@
     "prUrl": "https://www.metaforiki-skopelou.gr/",
     "prImageSlug": "metaforikiskopelou",
     "prDescription": "A transportation company website offering logistics services in Skopelos.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -173,7 +173,7 @@
     "prUrl": "https://aggelikas.gr/",
     "prImageSlug": "aggelikas",
     "prDescription": "A company specializing in energy-efficient aluminum frames and installations.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -183,7 +183,7 @@
     "prUrl": "https://aggelikas.gr/",
     "prImageSlug": "aggelikas",
     "prDescription": "A supplier of professional bakery and confectionery equipment.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -193,7 +193,7 @@
     "prUrl": "https://sms-metal.gr/",
     "prImageSlug": "smsmetal",
     "prDescription": "A manufacturer of metal and aluminum closets and lockers for various industries.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -203,7 +203,7 @@
     "prUrl": "https://aii.gr/",
     "prImageSlug": "aii",
     "prDescription": "Professional interpretation and translation services specializing in Italian.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -213,7 +213,7 @@
     "prUrl": "https://www.mykosdriver.com/",
     "prImageSlug": "mykosdriver",
     "prDescription": "A private transfer and tour service for the island of Kos.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -223,7 +223,7 @@
     "prUrl": "https://www.rentmotokos.com/",
     "prImageSlug": "rentmotokos",
     "prDescription": "A motorcycle rental service operating in Kos.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -233,7 +233,7 @@
     "prUrl": "https://www.kalivasservice.gr/",
     "prImageSlug": "kalivas",
     "prDescription": "A maintenance and repair service for boilers and furnaces in Athens.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -243,7 +243,7 @@
     "prUrl": "https://www.poetek.gr/",
     "prImageSlug": "poetek",
     "prDescription": "The official website for the Panhellenic Federation of Professionals of Technical Combustion Installations.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -253,7 +253,7 @@
     "prUrl": "https://www.episkeves-ploion.gr/",
     "prImageSlug": "nautilosnave",
     "prDescription": "A company offering ship and boat construction, repairs, and metalwork services.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -263,7 +263,7 @@
     "prUrl": "https://www.marvim-villiotis.gr/",
     "prImageSlug": "marvim",
     "prDescription": "A specialized service provider for pipe and metal sheet work.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -273,7 +273,7 @@
     "prUrl": "https://www.paintyachts.com/",
     "prImageSlug": "ariston",
     "prDescription": "A professional yacht painting and refinishing service.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "Redesign",
     "prEmployer": "gron",
     "prFeatured": false
@@ -283,7 +283,7 @@
     "prUrl": "https://www.shipboiler.gr/",
     "prImageSlug": "shipboiler",
     "prDescription": "A company specializing in ship repairs and boiler retubing.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -293,7 +293,7 @@
     "prUrl": "https://piccardhellasdiversco.com/",
     "prImageSlug": "piccard",
     "prDescription": "A professional underwater operations and diving services company.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -303,7 +303,7 @@
     "prUrl": "https://ploutis-yachts.gr/",
     "prImageSlug": "ploutis",
     "prDescription": "A custom yacht building and design service.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -313,7 +313,7 @@
     "prUrl": "https://onasos.gr/",
     "prImageSlug": "onasos",
     "prDescription": "A local butcher shop offering quality meats and related products.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -323,7 +323,7 @@
     "prUrl": "https://rodimeli.gr/",
     "prImageSlug": "rodimeli",
     "prDescription": "A restaurant in Thessaloniki showcasing local cuisine.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -333,7 +333,7 @@
     "prUrl": "https://www.xafis.gr/",
     "prImageSlug": "xafis",
     "prDescription": "A professional laundry and pressing service.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "Redesign",
     "prEmployer": "gron",
     "prFeatured": false
@@ -343,7 +343,7 @@
     "prUrl": "https://www.stimex.gr/",
     "prImageSlug": "stimex",
     "prDescription": "A company specializing in carpet cleaning and maintenance services.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "Redesign",
     "prEmployer": "gron",
     "prFeatured": false
@@ -353,7 +353,7 @@
     "prUrl": "https://kokoliosfruits.gr/",
     "prImageSlug": "kokkolios",
     "prDescription": "An import and export company dealing with a variety of fruits.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -363,7 +363,7 @@
     "prUrl": "https://amigdala.gr/",
     "prImageSlug": "amigdala",
     "prDescription": "A company focused on processing and marketing nuts and related products.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -373,7 +373,7 @@
     "prUrl": "https://www.zaxaroplasteio-eleni.gr/",
     "prImageSlug": "zaxaroplasteioeleni",
     "prDescription": "A pastry shop in Thessaloniki offering a variety of sweet treats.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -383,7 +383,7 @@
     "prUrl": "https://www.apotefrosis.com/",
     "prImageSlug": "apotefrosis",
     "prDescription": "A comprehensive funeral and incineration services provider.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -393,7 +393,7 @@
     "prUrl": "https://www.gkatsantoni.gr/",
     "prImageSlug": "reflexologos",
     "prDescription": "A holistic health practice offering reflexology and musculoskeletal therapy.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -403,7 +403,7 @@
     "prUrl": "https://www.hnplaw.gr/",
     "prImageSlug": "hnplaw",
     "prDescription": "A professional law firm providing various legal services.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -413,7 +413,7 @@
     "prUrl": "https://lbmetal.gr/",
     "prImageSlug": "lbmetal",
     "prDescription": "A machine shop specializing in metal processing and fabrication.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -423,7 +423,7 @@
     "prUrl": "https://www.vip-fitness-mihabodytec.gr/",
     "prImageSlug": "vipfitness",
     "prDescription": "A gym offering personalized fitness programs and state-of-the-art equipment.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "Redisgn",
     "prEmployer": "gron",
     "prFeatured": false
@@ -433,7 +433,7 @@
     "prUrl": "https://ctlaw.gr/",
     "prImageSlug": "taoulas",
     "prDescription": "A law office providing legal counsel and representation.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -443,7 +443,7 @@
     "prUrl": "https://cylindermaster.gr/",
     "prImageSlug": "cylidermaster",
     "prDescription": "A company specializing in the manufacture and repair of hydraulic cylinders.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -453,7 +453,7 @@
     "prUrl": "https://manospowercoffee.gr/",
     "prImageSlug": "manospowercoffee",
     "prDescription": "A coffee shop offering a variety of coffee drinks and snacks.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -463,7 +463,7 @@
     "prUrl": "https://teletes-papaliasandreas.gr/",
     "prImageSlug": "papalias",
     "prDescription": "Funeral home website.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -473,7 +473,7 @@
     "prUrl": "https://limobus.gr/",
     "prImageSlug": "limobus",
     "prDescription": "A private tour and excursion company offering customized travel experiences.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -483,7 +483,7 @@
     "prUrl": "https://kaptangiorgis.gr/",
     "prImageSlug": "kaptangiorgis",
     "prDescription": "A wholesale and retail seafood supplier.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
     "prFeatured": false
@@ -493,7 +493,7 @@
     "prUrl": "https://www.gvf.gr/",
     "prImageSlug": "gvf",
     "prDescription": "A fan website dedicated to Suzuki V-Strom motorcycles.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "Redesign",
     "prEmployer": "gron",
     "prFeatured": false
@@ -773,7 +773,7 @@
     "prUrl": "https://www.almotek.gr",
     "prImageSlug": "almotek",
     "prDescription": "Contstuctions & Eneregy related company website.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -813,7 +813,7 @@
     "prUrl": "https://www.beautifulpeoplepr.gr",
     "prImageSlug": "beautifulpeoplepr",
     "prDescription": "A public relations agency website highlighting their services in fashion, beauty, and lifestyle industries.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -843,7 +843,7 @@
     "prUrl": "https://www.citycars.gr",
     "prImageSlug": "citycars",
     "prDescription": "A car rental service website for Athens and other locations in Greece.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -863,7 +863,7 @@
     "prUrl": "https://www.cosmoshotel.gr",
     "prImageSlug": "cosmoshotel",
     "prDescription": "A website for a hotel in Thessaloniki, Greece, showcasing its rooms and amenities.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -873,7 +873,7 @@
     "prUrl": "https://www.crystalseayachting.gr",
     "prImageSlug": "crystalseayachting",
     "prDescription": "A yacht charter company website offering luxury sailing experiences in Greece.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -883,7 +883,7 @@
     "prUrl": "https://www.cycladescollection.gr",
     "prImageSlug": "cycladescollection",
     "prDescription": "A travel website promoting and booking accommodations in the Cyclades islands of Greece.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -903,7 +903,7 @@
     "prUrl": "https://www.dandyvillas.com",
     "prImageSlug": "dandyvillas",
     "prDescription": "A luxury villa rental service for properties in various Greek destinations.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -913,7 +913,7 @@
     "prUrl": "https://www.dermapro.gr",
     "prImageSlug": "dermapro",
     "prDescription": "An online store selling professional skincare and beauty products.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -933,7 +933,7 @@
     "prUrl": "https://www.dm-realestate.gr",
     "prImageSlug": "dm-realestate",
     "prDescription": "A real estate agency website showcasing property listings and services in Greece.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -943,7 +943,7 @@
     "prUrl": "https://www.elaialuxurysuites.gr",
     "prImageSlug": "elaialuxurysuites",
     "prDescription": "A website for a luxury hotel in Santorini, highlighting its suites and amenities.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -963,7 +963,7 @@
     "prUrl": "https://www.energonservice.gr",
     "prImageSlug": "energonservice",
     "prDescription": "A company website offering energy-related services and products.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -973,7 +973,7 @@
     "prUrl": "https://www.epidosis.gr",
     "prImageSlug": "epidosis",
     "prDescription": "An online platform providing educational resources and services for students and professionals.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -993,7 +993,7 @@
     "prUrl": "https://www.fcopy.gr",
     "prImageSlug": "fcopy",
     "prDescription": "A printing and copying services company website showcasing their products and services.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1003,7 +1003,7 @@
     "prUrl": "https://www.flora-santorini.com",
     "prImageSlug": "flora-santorini",
     "prDescription": "A website for a hotel in Santorini, featuring its rooms and facilities.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1023,7 +1023,7 @@
     "prUrl": "https://harmonyathens.com/",
     "prImageSlug": "harmonyathens",
     "prDescription": "A wellness center website offering various holistic health services.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1033,7 +1033,7 @@
     "prUrl": "https://iasiskozani.com/",
     "prImageSlug": "iasiskozani",
     "prDescription": "A medical center website showcasing their healthcare services and facilities.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1043,7 +1043,7 @@
     "prUrl": "https://www.ioniananthology.gr",
     "prImageSlug": "ioniananthology",
     "prDescription": "A luxury hotel group website featuring properties in the Ionian Islands of Greece.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1063,7 +1063,7 @@
     "prUrl": "https://iosbakery.gr",
     "prImageSlug": "iosbakery",
     "prDescription": "A bakery website showcasing their products and services on the island of Ios, Greece.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1083,7 +1083,7 @@
     "prUrl": "https://www.kinesisathensphysio.gr",
     "prImageSlug": "kinesisathensphysio",
     "prDescription": "A physiotherapy clinic website highlighting their services and expertise.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1093,7 +1093,7 @@
     "prUrl": "https://www.lexelparisgreece.gr",
     "prImageSlug": "lexelparisgreece",
     "prDescription": "An online store for Lexel Paris skincare products in Greece.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1133,7 +1133,7 @@
     "prUrl": "https://www.newearthretreats.eu",
     "prImageSlug": "newearthretreats",
     "prDescription": "",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1153,7 +1153,7 @@
     "prUrl": "https://www.planetbikes.gr",
     "prImageSlug": "planetbikes",
     "prDescription": "A bicycle shop website selling bikes, accessories, and offering repair services.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1163,7 +1163,7 @@
     "prUrl": "https://www.rockvillas.gr",
     "prImageSlug": "rockvillas",
     "prDescription": "A luxury villa rental service for properties in Santorini and other Greek islands.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1173,7 +1173,7 @@
     "prUrl": "https://www.sail4fun.gr",
     "prImageSlug": "sail4fun",
     "prDescription": "A sailing charter company offering boat rentals and sailing experiences in Greece.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1193,7 +1193,7 @@
     "prUrl": "https://www.seasidesantorini.com",
     "prImageSlug": "seasidesantorini",
     "prDescription": "",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1213,7 +1213,7 @@
     "prUrl": "https://www.thepinnacleathens.gr",
     "prImageSlug": "thepinnacleathens",
     "prDescription": "A luxury apartment rental service in Athens, highlighting their properties and services.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1243,7 +1243,7 @@
     "prUrl": "https://www.tsokoglou-katharotexniki.gr",
     "prImageSlug": "tsokoglou-katharotexniki",
     "prDescription": "A cleaning services company website highlighting their professional cleaning solutions.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
@@ -1253,7 +1253,7 @@
     "prUrl": "https://www.villavaneliamare.gr",
     "prImageSlug": "villavaneliamare",
     "prDescription": "A luxury villa rental website featuring a property in Zakynthos, Greece.",
-    "prType": "Dynamic",
+    "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
     "prFeatured": false
