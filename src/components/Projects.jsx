@@ -8,7 +8,11 @@ const Projects = () => {
   const projectsPerPage = 6
 
   const filteredProjects = useMemo(() => {
-    const featured = myProjects.filter((project) => project.prFeatured)
+    const featured = myProjects
+      .filter((project) => project.prFeatured)
+      .filter(
+        (project) => projectType === null || project.prType === projectType
+      )
     const nonFeatured = myProjects
       .filter((project) => project.prFeatured === false)
       .filter(
