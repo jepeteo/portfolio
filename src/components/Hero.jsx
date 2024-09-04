@@ -1,5 +1,5 @@
 import TypedText from "./TypedText"
-import programmer from "/src/assets/images/programmer.webp"
+import programmer from "/src/assets/images/new_programmer.webp"
 
 export default function Hero() {
   return (
@@ -18,9 +18,9 @@ export default function Hero() {
 
       <div className="">
         <img
-          className="h-80 object-cover shadow-lg rounded-xl"
+          className="max-h-[400px] object-cover shadow-lg rounded-3xl"
           src={programmer}
-          alt="Theodore Mentis"
+          alt="Theodore Mentis - Senior Wordpress Developer"
         />
       </div>
     </section>
