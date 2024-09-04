@@ -1,7 +1,10 @@
 import React from "react"
-import { useForm, ValidationError } from "@formspree/react"
+import emailjs from "@emailjs/browser"
 
 export default function Contact() {
+  emailjs.init(import.meta.env.REACT_APP_EMAILJS_PUBLIC_KEY)
+
+  const [isSubmitted, setIsSubmitted] = React.useState(false)
   const [formData, setFormData] = React.useState({
     name: "",
     email: "",
@@ -17,14 +20,41 @@ export default function Contact() {
       [name]: value,
     }))
   }
+  const handleSubmit = (e) => {
+    e.preventDefault()
 
-  const [state, handleSubmit] = useForm("xayrrwyj")
-  if (state.succeeded) {
+    emailjs
+      .sendForm(
+        import.meta.env.REACT_APP_EMAILJS_SERVICE_ID,
+        import.meta.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+        e.target,
+        import.meta.env.REACT_APP_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        (result) => {
+          console.log("Email successfully sent!", result.text)
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            company: "",
+            message: "",
+          })
+          setIsSubmitted(true)
+        },
+        (error) => {
+          console.log("Failed to send email:", error.text)
+          // Handle error (e.g., show an error message)
+        }
+      )
+  }
+
+  if (isSubmitted) {
     return (
       <section className="container flex flex-wrap" id="contact">
         <h2 className="w-full text-5xl font-bold">Contact</h2>
         <span className="py-8">
-          Thanks for contacting me! I&apos;ll be in touch soon.
+          Thanks for contacting me! I'll be in touch soon.
         </span>
       </section>
     )
@@ -42,6 +72,7 @@ export default function Contact() {
         latest in development trends, feel free to drop me a message. I look
         forward to hearing from you!
       </span>
+
       <div className="w-full py-4 m-auto">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-row flex-wrap gap-4">
@@ -54,7 +85,6 @@ export default function Contact() {
               onChange={handleChange}
               required
             />
-            <ValidationError prefix="Name" field="name" errors={state.errors} />
             <input
               type="email"
               placeholder="Email"
@@ -63,11 +93,6 @@ export default function Contact() {
               value={formData.email}
               onChange={handleChange}
               required
-            />
-            <ValidationError
-              prefix="Email"
-              field="email"
-              errors={state.errors}
             />
           </div>
           <div className="flex flex-row flex-wrap gap-4">
@@ -79,11 +104,6 @@ export default function Contact() {
               value={formData.phone}
               onChange={handleChange}
             />
-            <ValidationError
-              prefix="Phone"
-              field="phone"
-              errors={state.errors}
-            />
             <input
               type="company"
               placeholder="Company / Agency"
@@ -91,11 +111,6 @@ export default function Contact() {
               name="company"
               value={formData.company}
               onChange={handleChange}
-            />
-            <ValidationError
-              prefix="Company"
-              field="company"
-              errors={state.errors}
             />
           </div>
           <textarea
@@ -106,14 +121,9 @@ export default function Contact() {
             value={formData.message}
             onChange={handleChange}
           ></textarea>
-          <ValidationError
-            prefix="Message"
-            field="message"
-            errors={state.errors}
-          />
           <button
             className="btn-contact w-full self-end p-4 mt-8 md:w-56"
-            disabled={state.submitting}
+            type="submit"
           >
             Send
           </button>
