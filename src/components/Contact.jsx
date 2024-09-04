@@ -2,7 +2,7 @@ import React from "react"
 import emailjs from "@emailjs/browser"
 
 emailjs.init(import.meta.env.REACT_APP_EMAILJS_PUBLIC_KEY)
-
+console.log(import.meta.env.REACT_APP_EMAILJS_PUBLIC_KEY)
 export default function Contact() {
   const [isSubmitted, setIsSubmitted] = React.useState(false)
   const [formData, setFormData] = React.useState({
