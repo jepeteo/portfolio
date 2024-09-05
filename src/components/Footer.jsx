@@ -16,6 +16,7 @@ export default function Footer() {
             href="https://github.com/jepeteo"
             className="p-2 rounded-xl"
             title="Find me on Github"
+            target="_blank"
           >
             <BsGithub className="inline h-6 w-6 text-black" />
           </a>
@@ -23,6 +24,7 @@ export default function Footer() {
             href="https://www.linkedin.com/in/thmentis/"
             className="p-2 rounded-xl"
             title="View my profile on LinkedIn"
+            target="_blank"
           >
             <BsLinkedin className="inline h-6 w-6 text-black" />
           </a>
@@ -30,6 +32,7 @@ export default function Footer() {
             href="mailto:th.mentis@gmail.com"
             className=" p-2 rounded-xl"
             title="Send me an email"
+            target="_blank"
           >
             <BsEnvelopeAt className="inline h-6 w-6 text-black" />
           </a>

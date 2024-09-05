@@ -36,6 +36,7 @@ const Projects = () => {
         <a
           href={project.prUrl}
           className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+          target="_blank"
         >
           <div
             className="bg-cover w-full rounded-md h-56 animate-scrollImage"

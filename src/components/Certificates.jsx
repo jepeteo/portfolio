@@ -19,6 +19,7 @@ const Certificates = () => {
             <a
               href={isURL(cert.certUrl) ? cert.certUrl : "#"}
               className="flex items-center gap-2 p-2 md:p-4"
+              target="_blank"
             >
               <img
                 className="w-8"
