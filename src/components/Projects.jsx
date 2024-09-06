@@ -108,7 +108,7 @@ const Projects = () => {
       buttons.push(
         <li key={1}>
           <button
-            className="border rounded-xl w-12 py-1 text-center text-sm bg-slate-700 mx-1"
+            className="border rounded-xl w-8 py-1 text-center text-sm bg-slate-700 mx-1"
             onClick={() => goToPage(1)}
             aria-label="Go to first page"
           >
@@ -126,7 +126,7 @@ const Projects = () => {
       buttons.push(
         <li key={i}>
           <button
-            className={`border rounded-xl w-12 py-1 text-center text-sm bg-slate-700 mx-1 ${
+            className={`border rounded-xl w-8 py-1 text-center text-sm bg-slate-700 mx-1 ${
               currentPage === i ? "bg-gray-900 text-white" : ""
             }`}
             onClick={() => goToPage(i)}
@@ -147,7 +147,7 @@ const Projects = () => {
       buttons.push(
         <li key={totalPages}>
           <button
-            className="border rounded-xl w-12 py-1 text-center text-sm bg-slate-700 mx-1"
+            className="border rounded-xl w-8 py-1 text-center text-sm bg-slate-700 mx-1"
             onClick={() => goToPage(totalPages)}
             aria-label="Go to last page"
           >
