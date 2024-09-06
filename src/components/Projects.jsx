@@ -34,7 +34,7 @@ const Projects = () => {
     return displayProjects.map((project) => (
       <div key={project.prName} className="relative">
         {project.prFeatured && (
-          <div className="absolute top-2 right-2 bg-slate-700 text-white py-1 px-3 rounded-lg z-10 border border-black shadow shadow-slate-900">
+          <div className="absolute top-2 right-2 bg-slate-700 text-white py-1 px-3 rounded-lg z-10 border border-white shadow shadow-slate-900">
             Featured
           </div>
         )}
