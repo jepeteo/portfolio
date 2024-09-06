@@ -32,10 +32,15 @@ const Projects = () => {
 
   const memoizedProjects = useMemo(() => {
     return displayProjects.map((project) => (
-      <div key={project.prName}>
+      <div key={project.prName} className="relative">
+        {project.prFeatured && (
+          <div className="absolute top-2 right-2 bg-slate-700 text-white py-1 px-3 rounded-lg z-10 border border-black shadow shadow-slate-900">
+            Featured
+          </div>
+        )}
         <a
           href={project.prUrl}
-          className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+          className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
           target="_blank"
         >
           <div
