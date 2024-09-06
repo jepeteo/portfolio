@@ -46,7 +46,7 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "fl",
-    "prFeatured": false
+    "prFeatured": true
   },
   {
     "prName": "Prionotainies",
@@ -756,7 +756,7 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": true
   },
   {
     "prName": "Studios Lydia",
@@ -886,7 +886,7 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": true
   },
   {
     "prName": "Dancohome",
