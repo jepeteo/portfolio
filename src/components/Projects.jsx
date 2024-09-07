@@ -182,6 +182,14 @@ const Projects = () => {
   return (
     <section className="container" id="projects">
       <h2 className="text-5xl font-bold">Projects</h2>
+      <p className="my-4">
+        Below are some selected projects I have worked on over the years. The
+        majority of these projects were developed using WordPress, and are
+        projects made from scratch. I was responsible for the design, coding,
+        and the functionality of the websites. I have also worked on several
+        projects using other technoologies. The first page contains some
+        selected projects, and the rest are listed alphabetically.
+      </p>
 
       <FilterButtons
         setProjectType={setProjectType}
