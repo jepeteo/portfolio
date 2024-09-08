@@ -9,6 +9,8 @@ export default function Header({ toggleDarkMode, darkMode }) {
         <img src={logo} alt="logo" width="80px" className="p-2" />
         <span className="w-0 mr-auto md:invisible xl:visible xl:w-auto">
           Theodoros Mentis
+          <br />
+          <span className="hidden md:inline">Full Stack Developer | Wordpress Expert</span>
         </span>
         <Nav toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
       </div>
