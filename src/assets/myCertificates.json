@@ -1,5 +1,11 @@
 [
   {
+    "certName": "Learning Git and GitHub",
+    "certUrl": "https://www.linkedin.com/learning/certificates/58530a22a9d97621ec0fe889588f38307c5f9a95203609a4fb568b8f7ba19ef8?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BkVVw8Q2bR3yg4kANJSe3Kg%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true
+  },
+  {
     "certName": "Learning Next.js (2022)",
     "certUrl": "https://www.linkedin.com/learning/certificates/05ba6d373c657cfa8ac827ef5c298bb2a642a406a1a94c8ca030af4822424e7d?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BUvusm%2F9oT2WTie7f41O38w%3D%3D",
     "certImg": "linkedin_logo.jpeg",
