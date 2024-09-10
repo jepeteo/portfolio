@@ -1,4 +1,4 @@
-import React from "react"
+import React, { lazy, Suspense } from "react"
 import Hero from "./components/Hero"
 import Skills from "./components/Skills"
 import Experience from "./components/Experience"
@@ -7,10 +7,11 @@ import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Bio from "./components/Bio"
 import Certificates from "./components/Certificates"
-import Projects from "./components/Projects"
 
 import "flowbite"
 import "flowbite/dist/flowbite.css"
+
+const Projects = lazy(() => import("./components/Projects"))
 
 function App() {
   const [darkMode, setDarkMode] = React.useState(true)
@@ -34,7 +35,9 @@ function App() {
       <Skills />
       <Experience />
       <Certificates />
-      <Projects />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Projects />
+      </Suspense>
       <Contact />
       <Footer />
     </div>
