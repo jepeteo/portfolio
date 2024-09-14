@@ -1,25 +1,5 @@
 [
   {
-    "prName": "Color Palette Generator",
-    "prUrl": "https://jepeteo.github.io/react-color-palette-generator/",
-    "prImageSlug": "palettegenerator",
-    "prDescription": "A react based application that generates color palettes based on the color you choose.",
-    "prType": "App",
-    "prTags": "From scratch",
-    "prEmployer": "fl",
-    "prFeatured": true
-  },
-  {
-    "prName": "Notes App",
-    "prUrl": "https://jepeteo.github.io/notes-app/",
-    "prImageSlug": "jepenotes",
-    "prDescription": "A simple notes application made with React and Tailwind.",
-    "prType": "App",
-    "prTags": "From scratch",
-    "prEmployer": "fl",
-    "prFeatured": true
-  },
-  {
     "prName": "Kariera in Sports",
     "prUrl": "https://karierainsports.gr",
     "prImageSlug": "karierainsports",
@@ -116,7 +96,7 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": true
   },
   {
     "prName": "Saratsopoulou Optics",
@@ -856,7 +836,7 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": true
   },
   {
     "prName": "Cosmoshotel",
@@ -1129,7 +1109,7 @@
     "prFeatured": false
   },
   {
-    "prName": "Newe Erth Retreats",
+    "prName": "New Earth Retreats",
     "prUrl": "https://www.newearthretreats.eu",
     "prImageSlug": "newearthretreats",
     "prDescription": "",

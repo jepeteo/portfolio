@@ -181,7 +181,7 @@ const Projects = () => {
 
   return (
     <section className="container" id="projects">
-      <h2 className="text-5xl font-bold">Projects</h2>
+      <h2 className="text-5xl font-bold">Wordpress Projects</h2>
       <p className="my-4">
         Below are some selected projects I have worked on over the years. The
         majority of these projects were developed using WordPress, and are
