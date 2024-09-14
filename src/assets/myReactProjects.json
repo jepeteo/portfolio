@@ -1,0 +1,32 @@
+[
+  {
+    "prName": "Url Shortener",
+    "prUrl": "https://mikrouli.link/",
+    "prImageSlug": "url-shortener",
+    "prDescription": "A url shortener built with Next.js and Tailwind",
+    "prType": "App",
+    "prTags": "From scratch",
+    "prEmployer": "fl",
+    "prFeatured": true
+  },
+  {
+    "prName": "Color Palette Generator",
+    "prUrl": "https://jepeteo.github.io/react-color-palette-generator/",
+    "prImageSlug": "palettegenerator",
+    "prDescription": "A react based application that generates color palettes based on the color you choose.",
+    "prType": "App",
+    "prTags": "From scratch",
+    "prEmployer": "fl",
+    "prFeatured": true
+  },
+  {
+    "prName": "Notes App",
+    "prUrl": "https://jepeteo.github.io/notes-app/",
+    "prImageSlug": "jepenotes",
+    "prDescription": "A simple notes application made with React and Tailwind.",
+    "prType": "App",
+    "prTags": "From scratch",
+    "prEmployer": "fl",
+    "prFeatured": true
+  }
+]
