@@ -7,12 +7,12 @@ import Footer from "./components/Footer.tsx"
 import Header from "./components/Header.tsx"
 import Bio from "./components/Bio.tsx"
 import Certificates from "./components/Certificates.tsx"
-import ReactProjects from "./components/ReactProjects"
+import ReactProjects from "./components/ReactProjects.tsx"
 
 import "flowbite"
 import "flowbite/dist/flowbite.css"
 
-const Projects = lazy(() => import("./components/Projects"))
+const Projects = lazy(() => import("./components/Projects.tsx"))
 
 const App: React.FC = () => {
   const [darkMode, setDarkMode] = React.useState<boolean>(true)

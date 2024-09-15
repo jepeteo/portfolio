@@ -1,7 +1,15 @@
 import React from "react"
-import myReactProjects from "./../assets/myReactProjects.json"
+import myReactProjects from "../assets/myReactProjects.json"
 
-const myRProjects = myReactProjects.map((project) => (
+interface Project {
+  prName: string
+  prUrl: string
+  prType: string
+  prImageSlug: string
+  prDescription: string
+}
+
+  const myRProjects = myReactProjects.map((project: Project) => (
   <li key={project.prName}>
     <a
       href={project.prUrl}
@@ -31,7 +39,7 @@ const myRProjects = myReactProjects.map((project) => (
   </li>
 ))
 
-const ReactProjects = () => {
+const ReactProjects: React.FC = () => {
   return (
     <section className="container" id="projects">
       <h2 className="text-5xl font-bold">React Projects</h2>
@@ -39,4 +47,5 @@ const ReactProjects = () => {
     </section>
   )
 }
+
 export default ReactProjects
