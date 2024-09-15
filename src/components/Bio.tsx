@@ -1,4 +1,6 @@
-export default function Bio() {
+import React from "react"
+
+const Bio: React.FC = () => {
   return (
     <section className="container" id="bio">
       <div className="flex flex-col md:flex-row justify-between py-4">
@@ -34,3 +36,5 @@ export default function Bio() {
     </section>
   )
 }
+
+export default Bio

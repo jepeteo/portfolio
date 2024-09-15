@@ -2,15 +2,22 @@ import React, { useMemo } from "react"
 import myCertificates from "../assets/myCertificates.json"
 import { isURL } from "validator"
 
-const Certificates = () => {
+interface Certificate {
+  certName: string
+  certUrl: string
+  certImg: string
+  certVisible: boolean
+}
+
+const Certificates: React.FC = () => {
   const memoCerts = useMemo(() => {
     if (!myCertificates || myCertificates.length === 0) {
       return <div>No certificates available</div>
     }
 
     return myCertificates
-      .filter((cert) => cert.certVisible != false)
-      .map((cert) => {
+      .filter((cert: Certificate) => cert.certVisible != false)
+      .map((cert: Certificate) => {
         return (
           <li
             className="w-auto col-span-1 flex flex-col justify-center border border-color-1 hover:border-neutral-400 hover:bg-slate-100 dark:hover:bg-slate-800 dark:hover:border-neutral-200 transition-all"

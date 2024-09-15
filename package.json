@@ -15,6 +15,7 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@formspree/react": "^2.5.1",
+    "@types/validator": "^13.12.1",
     "flowbite": "^2.4.1",
     "flowbite-react": "^0.10.1",
     "nanoid": "^5.0.7",

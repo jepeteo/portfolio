@@ -1,5 +1,5 @@
 import React from "react"
-import Nav from "./Nav"
+import Nav from "./Nav.tsx"
 import logo from "../assets/images/teo.png"
 
 interface HeaderProps {
