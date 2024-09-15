@@ -1,5 +1,5 @@
 import React from "react"
-import TypedText from "./TypedText"
+import TypedText from "./TypedText.tsx"
 import programmer from "/src/assets/images/new_programmer.webp"
 
 const Hero: React.FC = () => {
