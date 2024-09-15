@@ -1,6 +1,7 @@
+import React from "react"
 import { ReactTyped } from "react-typed"
 
-const TypedText = () => (
+const TypedText: React.FC = () => (
   <ReactTyped
     strings={[
       "SENIOR FULL STACK DEVELOPER",
