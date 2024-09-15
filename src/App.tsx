@@ -14,8 +14,8 @@ import "flowbite/dist/flowbite.css"
 
 const Projects = lazy(() => import("./components/Projects"))
 
-function App() {
-  const [darkMode, setDarkMode] = React.useState(true)
+const App: React.FC = () => {
+  const [darkMode, setDarkMode] = React.useState<boolean>(true)
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => !prevMode)
   }
