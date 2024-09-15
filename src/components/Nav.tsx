@@ -1,13 +1,22 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React, { useState } from "react"
 import sun from "/src/assets/images/sun.svg"
 import moon from "/src/assets/images/moon.svg"
 
-export default function Nav({ toggleDarkMode, darkMode }) {
-  const [isOpen, setIsOpen] = React.useState(false)
+interface NavProps {
+  toggleDarkMode: () => void
+  darkMode: boolean
+}
+
+interface Link {
+  href: string
+  text: string
+}
+
+const Nav: React.FC<NavProps> = ({ toggleDarkMode, darkMode }) => {
+  const [isOpen, setIsOpen] = useState(false)
   const toggleMenu = () => setIsOpen(!isOpen)
 
-  let links = [
+  let links: Link[] = [
     { href: "#top", text: "Home" },
     { href: "#skills", text: "Skills" },
     { href: "#experience", text: "Experience" },
@@ -92,7 +101,4 @@ export default function Nav({ toggleDarkMode, darkMode }) {
   )
 }
 
-Nav.propTypes = {
-  toggleDarkMode: PropTypes.func,
-  darkMode: PropTypes.bool,
-}
+export default Nav

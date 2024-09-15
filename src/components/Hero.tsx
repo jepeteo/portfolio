@@ -1,7 +1,8 @@
+import React from "react"
 import TypedText from "./TypedText"
 import programmer from "/src/assets/images/new_programmer.webp"
 
-export default function Hero() {
+const Hero: React.FC = () => {
   return (
     <section className="container flex flex-col items-center justify-between min-h-[80vh] lg:flex-row">
       <div className="exit">
@@ -26,3 +27,5 @@ export default function Hero() {
     </section>
   )
 }
+
+export default Hero
