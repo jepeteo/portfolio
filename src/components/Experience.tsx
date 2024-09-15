@@ -2,9 +2,17 @@ import React, { useMemo } from "react"
 import jobExperience from "../assets/jobExperience.json"
 import { nanoid } from "nanoid"
 
-export default function Experience() {
+interface Job {
+  title: string
+  company: string
+  from: string
+  to: string
+  description: string
+}
+
+const Experience: React.FC = () => {
   const memoJobs = useMemo(() => {
-    return jobExperience.map((job) => (
+    return jobExperience.map((job: Job) => (
       <div
         key={nanoid(8)}
         className="flex flex-col w-full md:flex-row justify-between py-4"
@@ -19,6 +27,7 @@ export default function Experience() {
       </div>
     ))
   }, [])
+
   if (!memoJobs) {
     return <div>No jobs available</div>
   }
@@ -29,3 +38,5 @@ export default function Experience() {
     </section>
   )
 }
+
+export default Experience

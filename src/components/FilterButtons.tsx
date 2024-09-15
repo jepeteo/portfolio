@@ -1,5 +1,20 @@
-const FilterButtons = ({ setProjectType, setCurrentPage }) => {
-  const filterTypes = [
+import React from "react"
+
+interface FilterButtonsProps {
+  setProjectType: React.Dispatch<React.SetStateAction<string | null>>
+  setCurrentPage: (page: number) => void
+}
+
+interface FilterType {
+  type: string | null
+  label: string
+}
+
+const FilterButtons: React.FC<FilterButtonsProps> = ({
+  setProjectType,
+  setCurrentPage,
+}) => {
+  const filterTypes: FilterType[] = [
     { type: null, label: "All" },
     // { type: "App", label: "App" },
     // { type: "Blog", label: "Blog" },

@@ -1,25 +1,32 @@
-import React, { useEffect, useState, useMemo } from "react"
-import PropTypes from "prop-types"
+import React, { useEffect, useMemo } from "react"
 import mySkills from "../assets/mySkills.json"
 import { initPopovers } from "flowbite"
 
-// Initialize Flowbite popovers
+interface SkillProps {
+  category: string
+  animation: string
+}
+
+interface Skill {
+  skillName: string
+  category: string
+  description: string
+  visible: boolean
+}
+
 const initializeFlowbite = () => {
   initPopovers()
 }
 
-export default function Skills({ category, animation }) {
-  const [hoveredSkill, setHoveredSkill] = useState(null)
-
+const Skill: React.FC<SkillProps> = ({ category, animation }) => {
   useEffect(() => {
     initializeFlowbite()
   }, [])
 
   const memoSkills = useMemo(() => {
     return mySkills
-      .filter((skill) => skill.category === category)
-      .filter((skill) => skill.visible === true)
-      .map((skill) => (
+      .filter((skill: Skill) => skill.category === category && skill.visible)
+      .map((skill: Skill) => (
         <li key={skill.skillName} className="mySkill">
           <button
             data-popover-target={`popover-${skill.skillName}`}
@@ -45,9 +52,9 @@ export default function Skills({ category, animation }) {
           </div>
         </li>
       ))
-  }, [])
+  }, [category])
 
-  if (!memoSkills) {
+  if (!memoSkills.length) {
     return <div>No skills available</div>
   }
 
@@ -63,26 +70,4 @@ export default function Skills({ category, animation }) {
   )
 }
 
-Skills.propTypes = {
-  category: PropTypes.string,
-  animation: PropTypes.string,
-}
-
-//   const handleMouseEnter = (skill) => setHoveredSkill(skill)
-//   const handleMouseLeave = () => setHoveredSkill(null)
-
-//   const skillList = mySkills
-//     .filter((skill) => skill.category === category)
-//     .filter((skill) => skill.visible === true)
-//     .map((skill) => (
-//         {/* <li
-//           className="skill grow px-4 py-2 text-center"
-//           key={skill.skillName}
-//           onMouseEnter={() => handleMouseEnter(skill)}
-//           onMouseLeave={handleMouseLeave}>
-//           {skill.skillName}
-//           {hoveredSkill === skill && (
-//               <div className="skill--description">{skill.description}</div>
-//           )}
-//         </li> */}
-//     ))
+export default Skill

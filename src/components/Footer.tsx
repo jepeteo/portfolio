@@ -1,15 +1,14 @@
+import React from "react"
 import react from "../assets/images/react.svg"
 import tailwind from "../assets/images/tailwindcss.svg"
-import { BsEnvelopeAt } from "react-icons/bs"
-import { BsLinkedin } from "react-icons/bs"
-import { BsGithub } from "react-icons/bs"
+import { BsEnvelopeAt, BsLinkedin, BsGithub } from "react-icons/bs"
 
-export default function Footer() {
+const Footer: React.FC = () => {
   return (
-    <footer className="p-2 border-t border-slate-700	">
+    <footer className="p-2 border-t border-slate-700">
       <div className="container grid grid-cols-1 p-0 justify-between items-center gap-4 md:flex-row md:grid-cols-3">
         <div className="text-center md:text-left">
-          &copy; {new Date().getFullYear()} Theodore Mentis
+          © {new Date().getFullYear()} Theodore Mentis
         </div>
         <div className="connect flex justify-center gap-2">
           <a
@@ -17,6 +16,7 @@ export default function Footer() {
             className="p-2 rounded-xl"
             title="Find me on Github"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <BsGithub className="inline h-6 w-6 text-black" />
           </a>
@@ -25,14 +25,16 @@ export default function Footer() {
             className="p-2 rounded-xl"
             title="View my profile on LinkedIn"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <BsLinkedin className="inline h-6 w-6 text-black" />
           </a>
           <a
             href="mailto:th.mentis@gmail.com"
-            className=" p-2 rounded-xl"
+            className="p-2 rounded-xl"
             title="Send me an email"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <BsEnvelopeAt className="inline h-6 w-6 text-black" />
           </a>
@@ -47,3 +49,5 @@ export default function Footer() {
     </footer>
   )
 }
+
+export default Footer

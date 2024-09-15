@@ -1,6 +1,7 @@
-import Skill from "../components/Skill"
+import React from "react"
+import Skill from "./Skill"
 
-export default function Skills() {
+const Skills: React.FC = () => {
   return (
     <section className="container flex flex-wrap justify-around" id="skills">
       <h2 className="section-title mb-8 w-full">Skills & Tools</h2>
@@ -62,3 +63,5 @@ export default function Skills() {
     </section>
   )
 }
+
+export default Skills
