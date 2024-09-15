@@ -1,21 +1,21 @@
 import React, { lazy, Suspense } from "react"
-import Hero from "./components/Hero"
-import Skills from "./components/Skills"
-import Experience from "./components/Experience"
-import Contact from "./components/Contact"
-import Footer from "./components/Footer"
-import Header from "./components/Header"
-import Bio from "./components/Bio"
-import Certificates from "./components/Certificates"
-import ReactProjects from "./components/ReactProjects"
+import Hero from "./components/Hero.tsx"
+import Skills from "./components/Skills.tsx"
+import Experience from "./components/Experience.tsx"
+import Contact from "./components/Contact.tsx"
+import Footer from "./components/Footer.tsx"
+import Header from "./components/Header.tsx"
+import Bio from "./components/Bio.tsx"
+import Certificates from "./components/Certificates.tsx"
+import ReactProjects from "./components/ReactProjects.tsx"
 
 import "flowbite"
 import "flowbite/dist/flowbite.css"
 
-const Projects = lazy(() => import("./components/Projects"))
+const Projects = lazy(() => import("./components/Projects.tsx"))
 
-function App() {
-  const [darkMode, setDarkMode] = React.useState(true)
+const App: React.FC = () => {
+  const [darkMode, setDarkMode] = React.useState<boolean>(true)
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => !prevMode)
   }

@@ -1,8 +1,13 @@
-import PropTypes from "prop-types"
-import Nav from "./Nav"
+import React from "react"
+import Nav from "./Nav.tsx"
 import logo from "../assets/images/teo.png"
 
-export default function Header({ toggleDarkMode, darkMode }) {
+interface HeaderProps {
+  toggleDarkMode: () => void
+  darkMode: boolean
+}
+
+const Header: React.FC<HeaderProps> = ({ toggleDarkMode, darkMode }) => {
   return (
     <header className="border-b border-slate-700 sticky top-0 bg-slate-900/50 backdrop-blur-md z-10">
       <div className="container flex justify-between items-center py-2">
@@ -10,15 +15,13 @@ export default function Header({ toggleDarkMode, darkMode }) {
         <span className="w-0 mr-auto md:invisible xl:visible xl:w-auto">
           Theodoros Mentis
           <br />
-          <span className="hidden md:inline">Full Stack Developer | Wordpress Expert</span>
+          <span className="hidden md:inline">
+            Full Stack Developer | Wordpress Expert
+          </span>
         </span>
         <Nav toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
       </div>
     </header>
   )
 }
-
-Header.propTypes = {
-  toggleDarkMode: PropTypes.func.isRequired,
-  darkMode: PropTypes.bool.isRequired,
-}
+export default Header

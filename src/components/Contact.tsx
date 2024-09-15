@@ -1,10 +1,19 @@
-import React from "react"
+import React, { useState } from "react"
 import emailjs from "@emailjs/browser"
 
 emailjs.init(import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY)
-export default function Contact() {
-  const [isSubmitted, setIsSubmitted] = React.useState(false)
-  const [formData, setFormData] = React.useState({
+
+interface FormData {
+  name: string
+  email: string
+  phone: string
+  company: string
+  message: string
+}
+
+const Contact: React.FC = () => {
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     phone: "",
@@ -12,21 +21,24 @@ export default function Contact() {
     message: "",
   })
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
     }))
   }
-  const handleSubmit = (e) => {
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     emailjs
       .sendForm(
         import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
-        e.target,
+        e.currentTarget,
         import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
       )
       .then(
@@ -43,7 +55,6 @@ export default function Contact() {
         },
         (error) => {
           console.log("Failed to send email:", error.text)
-          // Handle error (e.g., show an error message)
         }
       )
   }
@@ -64,12 +75,12 @@ export default function Contact() {
       <h2 className="w-full text-5xl font-bold">Contact</h2>
       <span className="py-8">
         Thank you for visiting my portfolio! As a senior full stack developer
-        with a passion for creating seamless web experiences, I&apos;m always
-        excited to connect with like-minded professionals, potential
-        collaborators, or anyone interested in discussing tech. Whether you have
-        a project in mind, need some advice, or just want to chat about the
-        latest in development trends, feel free to drop me a message. I look
-        forward to hearing from you!
+        with a passion for creating seamless web experiences, I'm always excited
+        to connect with like-minded professionals, potential collaborators, or
+        anyone interested in discussing tech. Whether you have a project in
+        mind, need some advice, or just want to chat about the latest in
+        development trends, feel free to drop me a message. I look forward to
+        hearing from you!
       </span>
 
       <div className="w-full py-4 m-auto">
@@ -115,7 +126,7 @@ export default function Contact() {
           <textarea
             placeholder="Message"
             className="w-full p-4 bg-transparent border-b"
-            rows="4"
+            rows={4}
             name="message"
             value={formData.message}
             onChange={handleChange}
@@ -131,3 +142,5 @@ export default function Contact() {
     </section>
   )
 }
+
+export default Contact

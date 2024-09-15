@@ -1,10 +1,22 @@
-import { useState, useMemo } from "react"
-import myProjects from "./../assets/myProjects.json"
-import FilterButtons from "./FilterButtons"
-import usePagination from "./../hooks/usePagination"
+import React, { useState, useMemo } from "react"
+import myProjects from "../assets/myProjects.json"
+import FilterButtons from "./FilterButtons.tsx"
+import usePagination from "../hooks/usePagination.tsx"
 
-const Projects = () => {
-  const [projectType, setProjectType] = useState(null)
+interface Project {
+  prName: string
+  prType: string
+  prFeatured: boolean
+  prLink: string
+  prImg: string
+  prImgAlt: string
+  prUrl: string
+  prImageSlug: string
+  prDescription: string
+}
+
+const Projects: React.FC = () => {
+  const [projectType, setProjectType] = useState<string | null>(null)
   const projectsPerPage = 6
 
   const filteredProjects = useMemo(() => {
@@ -31,7 +43,7 @@ const Projects = () => {
   } = usePagination(filteredProjects, projectsPerPage)
 
   const memoizedProjects = useMemo(() => {
-    return displayProjects.map((project) => (
+    return displayProjects.map((project: Project) => (
       <div key={project.prName} className="relative">
         {project.prFeatured && (
           <div className="absolute top-2 right-2 bg-slate-700 text-white py-1 px-3 rounded-lg z-10 border border-white shadow shadow-slate-900">
