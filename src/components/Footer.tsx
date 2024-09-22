@@ -1,6 +1,4 @@
 import React from "react"
-import react from "../assets/images/react.svg"
-import tailwind from "../assets/images/tailwindcss.svg"
 import { BsEnvelopeAt, BsLinkedin, BsGithub } from "react-icons/bs"
 
 const Footer: React.FC = () => {
@@ -40,10 +38,7 @@ const Footer: React.FC = () => {
           </a>
         </div>
         <div className="text-center md:text-right">
-          Made with React{" "}
-          <img className="inline h-6" src={react} alt="React Logo" /> & Tailwind
-          CSS{" "}
-          <img className="inline h-4" src={tailwind} alt="Tailwind CSS Logo" />
+          Made with React / Typescript & Tailwind CSS
         </div>
       </div>
     </footer>
