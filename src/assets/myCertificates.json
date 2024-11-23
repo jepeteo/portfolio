@@ -1,5 +1,19 @@
 [
   {
+    "certName": "Build an AI Application with React and AWS SageMaker",
+    "certUrl": "https://www.linkedin.com/learning/certificates/cd087692f316d4c0d4b3b667aaa0055bf429bc4f4747f793f5d114d5324fd863?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BBEGw2PduRbSLxf17JX26gA%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true,
+    "certCat": "AI"
+  },
+  {
+    "certName": "Integrating Generative AI into JavaScript Web Projects",
+    "certUrl": "https://www.linkedin.com/learning/certificates/ce27d41f93c5094d784cb81de60980ae1c3c0e50c8e92e0d5d7719e069b297b5?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BBEGw2PduRbSLxf17JX26gA%3D%3D",
+    "certImg": "linkedin_logo.jpeg",
+    "certVisible": true,
+    "certCat": "AI"
+  },
+  {
     "certName": "Prompting ChatGPT with Multimodal Techniques",
     "certUrl": "https://www.linkedin.com/learning/certificates/7d783bcb018123ce2fb4c931c6ddf7d9fc5ec4a14e382b23c8586783e0f68af0?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BljpYSO%2BYSWaP2QQQW1pYWA%3D%3D",
     "certImg": "linkedin_logo.jpeg",
