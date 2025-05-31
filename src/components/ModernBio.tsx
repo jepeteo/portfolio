@@ -10,25 +10,25 @@ import {
   Download,
   Mail,
   ExternalLink,
-  Award,
   Target,
   Zap,
   Users,
-  ChevronRight,
-  Coffee,
   Monitor,
   Server,
   Database,
   Globe,
-  Smartphone,
   CheckCircle,
   ArrowRight,
   Github,
-  Linkedin,
   Play,
 } from "lucide-react"
 
-// Create a separate memoized component for stats to prevent re-rendering
+// Import the image (this should work if the image is in src/assets)
+import profileImage from "../assets/images/gteo.webp"
+
+// For files in public folder, use a string path instead of import
+const resumePDF = "/cv/Theodoros-Mentis-CV.pdf"
+
 const StatsCard = memo(
   ({
     stat,
@@ -292,6 +292,32 @@ const ModernBio: React.FC = () => {
     </button>
   )
 
+  // Add navigation functions
+  const scrollToContact = () => {
+    const contactSection = document.getElementById("contact")
+    if (contactSection) {
+      contactSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      })
+    }
+  }
+
+  const downloadResume = () => {
+    const link = document.createElement("a")
+    link.href = resumePDF
+    link.download = "Theodoros_Mentis_CV.pdf"
+    link.target = "_blank" // Fallback
+
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
+  const openGitHub = () => {
+    window.open("https://github.com/jepeteo", "_blank")
+  }
+
   return (
     <section
       ref={targetRef}
@@ -333,11 +359,11 @@ const ModernBio: React.FC = () => {
           </p>
         </div>
 
-        {/* Stats Section - Now completely isolated */}
+        {/* Stats Section */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
           {stats.map((stat, index) => (
             <StatsCard
-              key={`stats-${stat.label}`} // Stable key
+              key={`stats-${stat.label}`}
               stat={stat}
               index={index}
               isDark={isDark}
@@ -360,30 +386,50 @@ const ModernBio: React.FC = () => {
               {/* Profile Header */}
               <div className="text-center mb-8">
                 <div
-                  className={`w-32 h-32 mx-auto mb-6 rounded-3xl flex items-center justify-center relative ${
+                  className={`w-32 h-32 mx-auto mb-4 rounded-3xl flex items-center justify-center relative overflow-hidden ${
                     isDark
                       ? "bg-gradient-to-br from-blue-500/20 to-purple-500/20"
                       : "bg-gradient-to-br from-blue-100 to-purple-100"
                   }`}
                 >
-                  <User
-                    className={`w-16 h-16 ${
-                      isDark ? "text-blue-300" : "text-blue-600"
-                    }`}
+                  {/* Profile Image */}
+                  <img
+                    src={profileImage}
+                    alt="Theodoros Mentis"
+                    className="w-full h-full object-cover rounded-3xl"
+                    onError={(e) => {
+                      console.log("Image failed to load:", profileImage)
+                      // Better fallback handling
+                    }}
+                    onLoad={() => {
+                      console.log("Image loaded successfully:", profileImage)
+                    }}
                   />
 
-                  {/* Status Badge */}
+                  {/* Fallback icon (hidden by default) */}
                   <div
-                    className={`absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-xs font-medium ${
+                    className={`fallback-icon absolute inset-0 flex items-center justify-center ${
+                      isDark ? "text-blue-300" : "text-blue-600"
+                    }`}
+                    style={{ display: "none" }}
+                  >
+                    <User className="w-16 h-16" />
+                  </div>
+                </div>
+
+                {/* Status Badge */}
+                <div
+                  className={`relative px-2 py-1 w-32 m-auto mb-2 rounded-full text-xs font-medium 
+                    ${
                       isDark
                         ? "bg-green-500/20 text-green-300 border border-green-500/30"
                         : "bg-green-100 text-green-700 border border-green-200"
-                    }`}
-                  >
-                    <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      Available
-                    </div>
+                    }
+                  `}
+                >
+                  <div className="flex items-center gap-1 justify-around">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    Available
                   </div>
                 </div>
 
@@ -408,11 +454,11 @@ const ModernBio: React.FC = () => {
                   }`}
                 >
                   <MapPin className="w-4 h-4" />
-                  Greece
+                  Piraeus, Attica, Greece
                 </div>
               </div>
 
-              {/* Quick Stats - These are separate from the main stats */}
+              {/* Quick Stats */}
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="text-center">
                   <div
@@ -451,6 +497,7 @@ const ModernBio: React.FC = () => {
               {/* Action Buttons */}
               <div className="space-y-3">
                 <button
+                  onClick={scrollToContact}
                   className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-all hover:scale-105 ${
                     isDark
                       ? "bg-blue-600 text-white hover:bg-blue-500"
@@ -463,6 +510,7 @@ const ModernBio: React.FC = () => {
 
                 <div className="grid grid-cols-2 gap-3">
                   <button
+                    onClick={downloadResume}
                     className={`flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all hover:scale-105 border ${
                       isDark
                         ? "border-slate-600 text-slate-300 hover:bg-slate-700"
@@ -474,6 +522,7 @@ const ModernBio: React.FC = () => {
                   </button>
 
                   <button
+                    onClick={openGitHub}
                     className={`flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all hover:scale-105 border ${
                       isDark
                         ? "border-slate-600 text-slate-300 hover:bg-slate-700"
@@ -488,7 +537,7 @@ const ModernBio: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column - Tabbed Content */}
+          {/* Right Column - Tabbed Content (unchanged) */}
           <div className="lg:col-span-3">
             <div
               className={`p-8 rounded-2xl border ${
@@ -562,8 +611,19 @@ const ModernBio: React.FC = () => {
                       </div>
                     </div>
 
+                    {/* Updated action buttons */}
                     <div className="flex flex-wrap gap-4 pt-6">
                       <button
+                        onClick={() => {
+                          const projectsSection =
+                            document.getElementById("projects")
+                          if (projectsSection) {
+                            projectsSection.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            })
+                          }
+                        }}
                         className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-all hover:scale-105 ${
                           isDark
                             ? "bg-blue-500/20 text-blue-300 hover:bg-blue-500/30"
@@ -575,6 +635,10 @@ const ModernBio: React.FC = () => {
                       </button>
 
                       <button
+                        onClick={() => {
+                          // You can add a demo video or portfolio showcase here
+                          console.log("Demo video coming soon!")
+                        }}
                         className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-all hover:scale-105 border ${
                           isDark
                             ? "border-slate-600 text-slate-300 hover:bg-slate-700"
@@ -683,7 +747,7 @@ const ModernBio: React.FC = () => {
           </div>
         </div>
 
-        {/* Call to Action - unchanged */}
+        {/* Call to Action - Updated buttons */}
         <div className="text-center mt-16">
           <div
             className={`p-8 rounded-2xl border relative overflow-hidden ${
@@ -692,7 +756,7 @@ const ModernBio: React.FC = () => {
                 : "bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200"
             }`}
           >
-            {/* Background Pattern */}
+            {/* Background Pattern - unchanged */}
             <div className="absolute inset-0 opacity-5">
               <div className="absolute top-0 left-0 w-32 h-32 bg-blue-500 rounded-full -translate-x-16 -translate-y-16"></div>
               <div className="absolute bottom-0 right-0 w-32 h-32 bg-purple-500 rounded-full translate-x-16 translate-y-16"></div>
@@ -715,8 +779,10 @@ const ModernBio: React.FC = () => {
                 work with creative minds and bring innovative ideas to life.
               </p>
 
+              {/* Updated CTA buttons */}
               <div className="flex flex-wrap gap-4 justify-center">
                 <button
+                  onClick={scrollToContact}
                   className={`flex items-center gap-2 px-8 py-4 rounded-xl font-medium transition-all hover:scale-105 ${
                     isDark
                       ? "bg-blue-600 text-white hover:bg-blue-500"
@@ -728,6 +794,15 @@ const ModernBio: React.FC = () => {
                 </button>
 
                 <button
+                  onClick={() => {
+                    const projectsSection = document.getElementById("projects")
+                    if (projectsSection) {
+                      projectsSection.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      })
+                    }
+                  }}
                   className={`flex items-center gap-2 px-8 py-4 rounded-xl font-medium transition-all hover:scale-105 border ${
                     isDark
                       ? "border-slate-600 text-slate-300 hover:bg-slate-700"
