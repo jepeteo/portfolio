@@ -1,0 +1,414 @@
+/* Modern 2025 Portfolio CSS - Cutting-Edge Features */
+
+/* View Transitions API Integration */
+@view-transition {
+    navigation: auto;
+}
+
+/* View transition animations */
+::view-transition-old(root) {
+    animation: fade-out 0.3s ease-out;
+}
+
+::view-transition-new(root) {
+    animation: fade-in 0.3s ease-in;
+}
+
+/* Page transitions */
+::view-transition-old(page) {
+    animation: slide-out-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-new(page) {
+    animation: slide-in-right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Component transitions */
+::view-transition-old(hero) {
+    animation: scale-out 0.3s ease-out;
+}
+
+::view-transition-new(hero) {
+    animation: scale-in 0.3s ease-in;
+}
+
+::view-transition-old(project-card) {
+    animation: fade-out-up 0.3s ease-out;
+}
+
+::view-transition-new(project-card) {
+    animation: fade-in-down 0.3s ease-in;
+}
+
+/* Keyframes for view transitions */
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slide-out-left {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes slide-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scale-out {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+@keyframes scale-in {
+    from {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fade-out-up {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes fade-in-down {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Modern CSS Container Queries */
+@container (min-width: 320px) {
+    .container-query-card {
+        padding: 1rem;
+    }
+}
+
+@container (min-width: 640px) {
+    .container-query-card {
+        padding: 1.5rem;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 1.5rem;
+    }
+}
+
+@container (min-width: 900px) {
+    .container-query-card {
+        padding: 2rem;
+        grid-template-columns: 1fr 3fr;
+        gap: 2rem;
+    }
+}
+
+/* Advanced scroll animations */
+@supports (animation-timeline: scroll()) {
+    .scroll-reveal {
+        animation: reveal-on-scroll linear;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+    }
+
+    @keyframes reveal-on-scroll {
+        from {
+            opacity: 0;
+            transform: translateY(100px) scale(0.8);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+}
+
+/* Modern focus management */
+.focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Remove default focus styles for mouse users */
+.js-focus-visible :focus:not(.focus-visible) {
+    outline: none;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --border-primary: currentColor;
+        --surface-glass: transparent;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* Disable view transitions for reduced motion */
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}
+
+/* Modern typography optimizations */
+.optimize-text {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "liga" 1, "kern" 1;
+}
+
+/* Modern glass morphism effects */
+.glass-morphism {
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+}
+
+[data-theme="dark"] .glass-morphism {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Modern gradient mesh backgrounds */
+.mesh-gradient-1 {
+    background:
+        radial-gradient(at 40% 20%, var(--color-primary) 0px, transparent 50%),
+        radial-gradient(at 80% 0%, var(--color-accent) 0px, transparent 50%),
+        radial-gradient(at 0% 50%, var(--color-secondary) 0px, transparent 50%);
+}
+
+.mesh-gradient-2 {
+    background:
+        radial-gradient(circle at 20% 80%, var(--color-primary) 0px, transparent 50%),
+        radial-gradient(circle at 80% 20%, var(--color-accent) 0px, transparent 50%),
+        radial-gradient(circle at 40% 40%, var(--color-secondary) 0px, transparent 50%);
+}
+
+/* Advanced hover effects */
+.magnetic-hover {
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+.magnetic-hover:hover {
+    transform: translate3d(var(--mouse-x, 0), var(--mouse-y, 0), 0) scale(1.02);
+}
+
+/* Modern loading states */
+.skeleton {
+    background: linear-gradient(90deg,
+            var(--surface-secondary) 25%,
+            var(--surface-tertiary) 50%,
+            var(--surface-secondary) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Modern scroll bars */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--surface-secondary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-primary);
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+}
+
+/* Modern selection styles */
+::selection {
+    background-color: var(--color-primary);
+    color: var(--text-inverse);
+}
+
+/* CSS custom properties for dynamic theming */
+:root {
+    /* Color scheme detection */
+    color-scheme: light dark;
+
+    /* Modern font loading optimization */
+    font-display: swap;
+
+    /* Hardware acceleration hints */
+    --gpu-layers: translateZ(0);
+}
+
+/* Modern print styles */
+@media print {
+    * {
+        background: transparent !important;
+        color: black !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .print-break {
+        page-break-before: always;
+    }
+}
+
+/* Modern CSS grid utilities */
+.grid-auto-fit {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: var(--space-md);
+}
+
+.grid-auto-fill {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
+    gap: var(--space-md);
+}
+
+/* Modern aspect ratio utilities */
+.aspect-golden {
+    aspect-ratio: 1.618 / 1;
+}
+
+.aspect-photo {
+    aspect-ratio: 4 / 3;
+}
+
+.aspect-video {
+    aspect-ratio: 16 / 9;
+}
+
+/* Advanced clip-path animations */
+.clip-reveal {
+    clip-path: inset(100% 0 0 0);
+    animation: clip-reveal-animation 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes clip-reveal-animation {
+    to {
+        clip-path: inset(0% 0 0 0);
+    }
+}
+
+/* Modern CSS masks for creative effects */
+.text-mask {
+    background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Performance optimizations */
+.will-change-transform {
+    will-change: transform;
+}
+
+.will-change-opacity {
+    will-change: opacity;
+}
+
+.will-change-auto {
+    will-change: auto;
+}
+
+/* Modern CSS logical properties */
+.margin-inline-auto {
+    margin-inline: auto;
+}
+
+.padding-block {
+    padding-block: var(--space-md);
+}
+
+.border-inline-start {
+    border-inline-start: 1px solid var(--border-primary);
+}

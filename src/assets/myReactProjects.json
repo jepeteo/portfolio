@@ -1,32 +1,79 @@
 [
   {
-    "prName": "Url Shortener",
-    "prUrl": "https://mikrouli.link/",
-    "prImageSlug": "url-shortener",
-    "prDescription": "A url shortener built with Next.js and Tailwind",
-    "prType": "App",
-    "prTags": "From scratch",
-    "prEmployer": "fl",
-    "prFeatured": true
+    "id": "url-shortener",
+    "title": "URL Shortener - Mikrouli.link",
+    "description": "A modern URL shortener application built with Next.js and Tailwind CSS. Features custom short URLs, analytics tracking, QR code generation, and a clean, responsive interface for managing links efficiently.",
+    "image": "/src/assets/images/url-shortener-preview.jpg",
+    "technologies": [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "TypeScript",
+      "Vercel",
+      "Database"
+    ],
+    "githubUrl": "https://github.com/jepeteo/url-shortener",
+    "liveUrl": "https://mikrouli.link/",
+    "date": "2024",
+    "status": "completed",
+    "featured": true,
+    "performance": "95+"
   },
   {
-    "prName": "Color Palette Generator",
-    "prUrl": "https://jepeteo.github.io/react-color-palette-generator/",
-    "prImageSlug": "palettegenerator",
-    "prDescription": "A react based application that generates color palettes based on the color you choose.",
-    "prType": "App",
-    "prTags": "From scratch",
-    "prEmployer": "fl",
-    "prFeatured": true
+    "id": "color-palette-generator",
+    "title": "React Color Palette Generator",
+    "description": "An intuitive color palette generator built with React that creates harmonious color schemes based on your selected base color. Features multiple color harmony algorithms, export functionality, and accessibility considerations.",
+    "image": "/src/assets/images/color-palette-preview.jpg",
+    "technologies": [
+      "React",
+      "JavaScript",
+      "CSS3",
+      "Color Theory",
+      "Design Tools"
+    ],
+    "githubUrl": "https://github.com/jepeteo/react-color-palette-generator",
+    "liveUrl": "https://jepeteo.github.io/react-color-palette-generator/",
+    "date": "2024",
+    "status": "completed",
+    "featured": true,
+    "performance": "92+"
   },
   {
-    "prName": "Notes App",
-    "prUrl": "https://jepeteo.github.io/notes-app/",
-    "prImageSlug": "jepenotes",
-    "prDescription": "A simple notes application made with React and Tailwind.",
-    "prType": "App",
-    "prTags": "From scratch",
-    "prEmployer": "fl",
-    "prFeatured": true
+    "id": "notes-app",
+    "title": "JepeNotes - React Notes App",
+    "description": "A clean and minimalist notes application built with React and Tailwind CSS. Features markdown support, local storage persistence, search functionality, and an intuitive user interface for organizing thoughts and ideas.",
+    "image": "/src/assets/images/notes-app-preview.jpg",
+    "technologies": [
+      "React",
+      "Tailwind CSS",
+      "Local Storage",
+      "Markdown",
+      "JavaScript"
+    ],
+    "githubUrl": "https://github.com/jepeteo/notes-app",
+    "liveUrl": "https://jepeteo.github.io/notes-app/",
+    "date": "2024",
+    "status": "completed",
+    "featured": true,
+    "performance": "90+"
+  },
+  {
+    "id": "portfolio-website",
+    "title": "Personal Portfolio Website",
+    "description": "This modern, responsive portfolio website showcasing my skills and projects. Built with React, TypeScript, and Tailwind CSS, featuring dark/light themes, smooth animations, and performance optimizations.",
+    "image": "/src/assets/images/portfolio-preview.jpg",
+    "technologies": [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Vite",
+      "GitHub Pages"
+    ],
+    "githubUrl": "https://github.com/jepeteo/portfolio",
+    "liveUrl": "https://jepeteo.github.io/portfolio/",
+    "date": "2024-2025",
+    "status": "completed",
+    "featured": true,
+    "performance": "96+"
   }
 ]
