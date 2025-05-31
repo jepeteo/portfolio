@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react"
 import Hero from "./components/Hero"
 import ModernSkills from "./components/ModernSkills"
-import Experience from "./components/Experience"
+import ModernExperience from "./components/ModernExperience"
 import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 import ModernHeader from "./components/navigation/ModernHeader"
@@ -16,6 +16,7 @@ import useServiceWorker from "./hooks/useServiceWorker"
 
 import "flowbite"
 import "flowbite/dist/flowbite.css"
+import Experience from "./components/Experience"
 
 const ModernProjects = lazy(() => import("./components/ModernProjects"))
 
@@ -67,8 +68,8 @@ const AppContent: React.FC = () => {
       <main>
         <Hero />
         <ModernBio />
-        <ModernSkills /> {/* Updated component */}
-        <Experience />
+        <ModernSkills />
+        <ModernExperience />
         <ErrorBoundary>
           <Suspense fallback={<Loading />}>
             <ModernProjects />
