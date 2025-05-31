@@ -23,7 +23,7 @@ const Footer: React.FC = memo(() => {
     {
       icon: Mail,
       label: "Email",
-      href: "mailto:theodoros.mentis@example.com",
+      href: "mailto:th.mentis@gmail.com",
       hoverColor: "hover:text-green-400",
     },
   ]
@@ -51,7 +51,7 @@ const Footer: React.FC = memo(() => {
         />
       </div>
 
-      <div className="container relative py-12">
+      <div className="container relative py-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           {/* Brand Section */}
           <div className="text-center md:text-left">
@@ -140,12 +140,10 @@ const Footer: React.FC = memo(() => {
             </button>
           </div>
         </div>
-
         {/* Divider */}
         <div
-          className={`my-8 h-px ${isDark ? "bg-slate-800" : "bg-slate-200"}`}
+          className={`my-4 h-px ${isDark ? "bg-slate-800" : "bg-slate-200"}`}
         />
-
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div
@@ -169,27 +167,9 @@ const Footer: React.FC = memo(() => {
             />
             using React & TypeScript
           </div>
-
-          <div
-            className={`text-sm ${
-              isDark ? "text-slate-500" : "text-slate-500"
-            }`}
-          >
-            <a
-              href="https://github.com/jepeteo/portfolio"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`transition-colors ${
-                isDark ? "hover:text-slate-300" : "hover:text-slate-700"
-              }`}
-            >
-              View Source Code
-            </a>
-          </div>
         </div>
-
         {/* Performance Badge */}
-        <div className="mt-6 text-center">
+        {/* <div className="mt-6 text-center">
           <div
             className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs ${
               isDark
@@ -200,7 +180,7 @@ const Footer: React.FC = memo(() => {
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
             Optimized for Performance & Accessibility
           </div>
-        </div>
+        </div> */}
       </div>
     </footer>
   )
