@@ -109,7 +109,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
                 "font-bold text-text-primary leading-tight"
               )}
             >
-              <span className="text-gradient">Theodoros</span>{" "}
+              <span className="text-text-primary">Theodoros</span>{" "}
               <span className="text-text-primary">Mentis</span>
             </h1>
             <p
