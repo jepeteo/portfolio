@@ -3,450 +3,750 @@
         "skillName": "HTML",
         "category": "Programming Languages",
         "description": "HyperText Markup Language, the standard markup language for documents designed to be displayed in a web browser.",
+        "level": 95,
+        "experienceYears": 15,
+        "icon": "🌐",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "CSS",
         "category": "Programming Languages",
         "description": "Cascading Style Sheets, a style sheet language used for describing the look and formatting of a document written in HTML.",
+        "level": 95,
+        "experienceYears": 15,
+        "icon": "🎨",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "JavaScript",
         "category": "Programming Languages",
         "description": "A high-level, interpreted programming language that conforms to the ECMAScript specification.",
+        "level": 95,
+        "experienceYears": 12,
+        "icon": "🟨",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Typescript",
         "category": "Programming Languages",
         "description": "An open-source language which builds on JavaScript by adding static type definitions.",
+        "level": 90,
+        "experienceYears": 4,
+        "icon": "🔷",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "PHP",
         "category": "Programming Languages",
         "description": "A popular general-purpose scripting language that is especially suited to web development.",
+        "level": 95,
+        "experienceYears": 12,
+        "icon": "🐘",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Python",
         "category": "Programming Languages",
         "description": "An interpreted, high-level and general-purpose programming language.",
+        "level": 85,
+        "experienceYears": 5,
+        "icon": "🐍",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "C",
         "category": "Programming Languages",
         "description": "A general-purpose, procedural computer programming language supporting structured programming.",
+        "level": 80,
+        "experienceYears": 8,
+        "icon": "⚙️",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Java",
         "category": "Programming Languages",
         "description": "A high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.",
+        "level": 75,
+        "experienceYears": 6,
+        "icon": "☕",
+        "trend": "stable",
         "visible": false
     },
     {
         "skillName": "Pascal",
         "category": "Programming Languages",
         "description": "A procedural programming language, designed in 1968–1969 and published in 1970 by Niklaus Wirth as a small and efficient language intended to encourage good programming practices using structured programming and data structuring.",
+        "level": 70,
+        "experienceYears": 5,
+        "icon": "📐",
+        "trend": "down",
         "visible": false
     },
     {
         "skillName": "Delphi",
         "category": "Programming Languages",
         "description": "An integrated development environment (IDE) for rapid application development of desktop, mobile, web, and console software, developed by Embarcadero Technologies.",
+        "level": 75,
+        "experienceYears": 6,
+        "icon": "🔺",
+        "trend": "down",
         "visible": false
     },
     {
         "skillName": "VBScript",
         "category": "Programming Languages",
         "description": "An Active Scripting language developed by Microsoft that is modeled on Visual Basic.",
+        "level": 75,
+        "experienceYears": 6,
+        "icon": "📝",
+        "trend": "down",
         "visible": true
     },
     {
         "skillName": "Assembly",
         "category": "Programming Languages",
         "description": "A low-level programming language for a computer, or other programmable device, in which there is a very strong correspondence between the language and the architecture's machine code instructions.",
+        "level": 70,
+        "experienceYears": 5,
+        "icon": "🔧",
+        "trend": "down",
         "visible": true
     },
     {
         "skillName": "React",
         "category": "Web Frameworks",
         "description": "A JavaScript library for building user interfaces, maintained by Facebook and a community of individual developers and companies.",
+        "level": 95,
+        "experienceYears": 5,
+        "icon": "⚛️",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Angular",
         "category": "Web Frameworks",
         "description": "A TypeScript-based open-source web application framework led by the Angular Team at Google and by a community of individuals and corporations.",
+        "level": 80,
+        "experienceYears": 3,
+        "icon": "🔴",
+        "trend": "stable",
         "visible": false
     },
     {
         "skillName": "Laravel",
         "category": "Web Frameworks",
         "description": "A free, open-source PHP web framework, created by Taylor Otwell and intended for the development of web applications following the model–view–controller (MVC) architectural pattern and based on Symfony.",
+        "level": 85,
+        "experienceYears": 6,
+        "icon": "🔴",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Bootstrap",
         "category": "Web Frameworks",
         "description": "A free and open-source CSS framework directed at responsive, mobile-first front-end web development.",
+        "level": 90,
+        "experienceYears": 8,
+        "icon": "🅱️",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Tailwind",
         "category": "Web Frameworks",
         "description": "A utility-first CSS framework for rapidly building custom user interfaces.",
+        "level": 90,
+        "experienceYears": 3,
+        "icon": "💨",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Styled-Components",
         "category": "Web Frameworks",
         "description": "A CSS-in-JS styling framework that uses tagged template literals in JavaScript and the power of CSS to provide a platform that allows you to write actual CSS to style your components.",
+        "level": 85,
+        "experienceYears": 3,
+        "icon": "💅",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "jQuery",
         "category": "Web Frameworks",
         "description": "A fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, and animation much simpler with an easy-to-use API that works across a multitude of browsers.",
+        "level": 90,
+        "experienceYears": 10,
+        "icon": "💠",
+        "trend": "down",
         "visible": true
     },
     {
         "skillName": "Ajax",
         "category": "Web Frameworks",
         "description": "A set of web development techniques using many web technologies on the client side to create asynchronous web applications.",
+        "level": 85,
+        "experienceYears": 8,
+        "icon": "🔄",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Flexbox",
         "category": "Web Frameworks",
         "description": "A CSS3 web layout model. It is in the W3C's candidate recommendation (CR) stage. The flex layout allows responsive elements within a container to be automatically arranged depending upon screen size (or device).",
+        "level": 95,
+        "experienceYears": 6,
+        "icon": "📐",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Grid",
         "category": "Web Frameworks",
         "description": "A powerful layout system available in CSS. It's a 2-dimensional system, meaning it can handle both columns and rows, unlike flexbox which is largely a 1-dimensional system.",
+        "level": 90,
+        "experienceYears": 4,
+        "icon": "⚡",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Leaflet",
         "category": "Web Frameworks",
         "description": "An open-source JavaScript library for mobile-friendly interactive maps.",
+        "level": 80,
+        "experienceYears": 3,
+        "icon": "🗺️",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "GWT",
         "category": "Web Frameworks",
         "description": "A development toolkit for building and optimizing complex browser-based applications. GWT is used by many products at Google, including Google AdWords and Google Wallet.",
+        "level": 70,
+        "experienceYears": 2,
+        "icon": "🔧",
+        "trend": "down",
         "visible": false
     },
     {
         "skillName": "MySQL",
         "category": "Databases",
         "description": "An open-source relational database management system (RDBMS).",
+        "level": 95,
+        "experienceYears": 12,
+        "icon": "🐬",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "MariaDB",
         "category": "Databases",
         "description": "An open-source relational database management system (RDBMS) that is a compatible drop-in replacement for the widely used MySQL database technology.",
+        "level": 90,
+        "experienceYears": 6,
+        "icon": "🗄️",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "SQLite",
         "category": "Databases",
-        "description": "A C library that provides a lightweight disk-based database that doesn’t require a separate server process and allows accessing the database using a nonstandard variant of the SQL query language.",
+        "description": "A C library that provides a lightweight disk-based database that doesn't require a separate server process and allows accessing the database using a nonstandard variant of the SQL query language.",
+        "level": 85,
+        "experienceYears": 7,
+        "icon": "📊",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "PostgreSQL",
         "category": "Databases",
         "description": "A powerful, open source object-relational database system with over 30 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance.",
+        "level": 85,
+        "experienceYears": 5,
+        "icon": "🐘",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Microsoft Access",
         "category": "Databases",
         "description": "An information management tool that helps you store information for reference, reporting, and analysis.",
+        "level": 80,
+        "experienceYears": 8,
+        "icon": "🗃️",
+        "trend": "down",
         "visible": true
     },
     {
         "skillName": "MongoDB",
         "category": "Databases",
         "description": "A source-available cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas.",
+        "level": 80,
+        "experienceYears": 4,
+        "icon": "🍃",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "CouchDB",
         "category": "Databases",
         "description": "An open-source document-oriented NoSQL database, implemented in Erlang.",
+        "level": 75,
+        "experienceYears": 3,
+        "icon": "🛋️",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "SCSS",
         "category": "Stylesheet Pre-processors & Data Formats",
         "description": "A preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets (CSS).",
+        "level": 85,
+        "experienceYears": 7,
+        "icon": "💗",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "XHTML",
         "category": "Stylesheet Pre-processors & Data Formats",
         "description": "An application of XML, a more restrictive subset of SGML, because it eliminates SGML's complex features.",
+        "level": 85,
+        "experienceYears": 10,
+        "icon": "📄",
+        "trend": "down",
         "visible": true
     },
     {
         "skillName": "JSON",
         "category": "Stylesheet Pre-processors & Data Formats",
         "description": "An open standard file format and data interchange format that uses human-readable text to store and transmit data objects consisting of attribute–value pairs and arrays (or other serializable values).",
+        "level": 90,
+        "experienceYears": 8,
+        "icon": "📋",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "XML",
         "category": "Stylesheet Pre-processors & Data Formats",
         "description": "A markup language that defines a set of rules for encoding documents in a format that is both human-readable and machine-readable.",
+        "level": 85,
+        "experienceYears": 9,
+        "icon": "📄",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Apache",
         "category": "Web Servers & Control Panels",
         "description": "The most widely used web server software. Developed and maintained by Apache Software Foundation, Apache is an open source software available for free.",
+        "level": 90,
+        "experienceYears": 12,
+        "icon": "🪶",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Nginx",
         "category": "Web Servers & Control Panels",
         "description": "An open source reverse proxy server for HTTP, HTTPS, SMTP, POP3, and IMAP protocols, as well as a load balancer, HTTP cache, and a web server (origin server).",
+        "level": 90,
+        "experienceYears": 8,
+        "icon": "🌊",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "cPanel/WHM",
         "category": "Web Servers & Control Panels",
         "description": "A Linux-based web hosting control panel that provides a graphical interface and automation tools designed to simplify the process of hosting a web site or email.",
+        "level": 90,
+        "experienceYears": 10,
+        "icon": "⚙️",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Parallels Plesk",
         "category": "Web Servers & Control Panels",
         "description": "A commercial web hosting and server data center automation software with a control panel developed for Linux and Windows-based retail hosting service providers.",
+        "level": 75,
+        "experienceYears": 4,
+        "icon": "🔧",
+        "trend": "down",
         "visible": true
     },
     {
         "skillName": "Webmin",
         "category": "Web Servers & Control Panels",
         "description": "A web-based interface for system administration for Unix. Using any modern web browser, you can setup user accounts, Apache, DNS, file sharing and much more.",
+        "level": 85,
+        "experienceYears": 8,
+        "icon": "🔧",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "DirectAdmin",
         "category": "Web Servers & Control Panels",
         "description": "A graphical web-based web hosting control panel designed to make administration of websites easier.",
+        "level": 80,
+        "experienceYears": 5,
+        "icon": "🎛️",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "ISPConfig 3",
         "category": "Web Servers & Control Panels",
         "description": "An open source hosting control panel for Linux, capable of managing multiple servers from one control panel.",
+        "level": 75,
+        "experienceYears": 4,
+        "icon": "🔧",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "WordPress",
         "category": "Content Management Systems",
         "description": "A free and open-source content management system written in PHP and paired with a MySQL or MariaDB database.",
+        "level": 95,
+        "experienceYears": 10,
+        "icon": "📝",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "WooCommerce",
         "category": "Content Management Systems",
         "description": "An open-source e-commerce plugin for WordPress. It is designed for small to large-sized online merchants using WordPress.",
+        "level": 95,
+        "experienceYears": 8,
+        "icon": "🛒",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "PrestaShop",
         "category": "Content Management Systems",
         "description": "An open-source e-commerce platform that is available under the Open Software License.",
+        "level": 80,
+        "experienceYears": 5,
+        "icon": "🏪",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "OpenCart",
         "category": "Content Management Systems",
         "description": "An online store management system. It is PHP-based, using a MySQL database and HTML components.",
+        "level": 75,
+        "experienceYears": 4,
+        "icon": "🛍️",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Shopify",
         "category": "Content Management Systems",
         "description": "A proprietary e-commerce platform for online stores and retail point-of-sale systems.",
+        "level": 85,
+        "experienceYears": 4,
+        "icon": "🛒",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Joomla",
         "category": "Content Management Systems",
         "description": "A free and open-source content management system for publishing web content on websites.",
+        "level": 70,
+        "experienceYears": 5,
+        "icon": "🎯",
+        "trend": "down",
         "visible": true
     },
     {
         "skillName": "Drupal",
         "category": "Content Management Systems",
         "description": "A free and open-source web content management framework written in PHP.",
+        "level": 70,
+        "experienceYears": 4,
+        "icon": "💧",
+        "trend": "down",
         "visible": true
     },
     {
         "skillName": "Visual Studio",
         "category": "IDEs & Text Editors",
         "description": "An integrated development environment from Microsoft. It is used to develop computer programs, as well as websites, web apps, web services and mobile apps.",
+        "level": 85,
+        "experienceYears": 6,
+        "icon": "💜",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Eclipse",
         "category": "IDEs & Text Editors",
         "description": "An integrated development environment used in computer programming. It contains a base workspace and an extensible plug-in system for customizing the environment.",
+        "level": 75,
+        "experienceYears": 5,
+        "icon": "🌙",
+        "trend": "down",
         "visible": true
     },
     {
         "skillName": "Brackets",
         "category": "IDEs & Text Editors",
         "description": "A source code editor with a primary focus on web development. Created by Adobe Systems, it is free and open-source software licensed under the MIT License.",
+        "level": 80,
+        "experienceYears": 4,
+        "icon": "📝",
+        "trend": "down",
         "visible": true
     },
     {
         "skillName": "Sublime",
         "category": "IDEs & Text Editors",
         "description": "A shareware cross-platform source code editor with a Python application programming interface. It natively supports many programming languages and markup languages.",
+        "level": 85,
+        "experienceYears": 6,
+        "icon": "📝",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Git",
         "category": "IDEs & Text Editors",
         "description": "A distributed version control system for tracking changes in source code during software development. It is designed for coordinating work among programmers, but it can be used to track changes in any set of files.",
+        "level": 90,
+        "experienceYears": 8,
+        "icon": "🌿",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Wireshark",
         "category": "Network Analysis Tools",
         "description": "A free and open-source packet analyzer. It is used for network troubleshooting, analysis, software and communications protocol development, and education.",
+        "level": 85,
+        "experienceYears": 6,
+        "icon": "🔍",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "nmap",
         "category": "Network Analysis Tools",
         "description": "A free and open-source network scanner created by Gordon Lyon. Nmap is used to discover hosts and services on a computer network, thus building a 'map' of the network.",
+        "level": 80,
+        "experienceYears": 7,
+        "icon": "🗺️",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Aircrack-ng",
         "category": "Network Analysis Tools",
         "description": "A complete suite of tools to assess WiFi network security. It focuses on different areas of WiFi security: Monitoring, Attacking, Testing, and Cracking.",
+        "level": 75,
+        "experienceYears": 5,
+        "icon": "📡",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Docker & docker-compose",
         "category": "Containerization & Virtualization",
         "description": "Docker is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers. Docker-compose is a tool for defining and running multi-container Docker applications.",
+        "level": 85,
+        "experienceYears": 4,
+        "icon": "🐋",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Proxmox",
         "category": "Containerization & Virtualization",
         "description": "An open-source server virtualization management solution that offers the ability to manage virtual server technology with the Linux OpenVZ and KVM technology.",
+        "level": 80,
+        "experienceYears": 3,
+        "icon": "🖥️",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "VirtualBox",
         "category": "Containerization & Virtualization",
         "description": "A free and open-source hosted hypervisor for x86 virtualization, developed by Oracle Corporation.",
+        "level": 85,
+        "experienceYears": 8,
+        "icon": "📦",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "OpenVZ",
         "category": "Containerization & Virtualization",
         "description": "An open-source container-based virtualization for Linux. OpenVZ allows a physical server to run multiple isolated operating system instances, called containers, virtual private servers, or virtual environments.",
+        "level": 75,
+        "experienceYears": 5,
+        "icon": "📦",
+        "trend": "down",
         "visible": true
     },
     {
         "skillName": "LXC",
         "category": "Containerization & Virtualization",
         "description": "Linux Containers (LXC) is an operating-system-level virtualization method for running multiple isolated Linux systems (containers) on a control host using a single Linux kernel.",
+        "level": 80,
+        "experienceYears": 4,
+        "icon": "📦",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Nginx Proxy Manager",
         "category": "Server Management",
         "description": "A lightweight, robust, and sophisticated open-source software for managing Nginx servers.",
+        "level": 85,
+        "experienceYears": 3,
+        "icon": "🔄",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Nextcloud",
         "category": "Server Management",
         "description": "A suite of client-server software for creating and using file hosting services. Nextcloud is free and open-source, which means that anyone is allowed to install and operate it on their own private server devices.",
+        "level": 80,
+        "experienceYears": 3,
+        "icon": "☁️",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Portainer",
         "category": "Server Management",
         "description": "A lightweight management UI which allows you to easily manage your Docker host or Swarm cluster.",
+        "level": 85,
+        "experienceYears": 3,
+        "icon": "🐋",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Traefik",
         "category": "Server Management",
         "description": "A modern HTTP reverse proxy and load balancer that makes deploying microservices easy.",
+        "level": 80,
+        "experienceYears": 2,
+        "icon": "🔄",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Uptime-kuma",
         "category": "Server Management",
         "description": "A fancy self-hosted monitoring tool.",
+        "level": 80,
+        "experienceYears": 2,
+        "icon": "📈",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Grafana",
         "category": "Server Management",
         "description": "The open and composable observability and data visualization platform. Visualize metrics, logs, and traces from multiple sources like Prometheus, Loki, Elasticsearch, InfluxDB, Postgres and many more.",
+        "level": 75,
+        "experienceYears": 2,
+        "icon": "📊",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Prometheus",
         "category": "Server Management",
         "description": "An open-source monitoring system with a dimensional data model, flexible query language, efficient time series database and modern alerting approach.",
+        "level": 75,
+        "experienceYears": 2,
+        "icon": "🔥",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "piHole",
         "category": "Server Management",
         "description": "A Linux network-level advertisement and Internet tracker blocking application which acts as a DNS sinkhole, and optionally a DHCP server, intended for use on a private network.",
+        "level": 85,
+        "experienceYears": 3,
+        "icon": "🕳️",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Cloudflare",
         "category": "Server Management",
         "description": "An American web infrastructure and website security company that provides content delivery network services, DDoS mitigation, Internet security, and distributed domain name server services.",
+        "level": 85,
+        "experienceYears": 4,
+        "icon": "☁️",
+        "trend": "up",
         "visible": true
     },
     {
         "skillName": "Linux (CentOS/Alma Linux, Ubuntu, Fedora)",
         "category": "Operating Systems",
         "description": "Linux is a family of open-source Unix-like operating systems based on the Linux kernel. CentOS/Alma Linux, Ubuntu, and Fedora are popular Linux distributions.",
+        "level": 90,
+        "experienceYears": 12,
+        "icon": "🐧",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "MS Windows",
         "category": "Operating Systems",
         "description": "A group of several proprietary graphical operating system families, all of which are developed and marketed by Microsoft.",
+        "level": 85,
+        "experienceYears": 15,
+        "icon": "🪟",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "Android",
         "category": "Operating Systems",
         "description": "A mobile operating system based on a modified version of the Linux kernel and other open source software, designed primarily for touchscreen mobile devices such as smartphones and tablets.",
+        "level": 75,
+        "experienceYears": 8,
+        "icon": "🤖",
+        "trend": "stable",
         "visible": true
     },
     {
         "skillName": "iOS & macOS",
         "category": "Operating Systems",
         "description": "iOS and macOS are both operating systems developed by Apple. iOS is for mobile devices, and macOS is for desktop and laptop computers.",
+        "level": 70,
+        "experienceYears": 5,
+        "icon": "🍎",
+        "trend": "stable",
         "visible": true
     }
 ]

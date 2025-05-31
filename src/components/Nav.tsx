@@ -1,55 +1,132 @@
-import React, { useState } from "react"
-import sun from "/src/assets/images/sun.svg"
-import moon from "/src/assets/images/moon.svg"
+import React, { useState, memo, useCallback } from "react"
+import { useTheme } from "../context/ThemeContext"
+import { NavigationLink } from "../types"
+import { validateImageSrc } from "../utils/validation"
+import sun from "../assets/images/sun.svg"
+import moon from "../assets/images/moon.svg"
 
-interface NavProps {
-  toggleDarkMode: () => void
-  darkMode: boolean
-}
-
-interface Link {
-  href: string
-  text: string
-}
-
-const Nav: React.FC<NavProps> = ({ toggleDarkMode, darkMode }) => {
+const Nav: React.FC = memo(() => {
+  const { toggleTheme, isDark } = useTheme()
   const [isOpen, setIsOpen] = useState(false)
-  const toggleMenu = () => setIsOpen(!isOpen)
 
-  let links: Link[] = [
-    { href: "#top", text: "Home" },
-    { href: "#skills", text: "Skills" },
-    { href: "#experience", text: "Experience" },
-    { href: "#certificates", text: "Certificates" },
-    { href: "#projects", text: "Projects" },
-    { href: "#contact", text: "Contact" },
+  const toggleMenu = useCallback(() => {
+    setIsOpen((prev) => !prev)
+  }, [])
+
+  const closeMenu = useCallback(() => {
+    setIsOpen(false)
+  }, [])
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeMenu()
+      }
+    },
+    [closeMenu]
+  )
+
+  const links: NavigationLink[] = [
+    { href: "#top", text: "Home", ariaLabel: "Navigate to home section" },
+    {
+      href: "#skills",
+      text: "Skills",
+      ariaLabel: "Navigate to skills section",
+    },
+    {
+      href: "#experience",
+      text: "Experience",
+      ariaLabel: "Navigate to experience section",
+    },
+    {
+      href: "#certificates",
+      text: "Certificates",
+      ariaLabel: "Navigate to certificates section",
+    },
+    {
+      href: "#projects",
+      text: "Projects",
+      ariaLabel: "Navigate to projects section",
+    },
+    {
+      href: "#contact",
+      text: "Contact",
+      ariaLabel: "Navigate to contact section",
+    },
   ]
 
+  const sunIcon = validateImageSrc(sun, "Light mode")
+  const moonIcon = validateImageSrc(moon, "Dark mode")
+
   return (
-    <nav>
+    <nav role="navigation" aria-label="Main navigation">
       <div className="flex justify-between items-center p-4">
         {isOpen && (
-          <ul className="absolute top-24 slide-menu flex flex-col justify-between items-center gap-8 p-4 w-full left-0 shadow-md md:hidden">
-            {links.map((link) => (
-              <li key={link.text}>
-                <a href={link.href}>{link.text}</a>
-              </li>
-            ))}
-          </ul>
+          <div
+            className="fixed inset-0 z-40 md:hidden"
+            onClick={closeMenu}
+            onKeyDown={handleKeyDown}
+          >
+            <div className="absolute inset-0 bg-black bg-opacity-50" />
+            <ul
+              className={`absolute top-24 left-0 right-0 mx-4 rounded-lg shadow-lg p-4 transition-colors ${
+                isDark ? "bg-slate-800" : "bg-white"
+              }`}
+              role="menu"
+            >
+              {links.map((link) => (
+                <li key={link.href} role="none">
+                  <a
+                    href={link.href}
+                    className={`block py-3 px-4 rounded-md transition-colors ${
+                      isDark
+                        ? "hover:bg-slate-700 text-white"
+                        : "hover:bg-slate-100 text-slate-900"
+                    }`}
+                    onClick={closeMenu}
+                    role="menuitem"
+                    aria-label={link.ariaLabel}
+                  >
+                    {link.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
 
-        <ul className="hidden md-menu md:flex md:static gap-2 mr-4 xl:gap-4">
+        <ul
+          className="hidden md:flex md:static gap-2 mr-4 xl:gap-4"
+          role="menubar"
+        >
           {links.map((link) => (
-            <li key={link.text}>
-              <a className="menu-item" href={link.href}>
+            <li key={link.href} role="none">
+              <a
+                className={`menu-item px-3 py-2 rounded-md transition-colors ${
+                  isDark
+                    ? "hover:bg-slate-700 text-white"
+                    : "hover:bg-slate-100 text-slate-900"
+                }`}
+                href={link.href}
+                role="menuitem"
+                aria-label={link.ariaLabel}
+              >
                 {link.text}
               </a>
             </li>
           ))}
         </ul>
+
         <button
           onClick={toggleMenu}
-          className="menu-ham block md:hidden order-2 p-1 rounded-full text-white"
+          className={`menu-ham block md:hidden order-2 p-2 rounded-full transition-colors ${
+            isDark
+              ? "text-white hover:bg-slate-700"
+              : "text-slate-900 hover:bg-slate-100"
+          }`}
+          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={isOpen}
+          aria-controls="mobile-menu"
         >
           {isOpen ? (
             <svg
@@ -57,6 +134,7 @@ const Nav: React.FC<NavProps> = ({ toggleDarkMode, darkMode }) => {
               viewBox="0 0 24 24"
               fill="currentColor"
               className="size-6"
+              aria-hidden="true"
             >
               <path
                 fillRule="evenodd"
@@ -70,6 +148,7 @@ const Nav: React.FC<NavProps> = ({ toggleDarkMode, darkMode }) => {
               viewBox="0 0 24 24"
               fill="currentColor"
               className="size-6"
+              aria-hidden="true"
             >
               <path
                 fillRule="evenodd"
@@ -79,26 +158,25 @@ const Nav: React.FC<NavProps> = ({ toggleDarkMode, darkMode }) => {
             </svg>
           )}
         </button>
-        {toggleDarkMode && (
-          <button onClick={toggleDarkMode} className="p-2 rounded-lg">
-            {darkMode ? (
-              <img
-                src={sun}
-                className="h-8 toggle-darklight"
-                alt="Sun - Switch to light mode"
-              />
-            ) : (
-              <img
-                src={moon}
-                className="h-8 toggle-darklight"
-                alt="Moon - Switch to dark mode"
-              />
-            )}
-          </button>
-        )}
+
+        <button
+          onClick={toggleTheme}
+          className={`p-2 rounded-lg transition-colors ${
+            isDark ? "hover:bg-slate-700" : "hover:bg-slate-100"
+          }`}
+          aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+        >
+          {isDark ? (
+            <img src={sunIcon} className="h-6 w-6" alt="" aria-hidden="true" />
+          ) : (
+            <img src={moonIcon} className="h-6 w-6" alt="" aria-hidden="true" />
+          )}
+        </button>
       </div>
     </nav>
   )
-}
+})
+
+Nav.displayName = "Nav"
 
 export default Nav
