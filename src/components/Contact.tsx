@@ -126,20 +126,20 @@ const Contact: React.FC = memo(() => {
     {
       icon: Mail,
       label: "Email",
-      value: "theodoros.mentis@example.com",
-      href: "mailto:theodoros.mentis@example.com",
+      value: "th.mentis@gmail.com",
+      href: "mailto:th.mentis@gmail.com",
     },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+30 123 456 7890",
-      href: "tel:+301234567890",
-    },
+    // {
+    //   icon: Phone,
+    //   label: "Phone",
+    //   value: "+30 123 456 7890",
+    //   href: "tel:+301234567890",
+    // },
     {
       icon: MapPin,
       label: "Location",
-      value: "Athens, Greece",
-      href: "#",
+      value: "Piraeus, Attica, Greece",
+      href: "https://www.linkedin.com/in/thmentis/",
     },
   ]
 
