@@ -71,6 +71,43 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
     [startTransition, closeMenu]
   )
 
+  // Scroll to section smoothly
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent, sectionId: string) => {
+      e.preventDefault()
+
+      // Close mobile menu first
+      closeMenu()
+
+      // Get the element
+      const targetId = sectionId === "top" ? "" : sectionId
+      const element = targetId
+        ? document.getElementById(targetId)
+        : document.body
+
+      if (element) {
+        // Calculate offset for fixed header (adjust this value based on your header height)
+        const headerOffset = 80
+        const elementPosition = element.offsetTop
+        const offsetPosition = elementPosition - headerOffset
+
+        // Smooth scroll with offset
+        window.scrollTo({
+          top: targetId ? offsetPosition : 0,
+          behavior: "smooth",
+        })
+
+        // Update URL hash without jumping
+        if (targetId) {
+          history.pushState(null, "", `#${targetId}`)
+        } else {
+          history.pushState(null, "", window.location.pathname)
+        }
+      }
+    },
+    [closeMenu]
+  )
+
   // Track active section
   useEffect(() => {
     const handleScroll = () => {
@@ -136,7 +173,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
         isMobile ? "w-full text-left justify-start" : "",
         isActive && "text-primary font-medium"
       )}
-      onClick={() => handleNavigation(link.href)}
+      onClick={(e) => handleNavClick(e, link.href.slice(1))} // Only use handleNavClick
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       aria-label={link.ariaLabel}
