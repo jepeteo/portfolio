@@ -27,7 +27,7 @@ import {
 import profileImage from "../assets/images/gteo.webp"
 
 // For files in public folder, use a string path instead of import
-const resumePDF = "/cv/Theodoros-Mentis-CV.pdf"
+const resumePDF = "./cv/Theodoros-Mentis-CV.pdf"
 
 const StatsCard = memo(
   ({
@@ -397,13 +397,6 @@ const ModernBio: React.FC = () => {
                     src={profileImage}
                     alt="Theodoros Mentis"
                     className="w-full h-full object-cover rounded-3xl"
-                    onError={(e) => {
-                      console.log("Image failed to load:", profileImage)
-                      // Better fallback handling
-                    }}
-                    onLoad={() => {
-                      console.log("Image loaded successfully:", profileImage)
-                    }}
                   />
 
                   {/* Fallback icon (hidden by default) */}

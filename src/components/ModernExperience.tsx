@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useCallback } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import jobExperienceData from "../assets/jobExperience.json"
@@ -6,7 +6,6 @@ import {
   Briefcase,
   Calendar,
   MapPin,
-  ExternalLink,
   ChevronRight,
   Award,
   TrendingUp,
@@ -14,15 +13,14 @@ import {
   Code,
   Globe,
   Zap,
-  Heart,
   Star,
   Building,
   Server,
-  Shield,
-  Database,
   Laptop,
   CheckCircle,
   Target,
+  Download,
+  Mail,
 } from "lucide-react"
 
 // Enhanced experience interface that matches your JSON structure
@@ -61,7 +59,7 @@ interface EnhancedExperience extends Experience {
 const transformExperienceData = (): EnhancedExperience[] => {
   return jobExperienceData.map((job, index) => {
     const isCurrent = job.to === "Present"
-    const isFreelance = job.company === "Freelancer"
+    // const isFreelance = job.company === "Freelancer"
 
     // Parse dates more accurately
     const [fromMonth, fromYear] = job.from
@@ -218,8 +216,38 @@ const ModernExperience: React.FC = () => {
     experienceData.find((exp) => exp.id === selectedExperience) ||
     experienceData[0]
 
-  // Calculate total experience current year - 15
+  // Calculate total experience current year - 2000
   const totalExperience = new Date().getFullYear() - 2000
+
+  // Add navigation functions
+  const scrollToContact = useCallback(() => {
+    const contactSection = document.getElementById("contact")
+    if (contactSection) {
+      const headerOffset = 80
+      const elementPosition = contactSection.offsetTop
+      const offsetPosition = elementPosition - headerOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      })
+    }
+  }, [])
+
+  const downloadResume = useCallback(() => {
+    const resumePDF = "./cv/Theodoros-Mentis-CV.pdf"
+
+    // Create a temporary link element
+    const link = document.createElement("a")
+    link.href = resumePDF
+    link.download = "Theodoros_Mentis_CV.pdf"
+    link.target = "_blank" // Open in new tab as fallback
+
+    // Append to body, click, and remove
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }, [])
 
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -744,42 +772,58 @@ const ModernExperience: React.FC = () => {
         {/* Call to Action */}
         <div className="mt-16">
           <div
-            className={`p-8 rounded-2xl text-center border backdrop-blur-sm ${
+            className={`p-8 rounded-2xl text-center border backdrop-blur-sm relative overflow-hidden ${
               isDark
                 ? "bg-gradient-to-r from-slate-800/40 to-slate-700/40 border-slate-600/50"
                 : "bg-gradient-to-r from-slate-50/40 to-white/40 border-slate-200/50"
             }`}
           >
-            <h3
-              className={`text-2xl font-bold mb-4 ${
-                isDark ? "text-white" : "text-slate-900"
-              }`}
-            >
-              Let's Work Together
-            </h3>
-            <p
-              className={`text-lg mb-6 max-w-2xl mx-auto ${
-                isDark ? "text-slate-300" : "text-slate-600"
-              }`}
-            >
-              With over {totalExperience} years of experience in web development
-              and server administration, I'm ready to help bring your next
-              project to life.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2">
-                <Heart className="w-5 h-5" />
-                Get In Touch
-              </button>
-              <button
-                className={`px-8 py-4 rounded-xl font-semibold border-2 transition-all duration-300 hover:scale-105 ${
-                  isDark
-                    ? "border-slate-600 text-slate-300 hover:bg-slate-700"
-                    : "border-slate-300 text-slate-700 hover:bg-slate-50"
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute top-0 left-0 w-32 h-32 bg-purple-500 rounded-full -translate-x-16 -translate-y-16"></div>
+              <div className="absolute bottom-0 right-0 w-32 h-32 bg-pink-500 rounded-full translate-x-16 translate-y-16"></div>
+            </div>
+
+            <div className="relative">
+              <h3
+                className={`text-3xl font-bold mb-4 ${
+                  isDark ? "text-white" : "text-slate-900"
                 }`}
               >
-                Download Resume
-              </button>
+                Let's Work Together
+              </h3>
+              <p
+                className={`text-lg mb-8 max-w-2xl mx-auto ${
+                  isDark ? "text-slate-300" : "text-slate-600"
+                }`}
+              >
+                With over {totalExperience} years of experience in web
+                development and server administration, I'm ready to help bring
+                your next project to life.
+              </p>
+
+              {/* Updated CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={scrollToContact}
+                  className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
+                >
+                  <Mail className="w-5 h-5" />
+                  Get In Touch
+                </button>
+
+                <button
+                  onClick={downloadResume}
+                  className={`px-8 py-4 rounded-xl font-semibold border-2 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 ${
+                    isDark
+                      ? "border-slate-600 text-slate-300 hover:bg-slate-700"
+                      : "border-slate-300 text-slate-700 hover:bg-slate-50"
+                  }`}
+                >
+                  <Download className="w-5 h-5" />
+                  Download Resume
+                </button>
+              </div>
             </div>
           </div>
         </div>
