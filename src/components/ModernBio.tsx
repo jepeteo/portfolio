@@ -49,7 +49,7 @@ const ModernBio: React.FC = () => {
 
   // Your current bio text (you can replace this with your actual content)
   const bioContent = {
-    intro: `I am a Senior Full Stack Developer with over 15 years of experience in creating 
+    intro: `I am a Senior Full Stack Developer with over 25 years of experience in creating 
     scalable web solutions and managing complex server environments. My expertise spans from 
     front-end development with modern frameworks to back-end architecture and database optimization.`,
 
@@ -63,9 +63,9 @@ const ModernBio: React.FC = () => {
   }
 
   const stats = [
-    { label: "Years Experience", value: "15+", icon: Calendar, color: "blue" },
-    { label: "Projects Delivered", value: "100+", icon: Code2, color: "green" },
-    { label: "Happy Clients", value: "50+", icon: Users, color: "purple" },
+    { label: "Years Experience", value: "25+", icon: Calendar, color: "blue" },
+    { label: "Projects Delivered", value: "250+", icon: Code2, color: "green" },
+    { label: "Happy Clients", value: "150+", icon: Users, color: "purple" },
     { label: "Technologies", value: "20+", icon: Monitor, color: "orange" },
   ]
 
@@ -248,12 +248,12 @@ const ModernBio: React.FC = () => {
           </div>
 
           <h2
-            className={`text-4xl md:text-6xl font-display font-bold mb-6 ${
+            className={`text-6xl md:text-8xl font-bold mb-8 ${
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
             <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 bg-clip-text text-transparent">
-              Senior Developer
+              Digital Magician
             </span>
           </h2>
 
@@ -262,7 +262,7 @@ const ModernBio: React.FC = () => {
               isDark ? "text-slate-300" : "text-slate-600"
             }`}
           >
-            Crafting exceptional digital experiences with 15+ years of expertise
+            Crafting exceptional digital experiences with 25+ years of expertise
           </p>
         </div>
 

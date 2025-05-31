@@ -412,12 +412,12 @@ const ModernExperience: React.FC = () => {
           </div>
 
           <h2
-            className={`text-4xl md:text-6xl font-bold mb-6 ${
+            className={`text-6xl md:text-8xl font-bold mb-8 ${
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
             <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent">
-              My Experience
+              Experience I've Gained
             </span>
           </h2>
 

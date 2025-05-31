@@ -179,12 +179,12 @@ const Contact: React.FC = memo(() => {
           </div>
 
           <h2
-            className={`text-4xl md:text-6xl font-display font-bold mb-6 ${
+            className={`text-6xl md:text-8xl font-bold mb-8 ${
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
-            <span className="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 bg-clip-text text-transparent">
-              Contact Me
+            <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-red-500 bg-clip-text text-transparent">
+              Conversations I Welcome
             </span>
           </h2>
 
