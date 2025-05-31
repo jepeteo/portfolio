@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useCallback } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import mySkills from "../assets/mySkills.json"
@@ -41,6 +41,35 @@ const ModernSkills: React.FC = () => {
 
   const [activeCategory, setActiveCategory] = useState<string>("languages")
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
+
+  // Add navigation functions
+  const scrollToProjects = useCallback(() => {
+    const projectsSection = document.getElementById("projects")
+    if (projectsSection) {
+      const headerOffset = 80
+      const elementPosition = projectsSection.offsetTop
+      const offsetPosition = elementPosition - headerOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      })
+    }
+  }, [])
+
+  const scrollToContact = useCallback(() => {
+    const contactSection = document.getElementById("contact")
+    if (contactSection) {
+      const headerOffset = 80
+      const elementPosition = contactSection.offsetTop
+      const offsetPosition = elementPosition - headerOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      })
+    }
+  }, [])
 
   // Filter only visible skills and cast to proper type
   const visibleSkills: Skill[] = mySkills.filter(
@@ -673,12 +702,16 @@ const ModernSkills: React.FC = () => {
               </p>
 
               <div className="flex flex-wrap gap-4 justify-center">
-                <button className="px-8 py-4 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-2xl font-semibold hover:from-violet-600 hover:to-purple-600 transition-all duration-300 flex items-center gap-3 shadow-lg hover:shadow-xl hover:scale-105">
+                <button
+                  onClick={scrollToProjects}
+                  className="px-8 py-4 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-2xl font-semibold hover:from-violet-600 hover:to-purple-600 transition-all duration-300 flex items-center gap-3 shadow-lg hover:shadow-xl hover:scale-105"
+                >
                   <Heart className="w-5 h-5" />
                   View My Projects
                   <ArrowRight className="w-5 h-5" />
                 </button>
                 <button
+                  onClick={scrollToContact}
                   className={`px-8 py-4 rounded-2xl font-semibold border-2 transition-all duration-300 hover:scale-105 ${
                     isDark
                       ? "border-slate-600 text-slate-300 hover:bg-slate-700 hover:border-slate-500"

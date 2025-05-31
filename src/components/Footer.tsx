@@ -1,4 +1,4 @@
-import React, { memo } from "react"
+import React, { memo, useCallback } from "react"
 import { useTheme } from "../context/ThemeContext"
 import { Github, Linkedin, Mail, Heart, ArrowUp } from "lucide-react"
 
@@ -28,9 +28,49 @@ const Footer: React.FC = memo(() => {
     },
   ]
 
+  // Smooth scroll navigation function
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent, sectionId: string) => {
+      e.preventDefault()
+
+      // Handle "top" or "home" section
+      if (sectionId === "top" || sectionId === "home") {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        })
+        return
+      }
+
+      // Handle other sections
+      const targetElement = document.getElementById(sectionId)
+      if (targetElement) {
+        const headerOffset = 80 // Adjust based on your header height
+        const elementPosition = targetElement.offsetTop
+        const offsetPosition = elementPosition - headerOffset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        })
+      }
+    },
+    []
+  )
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
+
+  // Navigation items with proper section IDs
+  const navigationItems = [
+    { sectionId: "top", label: "Home" },
+    { sectionId: "about", label: "About" },
+    { sectionId: "skills", label: "Skills" },
+    { sectionId: "experience", label: "Experience" },
+    { sectionId: "projects", label: "Projects" },
+    { sectionId: "contact", label: "Contact" },
+  ]
 
   return (
     <footer
@@ -80,26 +120,21 @@ const Footer: React.FC = memo(() => {
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links - Updated with proper navigation */}
           <div className="text-center">
-            <div className="flex flex-wrap justify-center gap-6">
-              {[
-                { href: "#top", label: "Home" },
-                { href: "#skills", label: "Skills" },
-                { href: "#projects", label: "Projects" },
-                { href: "#contact", label: "Contact" },
-              ].map((link, index) => (
-                <a
+            <div className="flex flex-wrap justify-center gap-8">
+              {navigationItems.map((item, index) => (
+                <button
                   key={index}
-                  href={link.href}
-                  className={`text-sm font-medium transition-all hover:scale-105 ${
+                  onClick={(e) => handleNavClick(e, item.sectionId)}
+                  className={`text-sm font-medium transition-all hover:scale-105 cursor-pointer ${
                     isDark
                       ? "text-slate-400 hover:text-white"
                       : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
-                  {link.label}
-                </a>
+                  {item.label}
+                </button>
               ))}
             </div>
           </div>
@@ -140,10 +175,12 @@ const Footer: React.FC = memo(() => {
             </button>
           </div>
         </div>
+
         {/* Divider */}
         <div
           className={`my-4 h-px ${isDark ? "bg-slate-800" : "bg-slate-200"}`}
         />
+
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div
@@ -168,8 +205,9 @@ const Footer: React.FC = memo(() => {
             using React & TypeScript
           </div>
         </div>
+
         {/* Performance Badge */}
-        {/* <div className="mt-6 text-center">
+        <div className="mt-6 text-center">
           <div
             className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs ${
               isDark
@@ -180,7 +218,7 @@ const Footer: React.FC = memo(() => {
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
             Optimized for Performance & Accessibility
           </div>
-        </div> */}
+        </div>
       </div>
     </footer>
   )
