@@ -440,12 +440,12 @@ const ModernProjects = memo(() => {
           </div>
 
           <h2
-            className={`text-4xl md:text-6xl font-display font-bold mb-6 ${
+            className={`text-6xl md:text-8xl font-bold mb-8 ${
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
             <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 bg-clip-text text-transparent">
-              WordPress Projects
+              Projects I've Built
             </span>
           </h2>
 

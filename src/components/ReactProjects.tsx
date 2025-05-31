@@ -68,12 +68,12 @@ const ReactProjects: React.FC = memo(() => {
           </div>
 
           <h2
-            className={`text-4xl md:text-6xl font-display font-bold mb-6 ${
+            className={`text-6xl md:text-8xl font-bold mb-8 ${
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
             <span className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-              React Projects
+              Innovations I've Shipped
             </span>
           </h2>
 
