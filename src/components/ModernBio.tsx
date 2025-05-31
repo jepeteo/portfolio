@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react"
+import React, { memo, useState, useEffect, useRef } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import {
@@ -28,6 +28,105 @@ import {
   Play,
 } from "lucide-react"
 
+// Create a separate memoized component for stats to prevent re-rendering
+const StatsCard = memo(
+  ({
+    stat,
+    index,
+    isDark,
+    getColorClasses,
+  }: {
+    stat: any
+    index: number
+    isDark: boolean
+    getColorClasses: (color: string) => any
+  }) => {
+    const [displayValue, setDisplayValue] = useState("0")
+    const [hasAnimated, setHasAnimated] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
+    const cardRef = useRef<HTMLDivElement>(null)
+
+    // Use Intersection Observer for this specific card
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setIsVisible(true)
+
+            // Start animation after delay
+            const timeout = setTimeout(() => {
+              const numericValue = parseInt(stat.value.replace(/\D/g, ""))
+              const suffix = stat.value.replace(/\d/g, "")
+
+              let currentValue = 0
+              const increment = numericValue / 30
+
+              const interval = setInterval(() => {
+                currentValue += increment
+                if (currentValue >= numericValue) {
+                  setDisplayValue(stat.value)
+                  setHasAnimated(true)
+                  clearInterval(interval)
+                } else {
+                  setDisplayValue(Math.floor(currentValue) + suffix)
+                }
+              }, 50)
+
+              return () => clearInterval(interval)
+            }, index * 200)
+
+            return () => clearTimeout(timeout)
+          }
+        },
+        { threshold: 0.5, rootMargin: "50px" }
+      )
+
+      if (cardRef.current) {
+        observer.observe(cardRef.current)
+      }
+
+      return () => observer.disconnect()
+    }, [stat.value, index, hasAnimated])
+
+    const IconComponent = stat.icon
+    const colors = getColorClasses(stat.color)
+
+    return (
+      <div
+        ref={cardRef}
+        className={`p-6 rounded-2xl text-center transition-all duration-500 hover:scale-105 border ${
+          isDark
+            ? "bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:border-slate-600"
+            : "bg-white/50 backdrop-blur-sm border-slate-200 hover:border-slate-300"
+        }`}
+        style={{
+          transform: isVisible ? "translateY(0)" : "translateY(20px)",
+          opacity: isVisible ? 1 : 0,
+          transition: `all 0.6s ease ${index * 200}ms`,
+        }}
+      >
+        <div
+          className={`w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center ${colors.bg} ${colors.text} border ${colors.border}`}
+        >
+          <IconComponent className="w-8 h-8" />
+        </div>
+        <div className={`mb-2 ${isDark ? "text-white" : "text-slate-900"}`}>
+          <span className="font-bold text-2xl md:text-3xl">{displayValue}</span>
+        </div>
+        <div
+          className={`text-sm font-medium ${
+            isDark ? "text-slate-400" : "text-slate-600"
+          }`}
+        >
+          {stat.label}
+        </div>
+      </div>
+    )
+  }
+)
+
+StatsCard.displayName = "StatsCard"
+
 const ModernBio: React.FC = () => {
   const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
@@ -38,16 +137,7 @@ const ModernBio: React.FC = () => {
   const [activeSection, setActiveSection] = useState<
     "about" | "expertise" | "approach"
   >("about")
-  const [animatedStats, setAnimatedStats] = useState(false)
 
-  // Animate stats when section becomes visible
-  useEffect(() => {
-    if (isVisible && !animatedStats) {
-      setAnimatedStats(true)
-    }
-  }, [isVisible, animatedStats])
-
-  // Your current bio text (you can replace this with your actual content)
   const bioContent = {
     intro: `I am a Senior Full Stack Developer with over 25 years of experience in creating 
     scalable web solutions and managing complex server environments. My expertise spans from 
@@ -202,29 +292,6 @@ const ModernBio: React.FC = () => {
     </button>
   )
 
-  const AnimatedCounter = ({
-    value,
-    delay = 0,
-  }: {
-    value: string
-    delay?: number
-  }) => {
-    const [displayValue, setDisplayValue] = useState("0")
-
-    useEffect(() => {
-      if (animatedStats) {
-        const timeout = setTimeout(() => {
-          setDisplayValue(value)
-        }, delay)
-        return () => clearTimeout(timeout)
-      }
-    }, [animatedStats, value, delay])
-
-    return (
-      <span className="font-bold text-2xl md:text-3xl">{displayValue}</span>
-    )
-  }
-
   return (
     <section
       ref={targetRef}
@@ -253,7 +320,7 @@ const ModernBio: React.FC = () => {
             }`}
           >
             <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 bg-clip-text text-transparent">
-              Digital Magician
+              Stories I Tell
             </span>
           </h2>
 
@@ -266,42 +333,17 @@ const ModernBio: React.FC = () => {
           </p>
         </div>
 
-        {/* Stats Section */}
+        {/* Stats Section - Now completely isolated */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          {stats.map((stat, index) => {
-            const IconComponent = stat.icon
-            const colors = getColorClasses(stat.color)
-
-            return (
-              <div
-                key={index}
-                className={`p-6 rounded-2xl text-center transition-all duration-500 hover:scale-105 border ${
-                  isDark
-                    ? "bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:border-slate-600"
-                    : "bg-white/50 backdrop-blur-sm border-slate-200 hover:border-slate-300"
-                }`}
-                style={{ animationDelay: `${index * 200}ms` }}
-              >
-                <div
-                  className={`w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center ${colors.bg} ${colors.text} border ${colors.border}`}
-                >
-                  <IconComponent className="w-8 h-8" />
-                </div>
-                <div
-                  className={`mb-2 ${isDark ? "text-white" : "text-slate-900"}`}
-                >
-                  <AnimatedCounter value={stat.value} delay={index * 200} />
-                </div>
-                <div
-                  className={`text-sm font-medium ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}
-                >
-                  {stat.label}
-                </div>
-              </div>
-            )
-          })}
+          {stats.map((stat, index) => (
+            <StatsCard
+              key={`stats-${stat.label}`} // Stable key
+              stat={stat}
+              index={index}
+              isDark={isDark}
+              getColorClasses={getColorClasses}
+            />
+          ))}
         </div>
 
         {/* Main Content Grid */}
@@ -370,7 +412,7 @@ const ModernBio: React.FC = () => {
                 </div>
               </div>
 
-              {/* Quick Stats */}
+              {/* Quick Stats - These are separate from the main stats */}
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="text-center">
                   <div
@@ -378,7 +420,7 @@ const ModernBio: React.FC = () => {
                       isDark ? "text-white" : "text-slate-900"
                     }`}
                   >
-                    15+
+                    25+
                   </div>
                   <div
                     className={`text-sm ${
@@ -641,7 +683,7 @@ const ModernBio: React.FC = () => {
           </div>
         </div>
 
-        {/* Call to Action */}
+        {/* Call to Action - unchanged */}
         <div className="text-center mt-16">
           <div
             className={`p-8 rounded-2xl border relative overflow-hidden ${
@@ -705,4 +747,4 @@ const ModernBio: React.FC = () => {
 }
 
 ModernBio.displayName = "ModernBio"
-export default ModernBio
+export default memo(ModernBio)
