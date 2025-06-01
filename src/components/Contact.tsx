@@ -1,10 +1,9 @@
 import React, { memo, useState, useCallback } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
-import { validateEmail, sanitizeInput } from "../utils/validation"
+import emailjs from "@emailjs/browser"
 import {
   Mail,
-  Phone,
   MapPin,
   Send,
   CheckCircle,
@@ -12,20 +11,16 @@ import {
   Github,
   Linkedin,
 } from "lucide-react"
-
-interface FormData {
-  name: string
-  email: string
-  subject: string
-  message: string
-}
-
-interface FormErrors {
-  name?: string
-  email?: string
-  subject?: string
-  message?: string
-}
+import {
+  ContactFormData,
+  ContactFormErrors,
+  validateContactForm,
+  sanitizeContactForm,
+  isFormValid,
+  validateFieldEmail,
+  sanitizeEmail,
+  sanitizeTextInput,
+} from "../utils/contactValidation"
 
 const Contact: React.FC = memo(() => {
   const { isDark } = useTheme()
@@ -34,64 +29,69 @@ const Contact: React.FC = memo(() => {
     rootMargin: "50px",
   })
 
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     subject: "",
     message: "",
   })
 
-  const [errors, setErrors] = useState<FormErrors>({})
+  const [errors, setErrors] = useState<ContactFormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle")
 
-  const validateForm = useCallback((): boolean => {
-    const newErrors: FormErrors = {}
+  // EmailJS configuration from environment variables (Vite style)
+  const emailjsConfig = {
+    serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID || "",
+    templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "",
+    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "",
+  }
 
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required"
-    } else if (formData.name.trim().length < 2) {
-      newErrors.name = "Name must be at least 2 characters"
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required"
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = "Please enter a valid email address"
-    }
-
-    if (!formData.subject.trim()) {
-      newErrors.subject = "Subject is required"
-    } else if (formData.subject.trim().length < 5) {
-      newErrors.subject = "Subject must be at least 5 characters"
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = "Message is required"
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = "Message must be at least 10 characters"
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }, [formData])
-
+  // Handle input changes with proper sanitization
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target
-      const sanitizedValue = sanitizeInput(value)
+
+      let sanitizedValue: string
+
+      if (name === "email") {
+        // For email, remove spaces and apply email-specific sanitization
+        sanitizedValue = sanitizeEmail(value)
+      } else {
+        // For other fields, preserve spaces but sanitize dangerous content
+        sanitizedValue = sanitizeTextInput(value)
+      }
 
       setFormData((prev) => ({ ...prev, [name]: sanitizedValue }))
 
       // Clear error when user starts typing
-      if (errors[name as keyof FormErrors]) {
+      if (errors[name as keyof ContactFormErrors]) {
         setErrors((prev) => ({ ...prev, [name]: undefined }))
       }
     },
     [errors]
   )
+
+  // Handle email field blur validation
+  const handleEmailBlur = useCallback(() => {
+    const emailError = validateFieldEmail(formData.email)
+    if (emailError) {
+      setErrors((prev) => ({ ...prev, email: emailError }))
+    } else {
+      setErrors((prev) => ({ ...prev, email: undefined }))
+    }
+  }, [formData.email])
+
+  // Validate entire form
+  const validateForm = useCallback((): boolean => {
+    const sanitizedData = sanitizeContactForm(formData)
+    const validationErrors = validateContactForm(sanitizedData)
+
+    setErrors(validationErrors)
+    return isFormValid(validationErrors)
+  }, [formData])
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -99,27 +99,74 @@ const Contact: React.FC = memo(() => {
 
       if (!validateForm()) return
 
+      // Check if EmailJS is configured
+      if (
+        !emailjsConfig.serviceId ||
+        !emailjsConfig.templateId ||
+        !emailjsConfig.publicKey
+      ) {
+        console.warn("EmailJS not configured. Using simulation mode.")
+
+        // Fallback to simulation if EmailJS is not configured
+        setIsSubmitting(true)
+        setSubmitStatus("idle")
+
+        try {
+          await new Promise((resolve) => setTimeout(resolve, 2000))
+          setFormData({ name: "", email: "", subject: "", message: "" })
+          setSubmitStatus("success")
+          setTimeout(() => setSubmitStatus("idle"), 5000)
+        } catch (error) {
+          setSubmitStatus("error")
+          setTimeout(() => setSubmitStatus("idle"), 5000)
+        } finally {
+          setIsSubmitting(false)
+        }
+        return
+      }
+
       setIsSubmitting(true)
       setSubmitStatus("idle")
 
       try {
-        // Simulate API call - replace with actual form submission
-        await new Promise((resolve) => setTimeout(resolve, 2000))
+        // Sanitize form data before sending
+        const sanitizedData = sanitizeContactForm(formData)
+
+        // Send email using EmailJS
+        const templateParams = {
+          from_name: sanitizedData.name,
+          from_email: sanitizedData.email,
+          subject: sanitizedData.subject,
+          message: sanitizedData.message,
+          to_email: import.meta.env.VITE_CONTACT_EMAIL || "th.mentis@gmail.com",
+          reply_to: sanitizedData.email,
+        }
+
+        const result = await emailjs.send(
+          emailjsConfig.serviceId,
+          emailjsConfig.templateId,
+          templateParams,
+          emailjsConfig.publicKey
+        )
+
+        console.log("Email sent successfully:", result)
 
         // Reset form on success
         setFormData({ name: "", email: "", subject: "", message: "" })
+        setErrors({})
         setSubmitStatus("success")
 
         // Clear success message after 5 seconds
         setTimeout(() => setSubmitStatus("idle"), 5000)
       } catch (error) {
+        console.error("Failed to send email:", error)
         setSubmitStatus("error")
         setTimeout(() => setSubmitStatus("idle"), 5000)
       } finally {
         setIsSubmitting(false)
       }
     },
-    [formData, validateForm]
+    [formData, validateForm, emailjsConfig]
   )
 
   const contactInfo = [
@@ -129,12 +176,6 @@ const Contact: React.FC = memo(() => {
       value: "th.mentis@gmail.com",
       href: "mailto:th.mentis@gmail.com",
     },
-    // {
-    //   icon: Phone,
-    //   label: "Phone",
-    //   value: "+30 123 456 7890",
-    //   href: "tel:+301234567890",
-    // },
     {
       icon: MapPin,
       label: "Location",
@@ -357,6 +398,7 @@ const Contact: React.FC = memo(() => {
                   }`}
                   placeholder="Your full name"
                   disabled={isSubmitting}
+                  maxLength={50}
                 />
                 {errors.name && (
                   <p className="mt-2 text-sm text-red-500">{errors.name}</p>
@@ -379,6 +421,7 @@ const Contact: React.FC = memo(() => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  onBlur={handleEmailBlur}
                   className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent ${
                     errors.email
                       ? "border-red-500"
@@ -388,6 +431,7 @@ const Contact: React.FC = memo(() => {
                   }`}
                   placeholder="your.email@example.com"
                   disabled={isSubmitting}
+                  maxLength={254}
                 />
                 {errors.email && (
                   <p className="mt-2 text-sm text-red-500">{errors.email}</p>
@@ -419,6 +463,7 @@ const Contact: React.FC = memo(() => {
                   }`}
                   placeholder="Project inquiry, collaboration, etc."
                   disabled={isSubmitting}
+                  maxLength={100}
                 />
                 {errors.subject && (
                   <p className="mt-2 text-sm text-red-500">{errors.subject}</p>
@@ -450,6 +495,7 @@ const Contact: React.FC = memo(() => {
                   }`}
                   placeholder="Tell me about your project, requirements, timeline, etc."
                   disabled={isSubmitting}
+                  maxLength={2000}
                 />
                 {errors.message && (
                   <p className="mt-2 text-sm text-red-500">{errors.message}</p>
