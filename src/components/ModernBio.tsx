@@ -626,21 +626,6 @@ const ModernBio: React.FC = () => {
                         View My Work
                         <ArrowRight className="w-4 h-4" />
                       </button>
-
-                      <button
-                        onClick={() => {
-                          // You can add a demo video or portfolio showcase here
-                          console.log("Demo video coming soon!")
-                        }}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-all hover:scale-105 border ${
-                          isDark
-                            ? "border-slate-600 text-slate-300 hover:bg-slate-700"
-                            : "border-slate-300 text-slate-700 hover:bg-slate-50"
-                        }`}
-                      >
-                        <Play className="w-4 h-4" />
-                        Watch Demo
-                      </button>
                     </div>
                   </div>
                 )}
