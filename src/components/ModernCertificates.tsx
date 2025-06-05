@@ -21,6 +21,10 @@ import {
   Smartphone,
   TrendingUp,
   Settings,
+  ChevronDown,
+  ChevronUp,
+  Plus,
+  Minus,
 } from "lucide-react"
 
 // Category icons mapping
@@ -39,6 +43,11 @@ const categoryIcons: Record<string, React.ComponentType<any>> = {
   "Productivity Tools": Settings,
 }
 
+// Add interface for expanded skills
+interface ExpandedSkills {
+  [certificateId: string]: boolean
+}
+
 const ModernCertificates: React.FC = memo(() => {
   const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLDivElement>({
@@ -47,6 +56,10 @@ const ModernCertificates: React.FC = memo(() => {
   })
 
   const [isLoading, setIsLoading] = useState(false)
+  // Add state for expanded categories in summary section
+  const [isSummaryExpanded, setIsSummaryExpanded] = useState(false)
+  // Add state for expanded skills per certificate
+  const [expandedSkills, setExpandedSkills] = useState<ExpandedSkills>({})
 
   const { categories, certsByCategory, validCertificates } = useMemo(() => {
     const validCerts = myCertificates
@@ -97,6 +110,19 @@ const ModernCertificates: React.FC = memo(() => {
     setTimeout(() => setIsLoading(false), 150)
   }, [])
 
+  // Toggle function for summary expansion
+  const toggleSummaryExpansion = useCallback(() => {
+    setIsSummaryExpanded((prev) => !prev)
+  }, [])
+
+  // Toggle function for skills expansion per certificate
+  const toggleSkillsExpansion = useCallback((certificateId: string) => {
+    setExpandedSkills((prev) => ({
+      ...prev,
+      [certificateId]: !prev[certificateId],
+    }))
+  }, [])
+
   const displayedCertificates = useMemo(() => {
     if (selectedCategory === "All") {
       return validCertificates
@@ -108,6 +134,17 @@ const ModernCertificates: React.FC = memo(() => {
     const IconComponent = categoryIcons[category] || Award
     return IconComponent
   }
+
+  // Constants for summary display
+  const INITIAL_CATEGORIES_DISPLAY = 5
+  const hasMoreCategories = categories.length > INITIAL_CATEGORIES_DISPLAY
+  const visibleCategories = isSummaryExpanded
+    ? categories
+    : categories.slice(0, INITIAL_CATEGORIES_DISPLAY)
+  const hiddenCategoriesCount = categories.length - INITIAL_CATEGORIES_DISPLAY
+
+  // Constants for skills display
+  const INITIAL_SKILLS_DISPLAY = 3
 
   if (validCertificates.length === 0) {
     return (
@@ -271,6 +308,18 @@ const ModernCertificates: React.FC = memo(() => {
                   certificate.category || "Uncategorized"
                 )
 
+                // Skills expansion logic
+                const isSkillsExpanded = expandedSkills[certificate.id] || false
+                const hasMoreSkills =
+                  certificate.skills &&
+                  certificate.skills.length > INITIAL_SKILLS_DISPLAY
+                const visibleSkills = isSkillsExpanded
+                  ? certificate.skills
+                  : certificate.skills?.slice(0, INITIAL_SKILLS_DISPLAY)
+                const hiddenSkillsCount = certificate.skills
+                  ? certificate.skills.length - INITIAL_SKILLS_DISPLAY
+                  : 0
+
                 return (
                   <div
                     key={certificate.id}
@@ -340,36 +389,51 @@ const ModernCertificates: React.FC = memo(() => {
                         </p>
                       )}
 
-                      {/* Skills */}
+                      {/* Skills with Expandable Functionality */}
                       {certificate.skills && certificate.skills.length > 0 && (
                         <div className="mb-4">
-                          <div className="flex flex-wrap gap-1">
-                            {certificate.skills
-                              .slice(0, 3)
-                              .map((skill, skillIndex) => (
-                                <span
-                                  key={skillIndex}
-                                  className={`px-2 py-1 text-xs font-medium rounded-full ${
-                                    isDark
-                                      ? "bg-slate-700/60 text-slate-300"
-                                      : "bg-slate-100 text-slate-600"
-                                  }`}
-                                >
-                                  {skill}
-                                </span>
-                              ))}
-                            {certificate.skills.length > 3 && (
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            {visibleSkills?.map((skill, skillIndex) => (
                               <span
-                                className={`px-2 py-1 text-xs font-medium rounded-full ${
+                                key={skillIndex}
+                                className={`px-2 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
                                   isDark
-                                    ? "bg-slate-700/40 text-slate-400"
-                                    : "bg-slate-100 text-slate-500"
+                                    ? "bg-slate-700/60 text-slate-300"
+                                    : "bg-slate-100 text-slate-600"
                                 }`}
                               >
-                                +{certificate.skills.length - 3}
+                                {skill}
                               </span>
-                            )}
+                            ))}
                           </div>
+
+                          {/* Expandable Skills Button */}
+                          {hasMoreSkills && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                toggleSkillsExpansion(certificate.id)
+                              }}
+                              className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium transition-all duration-300 hover:scale-105 ${
+                                isDark
+                                  ? "bg-slate-700/40 text-slate-400 hover:bg-slate-700/60"
+                                  : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                              }`}
+                            >
+                              {isSkillsExpanded ? (
+                                <>
+                                  <Minus className="w-3 h-3" />
+                                  Show Less
+                                  <ChevronUp className="w-3 h-3" />
+                                </>
+                              ) : (
+                                <div className="w-8 flex items-center justify-center gap-1">
+                                  <Plus className="w-3 h-3" />
+                                  {hiddenSkillsCount}
+                                </div>
+                              )}
+                            </button>
+                          )}
                         </div>
                       )}
 
@@ -416,7 +480,7 @@ const ModernCertificates: React.FC = memo(() => {
               })}
             </div>
 
-            {/* Category Summary */}
+            {/* Category Summary with Expandable Categories */}
             <div className="mt-16">
               <div
                 className={`p-8 rounded-2xl text-center ${
@@ -447,13 +511,14 @@ const ModernCertificates: React.FC = memo(() => {
                   commitment to professional excellence
                 </p>
 
-                <div className="flex flex-wrap justify-center gap-3">
-                  {categories.slice(0, 5).map((category) => {
+                {/* Expandable Categories List */}
+                <div className="flex flex-wrap justify-center gap-3 mb-6">
+                  {visibleCategories.map((category) => {
                     const IconComponent = getCategoryIcon(category)
                     return (
                       <div
                         key={category}
-                        className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium ${
+                        className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                           isDark
                             ? "bg-purple-500/20 text-purple-300"
                             : "bg-purple-100 text-purple-700"
@@ -464,18 +529,33 @@ const ModernCertificates: React.FC = memo(() => {
                       </div>
                     )
                   })}
-                  {categories.length > 5 && (
-                    <div
-                      className={`px-3 py-2 rounded-full text-sm font-medium ${
-                        isDark
-                          ? "bg-slate-700/60 text-slate-400"
-                          : "bg-slate-100 text-slate-500"
-                      }`}
-                    >
-                      +{categories.length - 5} more
-                    </div>
-                  )}
                 </div>
+
+                {/* Expandable Button */}
+                {hasMoreCategories && (
+                  <button
+                    onClick={toggleSummaryExpansion}
+                    className={`inline-flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 hover:scale-105 text-sm font-medium ${
+                      isDark
+                        ? "bg-purple-500/20 text-slate-300"
+                        : "bg-purple-100 text-purple-700"
+                    }`}
+                  >
+                    {isSummaryExpanded ? (
+                      <>
+                        <Minus className="w-4 h-4" />
+                        Show Less Categories
+                        <ChevronUp className="w-4 h-4" />
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="w-4 h-4" />
+                        {hiddenCategoriesCount} more categories
+                        <ChevronDown className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
+                )}
               </div>
             </div>
           </>
