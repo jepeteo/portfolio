@@ -70,6 +70,25 @@ const transformToTechExperience = (): TechExperience[] => {
     const years = Math.floor(totalMonths / 12)
     const months = totalMonths % 12
 
+    // Helper function to format month and year
+    const formatMonthYear = (month: number, year: number) => {
+      const monthNames = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ]
+      return `${monthNames[month - 1]} ${year}`
+    }
+
     const extractMetrics = (job: Experience, years: number) => {
       const metrics: any = {}
       job.achievements?.forEach((achievement) => {
@@ -103,7 +122,9 @@ const transformToTechExperience = (): TechExperience[] => {
       duration: {
         years,
         months,
-        display: years > 0 ? `${years}y ${months}m` : `${months}m`,
+        display: `${formatMonthYear(fromMonth, fromYear)} - ${
+          isCurrent ? "Present" : formatMonthYear(toMonth, toYear)
+        }`,
       },
       metrics: extractMetrics(job, years),
       techStack: job.technologies || [],
@@ -336,7 +357,7 @@ const ModernExperience: React.FC = () => {
 
                   <div className="text-right">
                     <div
-                      className={`text-xl font-bold font-mono ${
+                      className={`text-lg font-bold font-mono ${
                         isDark ? "text-white" : "text-slate-900"
                       }`}
                     >
@@ -347,7 +368,7 @@ const ModernExperience: React.FC = () => {
                         isDark ? "text-slate-400" : "text-slate-600"
                       }`}
                     >
-                      Duration
+                      Period
                     </div>
                   </div>
                 </div>
