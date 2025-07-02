@@ -1,12 +1,13 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import usePerformanceMonitor from "../hooks/usePerformanceMonitor"
-import { useExperienceData } from "../hooks/useExperienceData"
+import { useExperienceData, TechExperience } from "../hooks/useExperienceData"
 import { ExperienceStatsComponent } from "./experience/ExperienceStats"
-import { ExperienceCard } from "./experience/ExperienceCard"
 import { TopTechnologies } from "./experience/TopTechnologies"
 import { ExperienceCallToAction } from "./experience/ExperienceCallToAction"
+import { ExperienceSidebar } from "./experience/ExperienceSidebar"
+import { ExperienceDetails } from "./experience/ExperienceDetails"
 import { Briefcase, Filter } from "lucide-react"
 
 const ModernExperience: React.FC = () => {
@@ -20,12 +21,22 @@ const ModernExperience: React.FC = () => {
   const performanceMetrics = usePerformanceMonitor("ModernExperience")
 
   // Experience data
-  const { experiences, stats, currentExperiences, pastExperiences } =
-    useExperienceData()
+  const {
+    experiences,
+    stats,
+    currentExperiences,
+    pastExperiences,
+    freelanceExperiences,
+    employmentExperiences,
+  } = useExperienceData()
 
   // State for UI controls
-  const [filter, setFilter] = useState<"all" | "current" | "past">("all")
-  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set())
+  const [filter, setFilter] = useState<
+    "all" | "current" | "past" | "freelance" | "employment"
+  >("all")
+  const [selectedExperienceId, setSelectedExperienceId] = useState<
+    string | null
+  >(null)
 
   // Filter experiences based on current filter
   const filteredExperiences =
@@ -33,19 +44,26 @@ const ModernExperience: React.FC = () => {
       ? currentExperiences
       : filter === "past"
       ? pastExperiences
+      : filter === "freelance"
+      ? freelanceExperiences
+      : filter === "employment"
+      ? employmentExperiences
       : experiences
 
-  const handleToggleExpanded = useCallback((experienceId: string) => {
-    setExpandedCards((prev) => {
-      const newSet = new Set(prev)
-      if (newSet.has(experienceId)) {
-        newSet.delete(experienceId)
-      } else {
-        newSet.add(experienceId)
-      }
-      return newSet
-    })
-  }, [])
+  // Set the selected experience as the first one when filter changes
+  useEffect(() => {
+    if (
+      filteredExperiences.length > 0 &&
+      (!selectedExperienceId ||
+        !filteredExperiences.some((exp) => exp.id === selectedExperienceId))
+    ) {
+      setSelectedExperienceId(filteredExperiences[0].id)
+    }
+  }, [filteredExperiences, selectedExperienceId])
+
+  // Find the selected experience object
+  const selectedExperience =
+    filteredExperiences.find((exp) => exp.id === selectedExperienceId) || null
 
   // Performance logging in development
   useEffect(() => {
@@ -92,8 +110,10 @@ const ModernExperience: React.FC = () => {
             }`}
           >
             A comprehensive overview of my {stats.totalYears}+ years in web
-            development, spanning {stats.totalProjects}+ projects and{" "}
-            {stats.totalClients}+ satisfied clients.
+            development ({stats.employmentYears}+ years employment and{" "}
+            {stats.freelanceYears}+ years freelance), spanning{" "}
+            {stats.totalProjects}+ projects and {stats.totalClients}+ satisfied
+            clients.
           </p>
         </div>
 
@@ -117,7 +137,7 @@ const ModernExperience: React.FC = () => {
             </span>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {[
               {
                 key: "all",
@@ -133,6 +153,16 @@ const ModernExperience: React.FC = () => {
                 key: "past",
                 label: "Past Roles",
                 count: pastExperiences.length,
+              },
+              {
+                key: "freelance",
+                label: "Freelancing",
+                count: freelanceExperiences.length,
+              },
+              {
+                key: "employment",
+                label: "Employment",
+                count: employmentExperiences.length,
               },
             ].map(({ key, label, count }) => (
               <button
@@ -154,17 +184,25 @@ const ModernExperience: React.FC = () => {
           </div>
         </div>
 
-        {/* Experience Cards */}
-        <div className="grid gap-8 mb-16">
-          {filteredExperiences.map((experience) => (
-            <ExperienceCard
-              key={experience.id}
-              experience={experience}
+        {/* Experience with Sidebar Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          {/* Sidebar */}
+          <div className="md:col-span-1 md:border-r md:pr-4">
+            <ExperienceSidebar
+              experiences={filteredExperiences}
+              selectedExperienceId={selectedExperienceId}
+              onSelectExperience={setSelectedExperienceId}
               isDark={isDark}
-              isExpanded={expandedCards.has(experience.id)}
-              onToggleExpanded={() => handleToggleExpanded(experience.id)}
             />
-          ))}
+          </div>
+
+          {/* Details Panel */}
+          <div className="md:col-span-2">
+            <ExperienceDetails
+              experience={selectedExperience}
+              isDark={isDark}
+            />
+          </div>
         </div>
 
         {/* Top Technologies */}

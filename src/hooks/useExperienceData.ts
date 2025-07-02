@@ -16,6 +16,7 @@ export interface Experience {
 export interface TechExperience extends Experience {
   id: string
   status: "current" | "completed"
+  isFreelance: boolean
   duration: {
     years: number
     months: number
@@ -38,6 +39,8 @@ export interface TechExperience extends Experience {
 
 export interface ExperienceStats {
   totalYears: number
+  freelanceYears: number
+  employmentYears: number
   totalProjects: number
   totalClients: number
   currentRoles: number
@@ -106,6 +109,7 @@ const transformToTechExperience = (): TechExperience[] => {
       ...job,
       id: `exp-${index}`,
       status: isCurrent ? "current" : "completed",
+      isFreelance: job.company === "Freelancer",
       duration: {
         years,
         months,
@@ -124,14 +128,87 @@ const transformToTechExperience = (): TechExperience[] => {
   })
 }
 
-// Calculate experience statistics
+// Calculate experience statistics with proper handling of concurrent roles
 const calculateExperienceStats = (
   experiences: TechExperience[]
 ): ExperienceStats => {
-  const totalYears = experiences.reduce(
-    (sum, exp) => sum + exp.duration.years + exp.duration.months / 12,
-    0
-  )
+  // Separate freelance and employment experiences
+  const freelanceExperiences = experiences.filter((exp) => exp.isFreelance)
+  const employmentExperiences = experiences.filter((exp) => !exp.isFreelance)
+
+  // Calculate total years considering overlap
+  // Calculate employment years
+  const calculateEmploymentYears = () => {
+    // Get employment period range
+    let earliestEmploymentStart: Date | null = null
+    let latestEmploymentEnd: Date | null = null
+
+    employmentExperiences.forEach((exp) => {
+      const [fromMonth, fromYear] = exp.from.split("-").map((n) => parseInt(n))
+      const startDate = new Date(fromYear, fromMonth - 1)
+
+      let endDate: Date
+      if (exp.to === "Present") {
+        endDate = new Date()
+      } else {
+        const [toMonth, toYear] = exp.to.split("-").map((n) => parseInt(n))
+        endDate = new Date(toYear, toMonth - 1)
+      }
+
+      if (!earliestEmploymentStart || startDate < earliestEmploymentStart) {
+        earliestEmploymentStart = startDate
+      }
+      if (!latestEmploymentEnd || endDate > latestEmploymentEnd) {
+        latestEmploymentEnd = endDate
+      }
+    })
+
+    // Calculate employment years
+    let employmentYears = 0
+    if (earliestEmploymentStart && latestEmploymentEnd) {
+      const diffTime = Math.abs(
+        (latestEmploymentEnd as Date).getTime() -
+          (earliestEmploymentStart as Date).getTime()
+      )
+      employmentYears = diffTime / (1000 * 60 * 60 * 24 * 365.25)
+    }
+
+    return Math.round(employmentYears * 10) / 10 // Round to 1 decimal place
+  }
+
+  // Calculate freelance years
+  const calculateFreelanceYears = () => {
+    if (freelanceExperiences.length === 0) return 0
+
+    // For freelance, we'll count actual duration from first to last
+    const [fromMonth, fromYear] = freelanceExperiences[0].from
+      .split("-")
+      .map((n) => parseInt(n))
+    const startDate = new Date(fromYear, fromMonth - 1)
+
+    // Assume the last freelance experience is ongoing or the latest
+    const lastExp = freelanceExperiences[0] // We only have one freelance experience in this case
+    let endDate: Date
+    if (lastExp.to === "Present") {
+      endDate = new Date()
+    } else {
+      const [toMonth, toYear] = lastExp.to.split("-").map((n) => parseInt(n))
+      endDate = new Date(toYear, toMonth - 1)
+    }
+
+    const diffTime = Math.abs(endDate.getTime() - startDate.getTime())
+    const freelanceYears = diffTime / (1000 * 60 * 60 * 24 * 365.25)
+
+    return Math.round(freelanceYears * 10) / 10 // Round to 1 decimal place
+  }
+
+  const employmentYears = calculateEmploymentYears()
+  const freelanceYears = calculateFreelanceYears()
+
+  // Total years is the maximum between employment and freelance
+  // since they were concurrent for much of the time
+  const totalYears = Math.max(employmentYears, freelanceYears)
+
   const totalProjects = experiences.reduce(
     (sum, exp) => sum + (exp.metrics.projects || 0),
     0
@@ -159,6 +236,8 @@ const calculateExperienceStats = (
 
   return {
     totalYears: Math.round(totalYears * 10) / 10,
+    freelanceYears,
+    employmentYears,
     totalProjects,
     totalClients,
     currentRoles,
@@ -183,10 +262,22 @@ export const useExperienceData = () => {
     [experiences]
   )
 
+  const freelanceExperiences = useMemo(
+    () => experiences.filter((exp) => exp.isFreelance),
+    [experiences]
+  )
+
+  const employmentExperiences = useMemo(
+    () => experiences.filter((exp) => !exp.isFreelance),
+    [experiences]
+  )
+
   return {
     experiences,
     stats,
     currentExperiences,
     pastExperiences,
+    freelanceExperiences,
+    employmentExperiences,
   }
 }
