@@ -13,14 +13,19 @@ import {
 } from "lucide-react"
 import {
   ContactFormData,
-  ContactFormErrors,
-  validateContactForm,
-  sanitizeContactForm,
-  isFormValid,
   validateFieldEmail,
   sanitizeEmail,
   sanitizeTextInput,
 } from "../utils/contactValidation"
+import {
+  SecureContactFormData,
+  ContactFormErrors,
+  validateContactFormSecure,
+  detectBot,
+  checkRateLimit,
+  sanitizeContactFormData,
+} from "../utils/secureContactValidation"
+import { generateCSRFToken } from "../utils/security"
 
 const Contact: React.FC = memo(() => {
   const { isDark } = useTheme()
@@ -41,6 +46,11 @@ const Contact: React.FC = memo(() => {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle")
+  
+  // Security state
+  const [csrfToken] = useState(() => generateCSRFToken())
+  const [honeypot, setHoneypot] = useState("")
+  const [startTime] = useState(() => Date.now())
 
   // EmailJS configuration from environment variables (Vite style)
   const emailjsConfig = {
@@ -84,20 +94,54 @@ const Contact: React.FC = memo(() => {
     }
   }, [formData.email])
 
-  // Validate entire form
+  // Validate entire form with security checks
   const validateForm = useCallback((): boolean => {
-    const sanitizedData = sanitizeContactForm(formData)
-    const validationErrors = validateContactForm(sanitizedData)
+    // Check rate limiting first
+    const rateLimitState = checkRateLimit('default') // Using 'default' as IP placeholder for client-side
+    if (rateLimitState.blocked) {
+      setErrors({ general: `Too many attempts. Please try again in ${Math.ceil((rateLimitState.blockUntil! - Date.now()) / 1000)} seconds.` })
+      return false
+    }
 
-    setErrors(validationErrors)
-    return isFormValid(validationErrors)
-  }, [formData])
+    // Create secure form data
+    const secureData: SecureContactFormData = {
+      ...formData,
+      csrfToken,
+      timestamp: Date.now(),
+      honeypot,
+    }
+
+    // Detect bot behavior
+    if (detectBot(secureData)) {
+      console.warn('Bot behavior detected')
+      setErrors({ general: 'Invalid submission detected. Please try again.' })
+      return false
+    }
+
+    // Validate with enhanced security
+    const validationResult = validateContactFormSecure(secureData)
+    if (!validationResult.isValid) {
+      setErrors(validationResult.errors)
+      return false
+    }
+
+    // Clear any previous errors
+    setErrors({})
+    return true
+  }, [formData, csrfToken, honeypot])
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault()
 
       if (!validateForm()) return
+
+      // Additional security: check submission timing (prevent too fast submissions)
+      const submissionTime = Date.now() - startTime
+      if (submissionTime < 3000) { // Less than 3 seconds
+        setErrors({ general: 'Please take a moment to review your message before submitting.' })
+        return
+      }
 
       // Check if EmailJS is configured
       if (
@@ -129,8 +173,14 @@ const Contact: React.FC = memo(() => {
       setSubmitStatus("idle")
 
       try {
-        // Sanitize form data before sending
-        const sanitizedData = sanitizeContactForm(formData)
+        // Sanitize form data before sending using secure sanitization
+        const secureData: SecureContactFormData = {
+          ...formData,
+          csrfToken,
+          timestamp: Date.now(),
+          honeypot,
+        }
+        const sanitizedData = sanitizeContactFormData(secureData)
 
         // Send email using EmailJS
         const templateParams = {
@@ -501,6 +551,27 @@ const Contact: React.FC = memo(() => {
                   <p className="mt-2 text-sm text-red-500">{errors.message}</p>
                 )}
               </div>
+
+              {/* Honeypot field - hidden from users, visible to bots */}
+              <div style={{ display: 'none' }}>
+                <label htmlFor="website">Website</label>
+                <input
+                  type="text"
+                  id="website"
+                  name="website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+
+              {/* General error display */}
+              {errors.general && (
+                <div className="p-4 rounded-xl bg-red-50 border border-red-200">
+                  <p className="text-sm text-red-600">{errors.general}</p>
+                </div>
+              )}
 
               {/* Submit Button */}
               <button
