@@ -139,7 +139,7 @@ const ModernBio: React.FC = () => {
   >("about")
 
   const bioContent = {
-    intro: `I am a Senior Full Stack Developer with over 25 years of experience in creating 
+    intro: `I am a Senior Full Stack Developer with over 18 years of experience in creating 
     scalable web solutions and managing complex server environments. My expertise spans from 
     front-end development with modern frameworks to back-end architecture and database optimization.`,
 
@@ -153,9 +153,9 @@ const ModernBio: React.FC = () => {
   }
 
   const stats = [
-    { label: "Years Experience", value: "25+", icon: Calendar, color: "blue" },
-    { label: "Projects Delivered", value: "250+", icon: Code2, color: "green" },
-    { label: "Happy Clients", value: "150+", icon: Users, color: "purple" },
+    { label: "Years Experience", value: "18+", icon: Calendar, color: "blue" },
+    { label: "Projects Delivered", value: "390+", icon: Code2, color: "green" },
+    { label: "Happy Clients", value: "172+", icon: Users, color: "purple" },
     { label: "Technologies", value: "20+", icon: Monitor, color: "orange" },
   ]
 
@@ -459,7 +459,7 @@ const ModernBio: React.FC = () => {
                       isDark ? "text-white" : "text-slate-900"
                     }`}
                   >
-                    25+
+                    18+
                   </div>
                   <div
                     className={`text-sm ${
@@ -475,7 +475,7 @@ const ModernBio: React.FC = () => {
                       isDark ? "text-white" : "text-slate-900"
                     }`}
                   >
-                    100+
+                    390+
                   </div>
                   <div
                     className={`text-sm ${
