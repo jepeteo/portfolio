@@ -1,30 +1,93 @@
-import React, { lazy, Suspense } from "react"
+import React, { Suspense } from "react"
 import Hero from "./components/Hero"
 import ModernSkills from "./components/ModernSkills"
-import ModernExperience from "./components/ModernExperience"
 import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 import ModernHeader from "./components/navigation/ModernHeader"
 import ModernBio from "./components/ModernBio"
-import ModernCertificates from "./components/ModernCertificates"
-import ReactProjects from "./components/ReactProjects"
 import ErrorBoundary from "./components/ErrorBoundary"
-import Loading from "./components/Loading"
+import PerformanceDashboard from "./components/PerformanceDashboard"
+import { LoadingSpinner } from "./components/loading/ModernLoadingStates"
 import { BackToTopButton } from "./components/ui/BackToTopButton"
 import { ThemeProvider, useTheme } from "./context/ThemeContext"
+import {
+  createLazyComponent,
+  ComponentPreloader,
+} from "./utils/performanceOptimization"
 import useSEO from "./hooks/useSEO"
 import useServiceWorker from "./hooks/useServiceWorker"
 
 import "flowbite"
 import "flowbite/dist/flowbite.css"
 
-const ModernProjects = lazy(() => import("./components/ModernProjects"))
+// Lazy load non-critical components with enhanced loading
+const ModernProjects = createLazyComponent(
+  () => import("./components/ModernProjects"),
+  { chunkName: "modern-projects", preload: true }
+)
+
+const ModernExperience = createLazyComponent(
+  () => import("./components/ModernExperience"),
+  { chunkName: "experience" }
+)
+
+const ReactProjects = createLazyComponent(
+  () => import("./components/ReactProjects"),
+  { chunkName: "react-projects" }
+)
+
+const ModernCertificates = createLazyComponent(
+  () => import("./components/ModernCertificates"),
+  { chunkName: "certificates" }
+)
+
+// Enhanced loading component for better UX
+const SectionLoader: React.FC = () => (
+  <div className="flex justify-center items-center min-h-[200px] py-16">
+    <LoadingSpinner size="lg" className="text-primary" />
+  </div>
+)
 
 const AppContent: React.FC = () => {
   const { isDark } = useTheme()
 
   // Initialize service worker for performance
   useServiceWorker()
+
+  // Preload components on hover/intersection
+  React.useEffect(() => {
+    // Preload experience section when user scrolls past skills
+    const skillsSection = document.getElementById("skills")
+    if (skillsSection) {
+      ComponentPreloader.preloadOnIntersection(
+        "experience",
+        () => import("./components/ModernExperience")
+      )(skillsSection)
+    }
+
+    // Preload projects when user interacts with navigation
+    const projectsNav = document.querySelector('a[href*="projects"]')
+    if (projectsNav) {
+      const preloadHandlers = ComponentPreloader.preloadOnHover(
+        "react-projects",
+        () => import("./components/ReactProjects")
+      )
+
+      projectsNav.addEventListener("mouseenter", preloadHandlers.onMouseEnter)
+      projectsNav.addEventListener("touchstart", preloadHandlers.onTouchStart)
+
+      return () => {
+        projectsNav.removeEventListener(
+          "mouseenter",
+          preloadHandlers.onMouseEnter
+        )
+        projectsNav.removeEventListener(
+          "touchstart",
+          preloadHandlers.onTouchStart
+        )
+      }
+    }
+  }, [])
 
   // SEO configuration
   useSEO({
@@ -66,22 +129,44 @@ const AppContent: React.FC = () => {
     >
       <ModernHeader />
       <main>
+        {/* Critical above-the-fold content - loaded immediately */}
         <Hero />
         <ModernBio />
         <ModernSkills />
-        <ModernExperience />
+
+        {/* Non-critical content - lazy loaded */}
         <ErrorBoundary>
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<SectionLoader />}>
+            <ModernExperience />
+          </Suspense>
+        </ErrorBoundary>
+
+        <ErrorBoundary>
+          <Suspense fallback={<SectionLoader />}>
             <ModernProjects />
           </Suspense>
         </ErrorBoundary>
-        <ReactProjects />
-        <ModernCertificates />
+
+        <ErrorBoundary>
+          <Suspense fallback={<SectionLoader />}>
+            <ReactProjects />
+          </Suspense>
+        </ErrorBoundary>
+
+        <ErrorBoundary>
+          <Suspense fallback={<SectionLoader />}>
+            <ModernCertificates />
+          </Suspense>
+        </ErrorBoundary>
+
+        {/* Contact is critical for user interaction */}
         <Contact />
         <BackToTopButton />
       </main>
       <Footer />
-      {/* Remove the extra wrapper */}
+
+      {/* Development Performance Dashboard */}
+      <PerformanceDashboard />
     </div>
   )
 }

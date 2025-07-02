@@ -1,9 +1,19 @@
-import React, { useState, useMemo, useCallback, memo } from "react"
+import React, { useState, useMemo, memo } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import myProjects from "../assets/myProjects.json"
 import { Project } from "../types"
 import { isValidProject } from "../utils/validation"
+import {
+  useRenderTracker,
+  useStableCallback,
+  useStableMemo,
+} from "../utils/componentOptimization"
+import {
+  useProgressiveImage,
+  useWebPSupport,
+  getOptimizedImageSrc,
+} from "../utils/assetOptimization"
 import {
   ExternalLink,
   Star,
@@ -18,6 +28,8 @@ import {
 } from "lucide-react"
 
 const ModernProjects = memo(() => {
+  useRenderTracker("ModernProjects")
+
   const { isDark } = useTheme()
   const [projectType, setProjectType] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
@@ -27,60 +39,95 @@ const ModernProjects = memo(() => {
     rootMargin: "50px",
   })
 
+  const supportsWebP = useWebPSupport()
+
   const projectsPerPage = 6
 
   // Validate and filter projects
   const validatedProjects = useMemo(() => {
-    return myProjects.filter((project: any): project is Project =>
-      isValidProject(project)
-    )
+    return myProjects
+      .filter((project: any): project is any => isValidProject(project))
+      .map((project, index) => ({
+        ...project,
+        id: `project-${index}-${project.prName
+          .toLowerCase()
+          .replace(/\s+/g, "-")}`,
+        prTags: Array.isArray(project.prTags)
+          ? project.prTags
+          : typeof project.prTags === "string"
+          ? [project.prTags]
+          : [],
+      })) as Project[]
   }, [])
 
   // Get unique project types for filter
-  const projectTypes = useMemo(() => {
-    return Array.from(
-      new Set(validatedProjects.map((project) => project.prType))
-    ).sort()
-  }, [validatedProjects])
+  const projectTypes = useStableMemo(
+    () => {
+      return Array.from(
+        new Set(validatedProjects.map((project) => project.prType))
+      ).sort()
+    },
+    [validatedProjects],
+    "projectTypes"
+  )
 
-  const filteredProjects = useMemo(() => {
-    const filtered =
-      projectType === null
-        ? validatedProjects
-        : validatedProjects.filter((project) => project.prType === projectType)
+  const filteredProjects = useStableMemo(
+    () => {
+      const filtered =
+        projectType === null
+          ? validatedProjects
+          : validatedProjects.filter(
+              (project) => project.prType === projectType
+            )
 
-    // Sort: featured first, then alphabetically
-    const featured = filtered.filter((project) => project.prFeatured)
-    const nonFeatured = filtered
-      .filter((project) => !project.prFeatured)
-      .sort((a, b) => a.prName.localeCompare(b.prName))
+      // Sort: featured first, then alphabetically
+      const featured = filtered.filter((project) => project.prFeatured)
+      const nonFeatured = filtered
+        .filter((project) => !project.prFeatured)
+        .sort((a, b) => a.prName.localeCompare(b.prName))
 
-    return [...featured, ...nonFeatured]
-  }, [projectType, validatedProjects])
+      return [...featured, ...nonFeatured]
+    },
+    [projectType, validatedProjects],
+    "filteredProjects"
+  )
 
   // Pagination logic
   const totalPages = Math.ceil(filteredProjects.length / projectsPerPage)
-  const displayProjects = useMemo(() => {
-    const startIndex = (currentPage - 1) * projectsPerPage
-    return filteredProjects.slice(startIndex, startIndex + projectsPerPage)
-  }, [filteredProjects, currentPage, projectsPerPage])
+  const displayProjects = useStableMemo(
+    () => {
+      const startIndex = (currentPage - 1) * projectsPerPage
+      return filteredProjects.slice(startIndex, startIndex + projectsPerPage)
+    },
+    [filteredProjects, currentPage, projectsPerPage],
+    "displayProjects"
+  )
 
-  const handleProjectTypeChange = useCallback((type: string | null) => {
-    setProjectType(type)
-    setCurrentPage(1)
-  }, [])
+  const handleProjectTypeChange = useStableCallback(
+    (type: string | null) => {
+      setProjectType(type)
+      setCurrentPage(1)
+    },
+    [],
+    "handleProjectTypeChange"
+  )
 
-  const goToPage = useCallback(
+  const goToPage = useStableCallback(
     (page: number) => {
       setCurrentPage(Math.max(1, Math.min(page, totalPages)))
     },
-    [totalPages]
+    [totalPages],
+    "goToPage"
   )
 
   // Handle image errors
-  const handleImageError = useCallback((projectName: string) => {
-    setImageErrors((prev) => new Set(prev).add(projectName))
-  }, [])
+  const handleImageError = useStableCallback(
+    (projectName: string) => {
+      setImageErrors((prev) => new Set(prev).add(projectName))
+    },
+    [],
+    "handleImageError"
+  )
 
   // Get image path for project - Fixed to handle missing prImageSlug
   const getImagePath = (project: Project) => {
@@ -107,9 +154,24 @@ const ModernProjects = memo(() => {
   // Project card component
   const ProjectCard = memo(
     ({ project, index }: { project: Project; index: number }) => {
+      useRenderTracker(`ProjectCard-${project.prName}`)
+
       const IconComponent = getProjectIcon(project.prType)
-      const imagePath = getImagePath(project)
+      const baseImagePath = getImagePath(project)
       const hasImageError = imageErrors.has(project.prName)
+
+      // Get optimized image source
+      const optimizedImageSrc = getOptimizedImageSrc(
+        baseImagePath,
+        baseImagePath.replace(".webp", ".webp"), // Keep WebP as is
+        supportsWebP
+      )
+
+      // Progressive image loading
+      const { src: imageSrc, isLoading: imageLoading } = useProgressiveImage(
+        optimizedImageSrc,
+        undefined
+      )
 
       return (
         <div
@@ -143,12 +205,20 @@ const ModernProjects = memo(() => {
               {!hasImageError ? (
                 <>
                   <img
-                    src={imagePath}
+                    src={imageSrc || optimizedImageSrc}
                     alt={`${project.prName} project preview`}
-                    className="w-full h-full object-cover object-top transition-all duration-[3000ms] ease-in-out group-hover:object-bottom"
+                    className={`w-full h-full object-cover object-top transition-all duration-[3000ms] ease-in-out group-hover:object-bottom ${
+                      imageLoading ? "opacity-50" : "opacity-100"
+                    }`}
                     onError={() => handleImageError(project.prName)}
                     loading="lazy"
                   />
+                  {/* Loading indicator */}
+                  {imageLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-slate-200/50">
+                      <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                  )}
                   {/* Image Overlay */}
                   <div
                     className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
