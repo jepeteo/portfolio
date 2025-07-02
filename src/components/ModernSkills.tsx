@@ -283,7 +283,9 @@ const ModernSkills: React.FC = () => {
             <div
               className={`w-12 h-12 rounded-xl flex items-center justify-center ${
                 isActive
-                  ? "bg-white/20 backdrop-blur-sm"
+                  ? isDark
+                    ? "bg-white/20 backdrop-blur-sm"
+                    : "bg-slate-700/20"
                   : isDark
                   ? "bg-slate-700"
                   : "bg-slate-100"
@@ -292,10 +294,12 @@ const ModernSkills: React.FC = () => {
               <IconComponent
                 className={`w-6 h-6 ${
                   isActive
-                    ? "text-white"
+                    ? isDark
+                      ? "text-white"
+                      : "text-slate-900"
                     : isDark
-                    ? "text-slate-300"
-                    : "text-slate-700"
+                    ? "text-white"
+                    : "text-slate-900"
                 }`}
               />
             </div>
@@ -303,7 +307,9 @@ const ModernSkills: React.FC = () => {
               <h3
                 className={`font-bold text-lg ${
                   isActive
-                    ? "text-white"
+                    ? isDark
+                      ? "text-white"
+                      : "text-slate-900"
                     : isDark
                     ? "text-white"
                     : "text-slate-900"
@@ -314,7 +320,9 @@ const ModernSkills: React.FC = () => {
               <p
                 className={`text-sm ${
                   isActive
-                    ? "text-white/80"
+                    ? isDark
+                      ? "text-white/80"
+                      : "text-slate-700"
                     : isDark
                     ? "text-slate-400"
                     : "text-slate-600"
@@ -328,7 +336,9 @@ const ModernSkills: React.FC = () => {
           <p
             className={`text-sm leading-relaxed ${
               isActive
-                ? "text-white/70"
+                ? isDark
+                  ? "text-white/70"
+                  : "text-slate-800" // Respect theme mode
                 : isDark
                 ? "text-slate-400"
                 : "text-slate-600"
