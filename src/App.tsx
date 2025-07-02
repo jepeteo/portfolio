@@ -10,13 +10,13 @@ import ModernCertificates from "./components/ModernCertificates"
 import ReactProjects from "./components/ReactProjects"
 import ErrorBoundary from "./components/ErrorBoundary"
 import Loading from "./components/Loading"
+import { BackToTopButton } from "./components/ui/BackToTopButton"
 import { ThemeProvider, useTheme } from "./context/ThemeContext"
 import useSEO from "./hooks/useSEO"
 import useServiceWorker from "./hooks/useServiceWorker"
 
 import "flowbite"
 import "flowbite/dist/flowbite.css"
-import Experience from "./components/Experience"
 
 const ModernProjects = lazy(() => import("./components/ModernProjects"))
 
@@ -78,8 +78,10 @@ const AppContent: React.FC = () => {
         <ReactProjects />
         <ModernCertificates />
         <Contact />
+        <BackToTopButton />
       </main>
       <Footer />
+      {/* Remove the extra wrapper */}
     </div>
   )
 }
