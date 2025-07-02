@@ -1,14 +1,15 @@
-// Security configuration for the portfolio application
+// Enhanced Security Configuration for Portfolio (2025)
 export const securityConfig = {
-  // Content Security Policy configuration
+  // Content Security Policy configuration - Enhanced
   csp: {
     // Allow self and specific domains for scripts
     scriptSrc: [
       "'self'",
-      "'unsafe-inline'", // Remove this in production if possible
+      "'unsafe-inline'", // Required for development - remove in production
       "https://cdnjs.cloudflare.com",
-      "https://unpkg.com",
-      "https://fonts.googleapis.com",
+      "https://cdn.emailjs.com",
+      "https://www.googletagmanager.com", // For analytics
+      "https://www.google-analytics.com",
     ],
 
     // Allow self and specific domains for styles
@@ -30,7 +31,13 @@ export const securityConfig = {
     ],
 
     // Connect sources for API calls
-    connectSrc: ["'self'", "https://formspree.io", "https://api.github.com"],
+    connectSrc: [
+      "'self'",
+      "https://formspree.io",
+      "https://api.github.com",
+      "https://api.emailjs.com",
+      "https://www.google-analytics.com",
+    ],
 
     // Frame sources
     frameSrc: ["'none'"],
@@ -43,14 +50,21 @@ export const securityConfig = {
 
     // Default source
     defaultSrc: ["'self'"],
+
+    // Form actions
+    formAction: ["'self'", "https://formspree.io"],
+
+    // Upgrade insecure requests
+    upgradeInsecureRequests: true,
   },
 
-  // Rate limiting configuration
+  // Enhanced Rate limiting configuration
   rateLimiting: {
-    // Contact form rate limiting
+    // Contact form rate limiting - More strict
     contactForm: {
       windowMs: 15 * 60 * 1000, // 15 minutes
-      max: 5, // limit each IP to 5 requests per windowMs
+      max: 3, // Reduced from 5 to 3 attempts
+      blockDuration: 30 * 60 * 1000, // 30 minutes block
       message: "Too many contact form submissions, please try again later.",
     },
 
@@ -60,9 +74,17 @@ export const securityConfig = {
       max: 100, // limit each IP to 100 requests per windowMs
       message: "Too many requests, please try again later.",
     },
+
+    // Email specific limits
+    email: {
+      windowMs: 60 * 60 * 1000, // 1 hour
+      max: 5, // Very strict for emails
+      blockDuration: 24 * 60 * 60 * 1000, // 24 hours block
+      message: "Email rate limit exceeded, please try again later.",
+    },
   },
 
-  // Security headers
+  // Enhanced Security headers
   headers: {
     // Prevent clickjacking
     "X-Frame-Options": "DENY",
@@ -76,21 +98,122 @@ export const securityConfig = {
     // Referrer policy
     "Referrer-Policy": "strict-origin-when-cross-origin",
 
-    // Permissions policy
-    "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+    // Enhanced Permissions policy
+    "Permissions-Policy": [
+      "camera=()",
+      "microphone=()",
+      "geolocation=()",
+      "payment=()",
+      "usb=()",
+      "magnetometer=()",
+      "accelerometer=()",
+      "gyroscope=()",
+    ].join(", "),
 
     // Strict Transport Security (HTTPS only)
     "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+
+    // Cross-Origin policies
+    "Cross-Origin-Embedder-Policy": "credentialless",
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "Cross-Origin-Resource-Policy": "same-origin",
+  },
+
+  // Enhanced CSRF configuration
+  csrf: {
+    tokenLength: 32,
+    tokenTTL: 30 * 60 * 1000, // 30 minutes
+    cookieName: "csrf-token",
+    headerName: "X-CSRF-Token",
+    cookieOptions: {
+      httpOnly: true,
+      secure: true, // HTTPS only
+      sameSite: "strict" as const,
+      maxAge: 30 * 60 * 1000, // 30 minutes
+    },
+  },
+
+  // Enhanced validation rules
+  validation: {
+    name: {
+      minLength: 2,
+      maxLength: 50,
+      pattern: /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s\-\'\.]+$/,
+      blockedPatterns: [
+        /script/gi,
+        /javascript/gi,
+        /vbscript/gi,
+        /onload/gi,
+        /onerror/gi,
+        /eval\(/gi,
+        /<.*>/gi,
+      ],
+    },
+    email: {
+      maxLength: 254,
+      pattern:
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+      blockedDomains: [
+        "tempmail.org",
+        "10minutemail.com",
+        "guerrillamail.com",
+        "mailinator.com",
+        "throwaway.email",
+      ],
+    },
+    subject: {
+      minLength: 3,
+      maxLength: 100,
+      blockedPatterns: [/script/gi, /javascript/gi, /vbscript/gi, /<.*>/gi],
+    },
+    message: {
+      minLength: 10,
+      maxLength: 2000,
+      blockedPatterns: [
+        /script/gi,
+        /javascript/gi,
+        /vbscript/gi,
+        /<.*>/gi,
+        /eval\(/gi,
+      ],
+    },
+  },
+
+  // Enhanced bot detection
+  botDetection: {
+    honeypotField: "website", // Hidden field name
+    minSubmissionTime: 3000, // 3 seconds minimum
+    maxSubmissionTime: 30 * 60 * 1000, // 30 minutes maximum
+    suspiciousPatterns: [
+      /buy.*now/gi,
+      /click.*here/gi,
+      /visit.*website/gi,
+      /guaranteed/gi,
+      /increase.*traffic/gi,
+      /seo.*service/gi,
+      /lorem ipsum/gi,
+      /test.*test/gi,
+      /viagra/gi,
+      /casino/gi,
+      /crypto/gi,
+      /investment/gi,
+      /make.*money/gi,
+      /work.*from.*home/gi,
+    ],
   },
 }
 
-// Generate CSP header string
-export const generateCSPHeader = (): string => {
+// Generate enhanced CSP header string
+export const generateCSPHeader = (isDevelopment = false): string => {
   const { csp } = securityConfig
 
   const directives = [
     `default-src ${csp.defaultSrc.join(" ")}`,
-    `script-src ${csp.scriptSrc.join(" ")}`,
+    `script-src ${
+      isDevelopment
+        ? csp.scriptSrc.join(" ")
+        : csp.scriptSrc.filter((src) => !src.includes("unsafe")).join(" ")
+    }`,
     `style-src ${csp.styleSrc.join(" ")}`,
     `img-src ${csp.imgSrc.join(" ")}`,
     `font-src ${csp.fontSrc.join(" ")}`,
@@ -98,9 +221,24 @@ export const generateCSPHeader = (): string => {
     `frame-src ${csp.frameSrc.join(" ")}`,
     `object-src ${csp.objectSrc.join(" ")}`,
     `base-uri ${csp.baseUri.join(" ")}`,
+    `form-action ${csp.formAction.join(" ")}`,
   ]
 
+  if (csp.upgradeInsecureRequests && !isDevelopment) {
+    directives.push("upgrade-insecure-requests")
+  }
+
   return directives.join("; ")
+}
+
+// Get all security headers including CSP
+export const getAllSecurityHeaders = (
+  isDevelopment = false
+): Record<string, string> => {
+  return {
+    ...securityConfig.headers,
+    "Content-Security-Policy": generateCSPHeader(isDevelopment),
+  }
 }
 
 // Sanitization utilities

@@ -22,10 +22,13 @@ import {
   ContactFormErrors,
   validateContactFormSecure,
   detectBot,
-  checkRateLimit,
   sanitizeContactFormData,
 } from "../utils/secureContactValidation"
-import { generateCSRFToken } from "../utils/security"
+import {
+  checkContactFormLimit,
+  recordContactFormAttempt,
+} from "../utils/enhancedRateLimit"
+import { CSRFProtection } from "../utils/enhancedCSRF"
 
 const Contact: React.FC = memo(() => {
   const { isDark } = useTheme()
@@ -48,7 +51,9 @@ const Contact: React.FC = memo(() => {
   >("idle")
 
   // Security state
-  const [csrfToken] = useState(() => generateCSRFToken())
+  const [csrfToken, setCsrfToken] = useState(() =>
+    CSRFProtection.getCurrentToken()
+  )
   const [honeypot, setHoneypot] = useState("")
   const [startTime] = useState(() => Date.now())
 
@@ -94,16 +99,26 @@ const Contact: React.FC = memo(() => {
     }
   }, [formData.email])
 
-  // Validate entire form with security checks
+  // Enhanced form validation with security checks
   const validateForm = useCallback((): boolean => {
-    // Check rate limiting first
-    const rateLimitState = checkRateLimit("default") // Using 'default' as IP placeholder for client-side
-    if (rateLimitState.blocked) {
-      setErrors({
-        general: `Too many attempts. Please try again in ${Math.ceil(
-          (rateLimitState.blockUntil! - Date.now()) / 1000
-        )} seconds.`,
-      })
+    // Check enhanced rate limiting first
+    const rateLimitResult = checkContactFormLimit("default") // Using 'default' as IP placeholder for client-side
+    if (!rateLimitResult.allowed) {
+      if (rateLimitResult.blocked) {
+        setErrors({
+          general:
+            rateLimitResult.message ||
+            "Too many attempts. Please try again later.",
+        })
+      } else {
+        setErrors({
+          general: `Rate limit exceeded. ${
+            rateLimitResult.remaining
+          } attempts remaining. Try again after ${new Date(
+            rateLimitResult.resetTime
+          ).toLocaleTimeString()}.`,
+        })
+      }
       return false
     }
 
@@ -138,7 +153,19 @@ const Contact: React.FC = memo(() => {
     async (e: React.FormEvent) => {
       e.preventDefault()
 
+      // Record the attempt first (for rate limiting tracking)
+      recordContactFormAttempt("default")
+
       if (!validateForm()) return
+
+      // Validate CSRF token
+      if (!CSRFProtection.validateToken(csrfToken)) {
+        setErrors({
+          general:
+            "Security validation failed. Please refresh the page and try again.",
+        })
+        return
+      }
 
       // Additional security: check submission timing (prevent too fast submissions)
       const submissionTime = Date.now() - startTime
@@ -165,6 +192,10 @@ const Contact: React.FC = memo(() => {
 
         try {
           await new Promise((resolve) => setTimeout(resolve, 2000))
+
+          // Generate new CSRF token for next submission
+          setCsrfToken(CSRFProtection.getCurrentToken())
+
           setFormData({ name: "", email: "", subject: "", message: "" })
           setSubmitStatus("success")
           setTimeout(() => setSubmitStatus("idle"), 5000)
@@ -209,6 +240,9 @@ const Contact: React.FC = memo(() => {
 
         console.log("Email sent successfully:", result)
 
+        // Generate new CSRF token for next submission
+        setCsrfToken(CSRFProtection.getCurrentToken())
+
         // Reset form on success
         setFormData({ name: "", email: "", subject: "", message: "" })
         setErrors({})
@@ -224,7 +258,7 @@ const Contact: React.FC = memo(() => {
         setIsSubmitting(false)
       }
     },
-    [formData, validateForm, emailjsConfig]
+    [formData, validateForm, emailjsConfig, csrfToken, startTime, setCsrfToken]
   )
 
   const contactInfo = [
