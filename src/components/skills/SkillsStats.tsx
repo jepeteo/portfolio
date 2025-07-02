@@ -42,9 +42,7 @@ const SkillsStats: React.FC<SkillsStatsProps> = ({
             Technologies learned
           </span>
           <span
-            className={`font-bold ${
-              isDark ? "text-white" : "text-slate-900"
-            }`}
+            className={`font-bold ${isDark ? "text-white" : "text-slate-900"}`}
           >
             {totalSkills}
           </span>

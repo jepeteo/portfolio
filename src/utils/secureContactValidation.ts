@@ -28,10 +28,10 @@ export interface RateLimitState {
 // Enhanced email validation with security checks
 export const validateEmailSecure = (email: string): boolean => {
   if (!email || typeof email !== "string") return false
-  
+
   // Remove any spaces (emails shouldn't have spaces)
   const cleanEmail = email.replace(/\s/g, "")
-  
+
   // Check for suspicious patterns
   const suspiciousPatterns = [
     /script/gi,
@@ -42,11 +42,11 @@ export const validateEmailSecure = (email: string): boolean => {
     /eval\(/gi,
     /<.*>/gi, // HTML tags
   ]
-  
-  if (suspiciousPatterns.some(pattern => pattern.test(cleanEmail))) {
+
+  if (suspiciousPatterns.some((pattern) => pattern.test(cleanEmail))) {
     return false
   }
-  
+
   return (
     validationPatterns.email.test(cleanEmail) &&
     cleanEmail.length >= 5 &&
@@ -57,9 +57,9 @@ export const validateEmailSecure = (email: string): boolean => {
 // Enhanced name validation with security checks
 export const validateNameSecure = (name: string): boolean => {
   if (!name || typeof name !== "string") return false
-  
+
   const trimmed = name.trim()
-  
+
   // Check for suspicious patterns
   const suspiciousPatterns = [
     /script/gi,
@@ -71,22 +71,22 @@ export const validateNameSecure = (name: string): boolean => {
     /<.*>/gi, // HTML tags
     /\{.*\}/gi, // Template literals
   ]
-  
-  if (suspiciousPatterns.some(pattern => pattern.test(trimmed))) {
+
+  if (suspiciousPatterns.some((pattern) => pattern.test(trimmed))) {
     return false
   }
-  
+
   return validationPatterns.name.test(trimmed)
 }
 
 // Enhanced message validation with security checks
 export const validateMessageSecure = (message: string): boolean => {
   if (!message || typeof message !== "string") return false
-  
+
   const trimmed = message.trim()
-  
+
   if (trimmed.length < 10 || trimmed.length > 2000) return false
-  
+
   // Check for suspicious patterns
   const suspiciousPatterns = [
     /script/gi,
@@ -100,22 +100,22 @@ export const validateMessageSecure = (message: string): boolean => {
     /<object.*?>/gi,
     /<embed.*?>/gi,
   ]
-  
-  if (suspiciousPatterns.some(pattern => pattern.test(trimmed))) {
+
+  if (suspiciousPatterns.some((pattern) => pattern.test(trimmed))) {
     return false
   }
-  
+
   return true
 }
 
 // Subject validation with security checks
 export const validateSubjectSecure = (subject: string): boolean => {
   if (!subject || typeof subject !== "string") return false
-  
+
   const trimmed = subject.trim()
-  
+
   if (trimmed.length < 3 || trimmed.length > 100) return false
-  
+
   // Check for suspicious patterns
   const suspiciousPatterns = [
     /script/gi,
@@ -126,16 +126,18 @@ export const validateSubjectSecure = (subject: string): boolean => {
     /eval\(/gi,
     /<.*>/gi, // HTML tags
   ]
-  
-  if (suspiciousPatterns.some(pattern => pattern.test(trimmed))) {
+
+  if (suspiciousPatterns.some((pattern) => pattern.test(trimmed))) {
     return false
   }
-  
+
   return true
 }
 
 // Enhanced sanitization
-export const sanitizeContactFormData = (data: SecureContactFormData): SecureContactFormData => {
+export const sanitizeContactFormData = (
+  data: SecureContactFormData
+): SecureContactFormData => {
   return {
     name: sanitizeInput(data.name),
     email: sanitizeInput(data.email).toLowerCase(),
@@ -153,18 +155,20 @@ export const detectBot = (data: SecureContactFormData): boolean => {
   if (data.honeypot && data.honeypot.trim() !== "") {
     return true
   }
-  
+
   // Check submission speed (too fast = bot)
   if (data.timestamp) {
     const submissionTime = Date.now() - data.timestamp
-    if (submissionTime < 3000) { // Less than 3 seconds
+    if (submissionTime < 3000) {
+      // Less than 3 seconds
       return true
     }
   }
-  
+
   // Check for suspicious patterns in combined text
-  const combinedText = `${data.name} ${data.email} ${data.subject} ${data.message}`.toLowerCase()
-  
+  const combinedText =
+    `${data.name} ${data.email} ${data.subject} ${data.message}`.toLowerCase()
+
   const botPatterns = [
     /buy.*now/gi,
     /click.*here/gi,
@@ -175,11 +179,11 @@ export const detectBot = (data: SecureContactFormData): boolean => {
     /lorem ipsum/gi,
     /test.*test/gi,
   ]
-  
-  if (botPatterns.some(pattern => pattern.test(combinedText))) {
+
+  if (botPatterns.some((pattern) => pattern.test(combinedText))) {
     return true
   }
-  
+
   return false
 }
 
@@ -188,13 +192,13 @@ export const checkRateLimit = (ip: string): RateLimitState => {
   const key = `rate_limit_${ip}`
   const stored = localStorage.getItem(key)
   const now = Date.now()
-  
+
   let state: RateLimitState = {
     attempts: 0,
     lastAttempt: now,
     blocked: false,
   }
-  
+
   if (stored) {
     try {
       state = JSON.parse(stored)
@@ -203,14 +207,14 @@ export const checkRateLimit = (ip: string): RateLimitState => {
       state = { attempts: 0, lastAttempt: now, blocked: false }
     }
   }
-  
+
   // Reset counter if enough time has passed (15 minutes)
   if (now - state.lastAttempt > 15 * 60 * 1000) {
     state.attempts = 0
     state.blocked = false
     state.blockUntil = undefined
   }
-  
+
   // Check if still blocked
   if (state.blockUntil && now < state.blockUntil) {
     state.blocked = true
@@ -218,15 +222,18 @@ export const checkRateLimit = (ip: string): RateLimitState => {
     state.blocked = false
     state.blockUntil = undefined
   }
-  
+
   return state
 }
 
-export const updateRateLimit = (ip: string, success: boolean = false): RateLimitState => {
+export const updateRateLimit = (
+  ip: string,
+  success: boolean = false
+): RateLimitState => {
   const key = `rate_limit_${ip}`
   const state = checkRateLimit(ip)
   const now = Date.now()
-  
+
   if (success) {
     // Reset on successful submission
     state.attempts = 0
@@ -236,14 +243,14 @@ export const updateRateLimit = (ip: string, success: boolean = false): RateLimit
     // Increment attempts
     state.attempts += 1
     state.lastAttempt = now
-    
+
     // Block if too many attempts
     if (state.attempts >= 5) {
       state.blocked = true
-      state.blockUntil = now + (30 * 60 * 1000) // Block for 30 minutes
+      state.blockUntil = now + 30 * 60 * 1000 // Block for 30 minutes
     }
   }
-  
+
   localStorage.setItem(key, JSON.stringify(state))
   return state
 }
@@ -257,7 +264,7 @@ export const validateContactFormSecure = (
   isBot: boolean
 } => {
   const errors: ContactFormErrors = {}
-  
+
   // Check for bot
   const isBot = detectBot(data)
   if (isBot) {
@@ -267,24 +274,24 @@ export const validateContactFormSecure = (
       isBot: true,
     }
   }
-  
+
   // Validate individual fields
   if (!validateNameSecure(data.name)) {
     errors.name = "Please enter a valid name (2-50 characters, letters only)"
   }
-  
+
   if (!validateEmailSecure(data.email)) {
     errors.email = "Please enter a valid email address"
   }
-  
+
   if (!validateSubjectSecure(data.subject)) {
     errors.subject = "Please enter a valid subject (3-100 characters)"
   }
-  
+
   if (!validateMessageSecure(data.message)) {
     errors.message = "Please enter a valid message (10-2000 characters)"
   }
-  
+
   return {
     isValid: Object.keys(errors).length === 0,
     errors,

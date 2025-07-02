@@ -45,9 +45,11 @@ const usePerformanceMonitor = (componentName: string) => {
       metricsRef.current.push(metrics)
 
       // Only log in development and for slow renders (>16ms for 60fps)
-      if (process.env.NODE_ENV === 'development' && renderTime > 16) {
+      if (process.env.NODE_ENV === "development" && renderTime > 16) {
         console.warn(
-          `🐌 Slow render in ${componentName}: ${renderTime.toFixed(2)}ms (Render #${renderCountRef.current})`
+          `🐌 Slow render in ${componentName}: ${renderTime.toFixed(
+            2
+          )}ms (Render #${renderCountRef.current})`
         )
       }
 
@@ -61,7 +63,7 @@ const usePerformanceMonitor = (componentName: string) => {
   // Web Vitals monitoring
   const measureWebVitals = useCallback(() => {
     // Largest Contentful Paint
-    if ('PerformanceObserver' in window) {
+    if ("PerformanceObserver" in window) {
       try {
         new PerformanceObserver((list) => {
           const entries = list.getEntries()
@@ -69,7 +71,7 @@ const usePerformanceMonitor = (componentName: string) => {
           if (lastEntry) {
             webVitalsRef.current.LCP = lastEntry.startTime
           }
-        }).observe({ entryTypes: ['largest-contentful-paint'] })
+        }).observe({ entryTypes: ["largest-contentful-paint"] })
 
         // First Input Delay
         new PerformanceObserver((list) => {
@@ -79,7 +81,7 @@ const usePerformanceMonitor = (componentName: string) => {
               webVitalsRef.current.FID = entry.processingStart - entry.startTime
             }
           })
-        }).observe({ entryTypes: ['first-input'] })
+        }).observe({ entryTypes: ["first-input"] })
 
         // Cumulative Layout Shift
         new PerformanceObserver((list) => {
@@ -91,17 +93,18 @@ const usePerformanceMonitor = (componentName: string) => {
             }
           })
           webVitalsRef.current.CLS = clsValue
-        }).observe({ entryTypes: ['layout-shift'] })
-
+        }).observe({ entryTypes: ["layout-shift"] })
       } catch (error) {
         // PerformanceObserver not supported
-        console.warn('PerformanceObserver not supported')
+        console.warn("PerformanceObserver not supported")
       }
     }
 
     // Navigation timing metrics
     if (performance.getEntriesByType) {
-      const navEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[]
+      const navEntries = performance.getEntriesByType(
+        "navigation"
+      ) as PerformanceNavigationTiming[]
       if (navEntries.length > 0) {
         const nav = navEntries[0]
         webVitalsRef.current.FCP = nav.responseStart - nav.requestStart
@@ -116,20 +119,25 @@ const usePerformanceMonitor = (componentName: string) => {
 
   // Performance report
   const getPerformanceReport = useCallback(() => {
-    const avgRenderTime = metricsRef.current.length > 0
-      ? metricsRef.current.reduce((sum, m) => sum + m.renderTime, 0) / metricsRef.current.length
-      : 0
+    const avgRenderTime =
+      metricsRef.current.length > 0
+        ? metricsRef.current.reduce((sum, m) => sum + m.renderTime, 0) /
+          metricsRef.current.length
+        : 0
 
-    const slowRenders = metricsRef.current.filter(m => m.renderTime > 16).length
+    const slowRenders = metricsRef.current.filter(
+      (m) => m.renderTime > 16
+    ).length
 
     return {
       componentName,
       avgRenderTime: Number(avgRenderTime.toFixed(2)),
       totalRenders: renderCountRef.current,
       slowRenders,
-      slowRenderPercentage: renderCountRef.current > 0 
-        ? Number(((slowRenders / renderCountRef.current) * 100).toFixed(2))
-        : 0,
+      slowRenderPercentage:
+        renderCountRef.current > 0
+          ? Number(((slowRenders / renderCountRef.current) * 100).toFixed(2))
+          : 0,
       webVitals: webVitalsRef.current,
       recentMetrics: metricsRef.current.slice(-5), // Last 5 renders
     }

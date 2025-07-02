@@ -28,11 +28,13 @@ const ModernSkills: React.FC = () => {
 
   // Log performance report in development
   React.useEffect(() => {
-    const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    const isDevelopment =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
     if (isDevelopment) {
       const report = getPerformanceReport()
       if (report.totalRenders % 5 === 0 && report.totalRenders > 0) {
-        console.log('📊 ModernSkills Performance:', report)
+        console.log("📊 ModernSkills Performance:", report)
       }
     }
   }, [getPerformanceReport])
@@ -134,9 +136,9 @@ const ModernSkills: React.FC = () => {
             </div>
 
             {Object.entries(skillCategories).map(([key, category]) => (
-              <CategoryCard 
-                key={key} 
-                categoryKey={key} 
+              <CategoryCard
+                key={key}
+                categoryKey={key}
                 category={category}
                 isActive={activeCategory === key}
                 onClick={setActiveCategory}
@@ -159,9 +161,9 @@ const ModernSkills: React.FC = () => {
             {/* Skills grid with stories */}
             <div className="grid md:grid-cols-2 gap-6">
               {currentCategory.skills.map((skill, index) => (
-                <SkillCard 
-                  key={skill.name} 
-                  skill={skill} 
+                <SkillCard
+                  key={skill.name}
+                  skill={skill}
                   index={index}
                   isVisible={isVisible}
                   hoveredSkill={hoveredSkill}

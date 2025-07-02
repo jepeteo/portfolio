@@ -1,12 +1,6 @@
 import React from "react"
 import { useTheme } from "../../context/ThemeContext"
-import {
-  TrendingUp,
-  Target,
-  Coffee,
-  Heart,
-  Star,
-} from "lucide-react"
+import { TrendingUp, Target, Coffee, Heart, Star } from "lucide-react"
 
 interface SkillCardProps {
   skill: {

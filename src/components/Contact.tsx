@@ -46,7 +46,7 @@ const Contact: React.FC = memo(() => {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle")
-  
+
   // Security state
   const [csrfToken] = useState(() => generateCSRFToken())
   const [honeypot, setHoneypot] = useState("")
@@ -97,9 +97,13 @@ const Contact: React.FC = memo(() => {
   // Validate entire form with security checks
   const validateForm = useCallback((): boolean => {
     // Check rate limiting first
-    const rateLimitState = checkRateLimit('default') // Using 'default' as IP placeholder for client-side
+    const rateLimitState = checkRateLimit("default") // Using 'default' as IP placeholder for client-side
     if (rateLimitState.blocked) {
-      setErrors({ general: `Too many attempts. Please try again in ${Math.ceil((rateLimitState.blockUntil! - Date.now()) / 1000)} seconds.` })
+      setErrors({
+        general: `Too many attempts. Please try again in ${Math.ceil(
+          (rateLimitState.blockUntil! - Date.now()) / 1000
+        )} seconds.`,
+      })
       return false
     }
 
@@ -113,8 +117,8 @@ const Contact: React.FC = memo(() => {
 
     // Detect bot behavior
     if (detectBot(secureData)) {
-      console.warn('Bot behavior detected')
-      setErrors({ general: 'Invalid submission detected. Please try again.' })
+      console.warn("Bot behavior detected")
+      setErrors({ general: "Invalid submission detected. Please try again." })
       return false
     }
 
@@ -138,8 +142,12 @@ const Contact: React.FC = memo(() => {
 
       // Additional security: check submission timing (prevent too fast submissions)
       const submissionTime = Date.now() - startTime
-      if (submissionTime < 3000) { // Less than 3 seconds
-        setErrors({ general: 'Please take a moment to review your message before submitting.' })
+      if (submissionTime < 3000) {
+        // Less than 3 seconds
+        setErrors({
+          general:
+            "Please take a moment to review your message before submitting.",
+        })
         return
       }
 
@@ -553,7 +561,7 @@ const Contact: React.FC = memo(() => {
               </div>
 
               {/* Honeypot field - hidden from users, visible to bots */}
-              <div style={{ display: 'none' }}>
+              <div style={{ display: "none" }}>
                 <label htmlFor="website">Website</label>
                 <input
                   type="text"
