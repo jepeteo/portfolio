@@ -145,35 +145,6 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
             {experience.description}
           </p>
 
-          {/* Metrics */}
-          {Object.keys(experience.metrics).length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-              {Object.entries(experience.metrics).map(([key, value]) => (
-                <div
-                  key={key}
-                  className={`p-3 rounded-xl ${
-                    isDark ? "bg-slate-700/50" : "bg-slate-100/50"
-                  } text-center`}
-                >
-                  <div
-                    className={`text-lg font-bold ${
-                      isDark ? "text-white" : "text-slate-900"
-                    }`}
-                  >
-                    {value}
-                  </div>
-                  <div
-                    className={`text-xs font-medium ${
-                      isDark ? "text-slate-400" : "text-slate-600"
-                    }`}
-                  >
-                    {key.charAt(0).toUpperCase() + key.slice(1)}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
           {/* Key Responsibilities */}
           {experience.keyResponsibilities &&
             experience.keyResponsibilities.length > 0 && (
@@ -205,64 +176,6 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
                 </ul>
               </div>
             )}
-
-          {/* Achievements */}
-          {experience.achievements && experience.achievements.length > 0 && (
-            <div className="mb-6">
-              <h4
-                className={`text-md font-semibold mb-3 ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
-              >
-                Key Achievements
-              </h4>
-              <ul className="space-y-2">
-                {experience.achievements.map((achievement, idx) => (
-                  <li key={idx} className="flex gap-2">
-                    <CheckCircle
-                      className={`w-5 h-5 flex-shrink-0 mt-0.5 ${
-                        isDark ? "text-green-500" : "text-green-600"
-                      }`}
-                    />
-                    <span
-                      className={`${
-                        isDark ? "text-slate-300" : "text-slate-700"
-                      }`}
-                    >
-                      {achievement}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Tech Stack */}
-          {experience.techStack.length > 0 && (
-            <div>
-              <h4
-                className={`text-md font-semibold mb-3 ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
-              >
-                Technologies Used
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {experience.techStack.map((tech, index) => (
-                  <span
-                    key={index}
-                    className={`px-3 py-1 rounded-lg text-sm font-medium ${
-                      isDark
-                        ? "bg-slate-700/50 text-slate-300 border border-slate-600/50"
-                        : "bg-slate-100 text-slate-700 border border-slate-200"
-                    }`}
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

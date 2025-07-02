@@ -173,7 +173,7 @@ const calculateExperienceStats = (
       employmentYears = diffTime / (1000 * 60 * 60 * 24 * 365.25)
     }
 
-    return Math.round(employmentYears * 10) / 10 // Round to 1 decimal place
+    return Math.ceil(employmentYears) // Round up to nearest whole year
   }
 
   // Calculate freelance years
@@ -199,7 +199,7 @@ const calculateExperienceStats = (
     const diffTime = Math.abs(endDate.getTime() - startDate.getTime())
     const freelanceYears = diffTime / (1000 * 60 * 60 * 24 * 365.25)
 
-    return Math.round(freelanceYears * 10) / 10 // Round to 1 decimal place
+    return Math.ceil(freelanceYears) // Round up to nearest whole year
   }
 
   const employmentYears = calculateEmploymentYears()
@@ -235,7 +235,7 @@ const calculateExperienceStats = (
     .map(([tech]) => tech)
 
   return {
-    totalYears: Math.round(totalYears * 10) / 10,
+    totalYears: Math.ceil(totalYears), // Rounded up to nearest year
     freelanceYears,
     employmentYears,
     totalProjects,

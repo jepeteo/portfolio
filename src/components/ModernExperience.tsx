@@ -4,7 +4,6 @@ import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import usePerformanceMonitor from "../hooks/usePerformanceMonitor"
 import { useExperienceData, TechExperience } from "../hooks/useExperienceData"
 import { ExperienceStatsComponent } from "./experience/ExperienceStats"
-import { TopTechnologies } from "./experience/TopTechnologies"
 import { ExperienceCallToAction } from "./experience/ExperienceCallToAction"
 import { ExperienceSidebar } from "./experience/ExperienceSidebar"
 import { ExperienceDetails } from "./experience/ExperienceDetails"
@@ -94,13 +93,12 @@ const ModernExperience: React.FC = () => {
           </div>
 
           <h2
-            className={`text-4xl md:text-5xl font-bold mb-6 ${
+            className={`text-5xl md:text-7xl font-bold mb-8 ${
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
-            Career{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-emerald-500">
-              Journey
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">
+              Career Journey
             </span>
           </h2>
 
@@ -109,9 +107,9 @@ const ModernExperience: React.FC = () => {
               isDark ? "text-slate-300" : "text-slate-700"
             }`}
           >
-            A comprehensive overview of my {stats.totalYears}+ years in web
-            development ({stats.employmentYears}+ years employment and{" "}
-            {stats.freelanceYears}+ years freelance), spanning{" "}
+            A comprehensive overview of my {stats.totalYears} years in web
+            development ({stats.employmentYears} years employment and{" "}
+            {stats.freelanceYears} years freelance), spanning{" "}
             {stats.totalProjects}+ projects and {stats.totalClients}+ satisfied
             clients.
           </p>
@@ -203,11 +201,6 @@ const ModernExperience: React.FC = () => {
               isDark={isDark}
             />
           </div>
-        </div>
-
-        {/* Top Technologies */}
-        <div className="mb-16">
-          <TopTechnologies stats={stats} isDark={isDark} />
         </div>
 
         {/* Call to Action */}
