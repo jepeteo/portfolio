@@ -10,7 +10,7 @@ export const securityConfig = {
       "https://unpkg.com",
       "https://fonts.googleapis.com",
     ],
-    
+
     // Allow self and specific domains for styles
     styleSrc: [
       "'self'",
@@ -18,50 +18,33 @@ export const securityConfig = {
       "https://fonts.googleapis.com",
       "https://cdnjs.cloudflare.com",
     ],
-    
+
     // Allow images from self and common CDNs
-    imgSrc: [
-      "'self'",
-      "data:",
-      "https:",
-      "blob:",
-    ],
-    
+    imgSrc: ["'self'", "data:", "https:", "blob:"],
+
     // Font sources
     fontSrc: [
       "'self'",
       "https://fonts.gstatic.com",
       "https://cdnjs.cloudflare.com",
     ],
-    
+
     // Connect sources for API calls
-    connectSrc: [
-      "'self'",
-      "https://formspree.io",
-      "https://api.github.com",
-    ],
-    
+    connectSrc: ["'self'", "https://formspree.io", "https://api.github.com"],
+
     // Frame sources
-    frameSrc: [
-      "'none'",
-    ],
-    
+    frameSrc: ["'none'"],
+
     // Object sources
-    objectSrc: [
-      "'none'",
-    ],
-    
+    objectSrc: ["'none'"],
+
     // Base URI
-    baseUri: [
-      "'self'",
-    ],
-    
+    baseUri: ["'self'"],
+
     // Default source
-    defaultSrc: [
-      "'self'",
-    ],
+    defaultSrc: ["'self'"],
   },
-  
+
   // Rate limiting configuration
   rateLimiting: {
     // Contact form rate limiting
@@ -70,7 +53,7 @@ export const securityConfig = {
       max: 5, // limit each IP to 5 requests per windowMs
       message: "Too many contact form submissions, please try again later.",
     },
-    
+
     // General API rate limiting
     api: {
       windowMs: 15 * 60 * 1000, // 15 minutes
@@ -78,24 +61,24 @@ export const securityConfig = {
       message: "Too many requests, please try again later.",
     },
   },
-  
+
   // Security headers
   headers: {
     // Prevent clickjacking
     "X-Frame-Options": "DENY",
-    
+
     // Prevent MIME type sniffing
     "X-Content-Type-Options": "nosniff",
-    
+
     // Enable XSS protection
     "X-XSS-Protection": "1; mode=block",
-    
+
     // Referrer policy
     "Referrer-Policy": "strict-origin-when-cross-origin",
-    
+
     // Permissions policy
     "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
-    
+
     // Strict Transport Security (HTTPS only)
     "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
   },
@@ -104,7 +87,7 @@ export const securityConfig = {
 // Generate CSP header string
 export const generateCSPHeader = (): string => {
   const { csp } = securityConfig
-  
+
   const directives = [
     `default-src ${csp.defaultSrc.join(" ")}`,
     `script-src ${csp.scriptSrc.join(" ")}`,
@@ -116,7 +99,7 @@ export const generateCSPHeader = (): string => {
     `object-src ${csp.objectSrc.join(" ")}`,
     `base-uri ${csp.baseUri.join(" ")}`,
   ]
-  
+
   return directives.join("; ")
 }
 
@@ -125,7 +108,7 @@ export const sanitizeInput = (input: string): string => {
   if (!input || typeof input !== "string") {
     return ""
   }
-  
+
   return input
     .trim()
     .replace(/[<>]/g, "") // Remove angle brackets
@@ -140,16 +123,22 @@ export const sanitizeInput = (input: string): string => {
 export const generateCSRFToken = (): string => {
   const array = new Uint8Array(32)
   crypto.getRandomValues(array)
-  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('')
+  return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join(
+    ""
+  )
 }
 
-export const validateCSRFToken = (token: string, sessionToken: string): boolean => {
+export const validateCSRFToken = (
+  token: string,
+  sessionToken: string
+): boolean => {
   return token === sessionToken && token.length === 64
 }
 
 // Input validation patterns
 export const validationPatterns = {
-  email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+  email:
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
   name: /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s\-\'\.]{2,50}$/,
   phone: /^[\+]?[\d\s\-\(\)\.]{10,15}$/,
   url: /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/,
@@ -167,7 +156,7 @@ export const secureStorage = {
       console.error("Error storing data:", error)
     }
   },
-  
+
   // Retrieve and decrypt data
   getItem: (key: string): any => {
     try {
@@ -178,7 +167,7 @@ export const secureStorage = {
       return null
     }
   },
-  
+
   // Remove data
   removeItem: (key: string): void => {
     try {
@@ -187,7 +176,7 @@ export const secureStorage = {
       console.error("Error removing data:", error)
     }
   },
-  
+
   // Clear all data
   clear: (): void => {
     try {

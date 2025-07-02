@@ -1,13 +1,6 @@
 import { useMemo } from "react"
 import mySkills from "../assets/mySkills.json"
-import {
-  Code2,
-  Database,
-  Server,
-  Globe,
-  Settings,
-  Layers,
-} from "lucide-react"
+import { Code2, Database, Server, Globe, Settings, Layers } from "lucide-react"
 
 interface Skill {
   skillName: string
@@ -206,7 +199,9 @@ const useSkillsData = () => {
 
     // Calculate stats
     const totalSkills = visibleSkills.length
-    const masteredSkills = visibleSkills.filter((skill) => skill.level >= 90).length
+    const masteredSkills = visibleSkills.filter(
+      (skill) => skill.level >= 90
+    ).length
     const proficientSkills = visibleSkills.filter(
       (skill) => skill.level >= 80 && skill.level < 90
     ).length

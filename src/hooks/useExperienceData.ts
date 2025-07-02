@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
-import jobExperienceData from '../assets/jobExperience.json'
+import { useMemo } from "react"
+import jobExperienceData from "../assets/jobExperience.json"
 
 export interface Experience {
   title: string
@@ -60,8 +60,18 @@ const transformToTechExperience = (): TechExperience[] => {
     // Helper function to format month and year
     const formatMonthYear = (month: number, year: number) => {
       const monthNames = [
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
       ]
       return `${monthNames[month - 1]} ${year}`
     }
@@ -99,9 +109,12 @@ const transformToTechExperience = (): TechExperience[] => {
       duration: {
         years,
         months,
-        display: years > 0 
-          ? `${years} year${years > 1 ? 's' : ''}${months > 0 ? ` ${months} month${months > 1 ? 's' : ''}` : ''}`
-          : `${months} month${months > 1 ? 's' : ''}`,
+        display:
+          years > 0
+            ? `${years} year${years > 1 ? "s" : ""}${
+                months > 0 ? ` ${months} month${months > 1 ? "s" : ""}` : ""
+              }`
+            : `${months} month${months > 1 ? "s" : ""}`,
       },
       metrics: extractMetrics(job, years),
       techStack: job.technologies || [],
@@ -112,22 +125,35 @@ const transformToTechExperience = (): TechExperience[] => {
 }
 
 // Calculate experience statistics
-const calculateExperienceStats = (experiences: TechExperience[]): ExperienceStats => {
-  const totalYears = experiences.reduce((sum, exp) => sum + exp.duration.years + (exp.duration.months / 12), 0)
-  const totalProjects = experiences.reduce((sum, exp) => sum + (exp.metrics.projects || 0), 0)
-  const totalClients = experiences.reduce((sum, exp) => sum + (exp.metrics.clients || 0), 0)
-  const currentRoles = experiences.filter(exp => exp.status === 'current').length
+const calculateExperienceStats = (
+  experiences: TechExperience[]
+): ExperienceStats => {
+  const totalYears = experiences.reduce(
+    (sum, exp) => sum + exp.duration.years + exp.duration.months / 12,
+    0
+  )
+  const totalProjects = experiences.reduce(
+    (sum, exp) => sum + (exp.metrics.projects || 0),
+    0
+  )
+  const totalClients = experiences.reduce(
+    (sum, exp) => sum + (exp.metrics.clients || 0),
+    0
+  )
+  const currentRoles = experiences.filter(
+    (exp) => exp.status === "current"
+  ).length
 
   // Extract top technologies
   const techCount: Record<string, number> = {}
-  experiences.forEach(exp => {
-    exp.techStack.forEach(tech => {
+  experiences.forEach((exp) => {
+    exp.techStack.forEach((tech) => {
       techCount[tech] = (techCount[tech] || 0) + 1
     })
   })
 
   const topTechnologies = Object.entries(techCount)
-    .sort(([,a], [,b]) => b - a)
+    .sort(([, a], [, b]) => b - a)
     .slice(0, 8)
     .map(([tech]) => tech)
 
@@ -142,15 +168,18 @@ const calculateExperienceStats = (experiences: TechExperience[]): ExperienceStat
 
 export const useExperienceData = () => {
   const experiences = useMemo(() => transformToTechExperience(), [])
-  const stats = useMemo(() => calculateExperienceStats(experiences), [experiences])
+  const stats = useMemo(
+    () => calculateExperienceStats(experiences),
+    [experiences]
+  )
 
   const currentExperiences = useMemo(
-    () => experiences.filter(exp => exp.status === 'current'),
+    () => experiences.filter((exp) => exp.status === "current"),
     [experiences]
   )
 
   const pastExperiences = useMemo(
-    () => experiences.filter(exp => exp.status === 'completed'),
+    () => experiences.filter((exp) => exp.status === "completed"),
     [experiences]
   )
 
