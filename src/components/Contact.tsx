@@ -29,6 +29,13 @@ import {
   recordContactFormAttempt,
 } from "../utils/enhancedRateLimit"
 import { CSRFProtection } from "../utils/enhancedCSRF"
+import {
+  useScreenReader,
+  useAccessibleForm,
+  useReducedMotion,
+  useFocusManagement,
+} from "../utils/accessibilityOptimization"
+import { LiveRegion } from "./accessibility/LiveRegion"
 
 const Contact: React.FC = memo(() => {
   const { isDark } = useTheme()
@@ -36,6 +43,12 @@ const Contact: React.FC = memo(() => {
     threshold: 0.1,
     rootMargin: "50px",
   })
+
+  // Accessibility hooks
+  const { announce } = useScreenReader()
+  const { errors: a11yErrors, validateField } = useAccessibleForm()
+  const prefersReducedMotion = useReducedMotion()
+  const { saveFocus, restoreFocus } = useFocusManagement()
 
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
