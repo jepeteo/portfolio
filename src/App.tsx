@@ -14,7 +14,11 @@ import {
   createLazyComponent,
   ComponentPreloader,
 } from "./utils/performanceOptimization"
-import useSEO from "./hooks/useSEO"
+import {
+  useEnhancedSEO,
+  defaultSEOConfig,
+  seoManager,
+} from "./utils/enhancedSEO"
 import useServiceWorker from "./hooks/useServiceWorker"
 
 import "flowbite"
@@ -54,6 +58,11 @@ const AppContent: React.FC = () => {
   // Initialize service worker for performance
   useServiceWorker()
 
+  // Optimize Core Web Vitals
+  React.useEffect(() => {
+    seoManager.optimizeCorewWebVitals()
+  }, [])
+
   // Preload components on hover/intersection
   React.useEffect(() => {
     // Preload experience section when user scrolls past skills
@@ -89,36 +98,29 @@ const AppContent: React.FC = () => {
     }
   }, [])
 
-  // SEO configuration
-  useSEO({
-    title: "Theodoros Mentis - Senior Full Stack Developer Portfolio",
-    description:
-      "Senior Full Stack Developer with 15+ years of experience in WordPress, React, and modern web technologies. Specializing in scalable web solutions and server administration.",
-    keywords:
-      "theodoros mentis, full stack developer, wordpress expert, react developer, web development, javascript, typescript, php, mysql, server administration, greece developer",
-    ogTitle: "Theodoros Mentis - Senior Full Stack Developer",
-    ogDescription:
-      "Experienced developer creating seamless web experiences with WordPress, React, and modern web technologies.",
-    schema: {
-      "@context": "https://schema.org",
-      "@type": "Person",
+  // Enhanced SEO configuration with structured data
+  useEnhancedSEO({
+    ...defaultSEOConfig,
+    structuredData: seoManager.generatePersonSchema({
       name: "Theodoros Mentis",
       jobTitle: "Senior Full Stack Developer",
-      description:
-        "Senior Full Stack Developer specializing in WordPress, React, and modern web technologies",
+      email: "th.mentis@gmail.com",
       url: "https://jepeteo.github.io/portfolio/",
-      sameAs: [
-        "https://www.linkedin.com/in/thmentis/",
-        "https://github.com/jepeteo",
-      ],
-      knowsAbout: [
+      image: "https://jepeteo.github.io/portfolio/src/assets/images/teo.png",
+      skills: [
         "WordPress Development",
         "React Development",
-        "Full Stack Development",
+        "JavaScript",
+        "TypeScript",
+        "PHP",
+        "MySQL",
         "Server Administration",
         "Web Development",
       ],
-    },
+      location: "Greece",
+      description:
+        "Senior Full Stack Developer with 15+ years of experience in WordPress, React, and modern web technologies.",
+    }),
   })
 
   return (
