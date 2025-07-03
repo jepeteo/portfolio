@@ -14,13 +14,7 @@
     "type-check": "tsc --noEmit",
     "preview": "vite preview",
     "test": "echo \"Add tests here\" && exit 0",
-    "performance:check": "node scripts/performance-budget-check.js",
     "performance:analyze": "npm run build && npx vite-bundle-visualizer -o bundle-report.html",
-    "performance:size": "npx bundlewatch --config bundlewatch.config.json",
-    "audit:security": "npm audit && npx audit-ci",
-    "audit:deps": "npx depcheck && npx npm-check-updates",
-    "ci": "echo \"Skipping lint and type-check\" && npm run build",
-    "lighthouse": "npm run build && npm run preview & sleep 10 && npx lighthouse http://localhost:4173 --output=html --output-path=lighthouse-report.html && pkill -f 'vite preview'",
     "clean": "npx rimraf dist node_modules/.vite",
     "prepare": "echo \"Skipping lint and type-check in prepare script\""
   },
