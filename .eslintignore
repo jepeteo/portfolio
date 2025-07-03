@@ -1,0 +1,27 @@
+# Build outputs and dist
+dist/
+dist-ssr/
+
+# Config and utility files
+*.config.js
+*.config.ts
+vite.config.js
+postcss.config.js
+tailwind.config.js
+security-test.js
+
+# Generated files
+bundle-report.html
+node_modules/
+coverage/
+*.min.js
+public/
+
+# Test data
+__mocks__/
+__tests__/
+
+# Other
+.DS_Store
+.env
+.env.*
