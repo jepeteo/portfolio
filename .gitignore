@@ -10,6 +10,7 @@ lerna-debug.log*
 # Build outputs and dependencies
 node_modules
 dist
+docs
 dist-ssr
 *.local
 bundle-report.html
@@ -31,4 +32,4 @@ updateDescriptions.js
 
 # Environment variables
 .env
-/src/docs/
+/src/docs
