@@ -17,7 +17,7 @@
     <!-- Security Headers -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.emailjs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com; frame-ancestors 'none';"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.emailjs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests;"
     />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="DENY" />
@@ -28,8 +28,11 @@
     />
     <meta
       http-equiv="Permissions-Policy"
-      content="camera=(), microphone=(), geolocation=()"
+      content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), magnetometer=(), gyroscope=(), accelerometer=()"
     />
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp" />
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+    <meta http-equiv="Cross-Origin-Resource-Policy" content="same-origin" />
 
     <!-- Open Graph Meta Tags -->
     <meta
@@ -63,8 +66,8 @@
     />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/portfolio/assets/teo-BnRuyBnv.png" />
-    <link rel="apple-touch-icon" href="/portfolio/assets/teo-BnRuyBnv.png" />
+    <link rel="icon" type="image/png" href="/portfolio/assets/images/teo-BnRuyBnv.png" />
+    <link rel="apple-touch-icon" href="/portfolio/assets/images/teo-BnRuyBnv.png" />
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://jepeteo.github.io/portfolio/" />
@@ -117,10 +120,13 @@
         }
       }
     </script>
-    <script type="module" crossorigin src="/portfolio/assets/index-Dtw5CKVX.js"></script>
-    <link rel="modulepreload" crossorigin href="/portfolio/assets/react-CYabRHnS.js">
-    <link rel="modulepreload" crossorigin href="/portfolio/assets/vendor-_lf-CcOu.js">
-    <link rel="stylesheet" crossorigin href="/portfolio/assets/index-5Rbj6WfT.css">
+    <script type="module" crossorigin src="/portfolio/assets/index-B2latcE-.js"></script>
+    <link rel="modulepreload" crossorigin href="/portfolio/assets/react-vendor-CUWRTB7o.js">
+    <link rel="modulepreload" crossorigin href="/portfolio/assets/framer-motion-B1zF2iON.js">
+    <link rel="modulepreload" crossorigin href="/portfolio/assets/utils-LTmjcG3g.js">
+    <link rel="modulepreload" crossorigin href="/portfolio/assets/ui-vendor-Bt50Jm7x.js">
+    <link rel="modulepreload" crossorigin href="/portfolio/assets/emailjs-DtVQIX_c.js">
+    <link rel="stylesheet" crossorigin href="/portfolio/assets/css/index-C1bMz1DM.css">
   </head>
   <body>
     <div id="root"></div>
