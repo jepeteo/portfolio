@@ -20,6 +20,7 @@ import {
   seoManager,
 } from "./utils/enhancedSEO"
 import useServiceWorker from "./hooks/useServiceWorker"
+import productionMonitor from "./utils/productionMonitor"
 
 import "flowbite"
 import "flowbite/dist/flowbite.css"
@@ -57,6 +58,17 @@ const AppContent: React.FC = () => {
 
   // Initialize service worker for performance
   useServiceWorker()
+
+  // Initialize production monitoring
+  React.useEffect(() => {
+    // Track initial page view
+    productionMonitor.trackPageView()
+
+    // Track theme changes
+    productionMonitor.trackEvent("theme_change", {
+      theme: isDark ? "dark" : "light",
+    })
+  }, [isDark])
 
   // Optimize Core Web Vitals
   React.useEffect(() => {

@@ -1,0 +1,22 @@
+{
+    "files": [
+        {
+            "path": "dist/assets/*.js",
+            "maxSize": "350KB"
+        },
+        {
+            "path": "dist/assets/*.css",
+            "maxSize": "250KB"
+        },
+        {
+            "path": "dist/assets/index-*.js",
+            "maxSize": "300KB"
+        }
+    ],
+    "ci": {
+        "trackBranches": [
+            "main"
+        ],
+        "defaultCompression": "gzip"
+    }
+}
