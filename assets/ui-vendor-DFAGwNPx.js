@@ -1,4 +1,4 @@
-import{r as n}from"./react-vendor-CUWRTB7o.js";import"./framer-motion-B1zF2iON.js";/**
+import{r as n}from"./react-vendor-CUWRTB7o.js";import"./framer-motion-DQ_Gls6L.js";/**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
