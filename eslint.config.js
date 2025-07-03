@@ -40,9 +40,9 @@ export default tseslint.config(
       ],
     },
     ignores: [
-      'dist/**', 
-      'node_modules/**', 
-      'public/**', 
+      'dist/**',
+      'node_modules/**',
+      'public/**',
       'build/**',
       '**/*.min.js',
       'coverage/**',
