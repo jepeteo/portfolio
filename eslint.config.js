@@ -39,6 +39,20 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
     },
-    ignores: ['dist/**', 'node_modules/**', 'public/**']
+    ignores: [
+      'dist/**', 
+      'node_modules/**', 
+      'public/**', 
+      'build/**',
+      '**/*.min.js',
+      'coverage/**',
+      '**/*.config.js',
+      'vite.config.js',
+      'tailwind.config.js',
+      'postcss.config.js',
+      'security-test.js',
+      'bundle-report.html',
+      '.lighthouseci/**'
+    ]
   }
 );
