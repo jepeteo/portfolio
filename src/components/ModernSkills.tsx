@@ -9,6 +9,11 @@ import SkillCard from "./skills/SkillCard"
 import SkillsStats from "./skills/SkillsStats"
 import SkillsCallToAction from "./skills/SkillsCallToAction"
 import { Sparkles } from "lucide-react"
+import {
+  useReducedMotion,
+  useKeyboardNavigation,
+  useScreenReader,
+} from "../utils/accessibilityOptimization"
 
 const ModernSkills: React.FC = () => {
   const { isDark } = useTheme()
@@ -22,6 +27,18 @@ const ModernSkills: React.FC = () => {
 
   const [activeCategory, setActiveCategory] = useState<string>("languages")
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
+
+  // Accessibility hooks
+  const prefersReducedMotion = useReducedMotion()
+  const { announce } = useScreenReader()
+  const skillsContainerRef = React.useRef<HTMLDivElement>(null)
+  const { currentIndex, focusElement } = useKeyboardNavigation(
+    skillsContainerRef,
+    {
+      selector: 'button, [role="button"], [tabindex]:not([tabindex="-1"])',
+      loop: true,
+    }
+  )
 
   // Use the custom hook for skills data
   const { skillCategories, stats } = useSkillsData()
