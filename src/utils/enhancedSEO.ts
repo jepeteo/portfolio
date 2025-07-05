@@ -1,9 +1,6 @@
-
-
 import { useEffect } from "react"
 
 export interface EnhancedSEOConfig {
-
   title?: string
   description?: string
   keywords?: string[]
@@ -53,7 +50,6 @@ class SEOManager {
   }
 
   applySEO(config: EnhancedSEOConfig): () => void {
-
     if (config.title) {
       document.title = config.title
     }
@@ -174,7 +170,6 @@ class SEOManager {
   }
 
   private setStructuredData(data: any): void {
-
     if (this.structuredDataScript) {
       document.head.removeChild(this.structuredDataScript)
     }
@@ -186,7 +181,6 @@ class SEOManager {
   }
 
   private cleanup(): void {
-
     if (document.title !== "Theodoros Mentis - Senior Full Stack Developer") {
       document.title = "Theodoros Mentis - Senior Full Stack Developer"
     }
@@ -216,9 +210,7 @@ class SEOManager {
         addressLocality: config.location,
       },
       description: config.description,
-      sameAs: [
-
-      ],
+      sameAs: [],
     }
   }
 
@@ -272,7 +264,6 @@ class SEOManager {
   }
 
   optimizeCorewWebVitals() {
-
     this.preloadCriticalResources()
 
     this.optimizeFonts()
@@ -294,7 +285,6 @@ class SEOManager {
   }
 
   private optimizeFonts() {
-
     const fontLinks = document.querySelectorAll(
       'link[href*="fonts.googleapis.com"]'
     )
@@ -338,7 +328,6 @@ export function useEnhancedSEO(config: EnhancedSEOConfig) {
 }
 
 export class SEOUtils {
-
   static generateTitle(
     pageName: string,
     siteName = "Theodoros Mentis"
@@ -390,7 +379,6 @@ export class SEOUtils {
   }
 
   static async validateOGImage(imageUrl: string): Promise<boolean> {
-
     const img = new Image()
     img.src = imageUrl
 

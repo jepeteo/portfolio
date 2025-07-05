@@ -55,7 +55,7 @@ class ProductionMonitor {
     this.userId = this.getUserId()
 
     const monitoringEnabled = import.meta.env.VITE_ENABLE_MONITORING === "true"
-    
+
     if (this.isProduction && monitoringEnabled) {
       this.initializeMonitoring()
     }
