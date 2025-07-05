@@ -20,6 +20,9 @@ const ModernProjects = memo(() => {
   const [projectType, setProjectType] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
+  const [shouldLoadImages, setShouldLoadImages] = useState<Set<string>>(
+    new Set()
+  )
   const { targetRef: ref, isVisible } = useIntersectionObserver<HTMLElement>({
     threshold: 0.1,
     rootMargin: "50px",
@@ -73,10 +76,120 @@ const ModernProjects = memo(() => {
     return filteredProjects.slice(startIndex, startIndex + projectsPerPage)
   }, [filteredProjects, currentPage, projectsPerPage])
 
-  const handleProjectTypeChange = useCallback((type: string | null) => {
-    setProjectType(type)
-    setCurrentPage(1)
+  // Image loading strategy: Load first 6 images immediately, others on demand
+  const shouldLoadImageImmediately = useCallback(
+    (project: Project, index: number) => {
+      // Load images for featured projects or first 6 projects immediately
+      return (
+        project.prFeatured || index < 6 || shouldLoadImages.has(project.prName)
+      )
+    },
+    [shouldLoadImages]
+  )
+
+  // Function to trigger image loading for a specific project
+  const triggerImageLoad = useCallback((projectName: string) => {
+    setShouldLoadImages((prev) => new Set(prev).add(projectName))
   }, [])
+
+  // Handle page changes and load images for new page
+  const handlePageChange = useCallback(
+    (newPage: number) => {
+      setCurrentPage(newPage)
+
+      // Load images for the new page
+      const startIndex = (newPage - 1) * projectsPerPage
+      const endIndex = startIndex + projectsPerPage
+      const pageProjects = filteredProjects.slice(startIndex, endIndex)
+
+      setShouldLoadImages((prev) => {
+        const newSet = new Set(prev)
+        pageProjects.forEach((project) => newSet.add(project.prName))
+        return newSet
+      })
+    },
+    [filteredProjects, projectsPerPage]
+  )
+
+  // Generate smart pagination numbers with ellipsis
+  const generatePaginationNumbers = useCallback(() => {
+    const pages: (number | string)[] = []
+    const maxVisiblePages = 5 // Show maximum 5 page numbers
+
+    if (totalPages <= maxVisiblePages) {
+      // Show all pages if total is less than max visible
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i)
+      }
+    } else {
+      // Always show first page
+      pages.push(1)
+
+      if (currentPage <= 3) {
+        // Show: 1, 2, 3, 4, ..., last
+        for (let i = 2; i <= 4; i++) {
+          pages.push(i)
+        }
+        if (totalPages > 4) {
+          pages.push("...")
+          pages.push(totalPages)
+        }
+      } else if (currentPage >= totalPages - 2) {
+        // Show: 1, ..., last-3, last-2, last-1, last
+        pages.push("...")
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          if (i > 1) pages.push(i)
+        }
+      } else {
+        // Show: 1, ..., current-1, current, current+1, ..., last
+        pages.push("...")
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i)
+        }
+        pages.push("...")
+        pages.push(totalPages)
+      }
+    }
+
+    return pages
+  }, [currentPage, totalPages])
+
+  // Load first 6 projects' images on component mount
+  React.useEffect(() => {
+    const first6Projects = filteredProjects.slice(0, 6)
+    setShouldLoadImages((prev) => {
+      const newSet = new Set(prev)
+      first6Projects.forEach((project) => newSet.add(project.prName))
+      return newSet
+    })
+  }, []) // Only run on mount
+
+  const handleProjectTypeChange = useCallback(
+    (type: string | null) => {
+      setProjectType(type)
+      setCurrentPage(1)
+      // When filter changes, trigger loading of first 6 images of new filtered results
+      const filtered =
+        type === null
+          ? validatedProjects
+          : validatedProjects.filter((project) => project.prType === type)
+
+      const featured = filtered.filter((project) => project.prFeatured)
+      const nonFeatured = filtered
+        .filter((project) => !project.prFeatured)
+        .sort((a, b) => a.prName.localeCompare(b.prName))
+
+      const sortedFiltered = [...featured, ...nonFeatured]
+      const first6Projects = sortedFiltered.slice(0, 6)
+
+      setShouldLoadImages((prev) => {
+        const newSet = new Set(prev)
+        first6Projects.forEach((project) => newSet.add(project.prName))
+        return newSet
+      })
+    },
+    [validatedProjects]
+  )
 
   // Handle image errors - optimized
   const handleImageError = useCallback((projectName: string) => {
@@ -94,18 +207,36 @@ const ModernProjects = memo(() => {
     return icons[type] || Code
   }
 
-  // Project card component - heavily optimized for performance
+  // Project card component - heavily optimized for performance with lazy loading
   const ProjectCard = memo(
     ({
       project,
       index,
       isDark,
+      globalIndex,
     }: {
       project: Project
       index: number
       isDark: boolean
+      globalIndex: number
     }) => {
-      // Removed expensive render tracking for production performance
+      // Card-level intersection observer for lazy loading
+      const { targetRef: cardRef, isVisible: isCardVisible } =
+        useIntersectionObserver<HTMLDivElement>({
+          threshold: 0.1,
+          rootMargin: "100px",
+        })
+
+      // Determine if image should load
+      const shouldLoadImage =
+        shouldLoadImageImmediately(project, globalIndex) || isCardVisible
+
+      // Trigger image loading when card becomes visible
+      React.useEffect(() => {
+        if (isCardVisible && !shouldLoadImages.has(project.prName)) {
+          triggerImageLoad(project.prName)
+        }
+      }, [isCardVisible, project.prName])
 
       // Simplified icon selection without useMemo
       const IconComponent = getProjectIcon(project.prType)
@@ -141,6 +272,7 @@ const ModernProjects = memo(() => {
 
       return (
         <div
+          ref={cardRef}
           className={`relative group transition-all duration-500 transform hover:scale-[1.02] ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
@@ -168,7 +300,7 @@ const ModernProjects = memo(() => {
           >
             {/* Project Image */}
             <div className="relative w-full h-64 overflow-hidden">
-              {!hasImageError && !imageError ? (
+              {shouldLoadImage && !hasImageError && !imageError ? (
                 <>
                   <img
                     src={imageSrc}
@@ -208,6 +340,32 @@ const ModernProjects = memo(() => {
                     </a>
                   </div>
                 </>
+              ) : !shouldLoadImage ? (
+                // Placeholder when image shouldn't load yet
+                <div
+                  className={`w-full h-full flex flex-col items-center justify-center ${
+                    isDark
+                      ? "bg-gradient-to-br from-slate-700 to-slate-800"
+                      : "bg-gradient-to-br from-slate-100 to-slate-200"
+                  }`}
+                >
+                  <div
+                    className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-3 ${
+                      isDark
+                        ? "bg-slate-600/50 text-slate-400"
+                        : "bg-slate-300/50 text-slate-500"
+                    }`}
+                  >
+                    <ImageIcon className="w-8 h-8" />
+                  </div>
+                  <p
+                    className={`text-xs ${
+                      isDark ? "text-slate-500" : "text-slate-400"
+                    }`}
+                  >
+                    Image loads on scroll
+                  </p>
+                </div>
               ) : (
                 // Fallback when image fails to load
                 <div
@@ -396,14 +554,21 @@ const ModernProjects = memo(() => {
 
         {/* Projects Grid */}
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3 mb-12">
-          {displayProjects.map((project: Project, index: number) => (
-            <ProjectCard
-              key={project.prName}
-              project={project}
-              index={index}
-              isDark={isDark}
-            />
-          ))}
+          {displayProjects.map((project: Project, index: number) => {
+            // Calculate global index for the project in the full filtered list
+            const globalIndex = filteredProjects.findIndex(
+              (p) => p.prName === project.prName
+            )
+            return (
+              <ProjectCard
+                key={project.prName}
+                project={project}
+                index={index}
+                isDark={isDark}
+                globalIndex={globalIndex}
+              />
+            )
+          })}
         </div>
 
         {/* Results Info */}
@@ -419,6 +584,82 @@ const ModernProjects = memo(() => {
             {currentPage} of {totalPages}
           </p>
         </div>
+
+        {/* Pagination Navigation */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 mt-8">
+            {/* Previous Page Button */}
+            <button
+              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                currentPage === 1
+                  ? isDark
+                    ? "bg-slate-800/50 text-slate-600 cursor-not-allowed"
+                    : "bg-slate-100/50 text-slate-400 cursor-not-allowed"
+                  : isDark
+                  ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
+                  : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+              }`}
+            >
+              Previous
+            </button>
+
+            {/* Smart Page Numbers */}
+            {generatePaginationNumbers().map((pageItem, index) => {
+              if (pageItem === "...") {
+                return (
+                  <span
+                    key={`ellipsis-${index}`}
+                    className={`w-10 h-10 flex items-center justify-center text-sm ${
+                      isDark ? "text-slate-500" : "text-slate-400"
+                    }`}
+                  >
+                    ...
+                  </span>
+                )
+              }
+
+              const pageNum = pageItem as number
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => handlePageChange(pageNum)}
+                  className={`w-10 h-10 rounded-lg font-medium text-sm transition-all ${
+                    currentPage === pageNum
+                      ? isDark
+                        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
+                        : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
+                      : isDark
+                      ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
+                      : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              )
+            })}
+
+            {/* Next Page Button */}
+            <button
+              onClick={() =>
+                handlePageChange(Math.min(totalPages, currentPage + 1))
+              }
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                currentPage === totalPages
+                  ? isDark
+                    ? "bg-slate-800/50 text-slate-600 cursor-not-allowed"
+                    : "bg-slate-100/50 text-slate-400 cursor-not-allowed"
+                  : isDark
+                  ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
+                  : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+              }`}
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
     </section>
   )
