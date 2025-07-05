@@ -31,14 +31,14 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       ariaLabel: "Navigate to experience section",
     },
     {
-      href: "#certificates",
-      text: "Certificates",
-      ariaLabel: "Navigate to certificates section",
-    },
-    {
       href: "#projects",
       text: "Projects",
       ariaLabel: "Navigate to projects section",
+    },
+    {
+      href: "#certificates",
+      text: "Certificates",
+      ariaLabel: "Navigate to certificates section",
     },
     {
       href: "#contact",
