@@ -51,10 +51,23 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
         )}
       >
         {/* Logo Section */}
-        <motion.div
-          className="flex items-center gap-4"
+        <motion.a
+          href="#hero"
+          className="flex items-center gap-4 cursor-pointer group"
           whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           transition={{ duration: 0.2 }}
+          onClick={(e) => {
+            e.preventDefault()
+            const heroSection = document.getElementById("hero")
+            if (heroSection) {
+              heroSection.scrollIntoView({ behavior: "smooth" })
+            } else {
+              // If no hero section, scroll to top
+              window.scrollTo({ top: 0, behavior: "smooth" })
+            }
+          }}
+          aria-label="Go to homepage"
         >
           {/* Logo Image */}
           <motion.div
@@ -104,7 +117,8 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
             <h1
               className={cn(
                 typography.heading.h4,
-                "font-bold text-text-primary leading-tight"
+                "font-bold text-text-primary leading-tight",
+                "group-hover:text-primary transition-colors duration-200"
               )}
             >
               <span className="text-text-primary">Theodoros</span>{" "}
@@ -119,7 +133,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
               Full Stack Developer • WordPress Expert
             </p>
           </motion.div>
-        </motion.div>
+        </motion.a>
 
         {/* Navigation */}
         <motion.div
