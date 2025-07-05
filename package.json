@@ -11,6 +11,7 @@
     "lint:fix": "eslint . --fix",
     "type-check": "tsc --noEmit",
     "preview": "vite preview",
+    "deploy:redirect": "echo 'Deploying redirect page to GitHub Pages...' && git add redirect.html .github/workflows/redirect-deploy.yml && git commit -m 'deploy: update GitHub Pages redirect' && git push",
     "performance:analyze": "npm run build && npx vite-bundle-visualizer -o bundle-report.html",
     "clean": "npx rimraf dist node_modules/.vite",
     "prepare": "echo \"Skipping lint and type-check in prepare script\""

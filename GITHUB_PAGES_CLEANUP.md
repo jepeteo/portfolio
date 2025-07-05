@@ -1,4 +1,4 @@
-# GitHub Pages Cleanup Guide
+# GitHub Pages Cleanup & Redirect Setup Guide
 
 ## ✅ Completed Automatically:
 
@@ -8,10 +8,29 @@
 - [x] Updated canonical URL to theodorosmentis.com
 - [x] Updated portfolio URL in project data
 - [x] Updated README.md with new domain
+- [x] Created redirect page and deployment workflow
 
-## 🔧 Manual Steps Required:
+## � Redirect Setup (Recommended):
 
-### 1. Disable GitHub Pages in Repository Settings:
+Instead of completely disabling GitHub Pages, you can set up an automatic redirect so visitors to the old URL are automatically sent to your new domain.
+
+### Option A: Deploy Redirect (Recommended)
+
+```bash
+# Deploy the redirect page to GitHub Pages
+npm run deploy:redirect
+```
+
+This will:
+
+1. Deploy a simple HTML page that redirects to theodorosmentis.com
+2. Use meta refresh, JavaScript, and canonical URL for SEO
+3. Show a nice loading message while redirecting
+4. Preserve any GitHub Pages traffic and redirect it to your new domain
+
+### Option B: Complete Disabling (Alternative)
+
+If you prefer to completely disable GitHub Pages instead of redirecting:
 
 1. Go to your GitHub repository: https://github.com/jepeteo/portfolio
 2. Click on "Settings" tab
