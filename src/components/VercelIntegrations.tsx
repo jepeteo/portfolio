@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 interface VercelConfig {
   analyticsEnabled: boolean
   speedInsightsEnabled: boolean
+  isVercel: boolean
   debug: boolean
 }
 
@@ -20,112 +23,53 @@ const getVercelConfig = (): VercelConfig => {
   const debug = import.meta.env.DEV
 
   return {
-    analyticsEnabled: isVercel && analyticsEnabled,
-    speedInsightsEnabled: isVercel && speedInsightsEnabled,
+    analyticsEnabled,
+    speedInsightsEnabled,
+    isVercel,
     debug,
   }
 }
 
 export const VercelAnalytics: React.FC = () => {
-  const [loaded, setLoaded] = useState(false)
   const config = getVercelConfig()
 
-  useEffect(() => {
-    if (!config.analyticsEnabled || loaded) return
-
-    import("@vercel/analytics/react")
-      .then(({ Analytics: _Analytics }) => {
-        setLoaded(true)
-        if (config.debug) {
-          console.log("✅ Vercel Analytics React component loaded")
-        }
-      })
-      .catch((error) => {
-        if (config.debug) {
-          console.warn(
-            "⚠️ Failed to load Vercel Analytics React component:",
-            error
-          )
-        }
-      })
-  }, [config.analyticsEnabled, config.debug, loaded])
-
-  if (!config.analyticsEnabled) {
+  // Only render on Vercel when enabled
+  if (!config.isVercel || !config.analyticsEnabled) {
     if (config.debug) {
-      console.log("🚫 Vercel Analytics disabled")
+      console.log("🚫 Vercel Analytics disabled:", {
+        isVercel: config.isVercel,
+        analyticsEnabled: config.analyticsEnabled,
+      })
     }
     return null
   }
 
-  // Dynamically import and render the Analytics component
-  const [AnalyticsComponent, setAnalyticsComponent] =
-    useState<React.ComponentType | null>(null)
+  if (config.debug) {
+    console.log("✅ Vercel Analytics enabled")
+  }
 
-  useEffect(() => {
-    if (config.analyticsEnabled && !AnalyticsComponent) {
-      import("@vercel/analytics/react")
-        .then(({ Analytics }) => {
-          setAnalyticsComponent(() => Analytics)
-        })
-        .catch(() => {
-          // Fail silently in production
-        })
-    }
-  }, [config.analyticsEnabled, AnalyticsComponent])
-
-  return AnalyticsComponent ? React.createElement(AnalyticsComponent) : null
+  return <Analytics />
 }
 
 export const VercelSpeedInsights: React.FC = () => {
-  const [loaded, setLoaded] = useState(false)
   const config = getVercelConfig()
 
-  useEffect(() => {
-    if (!config.speedInsightsEnabled || loaded) return
-
-    import("@vercel/speed-insights/react")
-      .then(({ SpeedInsights: _SpeedInsights }) => {
-        setLoaded(true)
-        if (config.debug) {
-          console.log("✅ Vercel Speed Insights React component loaded")
-        }
-      })
-      .catch((error) => {
-        if (config.debug) {
-          console.warn(
-            "⚠️ Failed to load Vercel Speed Insights React component:",
-            error
-          )
-        }
-      })
-  }, [config.speedInsightsEnabled, config.debug, loaded])
-
-  if (!config.speedInsightsEnabled) {
+  // Only render on Vercel when enabled
+  if (!config.isVercel || !config.speedInsightsEnabled) {
     if (config.debug) {
-      console.log("🚫 Vercel Speed Insights disabled")
+      console.log("🚫 Vercel Speed Insights disabled:", {
+        isVercel: config.isVercel,
+        speedInsightsEnabled: config.speedInsightsEnabled,
+      })
     }
     return null
   }
 
-  // Dynamically import and render the SpeedInsights component
-  const [SpeedInsightsComponent, setSpeedInsightsComponent] =
-    useState<React.ComponentType | null>(null)
+  if (config.debug) {
+    console.log("✅ Vercel Speed Insights enabled")
+  }
 
-  useEffect(() => {
-    if (config.speedInsightsEnabled && !SpeedInsightsComponent) {
-      import("@vercel/speed-insights/react")
-        .then(({ SpeedInsights }) => {
-          setSpeedInsightsComponent(() => SpeedInsights)
-        })
-        .catch(() => {
-          // Fail silently in production
-        })
-    }
-  }, [config.speedInsightsEnabled, SpeedInsightsComponent])
-
-  return SpeedInsightsComponent
-    ? React.createElement(SpeedInsightsComponent)
-    : null
+  return <SpeedInsights />
 }
 
 // Combined component for convenience
