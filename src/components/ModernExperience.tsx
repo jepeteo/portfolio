@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import usePerformanceMonitor from "../hooks/usePerformanceMonitor"
-import { useExperienceData, TechExperience } from "../hooks/useExperienceData"
+import { useExperienceData } from "../hooks/useExperienceData"
 import { ExperienceStatsComponent } from "./experience/ExperienceStats"
 import { ExperienceCallToAction } from "./experience/ExperienceCallToAction"
 import { ExperienceSidebar } from "./experience/ExperienceSidebar"
@@ -64,15 +64,17 @@ const ModernExperience: React.FC = () => {
   const selectedExperience =
     filteredExperiences.find((exp) => exp.id === selectedExperienceId) || null
 
-  // Performance logging in development
+  // Performance logging in development - throttled to avoid excessive logging
+  const renderCount = React.useRef(0)
   useEffect(() => {
+    renderCount.current += 1
     if (
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
+      process.env.NODE_ENV === "development" &&
+      renderCount.current % 10 === 0 // Only log every 10th render
     ) {
       console.log("ModernExperience Performance:", performanceMetrics)
     }
-  }, [performanceMetrics])
+  })
 
   return (
     <section

@@ -2,7 +2,7 @@ import { useEffect } from "react"
 
 const useServiceWorker = () => {
   useEffect(() => {
-    if ("serviceWorker" in navigator && import.meta.env.PROD) {
+    if ("serviceWorker" in navigator && import.meta.env.MODE === "production") {
       window.addEventListener("load", () => {
         navigator.serviceWorker
           .register("/portfolio/sw.js")

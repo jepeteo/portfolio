@@ -3,17 +3,13 @@ import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import useSkillsData from "../hooks/useSkillsData"
 import usePerformanceMonitor from "../hooks/usePerformanceMonitor"
+// import { useRenderTracker } from "../utils/debugRenderLoop" // Temporarily disabled
 import CategoryCard from "./skills/CategoryCard"
 import CategoryHeader from "./skills/CategoryHeader"
 import SkillCard from "./skills/SkillCard"
 import SkillsStats from "./skills/SkillsStats"
 import SkillsCallToAction from "./skills/SkillsCallToAction"
 import { Sparkles } from "lucide-react"
-import {
-  useReducedMotion,
-  useKeyboardNavigation,
-  useScreenReader,
-} from "../utils/accessibilityOptimization"
 
 const ModernSkills: React.FC = () => {
   const { isDark } = useTheme()
@@ -22,39 +18,33 @@ const ModernSkills: React.FC = () => {
     rootMargin: "50px",
   })
 
+  // Debug render tracking in development only - TEMPORARILY DISABLED
+  // if (process.env.NODE_ENV === "development") {
+  //   useRenderTracker("ModernSkills")
+  // }
+
   // Performance monitoring
   const { getPerformanceReport } = usePerformanceMonitor("ModernSkills")
 
   const [activeCategory, setActiveCategory] = useState<string>("languages")
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
 
-  // Accessibility hooks
-  const prefersReducedMotion = useReducedMotion()
-  const { announce } = useScreenReader()
-  const skillsContainerRef = React.useRef<HTMLDivElement>(null)
-  const { currentIndex, focusElement } = useKeyboardNavigation(
-    skillsContainerRef,
-    {
-      selector: 'button, [role="button"], [tabindex]:not([tabindex="-1"])',
-      loop: true,
-    }
-  )
-
   // Use the custom hook for skills data
   const { skillCategories, stats } = useSkillsData()
 
-  // Log performance report in development
+  // Log performance report in development - only periodically to avoid excessive logging
+  const renderCount = React.useRef(0)
   React.useEffect(() => {
-    const isDevelopment =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
-    if (isDevelopment) {
+    renderCount.current += 1
+    if (
+      process.env.NODE_ENV === "development" &&
+      renderCount.current % 10 === 0 &&
+      renderCount.current > 0
+    ) {
       const report = getPerformanceReport()
-      if (report.totalRenders % 5 === 0 && report.totalRenders > 0) {
-        console.log("📊 ModernSkills Performance:", report)
-      }
+      console.log("📊 ModernSkills Performance:", report)
     }
-  }, [getPerformanceReport])
+  })
 
   // Add navigation functions
   const scrollToProjects = useCallback(() => {

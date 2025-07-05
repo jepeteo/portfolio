@@ -46,6 +46,15 @@ interface WebVitals {
 }
 
 const PerformanceDashboard: React.FC = () => {
+  // Early return for production to reduce DOM nodes
+  const isDevelopment =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+
+  if (!isDevelopment) {
+    return null
+  }
+
   const [isVisible, setIsVisible] = useState(false)
   const [metrics, setMetrics] = useState<PerformanceMetrics | null>(null)
   const [webVitals, setWebVitals] = useState<WebVitals>({})
@@ -74,46 +83,63 @@ const PerformanceDashboard: React.FC = () => {
       setMetrics(metricsData)
     }
 
+    // Store observers to clean them up properly
+    const observers: PerformanceObserver[] = []
+
     // Monitor Web Vitals
     const collectWebVitals = () => {
-      // Largest Contentful Paint
-      new PerformanceObserver((list) => {
-        const entries = list.getEntries()
-        const lastEntry = entries[entries.length - 1]
-        setWebVitals((prev) => ({ ...prev, LCP: lastEntry.startTime }))
-      }).observe({ entryTypes: ["largest-contentful-paint"] })
-
-      // First Contentful Paint
-      new PerformanceObserver((list) => {
-        const entries = list.getEntries()
-        const fcpEntry = entries.find(
-          (entry) => entry.name === "first-contentful-paint"
-        )
-        if (fcpEntry) {
-          setWebVitals((prev) => ({ ...prev, FCP: fcpEntry.startTime }))
-        }
-      }).observe({ entryTypes: ["paint"] })
-
-      // Cumulative Layout Shift
-      let clsValue = 0
-      new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          if (!(entry as any).hadRecentInput) {
-            clsValue += (entry as any).value
-            setWebVitals((prev) => ({ ...prev, CLS: clsValue }))
+      try {
+        // Largest Contentful Paint
+        const lcpObserver = new PerformanceObserver((list) => {
+          const entries = list.getEntries()
+          const lastEntry = entries[entries.length - 1]
+          if (lastEntry) {
+            setWebVitals((prev) => ({ ...prev, LCP: lastEntry.startTime }))
           }
-        }
-      }).observe({ entryTypes: ["layout-shift"] })
+        })
+        lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] })
+        observers.push(lcpObserver)
 
-      // First Input Delay
-      new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          setWebVitals((prev) => ({
-            ...prev,
-            FID: (entry as any).processingStart - entry.startTime,
-          }))
-        }
-      }).observe({ entryTypes: ["first-input"] })
+        // First Contentful Paint
+        const fcpObserver = new PerformanceObserver((list) => {
+          const entries = list.getEntries()
+          const fcpEntry = entries.find(
+            (entry) => entry.name === "first-contentful-paint"
+          )
+          if (fcpEntry) {
+            setWebVitals((prev) => ({ ...prev, FCP: fcpEntry.startTime }))
+          }
+        })
+        fcpObserver.observe({ entryTypes: ["paint"] })
+        observers.push(fcpObserver)
+
+        // Cumulative Layout Shift
+        let clsValue = 0
+        const clsObserver = new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) {
+            if (!(entry as any).hadRecentInput) {
+              clsValue += (entry as any).value
+              setWebVitals((prev) => ({ ...prev, CLS: clsValue }))
+            }
+          }
+        })
+        clsObserver.observe({ entryTypes: ["layout-shift"] })
+        observers.push(clsObserver)
+
+        // First Input Delay
+        const fidObserver = new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) {
+            setWebVitals((prev) => ({
+              ...prev,
+              FID: (entry as any).processingStart - entry.startTime,
+            }))
+          }
+        })
+        fidObserver.observe({ entryTypes: ["first-input"] })
+        observers.push(fidObserver)
+      } catch (error) {
+        console.warn("PerformanceObserver not supported:", error)
+      }
     }
 
     // Monitor online status
@@ -124,12 +150,25 @@ const PerformanceDashboard: React.FC = () => {
     window.addEventListener("offline", handleOffline)
 
     // Collect metrics after page load
-    setTimeout(collectMetrics, 2000)
+    const metricsTimeout = setTimeout(collectMetrics, 2000)
     collectWebVitals()
 
     return () => {
+      // Clean up all observers
+      observers.forEach((observer) => {
+        try {
+          observer.disconnect()
+        } catch (error) {
+          console.warn("Error disconnecting observer:", error)
+        }
+      })
+
+      // Clean up event listeners
       window.removeEventListener("online", handleOnline)
       window.removeEventListener("offline", handleOffline)
+
+      // Clear timeout
+      clearTimeout(metricsTimeout)
     }
   }, [])
 

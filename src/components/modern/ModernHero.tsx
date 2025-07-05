@@ -7,7 +7,7 @@ import { Icon, icons } from "../icons/ModernIcons"
 import { AnimatedText, MagneticButton } from "../animations/AdvancedAnimations"
 import { cn, typography, spacing } from "../../utils/styles"
 import { useViewTransition } from "../../hooks/useViewTransition"
-import { ProgressiveImage } from "../loading/ModernLoading"
+import { ProgressiveImage } from "../loading/ModernLoadingStates"
 
 const ModernHero: React.FC = () => {
   const { isDark } = useTheme()
@@ -37,7 +37,6 @@ const ModernHero: React.FC = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
   }
@@ -50,7 +49,6 @@ const ModernHero: React.FC = () => {
       rotate: 0,
       transition: {
         duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
     hover: {
@@ -58,7 +56,6 @@ const ModernHero: React.FC = () => {
       rotate: 2,
       transition: {
         duration: 0.3,
-        ease: "easeOut",
       },
     },
   }
@@ -69,7 +66,6 @@ const ModernHero: React.FC = () => {
       transition: {
         duration: 3,
         repeat: Infinity,
-        ease: "easeInOut",
       },
     },
   }

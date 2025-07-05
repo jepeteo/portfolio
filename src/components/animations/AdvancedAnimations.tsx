@@ -1,5 +1,5 @@
 // Modern Animation System for 2025 Portfolio
-import { motion, type Variants, type MotionProps } from "framer-motion"
+import { motion, type MotionProps } from "framer-motion"
 import React from "react"
 
 // Advanced animation variants
@@ -76,7 +76,6 @@ export const animationVariants = {
       transition: {
         delay: i * 0.1,
         duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94],
       },
     }),
   },

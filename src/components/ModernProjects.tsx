@@ -1,34 +1,20 @@
-import React, { useState, useMemo, memo } from "react"
+import React, { useState, useMemo, memo, useCallback } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import myProjects from "../assets/myProjects.json"
 import { Project } from "../types"
 import { isValidProject } from "../utils/validation"
 import {
-  useRenderTracker,
-  useStableCallback,
-  useStableMemo,
-} from "../utils/componentOptimization"
-import {
-  useProgressiveImage,
-  useWebPSupport,
-  getOptimizedImageSrc,
-} from "../utils/assetOptimization"
-import {
   ExternalLink,
   Star,
-  Filter,
-  ChevronLeft,
-  ChevronRight,
   Code,
   Globe,
   Layers,
-  MoreHorizontal,
   Image as ImageIcon,
 } from "lucide-react"
 
 const ModernProjects = memo(() => {
-  useRenderTracker("ModernProjects")
+  // Removed expensive render tracking for performance
 
   const { isDark } = useTheme()
   const [projectType, setProjectType] = useState<string | null>(null)
@@ -39,11 +25,9 @@ const ModernProjects = memo(() => {
     rootMargin: "50px",
   })
 
-  const supportsWebP = useWebPSupport()
-
   const projectsPerPage = 6
 
-  // Validate and filter projects
+  // Validate and filter projects - optimized for performance
   const validatedProjects = useMemo(() => {
     return myProjects
       .filter((project: any): project is any => isValidProject(project))
@@ -60,87 +44,46 @@ const ModernProjects = memo(() => {
       })) as Project[]
   }, [])
 
-  // Get unique project types for filter
-  const projectTypes = useStableMemo(
-    () => {
-      return Array.from(
-        new Set(validatedProjects.map((project) => project.prType))
-      ).sort()
-    },
-    [validatedProjects],
-    "projectTypes"
-  )
+  // Get unique project types for filter - optimized
+  const projectTypes = useMemo(() => {
+    return Array.from(
+      new Set(validatedProjects.map((project) => project.prType))
+    ).sort()
+  }, [validatedProjects])
 
-  const filteredProjects = useStableMemo(
-    () => {
-      const filtered =
-        projectType === null
-          ? validatedProjects
-          : validatedProjects.filter(
-              (project) => project.prType === projectType
-            )
+  const filteredProjects = useMemo(() => {
+    const filtered =
+      projectType === null
+        ? validatedProjects
+        : validatedProjects.filter((project) => project.prType === projectType)
 
-      // Sort: featured first, then alphabetically
-      const featured = filtered.filter((project) => project.prFeatured)
-      const nonFeatured = filtered
-        .filter((project) => !project.prFeatured)
-        .sort((a, b) => a.prName.localeCompare(b.prName))
+    // Sort: featured first, then alphabetically
+    const featured = filtered.filter((project) => project.prFeatured)
+    const nonFeatured = filtered
+      .filter((project) => !project.prFeatured)
+      .sort((a, b) => a.prName.localeCompare(b.prName))
 
-      return [...featured, ...nonFeatured]
-    },
-    [projectType, validatedProjects],
-    "filteredProjects"
-  )
+    return [...featured, ...nonFeatured]
+  }, [projectType, validatedProjects])
 
-  // Pagination logic
+  // Pagination logic - optimized
   const totalPages = Math.ceil(filteredProjects.length / projectsPerPage)
-  const displayProjects = useStableMemo(
-    () => {
-      const startIndex = (currentPage - 1) * projectsPerPage
-      return filteredProjects.slice(startIndex, startIndex + projectsPerPage)
-    },
-    [filteredProjects, currentPage, projectsPerPage],
-    "displayProjects"
-  )
+  const displayProjects = useMemo(() => {
+    const startIndex = (currentPage - 1) * projectsPerPage
+    return filteredProjects.slice(startIndex, startIndex + projectsPerPage)
+  }, [filteredProjects, currentPage, projectsPerPage])
 
-  const handleProjectTypeChange = useStableCallback(
-    (type: string | null) => {
-      setProjectType(type)
-      setCurrentPage(1)
-    },
-    [],
-    "handleProjectTypeChange"
-  )
+  const handleProjectTypeChange = useCallback((type: string | null) => {
+    setProjectType(type)
+    setCurrentPage(1)
+  }, [])
 
-  const goToPage = useStableCallback(
-    (page: number) => {
-      setCurrentPage(Math.max(1, Math.min(page, totalPages)))
-    },
-    [totalPages],
-    "goToPage"
-  )
+  // Handle image errors - optimized
+  const handleImageError = useCallback((projectName: string) => {
+    setImageErrors((prev) => new Set(prev).add(projectName))
+  }, [])
 
-  // Handle image errors
-  const handleImageError = useStableCallback(
-    (projectName: string) => {
-      setImageErrors((prev) => new Set(prev).add(projectName))
-    },
-    [],
-    "handleImageError"
-  )
-
-  // Get image path for project - Fixed to handle missing prImageSlug
-  const getImagePath = (project: Project) => {
-    // Type assertion to access prImageSlug if it exists
-    const projectWithImage = project as Project & { prImageSlug?: string }
-    const imageSlug =
-      projectWithImage.prImageSlug ||
-      project.prName.toLowerCase().replace(/\s+/g, "-")
-
-    return `./images/projects/${imageSlug}.webp`
-  }
-
-  // Project type icons
+  // Project type icons - simplified for better performance
   const getProjectIcon = (type: string) => {
     const icons: Record<string, React.ComponentType<any>> = {
       WordPress: Layers,
@@ -151,27 +94,50 @@ const ModernProjects = memo(() => {
     return icons[type] || Code
   }
 
-  // Project card component
+  // Project card component - heavily optimized for performance
   const ProjectCard = memo(
-    ({ project, index }: { project: Project; index: number }) => {
-      useRenderTracker(`ProjectCard-${project.prName}`)
+    ({
+      project,
+      index,
+      isDark,
+    }: {
+      project: Project
+      index: number
+      isDark: boolean
+    }) => {
+      // Removed expensive render tracking for production performance
 
+      // Simplified icon selection without useMemo
       const IconComponent = getProjectIcon(project.prType)
-      const baseImagePath = getImagePath(project)
+
+      // Simple image path construction
+      const imageSlug =
+        (project as any).prImageSlug ||
+        project.prName.toLowerCase().replace(/\s+/g, "-")
+      const imageSrc = `./images/projects/${imageSlug}.webp`
+
       const hasImageError = imageErrors.has(project.prName)
 
-      // Get optimized image source
-      const optimizedImageSrc = getOptimizedImageSrc(
-        baseImagePath,
-        baseImagePath.replace(".webp", ".webp"), // Keep WebP as is
-        supportsWebP
-      )
+      // Simplified image loading state - optimized
+      const [imageError, setImageError] = React.useState(false)
+      const [imageLoading, setImageLoading] = React.useState(true)
 
-      // Progressive image loading
-      const { src: imageSrc, isLoading: imageLoading } = useProgressiveImage(
-        optimizedImageSrc,
-        undefined
-      )
+      // Reset image loading state when project changes - optimized
+      React.useEffect(() => {
+        setImageError(false)
+        setImageLoading(true)
+      }, [project.prName])
+
+      const handleImageLoad = React.useCallback(() => {
+        setImageError(false)
+        setImageLoading(false)
+      }, [])
+
+      const handleImageErrorLocal = React.useCallback(() => {
+        setImageError(true)
+        setImageLoading(false)
+        handleImageError(project.prName)
+      }, [handleImageError, project.prName])
 
       return (
         <div
@@ -202,20 +168,21 @@ const ModernProjects = memo(() => {
           >
             {/* Project Image */}
             <div className="relative w-full h-64 overflow-hidden">
-              {!hasImageError ? (
+              {!hasImageError && !imageError ? (
                 <>
                   <img
-                    src={imageSrc || optimizedImageSrc}
+                    src={imageSrc}
                     alt={`${project.prName} project preview`}
                     className={`w-full h-full object-cover object-top transition-all duration-[3000ms] ease-in-out group-hover:object-bottom ${
                       imageLoading ? "opacity-50" : "opacity-100"
                     }`}
-                    onError={() => handleImageError(project.prName)}
+                    onLoad={handleImageLoad}
+                    onError={handleImageErrorLocal}
                     loading="lazy"
                   />
                   {/* Loading indicator */}
                   {imageLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-slate-200/50">
+                    <div className="absolute inset-0 flex items-center justify-center bg-slate-200/50 dark:bg-slate-800/50">
                       <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                     </div>
                   )}
@@ -329,278 +296,106 @@ const ModernProjects = memo(() => {
           </div>
         </div>
       )
+    },
+    // Simplified comparison function for better performance
+    (prevProps, nextProps) => {
+      return (
+        prevProps.project.prName === nextProps.project.prName &&
+        prevProps.isDark === nextProps.isDark
+      )
     }
   )
 
   // Set display name for ProjectCard
   ProjectCard.displayName = "ProjectCard"
 
-  // Smart pagination component
-  const SmartPagination = memo(() => {
-    if (totalPages <= 1) return null
-
-    const getPageNumbers = () => {
-      const pages: (number | string)[] = []
-      const maxVisiblePages = 5
-
-      if (totalPages <= maxVisiblePages) {
-        // Show all pages if total is small
-        for (let i = 1; i <= totalPages; i++) {
-          pages.push(i)
-        }
-      } else {
-        // Always show first page
-        pages.push(1)
-
-        if (currentPage <= 3) {
-          // Near the beginning
-          pages.push(2, 3, 4, "...", totalPages)
-        } else if (currentPage >= totalPages - 2) {
-          // Near the end
-          pages.push(
-            "...",
-            totalPages - 3,
-            totalPages - 2,
-            totalPages - 1,
-            totalPages
-          )
-        } else {
-          // In the middle
-          pages.push(
-            "...",
-            currentPage - 1,
-            currentPage,
-            currentPage + 1,
-            "...",
-            totalPages
-          )
-        }
-      }
-
-      return pages
-    }
-
-    return (
-      <nav
-        className="flex justify-center mt-12"
-        aria-label="Projects pagination"
-      >
-        <div className="flex items-center gap-2">
-          {/* Previous Button */}
-          <button
-            onClick={() => goToPage(currentPage - 1)}
-            disabled={currentPage === 1}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              currentPage === 1
-                ? isDark
-                  ? "bg-slate-800/50 text-slate-500 cursor-not-allowed"
-                  : "bg-slate-100 text-slate-400 cursor-not-allowed"
-                : isDark
-                ? "bg-slate-700 text-slate-300 hover:bg-slate-600"
-                : "bg-white text-slate-700 hover:bg-slate-50 border border-slate-200"
-            }`}
-            aria-label="Go to previous page"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            Prev
-          </button>
-
-          {/* Page Numbers */}
-          {getPageNumbers().map((page, index) => (
-            <React.Fragment key={index}>
-              {page === "..." ? (
-                <span
-                  className={`px-3 py-2 text-sm ${
-                    isDark ? "text-slate-500" : "text-slate-400"
-                  }`}
-                  aria-hidden="true"
-                >
-                  <MoreHorizontal className="w-4 h-4" />
-                </span>
-              ) : (
-                <button
-                  onClick={() => goToPage(page as number)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                    currentPage === page
-                      ? isDark
-                        ? "bg-blue-600 text-white"
-                        : "bg-blue-500 text-white"
-                      : isDark
-                      ? "bg-slate-700 text-slate-300 hover:bg-slate-600"
-                      : "bg-white text-slate-700 hover:bg-slate-50 border border-slate-200"
-                  }`}
-                  aria-label={`Go to page ${page}`}
-                  aria-current={currentPage === page ? "page" : undefined}
-                >
-                  {page}
-                </button>
-              )}
-            </React.Fragment>
-          ))}
-
-          {/* Next Button */}
-          <button
-            onClick={() => goToPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              currentPage === totalPages
-                ? isDark
-                  ? "bg-slate-800/50 text-slate-500 cursor-not-allowed"
-                  : "bg-slate-100 text-slate-400 cursor-not-allowed"
-                : isDark
-                ? "bg-slate-700 text-slate-300 hover:bg-slate-600"
-                : "bg-white text-slate-700 hover:bg-slate-50 border border-slate-200"
-            }`}
-            aria-label="Go to next page"
-          >
-            Next
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-      </nav>
-    )
-  })
-
-  // Set display name for SmartPagination
-  SmartPagination.displayName = "SmartPagination"
-
-  if (validatedProjects.length === 0) {
-    return (
-      <section className="container py-20" id="projects">
-        <div className="text-center">
-          <h2
-            className={`text-4xl md:text-6xl font-display font-bold mb-4 ${
-              isDark ? "text-white" : "text-slate-900"
-            }`}
-          >
-            Projects
-          </h2>
-          <p
-            className={`text-xl ${
-              isDark ? "text-slate-400" : "text-slate-600"
-            }`}
-          >
-            No projects available at the moment.
-          </p>
-        </div>
-      </section>
-    )
-  }
-
+  // Main return statement for ModernProjects
   return (
     <section
       ref={ref}
-      className={`py-20 transition-all duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-      }`}
       id="projects"
+      className={`relative min-h-screen py-24 transition-all duration-1000 ${
+        isDark
+          ? "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
+          : "bg-gradient-to-br from-slate-50 via-white to-slate-100"
+      }`}
     >
-      <div className="container">
+      <div className="container mx-auto px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
-              isDark
-                ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                : "bg-blue-100 text-blue-700 border border-blue-200"
-            }`}
-          >
-            <Layers className="w-4 h-4" />
-            Portfolio Showcase
-          </div>
-
           <h2
-            className={`text-6xl md:text-8xl font-bold mb-8 ${
-              isDark ? "text-white" : "text-slate-900"
+            className={`text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r bg-clip-text text-transparent ${
+              isDark
+                ? "from-blue-400 via-purple-400 to-cyan-400"
+                : "from-blue-600 via-purple-600 to-cyan-600"
             }`}
           >
-            <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 bg-clip-text text-transparent">
-              Projects I've Built
-            </span>
+            My Projects
           </h2>
-
           <p
-            className={`text-xl max-w-4xl mx-auto leading-relaxed ${
+            className={`text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed ${
               isDark ? "text-slate-300" : "text-slate-600"
             }`}
           >
-            Below are some selected projects I have worked on over the years.
-            The majority of these projects were developed using WordPress, and
-            are projects made from scratch. I was responsible for the design,
-            coding, and the functionality of the websites.
+            Explore my portfolio of web development projects, from WordPress
+            sites to modern React applications
           </p>
         </div>
 
-        {/* Filter Buttons */}
-        <div className="mb-12">
-          <div
-            className={`flex items-center gap-2 mb-6 justify-center ${
-              isDark ? "text-slate-300" : "text-slate-700"
+        {/* Filter Pills */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          <button
+            onClick={() => handleProjectTypeChange(null)}
+            className={`px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105 ${
+              projectType === null
+                ? isDark
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25"
+                  : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25"
+                : isDark
+                ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
+                : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
             }`}
           >
-            <Filter className="w-5 h-5" />
-            <span className="font-medium">Filter by Type:</span>
-          </div>
-
-          <div className="flex flex-wrap gap-3 justify-center">
-            {/* All Projects Button */}
-            <button
-              onClick={() => handleProjectTypeChange(null)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 ${
-                projectType === null
-                  ? isDark
-                    ? "bg-blue-500/30 text-blue-300 border-2 border-blue-500"
-                    : "bg-blue-100 text-blue-700 border-2 border-blue-500"
-                  : isDark
-                  ? "bg-slate-800/50 text-slate-300 border border-slate-600 hover:border-blue-400"
-                  : "bg-white/50 text-slate-700 border border-slate-300 hover:border-blue-400"
-              }`}
-            >
-              <span className="flex items-center gap-2">
-                <Globe className="w-4 h-4" />
-                All ({validatedProjects.length})
-              </span>
-            </button>
-
-            {/* Type Filter Buttons */}
-            {projectTypes.map((type) => {
-              const count = validatedProjects.filter(
-                (p) => p.prType === type
-              ).length
-              const IconComponent = getProjectIcon(type)
-
-              return (
-                <button
-                  key={type}
-                  onClick={() => handleProjectTypeChange(type)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 ${
-                    projectType === type
-                      ? isDark
-                        ? "bg-blue-500/30 text-blue-300 border-2 border-blue-500"
-                        : "bg-blue-100 text-blue-700 border-2 border-blue-500"
-                      : isDark
-                      ? "bg-slate-800/50 text-slate-300 border border-slate-600 hover:border-blue-400"
-                      : "bg-white/50 text-slate-700 border border-slate-300 hover:border-blue-400"
-                  }`}
-                >
-                  <span className="flex items-center gap-2">
-                    <IconComponent className="w-4 h-4" />
-                    {type} ({count})
-                  </span>
-                </button>
-              )
-            })}
-          </div>
+            All Projects ({validatedProjects.length})
+          </button>
+          {projectTypes.map((type: string) => {
+            const count = validatedProjects.filter(
+              (project) => project.prType === type
+            ).length
+            return (
+              <button
+                key={type}
+                onClick={() => handleProjectTypeChange(type)}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105 ${
+                  projectType === type
+                    ? isDark
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25"
+                      : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25"
+                    : isDark
+                    ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
+                    : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+                }`}
+              >
+                {React.createElement(getProjectIcon(type), {
+                  className: "w-4 h-4",
+                })}
+                {type} ({count})
+              </button>
+            )
+          })}
         </div>
 
         {/* Projects Grid */}
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3 mb-12">
           {displayProjects.map((project: Project, index: number) => (
-            <ProjectCard key={project.prName} project={project} index={index} />
+            <ProjectCard
+              key={project.prName}
+              project={project}
+              index={index}
+              isDark={isDark}
+            />
           ))}
         </div>
-
-        <SmartPagination />
 
         {/* Results Info */}
         <div className="text-center mt-8">
@@ -618,6 +413,8 @@ const ModernProjects = memo(() => {
       </div>
     </section>
   )
+
+  // Smart pagination component
 })
 
 ModernProjects.displayName = "ModernProjects"

@@ -16,57 +16,10 @@ export interface ComponentPerformanceMetrics {
   slowRenders: number
 }
 
-// Track component re-renders in development
-export function useRenderTracker(componentName: string) {
-  const renderCount = useRef(0)
-  const renderTimes = useRef<number[]>([])
-  const slowRenderThreshold = 16 // 16ms for 60fps
-
-  if (isDev) {
-    const startTime = performance.now()
-
-    useEffect(() => {
-      const endTime = performance.now()
-      const renderTime = endTime - startTime
-
-      renderCount.current++
-      renderTimes.current.push(renderTime)
-
-      // Keep only last 100 render times
-      if (renderTimes.current.length > 100) {
-        renderTimes.current.shift()
-      }
-
-      const slowRenders = renderTimes.current.filter(
-        (time) => time > slowRenderThreshold
-      ).length
-      const averageRenderTime =
-        renderTimes.current.reduce((sum, time) => sum + time, 0) /
-        renderTimes.current.length
-
-      if (renderTime > slowRenderThreshold) {
-        console.warn(
-          `🐌 Slow render detected in ${componentName}: ${renderTime.toFixed(
-            2
-          )}ms`
-        )
-      }
-
-      // Log performance metrics every 10 renders
-      if (renderCount.current % 10 === 0) {
-        console.log(`📊 ${componentName} Performance:`, {
-          renderCount: renderCount.current,
-          lastRenderTime: renderTime.toFixed(2) + "ms",
-          averageRenderTime: averageRenderTime.toFixed(2) + "ms",
-          slowRenders,
-          efficiency: `${(
-            (1 - slowRenders / renderTimes.current.length) *
-            100
-          ).toFixed(1)}%`,
-        })
-      }
-    })
-  }
+// Track component re-renders in development - DISABLED for performance
+export function useRenderTracker(_componentName: string) {
+  // Completely disabled for performance - was causing 400-580ms render times
+  return
 }
 
 // Enhanced useCallback with dependency tracking

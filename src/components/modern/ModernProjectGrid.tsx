@@ -17,7 +17,10 @@ import {
   StaggerItem,
   FloatingCard,
 } from "../animations/AdvancedAnimations"
-import { ProjectCardSkeleton, LoadingState } from "../loading/ModernLoading"
+import {
+  ProjectCardSkeleton,
+  LoadingState,
+} from "../loading/ModernLoadingStates"
 import { cn, typography, spacing, shadows } from "../../utils/styles"
 import { useViewTransition } from "../../hooks/useViewTransition"
 

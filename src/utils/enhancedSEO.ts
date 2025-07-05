@@ -307,7 +307,7 @@ class SEOManager {
 
   private preloadCriticalResources() {
     const criticalResources = [
-      { href: "/src/assets/images/teo.png", as: "image" },
+      { href: "/portfolio/src/assets/images/teo.png", as: "image" },
       {
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap",
         as: "style",

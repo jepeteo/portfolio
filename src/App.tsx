@@ -21,6 +21,7 @@ import {
 } from "./utils/enhancedSEO"
 import useServiceWorker from "./hooks/useServiceWorker"
 import productionMonitor from "./utils/productionMonitor"
+// import { useRenderTracker } from "./utils/debugRenderLoop" // Temporarily disabled
 
 import "flowbite"
 import "flowbite/dist/flowbite.css"
@@ -56,15 +57,20 @@ const SectionLoader: React.FC = () => (
 const AppContent: React.FC = () => {
   const { isDark } = useTheme()
 
+  // Debug render tracking in development - TEMPORARILY DISABLED
+  // useRenderTracker("AppContent")
+
   // Initialize service worker for performance
   useServiceWorker()
 
-  // Initialize production monitoring
+  // Initialize production monitoring - only once
   React.useEffect(() => {
     // Track initial page view
     productionMonitor.trackPageView()
+  }, [])
 
-    // Track theme changes
+  // Track theme changes separately to avoid re-renders
+  React.useEffect(() => {
     productionMonitor.trackEvent("theme_change", {
       theme: isDark ? "dark" : "light",
     })

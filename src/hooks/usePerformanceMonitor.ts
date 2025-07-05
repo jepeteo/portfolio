@@ -44,8 +44,8 @@ const usePerformanceMonitor = (componentName: string) => {
 
       metricsRef.current.push(metrics)
 
-      // Only log in development and for slow renders (>16ms for 60fps)
-      if (process.env.NODE_ENV === "development" && renderTime > 16) {
+      // Only log in development and for slow renders (>50ms threshold for complex components)
+      if (process.env.NODE_ENV === "development" && renderTime > 50) {
         console.warn(
           `🐌 Slow render in ${componentName}: ${renderTime.toFixed(
             2
@@ -60,47 +60,57 @@ const usePerformanceMonitor = (componentName: string) => {
     }
   })
 
-  // Web Vitals monitoring
-  const measureWebVitals = useCallback(() => {
-    // Largest Contentful Paint
-    if ("PerformanceObserver" in window) {
-      try {
-        new PerformanceObserver((list) => {
-          const entries = list.getEntries()
-          const lastEntry = entries[entries.length - 1]
-          if (lastEntry) {
-            webVitalsRef.current.LCP = lastEntry.startTime
-          }
-        }).observe({ entryTypes: ["largest-contentful-paint"] })
-
-        // First Input Delay
-        new PerformanceObserver((list) => {
-          const entries = list.getEntries()
-          entries.forEach((entry: any) => {
-            if (entry.processingStart) {
-              webVitalsRef.current.FID = entry.processingStart - entry.startTime
-            }
-          })
-        }).observe({ entryTypes: ["first-input"] })
-
-        // Cumulative Layout Shift
-        new PerformanceObserver((list) => {
-          let clsValue = 0
-          const entries = list.getEntries()
-          entries.forEach((entry: any) => {
-            if (!entry.hadRecentInput) {
-              clsValue += entry.value
-            }
-          })
-          webVitalsRef.current.CLS = clsValue
-        }).observe({ entryTypes: ["layout-shift"] })
-      } catch (error) {
-        // PerformanceObserver not supported
-        console.warn("PerformanceObserver not supported")
-      }
+  // Web Vitals monitoring - only initialize once
+  useEffect(() => {
+    if (!("PerformanceObserver" in window)) {
+      console.warn("PerformanceObserver not supported")
+      return
     }
 
-    // Navigation timing metrics
+    const observers: PerformanceObserver[] = []
+
+    try {
+      // Largest Contentful Paint
+      const lcpObserver = new PerformanceObserver((list) => {
+        const entries = list.getEntries()
+        const lastEntry = entries[entries.length - 1]
+        if (lastEntry) {
+          webVitalsRef.current.LCP = lastEntry.startTime
+        }
+      })
+      lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] })
+      observers.push(lcpObserver)
+
+      // First Input Delay
+      const fidObserver = new PerformanceObserver((list) => {
+        const entries = list.getEntries()
+        entries.forEach((entry: any) => {
+          if (entry.processingStart) {
+            webVitalsRef.current.FID = entry.processingStart - entry.startTime
+          }
+        })
+      })
+      fidObserver.observe({ entryTypes: ["first-input"] })
+      observers.push(fidObserver)
+
+      // Cumulative Layout Shift
+      const clsObserver = new PerformanceObserver((list) => {
+        let clsValue = 0
+        const entries = list.getEntries()
+        entries.forEach((entry: any) => {
+          if (!entry.hadRecentInput) {
+            clsValue += entry.value
+          }
+        })
+        webVitalsRef.current.CLS = clsValue
+      })
+      clsObserver.observe({ entryTypes: ["layout-shift"] })
+      observers.push(clsObserver)
+    } catch (error) {
+      console.warn("PerformanceObserver setup error:", error)
+    }
+
+    // Navigation timing metrics - only once
     if (performance.getEntriesByType) {
       const navEntries = performance.getEntriesByType(
         "navigation"
@@ -111,11 +121,18 @@ const usePerformanceMonitor = (componentName: string) => {
         webVitalsRef.current.TTFB = nav.responseStart - nav.requestStart
       }
     }
-  }, [])
 
-  useEffect(() => {
-    measureWebVitals()
-  }, [measureWebVitals])
+    return () => {
+      // Clean up all observers
+      observers.forEach((observer) => {
+        try {
+          observer.disconnect()
+        } catch (error) {
+          console.warn("Error disconnecting performance observer:", error)
+        }
+      })
+    }
+  }, []) // Empty dependency array - only run once
 
   // Performance report
   const getPerformanceReport = useCallback(() => {

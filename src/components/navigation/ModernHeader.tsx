@@ -1,7 +1,6 @@
 // Modern Header Component (2025 Version)
 import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { useTheme } from "../../context/ThemeContext"
 import { validateImageSrc } from "../../utils/validation"
 import { cn, typography } from "../../utils/styles"
 import ModernNav from "../navigation/ModernNav"
@@ -12,7 +11,6 @@ interface ModernHeaderProps {
 }
 
 const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
-  const { isDark } = useTheme()
   const [isScrolled, setIsScrolled] = useState(false)
   const logoSrc = validateImageSrc(logo, "Portfolio Logo")
 
