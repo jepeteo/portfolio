@@ -108,8 +108,8 @@ const AppContent: React.FC = () => {
       name: "Theodoros Mentis",
       jobTitle: "Senior Full Stack Developer",
       email: "th.mentis@gmail.com",
-      url: "https://jepeteo.github.io/portfolio/",
-      image: "https://jepeteo.github.io/portfolio/src/assets/images/teo.png",
+      url: "https://theodorosmentis.com",
+      image: "https://theodorosmentis.com/src/assets/images/teo.png",
       skills: [
         "WordPress Development",
         "React Development",
