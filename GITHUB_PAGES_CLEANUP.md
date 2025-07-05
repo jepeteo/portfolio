@@ -1,6 +1,7 @@
 # GitHub Pages Cleanup Guide
 
 ## ✅ Completed Automatically:
+
 - [x] Removed GitHub Pages deployment workflow (`.github/workflows/deploy.yml`)
 - [x] Removed `gh-pages` package dependency
 - [x] Removed `predeploy` and `deploy` scripts from package.json
@@ -11,6 +12,7 @@
 ## 🔧 Manual Steps Required:
 
 ### 1. Disable GitHub Pages in Repository Settings:
+
 1. Go to your GitHub repository: https://github.com/jepeteo/portfolio
 2. Click on "Settings" tab
 3. Scroll down to "Pages" section in the left sidebar
@@ -19,6 +21,7 @@
 6. Save the changes
 
 ### 2. Clean up any remaining gh-pages branch (if exists):
+
 ```bash
 # Check if gh-pages branch exists
 git branch -a | grep gh-pages
@@ -29,9 +32,11 @@ git push origin --delete gh-pages   # Delete remote branch
 ```
 
 ### 3. Optional - Remove old GitHub Pages deployment history:
+
 The old deployments will remain in the repository's Actions history, but they won't affect anything. You can leave them for reference or manually delete them from the Actions tab.
 
 ## 🎯 Result:
+
 - ✅ No more GitHub Pages deployments
 - ✅ All references point to theodorosmentis.com
 - ✅ Clean repository without gh-pages dependencies

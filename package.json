@@ -11,7 +11,6 @@
     "lint:fix": "eslint . --fix",
     "type-check": "tsc --noEmit",
     "preview": "vite preview",
-    "test": "echo \"Add tests here\" && exit 0",
     "performance:analyze": "npm run build && npx vite-bundle-visualizer -o bundle-report.html",
     "clean": "npx rimraf dist node_modules/.vite",
     "prepare": "echo \"Skipping lint and type-check in prepare script\""
