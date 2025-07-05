@@ -7,7 +7,13 @@ import { ExperienceStatsComponent } from "./experience/ExperienceStats"
 import { ExperienceCallToAction } from "./experience/ExperienceCallToAction"
 import { ExperienceSidebar } from "./experience/ExperienceSidebar"
 import { ExperienceDetails } from "./experience/ExperienceDetails"
-import { Briefcase, Filter } from "lucide-react"
+import {
+  Briefcase,
+  Filter,
+  Calendar,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react"
 
 const ModernExperience: React.FC = () => {
   const { isDark } = useTheme()
@@ -35,7 +41,7 @@ const ModernExperience: React.FC = () => {
   >("all")
   const [selectedExperienceId, setSelectedExperienceId] = useState<
     string | null
-  >(null)
+  >(null) // Start with null - nothing expanded by default
 
   // Filter experiences based on current filter
   const filteredExperiences =
@@ -49,14 +55,21 @@ const ModernExperience: React.FC = () => {
       ? employmentExperiences
       : experiences
 
-  // Set the selected experience as the first one when filter changes
+  // Set the selected experience as the first one when filter changes (for desktop only)
   useEffect(() => {
     if (
       filteredExperiences.length > 0 &&
       (!selectedExperienceId ||
         !filteredExperiences.some((exp) => exp.id === selectedExperienceId))
     ) {
-      setSelectedExperienceId(filteredExperiences[0].id)
+      // Only auto-select on desktop, not mobile
+      const isMobile = window.innerWidth < 768
+      if (!isMobile) {
+        setSelectedExperienceId(filteredExperiences[0].id)
+      } else {
+        // On mobile, reset to null so nothing is expanded by default
+        setSelectedExperienceId(null)
+      }
     }
   }, [filteredExperiences, selectedExperienceId])
 
@@ -185,7 +198,150 @@ const ModernExperience: React.FC = () => {
         </div>
 
         {/* Experience with Sidebar Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        {/* Mobile Layout */}
+        <div className="md:hidden mb-16">
+          <div className="text-center mb-6">
+            <h3
+              className={`text-xl font-bold mb-2 ${
+                isDark ? "text-white" : "text-slate-900"
+              }`}
+            >
+              My Experience Timeline
+            </h3>
+            <p
+              className={`text-sm ${
+                isDark ? "text-slate-400" : "text-slate-600"
+              }`}
+            >
+              Tap any position to explore details
+            </p>
+          </div>
+
+          {/* Mobile Experience Cards */}
+          <div className="space-y-4">
+            {filteredExperiences.map((experience) => (
+              <div
+                key={experience.id}
+                className={`experience-card rounded-xl border transition-all duration-300 ${
+                  isDark
+                    ? "bg-slate-800/30 border-slate-700/50"
+                    : "bg-white/30 border-slate-200/50"
+                } backdrop-blur-sm`}
+              >
+                {/* Experience Header - Always Visible */}
+                <div className="p-4">
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1 mr-3">
+                      <div className="flex items-start justify-between mb-1">
+                        <h3
+                          className={`font-bold text-base leading-tight ${
+                            isDark ? "text-white" : "text-slate-900"
+                          }`}
+                        >
+                          {experience.company}
+                        </h3>
+                        {/* Status indicators - moved to the right */}
+                        <div className="flex items-center space-x-1 ml-2 flex-shrink-0">
+                          {experience.isFreelance && (
+                            <div
+                              className="h-2 w-2 rounded-full bg-purple-500"
+                              title="Freelance"
+                            />
+                          )}
+                          {experience.status === "current" && (
+                            <div
+                              className="h-2 w-2 rounded-full bg-green-500 animate-pulse"
+                              title="Current"
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <p
+                        className={`text-sm font-medium ${
+                          isDark ? "text-slate-300" : "text-slate-700"
+                        }`}
+                      >
+                        {experience.title}
+                      </p>
+                      <div
+                        className={`text-xs mt-1 flex items-center ${
+                          isDark ? "text-slate-500" : "text-slate-400"
+                        }`}
+                      >
+                        <Calendar className="w-3 h-3 mr-1" />
+                        {experience.periodInfo.from} -{" "}
+                        {experience.periodInfo.to}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Modern Toggle Button */}
+                  <button
+                    onClick={() =>
+                      setSelectedExperienceId(
+                        selectedExperienceId === experience.id
+                          ? null
+                          : experience.id
+                      )
+                    }
+                    className={`experience-toggle-btn mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-300 group relative overflow-hidden ${
+                      selectedExperienceId === experience.id
+                        ? isDark
+                          ? "bg-gradient-to-r from-emerald-600/20 to-green-600/20 hover:from-emerald-600/30 hover:to-green-600/30 border border-emerald-500/40 text-emerald-300 shadow-lg shadow-emerald-500/10"
+                          : "bg-gradient-to-r from-emerald-500/15 to-green-500/15 hover:from-emerald-500/25 hover:to-green-500/25 border border-emerald-500/30 text-emerald-700 shadow-lg shadow-emerald-500/10"
+                        : isDark
+                        ? "bg-gradient-to-r from-slate-700/60 to-slate-600/60 hover:from-slate-600/80 hover:to-slate-700/80 border border-slate-600/40 text-slate-300 hover:text-white shadow-md hover:shadow-lg"
+                        : "bg-gradient-to-r from-white/90 to-slate-50/90 hover:from-white hover:to-slate-100 border border-slate-200/60 text-slate-700 hover:text-slate-900 shadow-md hover:shadow-lg"
+                    }`}
+                  >
+                    <span className="relative z-10">
+                      {selectedExperienceId === experience.id
+                        ? "Hide Details"
+                        : "View Details"}
+                    </span>
+                    {selectedExperienceId === experience.id ? (
+                      <ChevronUp className="w-4 h-4 transition-all duration-300 group-hover:translate-y-[-2px] group-hover:scale-110 relative z-10" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 transition-all duration-300 group-hover:translate-y-[2px] group-hover:scale-110 relative z-10" />
+                    )}
+
+                    {/* Subtle hover effect overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%]" />
+                  </button>
+                </div>
+
+                {/* Expandable Details with Smooth Animation */}
+                <div
+                  className={`experience-details-container overflow-hidden transition-all duration-500 ease-in-out ${
+                    selectedExperienceId === experience.id
+                      ? "max-h-[2000px] opacity-100"
+                      : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div
+                    className={`px-4 pb-4 pt-3 border-t transition-all duration-300 ${
+                      isDark ? "border-slate-700/50" : "border-slate-200/50"
+                    } ${
+                      selectedExperienceId === experience.id
+                        ? "translate-y-0"
+                        : "translate-y-[-10px]"
+                    }`}
+                  >
+                    <div className="experience-details-mobile">
+                      <ExperienceDetails
+                        experience={experience}
+                        isDark={isDark}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop Layout */}
+        <div className="hidden md:grid md:grid-cols-3 gap-6 mb-16">
           {/* Sidebar */}
           <div className="md:col-span-1 md:border-r md:pr-4">
             <ExperienceSidebar

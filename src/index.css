@@ -265,3 +265,79 @@ html {
         backdrop-filter: blur(4px);
     }
 }
+
+/* Mobile Experience Details - Remove extra borders and backgrounds */
+.experience-details-mobile .rounded-2xl {
+    border-radius: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    /* Remove purple ring for freelance positions in mobile */
+    box-shadow: none !important;
+}
+
+.experience-details-mobile .bg-slate-800\/50,
+.experience-details-mobile .bg-white\/70,
+.experience-details-mobile .border-slate-700\/50,
+.experience-details-mobile .border-slate-200\/50 {
+    background: transparent !important;
+    border: none !important;
+}
+
+/* Remove purple background and styling for freelance badges in mobile details */
+.experience-details-mobile .bg-purple-500\/20 {
+    background: transparent !important;
+    border: none !important;
+}
+
+.experience-details-mobile .border-purple-500\/30 {
+    border: none !important;
+}
+
+/* Hide freelance and current status indicators in mobile details view */
+@media (max-width: 768px) {
+    .experience-details-mobile .flex.items-center.justify-center.gap-2.p-2 {
+        display: none !important;
+    }
+}
+
+/* Mobile Experience Cards - Enhanced animations and styling */
+@media (max-width: 768px) {
+    .experience-card {
+        /* Ensure no unwanted borders */
+        border-color: rgb(148 163 184 / 0.2) !important;
+    }
+
+    .experience-card:first-child {
+        /* Specifically remove any purple borders from first card */
+        border-color: rgb(148 163 184 / 0.2) !important;
+        border-width: 1px !important;
+    }
+
+    /* Smooth expand/collapse animation for details */
+    .experience-details-container {
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Enhanced button hover effects */
+    .experience-toggle-btn {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .experience-toggle-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .experience-toggle-btn:hover::before {
+        left: 100%;
+    }
+}

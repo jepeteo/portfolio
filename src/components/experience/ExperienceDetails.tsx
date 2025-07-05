@@ -52,7 +52,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
       }`}
     >
       {/* Status indicator */}
-      <div className="absolute top-4 right-4 flex items-center gap-2">
+      <div className="flex items-center justify-center gap-2 p-2 md:absolute md:top-4 md:right-4 md:p-0">
         {experience.isFreelance && (
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/30">
             <div className="w-2 h-2 bg-purple-500 rounded-full" />
@@ -71,8 +71,8 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
         )}
       </div>
 
-      <div className="p-6">
-        <div className="mb-6">
+      <div className="md:p-6">
+        <div className="md:mb-6">
           {/* Header */}
           <h3
             className={`text-2xl font-bold mb-2 ${
