@@ -266,7 +266,7 @@ const Hero: React.FC = memo(() => {
 
             {/* Floating badges */}
             <div
-              className={`absolute -top-4 -right-4 px-3 py-2 rounded-xl text-sm font-semibold ${
+              className={`absolute -top-4 -right-4 px-3 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 ${
                 isDark
                   ? "bg-green-500/20 text-green-300 border border-green-500/30"
                   : "bg-green-100 text-green-700 border border-green-200"
@@ -274,6 +274,7 @@ const Hero: React.FC = memo(() => {
               role="status"
               aria-label="Current availability status"
             >
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               Available for hire
             </div>
 
