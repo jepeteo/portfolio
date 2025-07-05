@@ -154,9 +154,11 @@ const SkillCard: React.FC<SkillCardProps> = ({
                 >
                   {skill.description}
                 </p>
-                <div className={`mt-2 text-xs font-medium ${
-                  isDark ? "text-slate-400" : "text-slate-500"
-                }`}>
+                <div
+                  className={`mt-2 text-xs font-medium ${
+                    isDark ? "text-slate-400" : "text-slate-500"
+                  }`}
+                >
                   {skill.experience}
                 </div>
               </div>
@@ -164,9 +166,11 @@ const SkillCard: React.FC<SkillCardProps> = ({
 
             {/* Tap to expand hint */}
             {!isHovered && (
-              <div className={`text-center mt-2 text-xs opacity-60 ${
-                isDark ? "text-slate-400" : "text-slate-500"
-              }`}>
+              <div
+                className={`text-center mt-2 text-xs opacity-60 ${
+                  isDark ? "text-slate-400" : "text-slate-500"
+                }`}
+              >
                 Tap to learn more
               </div>
             )}
