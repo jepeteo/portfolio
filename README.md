@@ -2,7 +2,7 @@
 
 This is my personal portfolio website built with React, Tailwind and Vite.
 
-You can view it at [jepeteo.github.io/portfolio/](https://jepeteo.github.io/portfolio/)
+You can view it at [theodorosmentis.com](https://theodorosmentis.com)
 
 ## Features
 
