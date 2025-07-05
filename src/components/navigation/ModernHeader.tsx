@@ -30,18 +30,25 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
   return (
     <motion.header
       className={cn(
-        "fixed top-0 left-0 right-0 z-navbar",
-        "border-b border-border/50 backdrop-blur-xl",
-        "transition-all duration-300",
+        "sticky top-0 left-0 right-0 z-[9999]",
+        "border-b backdrop-blur-xl",
+        "transition-all duration-300 ease-in-out",
+        "supports-[backdrop-filter]:bg-surface-primary/60",
         isScrolled
-          ? "bg-surface-primary/80 shadow-lg shadow-black/5"
-          : "bg-surface-primary/60",
+          ? "bg-surface-primary/95 shadow-lg shadow-black/10 border-border/80 backdrop-blur-xl"
+          : "bg-surface-primary/80 border-border/30 backdrop-blur-sm",
         className
       )}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       role="banner"
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 9999,
+        willChange: "transform",
+      }}
     >
       {" "}
       <div

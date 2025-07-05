@@ -65,6 +65,8 @@
 html {
     scroll-behavior: smooth;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    scroll-padding-top: 80px;
+    /* Account for sticky header height */
 }
 
 body {
@@ -214,4 +216,26 @@ a:focus-visible {
 
 .rotate-y-180 {
     transform: rotateY(180deg);
+}
+
+/* Enhanced sticky header styles */
+html {
+    scroll-padding-top: 80px;
+    /* Account for sticky header height */
+}
+
+/* Smooth scrolling for all elements */
+* {
+    scroll-behavior: smooth;
+}
+
+/* Ensure header backdrop blur works properly */
+@supports (backdrop-filter: blur(20px)) {
+    .backdrop-blur-xl {
+        backdrop-filter: blur(20px);
+    }
+
+    .backdrop-blur-sm {
+        backdrop-filter: blur(4px);
+    }
 }

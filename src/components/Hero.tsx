@@ -48,7 +48,7 @@ const Hero: React.FC = memo(() => {
   return (
     <section
       ref={heroRef}
-      className={`relative min-h-screen flex items-center justify-center py-20 transition-all duration-1000 ${
+      className={`relative min-h-screen flex items-center justify-center pt-24 pb-20 transition-all duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       } ${prefersReducedMotion ? "!transition-none" : ""}`}
       id="top"
