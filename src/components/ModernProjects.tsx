@@ -320,25 +320,34 @@ const ModernProjects = memo(() => {
           : "bg-gradient-to-br from-slate-50 via-white to-slate-100"
       }`}
     >
-      <div className="container mx-auto px-6 lg:px-8">
+      <div className="container">
         {/* Section Header */}
         <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 mb-6">
+            <Layers className="w-5 h-5 text-blue-500" />
+            <span className="text-blue-500 font-semibold">
+              Portfolio & Projects
+            </span>
+          </div>
+
           <h2
-            className={`text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r bg-clip-text text-transparent ${
-              isDark
-                ? "from-blue-400 via-purple-400 to-cyan-400"
-                : "from-blue-600 via-purple-600 to-cyan-600"
+            className={`text-5xl md:text-7xl font-bold mb-8 ${
+              isDark ? "text-white" : "text-slate-900"
             }`}
           >
-            My Projects
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+              My Work
+            </span>
           </h2>
+
           <p
-            className={`text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed ${
-              isDark ? "text-slate-300" : "text-slate-600"
+            className={`text-xl max-w-3xl mx-auto leading-relaxed ${
+              isDark ? "text-slate-300" : "text-slate-700"
             }`}
           >
             Explore my portfolio of web development projects, from WordPress
-            sites to modern React applications
+            sites to modern React applications. Each project represents a unique
+            challenge and creative solution.
           </p>
         </div>
 
