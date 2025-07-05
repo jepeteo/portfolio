@@ -9,6 +9,7 @@ import ErrorBoundary from "./components/ErrorBoundary"
 import PerformanceDashboard from "./components/PerformanceDashboard"
 import { LoadingSpinner } from "./components/loading/ModernLoadingStates"
 import { BackToTopButton } from "./components/ui/BackToTopButton"
+import { VercelIntegrations } from "./components/VercelIntegrations"
 import { ThemeProvider, useTheme } from "./context/ThemeContext"
 import {
   createLazyComponent,
@@ -20,6 +21,7 @@ import {
   seoManager,
 } from "./utils/enhancedSEO"
 import useServiceWorker from "./hooks/useServiceWorker"
+
 import productionMonitor from "./utils/productionMonitor"
 
 import "flowbite"
@@ -177,6 +179,7 @@ const App: React.FC = () => {
     <ErrorBoundary>
       <ThemeProvider>
         <AppContent />
+        <VercelIntegrations />
       </ThemeProvider>
     </ErrorBoundary>
   )

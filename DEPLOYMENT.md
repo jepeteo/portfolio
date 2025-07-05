@@ -43,11 +43,20 @@ VITE_APP_DOMAIN=theodorosmentis.com
 VITE_ENABLE_MONITORING=true
 VITE_ENABLE_PERFORMANCE_DASHBOARD=false
 
+# Vercel Analytics & Speed Insights (REQUIRED for analytics)
+VITE_VERCEL_ANALYTICS_ENABLED=true
+VITE_VERCEL_SPEED_INSIGHTS_ENABLED=true
+
 # EmailJS Configuration (add your real values)
 VITE_EMAILJS_SERVICE_ID=your_service_id
 VITE_EMAILJS_TEMPLATE_ID=your_template_id
 VITE_EMAILJS_PUBLIC_KEY=your_public_key
 ```
+
+> **Important**: The Vercel Analytics and Speed Insights will only load when:
+> 1. The environment variables are set to `true`
+> 2. The site is running on Vercel (vercel.app domain or theodorosmentis.com)
+> 3. They fail gracefully if disabled or unavailable
 
 #### 5. Custom Domain Setup
 
@@ -82,9 +91,20 @@ VITE_EMAILJS_PUBLIC_KEY=your_public_key
 ### 🔧 Post-Deployment
 
 1. Test the live site: `https://theodorosmentis.com`
-2. Run Lighthouse audit
-3. Monitor performance with built-in dashboard
-4. Update EmailJS configuration for contact form
+2. **Set up Vercel Analytics & Speed Insights**:
+   - Go to Vercel Dashboard → Project → Analytics tab
+   - Enable Analytics and Speed Insights
+   - Verify environment variables are set correctly
+3. Run Lighthouse audit
+4. Monitor performance with built-in dashboard
+5. Update EmailJS configuration for contact form
+
+### 📊 Analytics & Monitoring
+
+✅ **Vercel Analytics**: Tracks page views and user interactions
+✅ **Vercel Speed Insights**: Monitors Core Web Vitals in real-time  
+✅ **Failsafe Integration**: Only loads when enabled and on Vercel platform
+✅ **Privacy-First**: No personal data tracking, aggregated metrics only
 
 ### 🚀 Continuous Deployment
 
