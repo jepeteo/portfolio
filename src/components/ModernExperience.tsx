@@ -134,15 +134,15 @@ const ModernExperience: React.FC = () => {
         <ExperienceStatsComponent stats={stats} isDark={isDark} />
 
         {/* Filter Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+        <div className="flex flex-col items-center gap-4 mb-8">
           <div className="flex items-center gap-3">
             <Filter
-              className={`w-5 h-5 ${
+              className={`w-4 h-4 ${
                 isDark ? "text-slate-400" : "text-slate-600"
               }`}
             />
             <span
-              className={`font-medium ${
+              className={`font-medium text-sm ${
                 isDark ? "text-slate-300" : "text-slate-700"
               }`}
             >
@@ -150,7 +150,7 @@ const ModernExperience: React.FC = () => {
             </span>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap justify-center gap-2">
             {[
               {
                 key: "all",
@@ -181,7 +181,7 @@ const ModernExperience: React.FC = () => {
               <button
                 key={key}
                 onClick={() => setFilter(key as any)}
-                className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                className={`px-3 py-1.5 rounded-lg font-medium text-xs transition-all ${
                   filter === key
                     ? isDark
                       ? "bg-green-600 text-white"
