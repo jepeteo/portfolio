@@ -53,7 +53,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
       } backdrop-blur-sm hover:shadow-xl`}
     >
       <div className="p-6">
-        {/* Header */}
+        
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
             <h3
@@ -95,7 +95,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
             </div>
           </div>
 
-          {/* Level Badge */}
           <div
             className={`px-3 py-1 rounded-full text-xs font-medium border ${getLevelColor(
               certificate.level || "Intermediate"
@@ -105,7 +104,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           </div>
         </div>
 
-        {/* Verified Badge */}
         {certificate.verified && (
           <div className="flex items-center gap-2 mb-4">
             <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-green-100 dark:bg-green-900/30 border border-green-200 dark:border-green-700">
@@ -117,7 +115,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           </div>
         )}
 
-        {/* Description */}
         {certificate.description && (
           <p
             className={`mb-4 leading-relaxed ${
@@ -128,7 +125,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           </p>
         )}
 
-        {/* Skills - Always visible (truncated if not expanded) */}
         {certificate.skills && certificate.skills.length > 0 && (
           <div className="mb-4">
             <h4
@@ -167,10 +163,9 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           </div>
         )}
 
-        {/* Expanded content */}
         {isExpanded && (
           <div className="space-y-4">
-            {/* Credential ID */}
+            
             {certificate.credentialId && (
               <div>
                 <h4
@@ -190,7 +185,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
               </div>
             )}
 
-            {/* Duration */}
             {certificate.duration && (
               <div>
                 <h4
@@ -212,9 +206,8 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           </div>
         )}
 
-        {/* Actions */}
         <div className="flex items-center justify-between mt-6">
-          {/* Expand/Collapse button */}
+          
           <button
             onClick={onToggleExpanded}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105 ${
@@ -236,7 +229,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
             )}
           </button>
 
-          {/* View Certificate button */}
           {certificate.credentialUrl && (
             <a
               href={certificate.credentialUrl}

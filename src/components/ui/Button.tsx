@@ -1,11 +1,8 @@
-// Modern Button Component with Advanced Patterns
+
 import React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "../../utils/styles"
-
-// Button variants using CVA (Class Variance Authority)
-const buttonVariants = cva(
-  // Base styles
+import { cn } from "../../utils/styles"
+const buttonVariants = cva(
   [
     "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md",
     "text-sm font-medium transition-all duration-200 ease-out",
@@ -70,9 +67,7 @@ const buttonVariants = cva(
       animation: "none",
     },
   }
-)
-
-// Loading spinner component
+)
 const LoadingSpinner = ({ className }: { className?: string }) => (
   <svg
     className={cn("h-4 w-4 animate-spin", className)}
@@ -95,9 +90,7 @@ const LoadingSpinner = ({ className }: { className?: string }) => (
       d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
     />
   </svg>
-)
-
-// Button props interface
+)
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
@@ -106,9 +99,7 @@ export interface ButtonProps
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
   tooltip?: string
-}
-
-// Main Button component
+}
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
@@ -157,9 +148,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {buttonContent}
       </button>
-    )
-
-    // Add tooltip if provided
+    )
     if (tooltip) {
       return (
         <div className="group relative">

@@ -24,13 +24,10 @@ export interface CertificateStats {
   byIssuer: Record<string, number>
   totalSkills: number
   recentCount: number
-}
-
-// Validate and transform certificate data
+}
 const transformCertificates = (): ModernCertificate[] => {
   return myCertificates
-    .filter((cert) => {
-      // Basic validation
+    .filter((cert) => {
       return cert.name && cert.issuer && cert.issueDate && cert.category
     })
     .map((cert, index) => ({
@@ -49,9 +46,7 @@ const transformCertificates = (): ModernCertificate[] => {
       verified: !!cert.credentialUrl,
     }))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-}
-
-// Calculate certificate statistics
+}
 const calculateCertificateStats = (
   certificates: ModernCertificate[]
 ): CertificateStats => {
@@ -61,22 +56,13 @@ const calculateCertificateStats = (
   const allSkills = new Set<string>()
   const currentYear = new Date().getFullYear()
 
-  certificates.forEach((cert) => {
-    // Count by category
-    byCategory[cert.category] = (byCategory[cert.category] || 0) + 1
-
-    // Count by year
+  certificates.forEach((cert) => {
+    byCategory[cert.category] = (byCategory[cert.category] || 0) + 1
     const year = new Date(cert.date).getFullYear().toString()
-    byYear[year] = (byYear[year] || 0) + 1
-
-    // Count by issuer
-    byIssuer[cert.issuer] = (byIssuer[cert.issuer] || 0) + 1
-
-    // Collect unique skills
+    byYear[year] = (byYear[year] || 0) + 1
+    byIssuer[cert.issuer] = (byIssuer[cert.issuer] || 0) + 1
     cert.skills?.forEach((skill) => allSkills.add(skill))
-  })
-
-  // Count recent certificates (last 2 years)
+  })
   const recentCount = certificates.filter((cert) => {
     const certYear = new Date(cert.date).getFullYear()
     return certYear >= currentYear - 1

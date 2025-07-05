@@ -21,14 +21,11 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    // Check localStorage first, then system preference, default to dark
+  const [theme, setTheme] = useState<Theme>(() => {
     const savedTheme = localStorage.getItem("theme") as Theme
     if (savedTheme && (savedTheme === "light" || savedTheme === "dark")) {
       return savedTheme
-    }
-
-    // Check system preference
+    }
     if (
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -49,14 +46,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     }
 
     localStorage.setItem("theme", theme)
-  }, [theme])
-
-  // Listen for system theme changes
+  }, [theme])
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
 
-    const handleChange = (e: MediaQueryListEvent) => {
-      // Only update if user hasn't manually set a preference
+    const handleChange = (e: MediaQueryListEvent) => {
       const savedTheme = localStorage.getItem("theme")
       if (!savedTheme) {
         setTheme(e.matches ? "dark" : "light")

@@ -14,8 +14,6 @@ import {
 } from "lucide-react"
 
 const ModernProjects = memo(() => {
-  // Removed expensive render tracking for performance
-
   const { isDark } = useTheme()
   const [projectType, setProjectType] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
@@ -30,7 +28,6 @@ const ModernProjects = memo(() => {
 
   const projectsPerPage = 6
 
-  // Validate and filter projects - optimized for performance
   const validatedProjects = useMemo(() => {
     return myProjects
       .filter((project: any): project is any => isValidProject(project))
@@ -47,7 +44,6 @@ const ModernProjects = memo(() => {
       })) as Project[]
   }, [])
 
-  // Get unique project types for filter - optimized
   const projectTypes = useMemo(() => {
     return Array.from(
       new Set(validatedProjects.map((project) => project.prType))
@@ -60,7 +56,6 @@ const ModernProjects = memo(() => {
         ? validatedProjects
         : validatedProjects.filter((project) => project.prType === projectType)
 
-    // Sort: featured first, then alphabetically
     const featured = filtered.filter((project) => project.prFeatured)
     const nonFeatured = filtered
       .filter((project) => !project.prFeatured)
@@ -69,17 +64,14 @@ const ModernProjects = memo(() => {
     return [...featured, ...nonFeatured]
   }, [projectType, validatedProjects])
 
-  // Pagination logic - optimized
   const totalPages = Math.ceil(filteredProjects.length / projectsPerPage)
   const displayProjects = useMemo(() => {
     const startIndex = (currentPage - 1) * projectsPerPage
     return filteredProjects.slice(startIndex, startIndex + projectsPerPage)
   }, [filteredProjects, currentPage, projectsPerPage])
 
-  // Image loading strategy: Load first 6 images immediately, others on demand
   const shouldLoadImageImmediately = useCallback(
     (project: Project, index: number) => {
-      // Load images for featured projects or first 6 projects immediately
       return (
         project.prFeatured || index < 6 || shouldLoadImages.has(project.prName)
       )
@@ -87,17 +79,14 @@ const ModernProjects = memo(() => {
     [shouldLoadImages]
   )
 
-  // Function to trigger image loading for a specific project
   const triggerImageLoad = useCallback((projectName: string) => {
     setShouldLoadImages((prev) => new Set(prev).add(projectName))
   }, [])
 
-  // Handle page changes and load images for new page
   const handlePageChange = useCallback(
     (newPage: number) => {
       setCurrentPage(newPage)
 
-      // Load images for the new page
       const startIndex = (newPage - 1) * projectsPerPage
       const endIndex = startIndex + projectsPerPage
       const pageProjects = filteredProjects.slice(startIndex, endIndex)
@@ -111,22 +100,18 @@ const ModernProjects = memo(() => {
     [filteredProjects, projectsPerPage]
   )
 
-  // Generate smart pagination numbers with ellipsis
   const generatePaginationNumbers = useCallback(() => {
     const pages: (number | string)[] = []
-    const maxVisiblePages = 5 // Show maximum 5 page numbers
+    const maxVisiblePages = 5
 
     if (totalPages <= maxVisiblePages) {
-      // Show all pages if total is less than max visible
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i)
       }
     } else {
-      // Always show first page
       pages.push(1)
 
       if (currentPage <= 3) {
-        // Show: 1, 2, 3, 4, ..., last
         for (let i = 2; i <= 4; i++) {
           pages.push(i)
         }
@@ -135,13 +120,11 @@ const ModernProjects = memo(() => {
           pages.push(totalPages)
         }
       } else if (currentPage >= totalPages - 2) {
-        // Show: 1, ..., last-3, last-2, last-1, last
         pages.push("...")
         for (let i = totalPages - 3; i <= totalPages; i++) {
           if (i > 1) pages.push(i)
         }
       } else {
-        // Show: 1, ..., current-1, current, current+1, ..., last
         pages.push("...")
         for (let i = currentPage - 1; i <= currentPage + 1; i++) {
           pages.push(i)
@@ -154,7 +137,6 @@ const ModernProjects = memo(() => {
     return pages
   }, [currentPage, totalPages])
 
-  // Load first 6 projects' images on component mount
   React.useEffect(() => {
     const first6Projects = filteredProjects.slice(0, 6)
     setShouldLoadImages((prev) => {
@@ -162,13 +144,12 @@ const ModernProjects = memo(() => {
       first6Projects.forEach((project) => newSet.add(project.prName))
       return newSet
     })
-  }, []) // Only run on mount
+  }, [])
 
   const handleProjectTypeChange = useCallback(
     (type: string | null) => {
       setProjectType(type)
       setCurrentPage(1)
-      // When filter changes, trigger loading of first 6 images of new filtered results
       const filtered =
         type === null
           ? validatedProjects
@@ -191,12 +172,10 @@ const ModernProjects = memo(() => {
     [validatedProjects]
   )
 
-  // Handle image errors - optimized
   const handleImageError = useCallback((projectName: string) => {
     setImageErrors((prev) => new Set(prev).add(projectName))
   }, [])
 
-  // Project type icons - simplified for better performance
   const getProjectIcon = (type: string) => {
     const icons: Record<string, React.ComponentType<any>> = {
       WordPress: Layers,
@@ -207,7 +186,6 @@ const ModernProjects = memo(() => {
     return icons[type] || Code
   }
 
-  // Project card component - heavily optimized for performance with lazy loading
   const ProjectCard = memo(
     ({
       project,
@@ -220,28 +198,23 @@ const ModernProjects = memo(() => {
       isDark: boolean
       globalIndex: number
     }) => {
-      // Card-level intersection observer for lazy loading
       const { targetRef: cardRef, isVisible: isCardVisible } =
         useIntersectionObserver<HTMLDivElement>({
           threshold: 0.1,
           rootMargin: "100px",
         })
 
-      // Determine if image should load
       const shouldLoadImage =
         shouldLoadImageImmediately(project, globalIndex) || isCardVisible
 
-      // Trigger image loading when card becomes visible
       React.useEffect(() => {
         if (isCardVisible && !shouldLoadImages.has(project.prName)) {
           triggerImageLoad(project.prName)
         }
       }, [isCardVisible, project.prName])
 
-      // Simplified icon selection without useMemo
       const IconComponent = getProjectIcon(project.prType)
 
-      // Simple image path construction
       const imageSlug =
         (project as any).prImageSlug ||
         project.prName.toLowerCase().replace(/\s+/g, "-")
@@ -249,11 +222,9 @@ const ModernProjects = memo(() => {
 
       const hasImageError = imageErrors.has(project.prName)
 
-      // Simplified image loading state - optimized
       const [imageError, setImageError] = React.useState(false)
       const [imageLoading, setImageLoading] = React.useState(true)
 
-      // Reset image loading state when project changes - optimized
       React.useEffect(() => {
         setImageError(false)
         setImageLoading(true)
@@ -298,7 +269,6 @@ const ModernProjects = memo(() => {
                 : "bg-white/50 backdrop-blur-sm border-slate-200 hover:border-blue-500/50"
             }`}
           >
-            {/* Project Image */}
             <div className="relative w-full h-64 overflow-hidden">
               {shouldLoadImage && !hasImageError && !imageError ? (
                 <>
@@ -312,13 +282,11 @@ const ModernProjects = memo(() => {
                     onError={handleImageErrorLocal}
                     loading="lazy"
                   />
-                  {/* Loading indicator */}
                   {imageLoading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-slate-200/50 dark:bg-slate-800/50">
                       <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                     </div>
                   )}
-                  {/* Image Overlay */}
                   <div
                     className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
                       isDark
@@ -326,7 +294,6 @@ const ModernProjects = memo(() => {
                         : "bg-gradient-to-t from-slate-900/60 via-slate-900/20 to-transparent"
                     }`}
                   />
-                  {/* View Project button overlay */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
                     <a
                       href={project.prUrl}
@@ -341,7 +308,6 @@ const ModernProjects = memo(() => {
                   </div>
                 </>
               ) : !shouldLoadImage ? (
-                // Placeholder when image shouldn't load yet
                 <div
                   className={`w-full h-full flex flex-col items-center justify-center ${
                     isDark
@@ -367,7 +333,6 @@ const ModernProjects = memo(() => {
                   </p>
                 </div>
               ) : (
-                // Fallback when image fails to load
                 <div
                   className={`w-full h-full flex items-center justify-center ${
                     isDark
@@ -388,9 +353,7 @@ const ModernProjects = memo(() => {
               )}
             </div>
 
-            {/* Content Section */}
             <div className="p-5">
-              {/* Header */}
               <div className="flex items-center justify-between mb-3">
                 <div
                   className={`w-10 h-10 rounded-xl flex items-center justify-center ${
@@ -413,7 +376,6 @@ const ModernProjects = memo(() => {
                 </span>
               </div>
 
-              {/* Project Title */}
               <h3
                 className={`text-lg font-bold mb-2 group-hover:text-blue-500 transition-colors line-clamp-2 ${
                   isDark ? "text-white" : "text-slate-900"
@@ -422,7 +384,6 @@ const ModernProjects = memo(() => {
                 {project.prName}
               </h3>
 
-              {/* Description */}
               <p
                 className={`text-sm mb-3 leading-relaxed line-clamp-2 ${
                   isDark ? "text-slate-300" : "text-slate-600"
@@ -431,7 +392,6 @@ const ModernProjects = memo(() => {
                 {project.prDescription}
               </p>
 
-              {/* Footer - Only show if image failed to load */}
               {hasImageError && (
                 <div className="flex items-center justify-center mt-4">
                   <a
@@ -455,7 +415,6 @@ const ModernProjects = memo(() => {
         </div>
       )
     },
-    // Simplified comparison function for better performance
     (prevProps, nextProps) => {
       return (
         prevProps.project.prName === nextProps.project.prName &&
@@ -464,10 +423,8 @@ const ModernProjects = memo(() => {
     }
   )
 
-  // Set display name for ProjectCard
   ProjectCard.displayName = "ProjectCard"
 
-  // Main return statement for ModernProjects
   return (
     <section
       ref={ref}
@@ -479,7 +436,6 @@ const ModernProjects = memo(() => {
       }`}
     >
       <div className="container">
-        {/* Section Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 mb-6">
             <Layers className="w-5 h-5 text-blue-500" />
@@ -509,7 +465,6 @@ const ModernProjects = memo(() => {
           </p>
         </div>
 
-        {/* Filter Pills */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           <button
             onClick={() => handleProjectTypeChange(null)}
@@ -552,10 +507,8 @@ const ModernProjects = memo(() => {
           })}
         </div>
 
-        {/* Projects Grid */}
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3 mb-12">
           {displayProjects.map((project: Project, index: number) => {
-            // Calculate global index for the project in the full filtered list
             const globalIndex = filteredProjects.findIndex(
               (p) => p.prName === project.prName
             )
@@ -571,7 +524,6 @@ const ModernProjects = memo(() => {
           })}
         </div>
 
-        {/* Results Info */}
         <div className="text-center mt-8">
           <p
             className={`text-sm ${
@@ -585,10 +537,8 @@ const ModernProjects = memo(() => {
           </p>
         </div>
 
-        {/* Pagination Navigation */}
         {totalPages > 1 && (
           <div className="flex justify-center items-center gap-2 mt-8">
-            {/* Previous Page Button */}
             <button
               onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
@@ -605,7 +555,6 @@ const ModernProjects = memo(() => {
               Previous
             </button>
 
-            {/* Smart Page Numbers */}
             {generatePaginationNumbers().map((pageItem, index) => {
               if (pageItem === "...") {
                 return (
@@ -640,7 +589,6 @@ const ModernProjects = memo(() => {
               )
             })}
 
-            {/* Next Page Button */}
             <button
               onClick={() =>
                 handlePageChange(Math.min(totalPages, currentPage + 1))
@@ -663,8 +611,6 @@ const ModernProjects = memo(() => {
       </div>
     </section>
   )
-
-  // Smart pagination component
 })
 
 ModernProjects.displayName = "ModernProjects"

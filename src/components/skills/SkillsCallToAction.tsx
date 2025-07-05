@@ -62,7 +62,6 @@ const SkillsCallToAction: React.FC<SkillsCallToActionProps> = ({
           </div>
         </div>
 
-        {/* Subtle background elements */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-10 left-10 w-20 h-20 rounded-full bg-violet-500" />
           <div className="absolute bottom-10 right-10 w-16 h-16 rounded-full bg-purple-500" />

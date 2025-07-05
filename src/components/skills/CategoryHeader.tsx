@@ -37,7 +37,6 @@ const CategoryHeader: React.FC<CategoryHeaderProps> = ({ category }) => {
         </p>
       </div>
 
-      {/* Beautiful background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
         <div className="absolute top-10 right-10 w-32 h-32 rounded-full bg-white/10" />

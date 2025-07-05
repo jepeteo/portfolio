@@ -1,6 +1,3 @@
-// Performance Dashboard Component (2025)
-// Development-only component for monitoring performance metrics
-
 import React, { useState, useEffect } from "react"
 import { getBundleInfo } from "../utils/performanceOptimization"
 import { A11yChecker } from "../utils/accessibilityOptimization"
@@ -38,7 +35,6 @@ interface WebVitals {
 }
 
 const PerformanceDashboard: React.FC = () => {
-  // Enhanced production detection - hide in production builds
   const isDevelopment =
     process.env.NODE_ENV === "development" &&
     (window.location.hostname === "localhost" ||
@@ -55,7 +51,6 @@ const PerformanceDashboard: React.FC = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
 
   useEffect(() => {
-    // Only show in development
     const isDevelopment =
       process.env.NODE_ENV === "development" &&
       (window.location.hostname === "localhost" ||
@@ -64,7 +59,6 @@ const PerformanceDashboard: React.FC = () => {
 
     if (!isDevelopment) return
 
-    // Collect performance metrics
     const collectMetrics = () => {
       const bundleInfo = getBundleInfo()
       const accessibilityIssues = A11yChecker.runAllChecks()
@@ -77,13 +71,10 @@ const PerformanceDashboard: React.FC = () => {
       setMetrics(metricsData)
     }
 
-    // Store observers to clean them up properly
     const observers: PerformanceObserver[] = []
 
-    // Monitor Web Vitals
     const collectWebVitals = () => {
       try {
-        // Largest Contentful Paint
         const lcpObserver = new PerformanceObserver((list) => {
           const entries = list.getEntries()
           const lastEntry = entries[entries.length - 1]
@@ -94,7 +85,6 @@ const PerformanceDashboard: React.FC = () => {
         lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] })
         observers.push(lcpObserver)
 
-        // First Contentful Paint
         const fcpObserver = new PerformanceObserver((list) => {
           const entries = list.getEntries()
           const fcpEntry = entries.find(
@@ -107,7 +97,6 @@ const PerformanceDashboard: React.FC = () => {
         fcpObserver.observe({ entryTypes: ["paint"] })
         observers.push(fcpObserver)
 
-        // Cumulative Layout Shift
         let clsValue = 0
         const clsObserver = new PerformanceObserver((list) => {
           for (const entry of list.getEntries()) {
@@ -120,7 +109,6 @@ const PerformanceDashboard: React.FC = () => {
         clsObserver.observe({ entryTypes: ["layout-shift"] })
         observers.push(clsObserver)
 
-        // First Input Delay
         const fidObserver = new PerformanceObserver((list) => {
           for (const entry of list.getEntries()) {
             setWebVitals((prev) => ({
@@ -131,37 +119,28 @@ const PerformanceDashboard: React.FC = () => {
         })
         fidObserver.observe({ entryTypes: ["first-input"] })
         observers.push(fidObserver)
-      } catch (error) {
-        console.warn("PerformanceObserver not supported:", error)
-      }
+      } catch (error) {}
     }
 
-    // Monitor online status
     const handleOnline = () => setIsOnline(true)
     const handleOffline = () => setIsOnline(false)
 
     window.addEventListener("online", handleOnline)
     window.addEventListener("offline", handleOffline)
 
-    // Collect metrics after page load
     const metricsTimeout = setTimeout(collectMetrics, 2000)
     collectWebVitals()
 
     return () => {
-      // Clean up all observers
       observers.forEach((observer) => {
         try {
           observer.disconnect()
-        } catch (error) {
-          console.warn("Error disconnecting observer:", error)
-        }
+        } catch (error) {}
       })
 
-      // Clean up event listeners
       window.removeEventListener("online", handleOnline)
       window.removeEventListener("offline", handleOffline)
 
-      // Clear timeout
       clearTimeout(metricsTimeout)
     }
   }, [])
@@ -226,7 +205,6 @@ const PerformanceDashboard: React.FC = () => {
       </div>
 
       <div className="p-3 space-y-3 text-xs">
-        {/* Web Vitals */}
         <div>
           <h4 className="font-medium mb-2">Core Web Vitals</h4>
           <div className="space-y-1">
@@ -253,7 +231,6 @@ const PerformanceDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Navigation Timing */}
         {metrics?.navigation && (
           <div>
             <h4 className="font-medium mb-2">Navigation Timing</h4>
@@ -280,7 +257,6 @@ const PerformanceDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Memory Usage */}
         {metrics?.memoryUsage && (
           <div>
             <h4 className="font-medium mb-2">Memory Usage</h4>
@@ -311,7 +287,6 @@ const PerformanceDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Largest Resources */}
         {metrics?.resources && (
           <div>
             <h4 className="font-medium mb-2">Largest Resources</h4>
@@ -337,7 +312,6 @@ const PerformanceDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Accessibility Issues */}
         {metrics?.accessibilityIssues && (
           <div>
             <h4 className="font-medium mb-2">Accessibility</h4>
@@ -382,7 +356,6 @@ const PerformanceDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Performance Tips */}
         <div>
           <h4 className="font-medium mb-2">Tips</h4>
           <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">

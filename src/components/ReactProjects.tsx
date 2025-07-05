@@ -54,7 +54,7 @@ const ReactProjects: React.FC = memo(() => {
       id="react-projects"
     >
       <div className="container">
-        {/* Section Header */}
+        
         <div className="text-center mb-16">
           <div
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
@@ -87,7 +87,6 @@ const ReactProjects: React.FC = memo(() => {
           </p>
         </div>
 
-        {/* Projects Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {validReactProjects.map((project, index) => (
             <div
@@ -105,13 +104,12 @@ const ReactProjects: React.FC = memo(() => {
               }
               onMouseLeave={() => setHoveredProject(null)}
             >
-              {/* Background Pattern */}
+              
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-              {/* Header Section with Status and Featured Badges */}
               <div className="relative p-6 pb-4">
                 <div className="flex items-start justify-between mb-4">
-                  {/* Project Icon */}
+                  
                   <div
                     className={`w-16 h-16 rounded-2xl flex items-center justify-center ${
                       isDark
@@ -122,9 +120,8 @@ const ReactProjects: React.FC = memo(() => {
                     <Code2 className="w-8 h-8" />
                   </div>
 
-                  {/* Badges */}
                   <div className="flex flex-col gap-2">
-                    {/* Project Status */}
+                    
                     <div
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
                         project.status === "completed"
@@ -141,7 +138,6 @@ const ReactProjects: React.FC = memo(() => {
                         : "In Progress"}
                     </div>
 
-                    {/* Featured Badge */}
                     {project.featured && (
                       <div
                         className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${
@@ -157,7 +153,6 @@ const ReactProjects: React.FC = memo(() => {
                   </div>
                 </div>
 
-                {/* Project Title */}
                 <h3
                   className={`text-2xl font-bold mb-3 group-hover:text-cyan-500 transition-colors ${
                     isDark ? "text-white" : "text-slate-900"
@@ -166,7 +161,6 @@ const ReactProjects: React.FC = memo(() => {
                   {project.title}
                 </h3>
 
-                {/* Description */}
                 <p
                   className={`text-base mb-4 leading-relaxed ${
                     isDark ? "text-slate-300" : "text-slate-700"
@@ -175,7 +169,6 @@ const ReactProjects: React.FC = memo(() => {
                   {project.description}
                 </p>
 
-                {/* Date */}
                 {project.date && (
                   <div
                     className={`flex items-center gap-2 mb-6 text-sm ${
@@ -187,7 +180,6 @@ const ReactProjects: React.FC = memo(() => {
                   </div>
                 )}
 
-                {/* Technologies */}
                 {project.technologies && project.technologies.length > 0 && (
                   <div className="mb-6">
                     <h4
@@ -227,7 +219,6 @@ const ReactProjects: React.FC = memo(() => {
                   </div>
                 )}
 
-                {/* Performance Indicator */}
                 {project.performance && (
                   <div className="mb-6 flex items-center gap-2">
                     <Zap
@@ -245,7 +236,6 @@ const ReactProjects: React.FC = memo(() => {
                   </div>
                 )}
 
-                {/* Project Links */}
                 <div className="flex gap-3">
                   {project.githubUrl && (
                     <a
@@ -284,7 +274,6 @@ const ReactProjects: React.FC = memo(() => {
           ))}
         </div>
 
-        {/* Technology Stats */}
         <div className="mt-16">
           <div
             className={`p-8 rounded-2xl ${

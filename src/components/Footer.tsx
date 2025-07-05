@@ -26,23 +26,17 @@ const Footer: React.FC = memo(() => {
       href: "mailto:th.mentis@gmail.com",
       hoverColor: "hover:text-green-400",
     },
-  ]
-
-  // Smooth scroll navigation function
+  ]
   const handleNavClick = useCallback(
     (e: React.MouseEvent, sectionId: string) => {
-      e.preventDefault()
-
-      // Handle "top" or "home" section
+      e.preventDefault()
       if (sectionId === "top" || sectionId === "home") {
         window.scrollTo({
           top: 0,
           behavior: "smooth",
         })
         return
-      }
-
-      // Handle other sections
+      }
       const targetElement = document.getElementById(sectionId)
       if (targetElement) {
         const headerOffset = 80 // Adjust based on your header height
@@ -60,9 +54,7 @@ const Footer: React.FC = memo(() => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
-  }
-
-  // Navigation items with proper section IDs
+  }
   const navigationItems = [
     { sectionId: "top", label: "Home" },
     { sectionId: "about", label: "About" },
@@ -80,7 +72,7 @@ const Footer: React.FC = memo(() => {
           : "bg-white/50 backdrop-blur-sm border-t border-slate-200"
       }`}
     >
-      {/* Background Pattern */}
+      
       <div className="absolute inset-0">
         <div
           className={`absolute inset-0 ${
@@ -93,7 +85,7 @@ const Footer: React.FC = memo(() => {
 
       <div className="container relative py-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-          {/* Brand Section */}
+          
           <div className="text-center md:text-left">
             <h3
               className={`text-2xl font-bold mb-2 ${
@@ -120,7 +112,6 @@ const Footer: React.FC = memo(() => {
             </p>
           </div>
 
-          {/* Quick Links - Updated with proper navigation */}
           <div className="text-center">
             <div className="flex flex-wrap justify-center gap-8">
               {navigationItems.map((item, index) => (
@@ -139,7 +130,6 @@ const Footer: React.FC = memo(() => {
             </div>
           </div>
 
-          {/* Social Links */}
           <div className="text-center md:text-right">
             <div className="flex justify-center md:justify-end gap-4 mb-4">
               {socialLinks.map((social, index) => (
@@ -160,7 +150,6 @@ const Footer: React.FC = memo(() => {
               ))}
             </div>
 
-            {/* Back to Top Button */}
             <button
               onClick={scrollToTop}
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105 ${
@@ -176,12 +165,10 @@ const Footer: React.FC = memo(() => {
           </div>
         </div>
 
-        {/* Divider */}
         <div
           className={`my-4 h-px ${isDark ? "bg-slate-800" : "bg-slate-200"}`}
         />
 
-        {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div
             className={`text-sm ${
@@ -206,7 +193,6 @@ const Footer: React.FC = memo(() => {
           </div>
         </div>
 
-        {/* Performance Badge */}
         <div className="mt-6 text-center">
           <div
             className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs ${

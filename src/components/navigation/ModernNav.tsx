@@ -1,4 +1,4 @@
-// Modern Navigation Component (2025 Version)
+
 import React, { useState, useCallback, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "../../context/ThemeContext"
@@ -53,9 +53,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
 
   const closeMenu = useCallback(() => {
     setIsOpen(false)
-  }, [])
-
-  // Handle navigation with view transitions
+  }, [])
   const handleNavigation = useCallback(
     (href: string) => {
       if (startTransition) {
@@ -69,35 +67,24 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       }
     },
     [startTransition, closeMenu]
-  )
-
-  // Scroll to section smoothly
+  )
   const handleNavClick = useCallback(
     (e: React.MouseEvent, sectionId: string) => {
-      e.preventDefault()
-
-      // Close mobile menu first
-      closeMenu()
-
-      // Get the element
+      e.preventDefault()
+      closeMenu()
       const targetId = sectionId === "top" ? "" : sectionId
       const element = targetId
         ? document.getElementById(targetId)
         : document.body
 
-      if (element) {
-        // Calculate offset for fixed header (adjust this value based on your header height)
+      if (element) {
         const headerOffset = 80
         const elementPosition = element.offsetTop
-        const offsetPosition = elementPosition - headerOffset
-
-        // Smooth scroll with offset
+        const offsetPosition = elementPosition - headerOffset
         window.scrollTo({
           top: targetId ? offsetPosition : 0,
           behavior: "smooth",
-        })
-
-        // Update URL hash without jumping
+        })
         if (targetId) {
           history.pushState(null, "", `#${targetId}`)
         } else {
@@ -106,9 +93,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       }
     },
     [closeMenu]
-  )
-
-  // Track active section
+  )
   useEffect(() => {
     const handleScroll = () => {
       const sections = links.map((link) => link.href.slice(1))
@@ -135,9 +120,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
     handleScroll() // Set initial active section
 
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [links])
-
-  // Handle escape key
+  }, [links])
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -156,9 +139,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       document.removeEventListener("keydown", handleEscape)
       document.body.style.overflow = ""
     }
-  }, [isOpen, closeMenu])
-
-  // Navigation link component
+  }, [isOpen, closeMenu])
   const NavLink: React.FC<{
     link: NavigationLink
     isMobile?: boolean
@@ -179,7 +160,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       aria-label={link.ariaLabel}
       aria-current={isActive ? "page" : undefined}
     >
-      {/* Active indicator */}
+      
       {isActive && !isMobile && (
         <motion.div
           className="absolute bottom-0 left-1/2 h-0.5 bg-primary rounded-full"
@@ -189,7 +170,6 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
         />
       )}
 
-      {/* Mobile active indicator */}
       {isActive && isMobile && (
         <motion.div
           className="absolute left-0 top-1/2 w-1 bg-primary rounded-r-full"
@@ -218,7 +198,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       aria-label="Main navigation"
     >
       <div className="flex items-center gap-4">
-        {/* Desktop Navigation */}
+        
         <ul className="hidden md:flex items-center gap-2" role="menubar">
           {links.map((link) => (
             <li key={link.href} role="none">
@@ -227,7 +207,6 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
           ))}
         </ul>
 
-        {/* Theme Toggle */}
         <Button
           variant="ghost"
           size="sm"
@@ -253,7 +232,6 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
           </motion.div>
         </Button>
 
-        {/* Mobile Menu Toggle */}
         <Button
           variant="ghost"
           size="sm"
@@ -275,11 +253,10 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
         </Button>
       </div>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
+            
             <motion.div
               className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
               initial={{ opacity: 0 }}
@@ -288,14 +265,12 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
               onClick={closeMenu}
             />
 
-            {/* Mobile Menu */}
             <motion.div
               id="mobile-menu"
               className={cn(
                 "fixed top-20 right-4 left-4 z-50 md:hidden",
                 "border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl",
-                "backdrop-blur-xl p-6 space-y-2",
-                // Enhanced background for better visibility
+                "backdrop-blur-xl p-6 space-y-2",
                 isDark
                   ? "bg-slate-900/95 dark:bg-slate-900/95"
                   : "bg-white/95 dark:bg-slate-900/95"
@@ -324,7 +299,6 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
                 ))}
               </div>
 
-              {/* Mobile Menu Footer */}
               <motion.div
                 className="pt-4 mt-4 border-t border-border"
                 initial={{ opacity: 0 }}

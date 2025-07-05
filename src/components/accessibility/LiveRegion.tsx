@@ -1,7 +1,4 @@
-/**
- * LiveRegion React Component
- * Accessible live region for dynamic content announcements
- */
+
 
 import React from "react"
 

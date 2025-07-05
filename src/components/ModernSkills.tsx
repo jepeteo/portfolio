@@ -3,7 +3,6 @@ import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import useSkillsData from "../hooks/useSkillsData"
 import usePerformanceMonitor from "../hooks/usePerformanceMonitor"
-// import { useRenderTracker } from "../utils/debugRenderLoop" // Temporarily disabled
 import CategoryCard from "./skills/CategoryCard"
 import CategoryHeader from "./skills/CategoryHeader"
 import SkillCard from "./skills/SkillCard"
@@ -18,21 +17,13 @@ const ModernSkills: React.FC = () => {
     rootMargin: "50px",
   })
 
-  // Debug render tracking in development only - TEMPORARILY DISABLED
-  // if (process.env.NODE_ENV === "development") {
-  //   useRenderTracker("ModernSkills")
-  // }
-
-  // Performance monitoring
   const { getPerformanceReport } = usePerformanceMonitor("ModernSkills")
 
   const [activeCategory, setActiveCategory] = useState<string>("languages")
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
 
-  // Use the custom hook for skills data
   const { skillCategories, stats } = useSkillsData()
 
-  // Log performance report in development - only periodically to avoid excessive logging
   const renderCount = React.useRef(0)
   React.useEffect(() => {
     renderCount.current += 1
@@ -41,12 +32,10 @@ const ModernSkills: React.FC = () => {
       renderCount.current % 10 === 0 &&
       renderCount.current > 0
     ) {
-      const report = getPerformanceReport()
-      console.log("📊 ModernSkills Performance:", report)
+      getPerformanceReport()
     }
   })
 
-  // Add navigation functions
   const scrollToProjects = useCallback(() => {
     const projectsSection = document.getElementById("projects")
     if (projectsSection) {
@@ -87,7 +76,6 @@ const ModernSkills: React.FC = () => {
       id="skills"
     >
       <div className="container">
-        {/* Personal header */}
         <div className="text-center mb-20">
           <div
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-8 ${
@@ -121,8 +109,6 @@ const ModernSkills: React.FC = () => {
           </p>
         </div>
 
-        {/* Mobile-first responsive layout */}
-        {/* Compact stats bar for mobile */}
         <div className="lg:hidden mb-8">
           <SkillsStats
             totalSkills={stats.totalSkills}
@@ -132,7 +118,6 @@ const ModernSkills: React.FC = () => {
           />
         </div>
 
-        {/* Horizontal scrollable categories for mobile */}
         <div className="lg:hidden mb-8">
           <div className="text-center mb-6">
             <h3
@@ -164,7 +149,6 @@ const ModernSkills: React.FC = () => {
             ))}
           </div>
 
-          {/* Scroll legend */}
           <div className="text-center mt-3">
             <p
               className={`text-xs flex items-center justify-center gap-2 ${
@@ -178,9 +162,7 @@ const ModernSkills: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile skills display */}
         <div className="lg:hidden">
-          {/* Compact category header for mobile */}
           <div
             className={`p-4 rounded-xl mb-6 text-white relative overflow-hidden`}
             style={{
@@ -205,7 +187,6 @@ const ModernSkills: React.FC = () => {
             </div>
           </div>
 
-          {/* Skills grid for mobile */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {currentCategory.skills.map((skill, index) => (
               <SkillCard
@@ -221,9 +202,7 @@ const ModernSkills: React.FC = () => {
           </div>
         </div>
 
-        {/* Desktop layout (unchanged) */}
         <div className="hidden lg:grid lg:grid-cols-3 gap-8">
-          {/* Category navigation - desktop */}
           <div className="lg:col-span-1 space-y-6">
             <div className="text-left mb-8">
               <h3
@@ -252,7 +231,6 @@ const ModernSkills: React.FC = () => {
               />
             ))}
 
-            {/* Desktop stats */}
             <SkillsStats
               totalSkills={stats.totalSkills}
               masteredSkills={stats.masteredSkills}
@@ -260,12 +238,9 @@ const ModernSkills: React.FC = () => {
             />
           </div>
 
-          {/* Skills showcase - desktop */}
           <div className="lg:col-span-2">
-            {/* Category story header */}
             <CategoryHeader category={currentCategory} />
 
-            {/* Skills grid with stories */}
             <div className="grid md:grid-cols-2 gap-6">
               {currentCategory.skills.map((skill, index) => (
                 <SkillCard
@@ -281,7 +256,6 @@ const ModernSkills: React.FC = () => {
           </div>
         </div>
 
-        {/* Personal call to action */}
         <SkillsCallToAction
           onScrollToProjects={scrollToProjects}
           onScrollToContact={scrollToContact}

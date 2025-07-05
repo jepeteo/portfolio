@@ -60,7 +60,7 @@ export const ExperienceSidebar: React.FC<ExperienceSidebarProps> = ({
             </div>
 
             <div className="flex items-center">
-              {/* Status indicators */}
+              
               <div className="flex flex-row items-center space-x-1.5 mr-1.5">
                 {experience.isFreelance && (
                   <div

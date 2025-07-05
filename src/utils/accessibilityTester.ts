@@ -1,7 +1,4 @@
-/**
- * Accessibility Testing Utilities
- * Comprehensive testing suite for WCAG 2.1 AA compliance
- */
+
 
 import { A11yChecker, ColorContrast } from "../utils/accessibilityOptimization"
 
@@ -29,9 +26,7 @@ export class AccessibilityTester {
       AccessibilityTester.instance = new AccessibilityTester()
     }
     return AccessibilityTester.instance
-  }
-
-  // Run comprehensive accessibility audit
+  }
   async runAudit(
     containerId?: string,
     options: {
@@ -58,37 +53,21 @@ export class AccessibilityTester {
       critical: [] as string[],
       warning: [] as string[],
       info: [] as string[],
-    }
-
-    // Run basic accessibility checks
+    }
     const basicChecks = A11yChecker.runAllChecks()
     issues.critical.push(...basicChecks.images)
     issues.warning.push(...basicChecks.headings)
-    issues.warning.push(...basicChecks.keyboard)
-
-    // Check semantic HTML structure
-    this.checkSemanticStructure(container, issues)
-
-    // Check ARIA implementation
-    this.checkARIAImplementation(container, issues)
-
-    // Check color contrast if enabled
+    issues.warning.push(...basicChecks.keyboard)
+    this.checkSemanticStructure(container, issues)
+    this.checkARIAImplementation(container, issues)
     if (includeColorContrast) {
       await this.checkColorContrast(container, issues)
-    }
-
-    // Check keyboard navigation if enabled
+    }
     if (includeKeyboardTest) {
       this.checkKeyboardNavigation(container, issues)
-    }
-
-    // Check for proper focus management
-    this.checkFocusManagement(container, issues)
-
-    // Check for screen reader compatibility
-    this.checkScreenReaderCompatibility(container, issues)
-
-    // Calculate score and compliance
+    }
+    this.checkFocusManagement(container, issues)
+    this.checkScreenReaderCompatibility(container, issues)
     const totalIssues =
       issues.critical.length + issues.warning.length + issues.info.length
     const score = Math.max(
@@ -113,8 +92,7 @@ export class AccessibilityTester {
   private checkSemanticStructure(
     container: Element,
     issues: AccessibilityReport["issues"]
-  ): void {
-    // Check for proper heading hierarchy
+  ): void {
     const headings = container.querySelectorAll("h1, h2, h3, h4, h5, h6")
     let previousLevel = 0
 
@@ -132,17 +110,13 @@ export class AccessibilityTester {
       }
 
       previousLevel = level
-    })
-
-    // Check for landmark elements
+    })
     const landmarks = container.querySelectorAll(
       "main, nav, aside, section, article, header, footer"
     )
     if (landmarks.length === 0) {
       issues.warning.push("No landmark elements found for navigation")
-    }
-
-    // Check for list structures
+    }
     const lists = container.querySelectorAll("ul, ol")
     lists.forEach((list) => {
       const listItems = list.querySelectorAll("li")
@@ -155,8 +129,7 @@ export class AccessibilityTester {
   private checkARIAImplementation(
     container: Element,
     issues: AccessibilityReport["issues"]
-  ): void {
-    // Check for ARIA labels on interactive elements
+  ): void {
     const interactiveElements = container.querySelectorAll(
       "button, a, input, select, textarea, [role='button'], [role='link']"
     )
@@ -173,9 +146,7 @@ export class AccessibilityTester {
           `Interactive element ${index + 1} lacks accessible name`
         )
       }
-    })
-
-    // Check for proper ARIA roles
+    })
     const elementsWithRoles = container.querySelectorAll("[role]")
     elementsWithRoles.forEach((element) => {
       const role = element.getAttribute("role")
@@ -203,9 +174,7 @@ export class AccessibilityTester {
       if (role && !validRoles.includes(role)) {
         issues.warning.push(`Invalid ARIA role: ${role}`)
       }
-    })
-
-    // Check for ARIA states and properties
+    })
     const ariaElements = container.querySelectorAll(
       "[aria-expanded], [aria-hidden], [aria-current]"
     )
@@ -254,8 +223,7 @@ export class AccessibilityTester {
               )}:1) for text element`
             )
           }
-        } catch (error) {
-          // Skip if color parsing fails
+        } catch (error) {
         }
       }
     }
@@ -279,9 +247,7 @@ export class AccessibilityTester {
           } has positive tabindex which can disrupt tab order`
         )
       }
-    })
-
-    // Check for skip links
+    })
     const skipLinks = container.querySelectorAll("a[href^='#']")
     if (skipLinks.length === 0) {
       issues.info.push("Consider adding skip links for keyboard navigation")
@@ -308,16 +274,13 @@ export class AccessibilityTester {
   private checkScreenReaderCompatibility(
     container: Element,
     issues: AccessibilityReport["issues"]
-  ): void {
-    // Check for screen reader only content
+  ): void {
     const srOnlyElements = container.querySelectorAll(
       ".sr-only, .visually-hidden"
     )
     if (srOnlyElements.length === 0) {
       issues.info.push("Consider adding screen reader only content for context")
-    }
-
-    // Check for proper live regions
+    }
     const liveRegions = container.querySelectorAll("[aria-live]")
     liveRegions.forEach((element) => {
       const politeness = element.getAttribute("aria-live")
@@ -379,9 +342,7 @@ export class AccessibilityTester {
         "🔊 Add screen reader announcements for dynamic content"
       )
       recommendations.push("🎨 Implement high contrast mode support")
-    }
-
-    // General recommendations
+    }
     recommendations.push(
       "🧪 Test with actual screen readers (NVDA, JAWS, VoiceOver)"
     )
@@ -389,53 +350,29 @@ export class AccessibilityTester {
     recommendations.push("🔄 Set up automated accessibility testing in CI/CD")
 
     return recommendations
-  }
-
-  // Lighthouse-style accessibility score
+  }
   async getLighthouseScore(): Promise<number> {
-    try {
-      // Simulate Lighthouse accessibility audit
+    try {
       const report = await this.runAudit()
       return report.score
     } catch (error) {
-      console.warn("Lighthouse accessibility audit failed:", error)
       return 0
     }
   }
-}
-
-// Export singleton instance
-export const accessibilityTester = AccessibilityTester.getInstance()
-
-// Utility function for quick testing
+}
+export const accessibilityTester = AccessibilityTester.getInstance()
 export async function quickA11yCheck(containerId?: string): Promise<void> {
   const report = await accessibilityTester.runAudit(containerId)
-
-  console.group("🔍 Accessibility Report")
-  console.log(`Score: ${report.score}/100`)
-  console.log(`WCAG Compliance: ${report.wcagCompliance.level}`)
-
   if (report.issues.critical.length > 0) {
-    console.group("🚨 Critical Issues")
-    report.issues.critical.forEach((issue) => console.error(issue))
-    console.groupEnd()
+    report.issues.critical.forEach((issue) => 
   }
 
   if (report.issues.warning.length > 0) {
-    console.group("⚠️ Warnings")
-    report.issues.warning.forEach((issue) => console.warn(issue))
-    console.groupEnd()
+    report.issues.warning.forEach((issue) => 
   }
 
   if (report.issues.info.length > 0) {
-    console.group("💡 Suggestions")
-    report.issues.info.forEach((issue) => console.info(issue))
-    console.groupEnd()
+    report.issues.info.forEach((issue) => 
   }
-
-  console.group("📋 Recommendations")
-  report.recommendations.forEach((rec) => console.log(rec))
-  console.groupEnd()
-
-  console.groupEnd()
+  report.recommendations.forEach((rec) => 
 }

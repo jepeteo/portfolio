@@ -10,16 +10,10 @@ export interface ContactFormErrors {
   email?: string
   subject?: string
   message?: string
-}
-
-// Email validation - strict for email fields
+}
 export const validateEmail = (email: string): boolean => {
-  if (!email || typeof email !== "string") return false
-
-  // Remove any spaces (emails shouldn't have spaces)
-  const cleanEmail = email.replace(/\s/g, "")
-
-  // Comprehensive email regex
+  if (!email || typeof email !== "string") return false
+  const cleanEmail = email.replace(/\s/g, "")
   const emailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
@@ -28,51 +22,37 @@ export const validateEmail = (email: string): boolean => {
     cleanEmail.length >= 5 &&
     cleanEmail.length <= 254
   )
-}
-
-// Name validation - allows spaces and common name characters
+}
 export const validateName = (name: string): boolean => {
   if (!name || typeof name !== "string") return false
 
   const trimmed = name.trim()
 
-  if (trimmed.length < 2 || trimmed.length > 50) return false
-
-  // Allow letters, spaces, hyphens, apostrophes, and periods
+  if (trimmed.length < 2 || trimmed.length > 50) return false
   const nameRegex = /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s\-\'\.]+$/
 
   return nameRegex.test(trimmed)
-}
-
-// Subject validation - allows spaces and most characters
+}
 export const validateSubject = (subject: string): boolean => {
   if (!subject || typeof subject !== "string") return false
 
   const trimmed = subject.trim()
 
-  if (trimmed.length < 3 || trimmed.length > 100) return false
-
-  // Allow most characters except dangerous ones
+  if (trimmed.length < 3 || trimmed.length > 100) return false
   const subjectRegex = /^[^<>{}[\]\\\/]*$/
 
   return subjectRegex.test(trimmed)
-}
-
-// Message validation - allows spaces and most characters
+}
 export const validateMessage = (message: string): boolean => {
   if (!message || typeof message !== "string") return false
 
   const trimmed = message.trim()
 
-  if (trimmed.length < 10 || trimmed.length > 2000) return false
-
-  // Allow most characters except dangerous HTML/script tags
+  if (trimmed.length < 10 || trimmed.length > 2000) return false
   const messageRegex = /^[^<>{}[\]\\]*$/
 
   return messageRegex.test(trimmed)
-}
-
-// Sanitization functions
+}
 export const sanitizeEmail = (email: string): string => {
   if (!email || typeof email !== "string") return ""
 
@@ -92,9 +72,7 @@ export const sanitizeTextInput = (input: string): string => {
     .replace(/javascript:/gi, "") // Remove javascript: protocol
     .replace(/on\w+\s*=/gi, "") // Remove event handlers
     .replace(/data:/gi, "") // Remove data: protocol
-}
-
-// Individual field validation with error messages
+}
 export const validateFieldName = (name: string): string | null => {
   if (!name || !name.trim()) {
     return "Name is required"
@@ -166,9 +144,7 @@ export const validateFieldMessage = (message: string): string | null => {
   }
 
   return null
-}
-
-// Complete form validation
+}
 export const validateContactForm = (
   data: ContactFormData
 ): ContactFormErrors => {
@@ -187,14 +163,10 @@ export const validateContactForm = (
   if (messageError) errors.message = messageError
 
   return errors
-}
-
-// Check if form is valid
+}
 export const isFormValid = (errors: ContactFormErrors): boolean => {
   return Object.keys(errors).length === 0
-}
-
-// Sanitize entire form
+}
 export const sanitizeContactForm = (data: ContactFormData): ContactFormData => {
   return {
     name: sanitizeTextInput(data.name),

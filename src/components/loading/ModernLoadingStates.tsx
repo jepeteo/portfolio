@@ -1,9 +1,7 @@
-// Modern Loading States Component (2025 Version)
+
 import React from "react"
 import { motion } from "framer-motion"
-import { useTheme } from "../../context/ThemeContext"
-
-// Simple utility function to combine class names
+import { useTheme } from "../../context/ThemeContext"
 const cn = (...classes: (string | undefined | null | false)[]): string => {
   return classes.filter(Boolean).join(" ")
 }
@@ -323,15 +321,4 @@ export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
       />
     </div>
   )
-}
-
-// // Re-export all components
-// export {
-//   LoadingSpinner as Spinner,
-//   LoadingDots as Dots,
-//   LoadingPulse as Pulse,
-//   Skeleton as SkeletonLoader,
-//   ProjectCardSkeleton,
-//   LoadingState,
-//   ProgressiveImage,
-// }
+}

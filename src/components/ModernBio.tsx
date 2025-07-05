@@ -20,12 +20,8 @@ import {
   CheckCircle,
   ArrowRight,
   Github,
-} from "lucide-react"
-
-// Import the image (this should work if the image is in src/assets)
-import profileImage from "../assets/images/gteo.webp"
-
-// For files in public folder, use a string path instead of import
+} from "lucide-react"
+import profileImage from "../assets/images/gteo.webp"
 const resumePDF = "./cv/Theodoros-Mentis-CV.pdf"
 
 const StatsCard = memo(
@@ -43,16 +39,12 @@ const StatsCard = memo(
     const [displayValue, setDisplayValue] = useState("0")
     const [hasAnimated, setHasAnimated] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
-    const cardRef = useRef<HTMLDivElement>(null)
-
-    // Use Intersection Observer for this specific card
+    const cardRef = useRef<HTMLDivElement>(null)
     useEffect(() => {
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting && !hasAnimated) {
-            setIsVisible(true)
-
-            // Start animation after delay
+            setIsVisible(true)
             const timeout = setTimeout(() => {
               const numericValue = parseInt(stat.value.replace(/\D/g, ""))
               const suffix = stat.value.replace(/\d/g, "")
@@ -289,9 +281,7 @@ const ModernBio: React.FC = () => {
       <Icon className="w-4 h-4" />
       {label}
     </button>
-  )
-
-  // Add navigation functions
+  )
   const scrollToContact = () => {
     const contactSection = document.getElementById("contact")
     if (contactSection) {
@@ -326,7 +316,7 @@ const ModernBio: React.FC = () => {
       id="about"
     >
       <div className="container">
-        {/* Section Header */}
+        
         <div className="text-center mb-16">
           <div
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
@@ -358,7 +348,6 @@ const ModernBio: React.FC = () => {
           </p>
         </div>
 
-        {/* Stats Section */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
           {stats.map((stat, index) => (
             <StatsCard
@@ -371,9 +360,8 @@ const ModernBio: React.FC = () => {
           ))}
         </div>
 
-        {/* Main Content Grid */}
         <div className="grid lg:grid-cols-5 gap-12 items-start">
-          {/* Left Column - Profile Card */}
+          
           <div className="lg:col-span-2 space-y-8">
             <div
               className={`p-8 rounded-2xl border ${
@@ -382,7 +370,7 @@ const ModernBio: React.FC = () => {
                   : "bg-white/50 backdrop-blur-sm border-slate-200"
               }`}
             >
-              {/* Profile Header */}
+              
               <div className="text-center mb-8">
                 <div
                   className={`w-32 h-32 mx-auto mb-4 rounded-3xl flex items-center justify-center relative overflow-hidden ${
@@ -391,7 +379,7 @@ const ModernBio: React.FC = () => {
                       : "bg-gradient-to-br from-blue-100 to-purple-100"
                   }`}
                 >
-                  {/* Profile Image */}
+                  
                   <img
                     src={profileImage}
                     alt="Theodoros Mentis"
@@ -399,7 +387,6 @@ const ModernBio: React.FC = () => {
                     loading="lazy"
                   />
 
-                  {/* Fallback icon (hidden by default) */}
                   <div
                     className={`fallback-icon absolute inset-0 flex items-center justify-center ${
                       isDark ? "text-blue-300" : "text-blue-600"
@@ -410,7 +397,6 @@ const ModernBio: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Status Badge */}
                 <div
                   className={`relative px-2 py-1 w-32 m-auto mb-2 rounded-full text-xs font-medium 
                     ${
@@ -451,7 +437,6 @@ const ModernBio: React.FC = () => {
                 </div>
               </div>
 
-              {/* Quick Stats */}
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="text-center">
                   <div
@@ -487,7 +472,6 @@ const ModernBio: React.FC = () => {
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="space-y-3">
                 <button
                   onClick={scrollToContact}
@@ -530,7 +514,6 @@ const ModernBio: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column - Tabbed Content (unchanged) */}
           <div className="lg:col-span-3">
             <div
               className={`p-8 rounded-2xl border ${
@@ -539,16 +522,15 @@ const ModernBio: React.FC = () => {
                   : "bg-white/50 backdrop-blur-sm border-slate-200"
               }`}
             >
-              {/* Tab Navigation */}
+              
               <div className="flex flex-wrap gap-3 mb-8">
                 <TabButton id="about" label="About" icon={User} />
                 <TabButton id="expertise" label="Expertise" icon={Code2} />
                 <TabButton id="approach" label="Approach" icon={Target} />
               </div>
 
-              {/* Tab Content */}
               <div className="min-h-[500px]">
-                {/* About Tab */}
+                
                 {activeSection === "about" && (
                   <div className="space-y-6 animate-fadeIn">
                     <div className="space-y-6">
@@ -604,7 +586,6 @@ const ModernBio: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Updated action buttons */}
                     <div className="flex flex-wrap gap-4 pt-6">
                       <button
                         onClick={() => {
@@ -630,7 +611,6 @@ const ModernBio: React.FC = () => {
                   </div>
                 )}
 
-                {/* Expertise Tab */}
                 {activeSection === "expertise" && (
                   <div className="space-y-6 animate-fadeIn">
                     {expertise.map((area, index) => {
@@ -682,7 +662,6 @@ const ModernBio: React.FC = () => {
                   </div>
                 )}
 
-                {/* Approach Tab */}
                 {activeSection === "approach" && (
                   <div className="space-y-6 animate-fadeIn">
                     {approach.map((principle, index) => {
@@ -725,7 +704,6 @@ const ModernBio: React.FC = () => {
           </div>
         </div>
 
-        {/* Call to Action - Updated buttons */}
         <div className="text-center mt-16">
           <div
             className={`p-8 rounded-2xl border relative overflow-hidden ${
@@ -734,7 +712,7 @@ const ModernBio: React.FC = () => {
                 : "bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200"
             }`}
           >
-            {/* Background Pattern - unchanged */}
+            
             <div className="absolute inset-0 opacity-5">
               <div className="absolute top-0 left-0 w-32 h-32 bg-blue-500 rounded-full -translate-x-16 -translate-y-16"></div>
               <div className="absolute bottom-0 right-0 w-32 h-32 bg-purple-500 rounded-full translate-x-16 translate-y-16"></div>
@@ -757,7 +735,6 @@ const ModernBio: React.FC = () => {
                 work with creative minds and bring innovative ideas to life.
               </p>
 
-              {/* Updated CTA buttons */}
               <div className="flex flex-wrap gap-4 justify-center">
                 <button
                   onClick={scrollToContact}

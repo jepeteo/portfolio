@@ -1,11 +1,6 @@
-/**
- * Asset Optimization Utilities
- * Progressive image loading, font optimization, and responsive assets
- */
 
-import { useEffect, useRef, useState } from "react"
 
-// Progressive image loading hook - simplified and fixed
+import { useEffect, useRef, useState } from "react"
 export function useProgressiveImage(src: string, fallback?: string) {
   const [currentSrc, setCurrentSrc] = useState(fallback || "")
   const [isLoading, setIsLoading] = useState(!!src) // Only loading if we have a src
@@ -16,13 +11,9 @@ export function useProgressiveImage(src: string, fallback?: string) {
     if (!src) {
       setIsLoading(false)
       return
-    }
-
-    // Check if the image is already cached/loaded
+    }
     const img = new Image()
-    imageRef.current = img
-
-    // If image is already in cache, it will load immediately
+    imageRef.current = img
     if (img.complete && img.naturalWidth > 0) {
       setCurrentSrc(src)
       setIsLoading(false)
@@ -58,9 +49,7 @@ export function useProgressiveImage(src: string, fallback?: string) {
   }, [src, fallback])
 
   return { src: currentSrc, isLoading, hasError }
-}
-
-// Responsive image sizes generator
+}
 export function generateResponsiveSizes(
   breakpoints: { [key: string]: number } = {
     mobile: 480,
@@ -79,9 +68,7 @@ export function generateResponsiveSizes(
     })
 
   return sizes.join(", ")
-}
-
-// WebP support detection
+}
 export function useWebPSupport() {
   const [supportsWebP, setSupportsWebP] = useState<boolean | null>(null)
 
@@ -108,9 +95,7 @@ export function useWebPSupport() {
   }, [])
 
   return supportsWebP
-}
-
-// Optimized image component props
+}
 export interface OptimizedImageProps {
   src: string
   alt: string
@@ -123,9 +108,7 @@ export interface OptimizedImageProps {
   onError?: () => void
   placeholder?: string
   blur?: boolean
-}
-
-// Get optimized image source based on format support
+}
 export function getOptimizedImageSrc(
   baseSrc: string,
   webpSrc?: string,
@@ -135,16 +118,13 @@ export function getOptimizedImageSrc(
     return webpSrc
   }
   return baseSrc
-}
-
-// Font loading optimization
+}
 export function useFontLoading(fontFamily: string, timeout: number = 3000) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
 
   useEffect(() => {
-    if (!document.fonts) {
-      // Fallback for browsers without Font Loading API
+    if (!document.fonts) {
       setIsLoaded(true)
       return
     }
@@ -173,9 +153,7 @@ export function useFontLoading(fontFamily: string, timeout: number = 3000) {
   }, [fontFamily, timeout])
 
   return { isLoaded, hasError }
-}
-
-// Preload critical resources
+}
 export function preloadResource(
   href: string,
   as: "style" | "script" | "font" | "image" | "document" = "script",
@@ -195,25 +173,19 @@ export function preloadResource(
   }
 
   document.head.appendChild(link)
-}
-
-// Prefetch resources for next navigation
+}
 export function prefetchResource(href: string) {
   const link = document.createElement("link")
   link.rel = "prefetch"
   link.href = href
   document.head.appendChild(link)
-}
-
-// Critical CSS inlining helper
+}
 export function inlineCriticalCSS(css: string) {
   const style = document.createElement("style")
   style.type = "text/css"
   style.appendChild(document.createTextNode(css))
   document.head.appendChild(style)
-}
-
-// Image lazy loading with intersection observer
+}
 export function useLazyImage(
   ref: React.RefObject<HTMLImageElement>,
   src: string,
@@ -256,9 +228,7 @@ export function useLazyImage(
   }, [imageSrc, ref])
 
   return { imageSrc, isLoaded }
-}
-
-// Resource hints management
+}
 export class ResourceHintsManager {
   private static preloadedResources = new Set<string>()
   private static prefetchedResources = new Set<string>()
@@ -297,11 +267,8 @@ export class ResourceHintsManager {
     this.preloadedResources.clear()
     this.prefetchedResources.clear()
   }
-}
-
-// Image optimization utilities
-export const ImageOptimization = {
-  // Generate srcset for responsive images
+}
+export const ImageOptimization = {
   generateSrcSet(
     basePath: string,
     sizes: number[],
@@ -310,9 +277,7 @@ export const ImageOptimization = {
     return sizes
       .map((size) => `${basePath}-${size}w.${format} ${size}w`)
       .join(", ")
-  },
-
-  // Get optimal image size based on container width
+  },
   getOptimalSize(
     containerWidth: number,
     devicePixelRatio: number = window.devicePixelRatio
@@ -324,9 +289,7 @@ export const ImageOptimization = {
       standardSizes.find((size) => size >= targetWidth) ||
       standardSizes[standardSizes.length - 1]
     )
-  },
-
-  // Create optimized image props
+  },
   createImageProps(
     src: string,
     alt: string,
@@ -350,20 +313,15 @@ export const ImageOptimization = {
       placeholder,
     }
   },
-}
-
-// Font optimization utilities
-export const FontOptimization = {
-  // Preload critical fonts
+}
+export const FontOptimization = {
   preloadCriticalFonts() {
     const criticalFonts = ["/fonts/inter-var.woff2", "/fonts/fira-code.woff2"]
 
     criticalFonts.forEach((font) => {
       ResourceHintsManager.preloadFont(font)
     })
-  },
-
-  // Apply font-display strategies
+  },
   applyFontDisplay(
     strategy: "auto" | "block" | "swap" | "fallback" | "optional" = "swap"
   ) {
@@ -374,9 +332,7 @@ export const FontOptimization = {
       }
     `
     document.head.appendChild(style)
-  },
-
-  // Font subsetting helper (for build process)
+  },
   getFontSubsetConfig(languages: string[] = ["en"]) {
     const subsets: Record<string, string> = {
       en: "U+0020-007F",

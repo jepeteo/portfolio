@@ -1,16 +1,8 @@
-/**
- * Component Performance Optimization Utilities
- * Tools to help optimize component rendering and prevent performance issues
- */
 
-import { useRef, useCallback, useMemo, useState } from "react"
 
-// Cache for expensive computations
+import { useRef, useCallback, useMemo, useState } from "react"
 const computationCache = new Map<string, any>()
 
-/**
- * Hook to debounce expensive operations to prevent excessive calls
- */
 export function useDebounce<T extends (...args: any[]) => any>(
   callback: T,
   delay: number
@@ -31,9 +23,6 @@ export function useDebounce<T extends (...args: any[]) => any>(
   ) as T
 }
 
-/**
- * Hook to memoize expensive computations with a cache key
- */
 export function useMemoizedComputation<T>(
   computation: () => T,
   deps: React.DependencyList,
@@ -47,9 +36,7 @@ export function useMemoizedComputation<T>(
     }
 
     const result = computation()
-    computationCache.set(depsKey, result)
-
-    // Clean cache if it gets too large
+    computationCache.set(depsKey, result)
     if (computationCache.size > 100) {
       const keys = Array.from(computationCache.keys())
       if (keys.length > 0) {
@@ -61,9 +48,6 @@ export function useMemoizedComputation<T>(
   }, deps)
 }
 
-/**
- * Hook to throttle function calls to prevent excessive execution
- */
 export function useThrottle<T extends (...args: any[]) => any>(
   callback: T,
   limit: number
@@ -84,9 +68,6 @@ export function useThrottle<T extends (...args: any[]) => any>(
   ) as T
 }
 
-/**
- * Hook to batch state updates to prevent multiple re-renders
- */
 export function useBatchedUpdates() {
   const updateQueue = useRef<Array<() => void>>([])
   const isScheduled = useRef<boolean>(false)
@@ -95,9 +76,7 @@ export function useBatchedUpdates() {
     updateQueue.current.push(updateFn)
 
     if (!isScheduled.current) {
-      isScheduled.current = true
-
-      // Use scheduler if available, otherwise setTimeout
+      isScheduled.current = true
       if (typeof requestIdleCallback !== "undefined") {
         requestIdleCallback(() => {
           updateQueue.current.forEach((fn) => fn())
@@ -117,9 +96,6 @@ export function useBatchedUpdates() {
   return batchUpdate
 }
 
-/**
- * Hook to virtualize large lists for better performance
- */
 export function useVirtualization<T>(
   items: T[],
   itemHeight: number,
@@ -145,16 +121,10 @@ export function useVirtualization<T>(
   }
 }
 
-/**
- * Clear computation cache manually if needed
- */
 export function clearComputationCache(): void {
   computationCache.clear()
 }
 
-/**
- * Get cache stats for debugging
- */
 export function getCacheStats() {
   return {
     size: computationCache.size,

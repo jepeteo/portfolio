@@ -1,37 +1,27 @@
-// Modern utility system combining clsx and tailwind-merge
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
 
-// Enhanced cn utility for 2025
+import { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
-}
-
-// Modern focus utilities
+}
 export const focusClasses = {
   ring: "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
   subtle:
     "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/50",
   bold: "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4",
-} as const
-
-// Container query utilities (2025 cutting-edge)
+} as const
 export const containerQueries = {
   "cq-sm": "@container (min-width: 20rem)",
   "cq-md": "@container (min-width: 28rem)",
   "cq-lg": "@container (min-width: 32rem)",
   "cq-xl": "@container (min-width: 36rem)",
-} as const
-
-// Modern spacing utilities
+} as const
 export const spacing = {
   section: "py-16 lg:py-24",
   container: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8",
   cardPadding: "p-6 md:p-8",
   buttonPadding: "px-4 py-2 md:px-6 md:py-3",
-} as const
-
-// Typography utilities with modern scales
+} as const
 export const typography = {
   heading: {
     h1: "text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight",
@@ -48,24 +38,18 @@ export const typography = {
     hero: "text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight",
     section: "text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight",
   },
-} as const
-
-// Modern shadow utilities
+} as const
 export const shadows = {
   card: "shadow-sm hover:shadow-lg transition-shadow duration-300",
   float: "shadow-lg hover:shadow-xl transition-shadow duration-300",
   glow: "shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-shadow duration-300",
-} as const
-
-// Interactive state utilities
+} as const
 export const interactions = {
   button: "transition-all duration-200 hover:scale-105 active:scale-95",
   card: "transition-all duration-300 hover:-translate-y-1 hover:shadow-lg",
   link: "transition-colors duration-200 hover:text-primary",
   magnetic: "transition-transform duration-300 ease-out",
-} as const
-
-// Color utilities with semantic naming
+} as const
 export const colors = {
   surface: {
     primary: "bg-background text-foreground",
@@ -80,9 +64,7 @@ export const colors = {
       "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
     ghost: "hover:bg-accent hover:text-accent-foreground",
   },
-} as const
-
-// Modern form utilities
+} as const
 export const forms = {
   input: cn(
     "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2",
@@ -99,9 +81,7 @@ export const forms = {
   ),
   label:
     "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-} as const
-
-// Responsive utilities
+} as const
 export const responsive = {
   grid: {
     auto: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
@@ -113,9 +93,7 @@ export const responsive = {
     between: "flex items-center justify-between",
     column: "flex flex-col items-center",
   },
-} as const
-
-// Animation utilities
+} as const
 export const animations = {
   fadeIn: "animate-in fade-in duration-500",
   slideUp: "animate-in slide-in-from-bottom-4 duration-500",
@@ -124,9 +102,7 @@ export const animations = {
   spin: "animate-spin",
   pulse: "animate-pulse",
   bounce: "animate-bounce",
-} as const
-
-// Modern loading states
+} as const
 export const loadingStates = {
   skeleton: "animate-pulse bg-muted rounded",
   shimmer:

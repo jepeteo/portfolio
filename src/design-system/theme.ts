@@ -1,11 +1,7 @@
-// Modern CSS-in-JS Theme System for 2025
-import { designTokens } from "./tokens"
 
-// Create CSS custom properties from design tokens
+import { designTokens } from "./tokens"
 export const createCSSVariables = (theme: "light" | "dark") => {
-  const variables: Record<string, string> = {}
-
-  // Map design tokens to CSS custom properties
+  const variables: Record<string, string> = {}
   Object.entries(designTokens.colors.semantic).forEach(([key, value]) => {
     variables[`--color-${key}`] = value
   })
@@ -24,9 +20,7 @@ export const createCSSVariables = (theme: "light" | "dark") => {
 
   Object.entries(designTokens.typography.fontSizes).forEach(([key, value]) => {
     variables[`--font-size-${key}`] = value
-  })
-
-  // Theme-specific overrides
+  })
   if (theme === "dark") {
     variables["--color-background"] = designTokens.colors.neutral[900]
     variables["--color-foreground"] = designTokens.colors.neutral[50]
@@ -38,9 +32,7 @@ export const createCSSVariables = (theme: "light" | "dark") => {
   }
 
   return variables
-}
-
-// Modern theme hook with design tokens
+}
 export const useDesignSystem = () => {
   const tokens = designTokens
 
@@ -62,17 +54,13 @@ export const useDesignSystem = () => {
     shadow: (size: keyof typeof tokens.shadows) => tokens.shadows[size],
     radius: (size: keyof typeof tokens.radii) => tokens.radii[size],
   }
-}
-
-// CSS Container Queries (2025 cutting-edge)
+}
 export const containerQueries = {
   sm: "@container (min-width: 320px)",
   md: "@container (min-width: 640px)",
   lg: "@container (min-width: 1024px)",
   xl: "@container (min-width: 1280px)",
-}
-
-// Modern focus management for accessibility
+}
 export const focusStyles = {
   base: "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
   rounded:

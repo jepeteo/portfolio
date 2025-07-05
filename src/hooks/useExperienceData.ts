@@ -45,9 +45,7 @@ export interface ExperienceStats {
   totalClients: number
   currentRoles: number
   topTechnologies: string[]
-}
-
-// Transform experience data with tech focus
+}
 const transformToTechExperience = (): TechExperience[] => {
   return jobExperienceData.map((job, index) => {
     const isCurrent = job.to === "Present"
@@ -58,9 +56,7 @@ const transformToTechExperience = (): TechExperience[] => {
 
     const totalMonths = (toYear - fromYear) * 12 + (toMonth - fromMonth)
     const years = Math.floor(totalMonths / 12)
-    const months = totalMonths % 12
-
-    // Helper function to format month and year
+    const months = totalMonths % 12
     const formatMonthYear = (month: number, year: number) => {
       const monthNames = [
         "Jan",
@@ -86,9 +82,7 @@ const transformToTechExperience = (): TechExperience[] => {
         if (achievement.includes("50+")) metrics.clients = 50
         if (achievement.includes("99%")) metrics.uptime = "99.9%"
         if (achievement.includes("65%")) metrics.impact = "+65% performance"
-      })
-
-      // Default metrics based on role duration
+      })
       if (!metrics.projects) {
         metrics.projects = Math.max(years * 15, 5)
       }
@@ -126,20 +120,13 @@ const transformToTechExperience = (): TechExperience[] => {
       periodInfo,
     }
   })
-}
-
-// Calculate experience statistics with proper handling of concurrent roles
+}
 const calculateExperienceStats = (
   experiences: TechExperience[]
-): ExperienceStats => {
-  // Separate freelance and employment experiences
+): ExperienceStats => {
   const freelanceExperiences = experiences.filter((exp) => exp.isFreelance)
-  const employmentExperiences = experiences.filter((exp) => !exp.isFreelance)
-
-  // Calculate total years considering overlap
-  // Calculate employment years
-  const calculateEmploymentYears = () => {
-    // Get employment period range
+  const employmentExperiences = experiences.filter((exp) => !exp.isFreelance)
+  const calculateEmploymentYears = () => {
     let earliestEmploymentStart: Date | null = null
     let latestEmploymentEnd: Date | null = null
 
@@ -161,9 +148,7 @@ const calculateExperienceStats = (
       if (!latestEmploymentEnd || endDate > latestEmploymentEnd) {
         latestEmploymentEnd = endDate
       }
-    })
-
-    // Calculate employment years
+    })
     let employmentYears = 0
     if (earliestEmploymentStart && latestEmploymentEnd) {
       const diffTime = Math.abs(
@@ -174,19 +159,13 @@ const calculateExperienceStats = (
     }
 
     return Math.ceil(employmentYears) // Round up to nearest whole year
-  }
-
-  // Calculate freelance years
+  }
   const calculateFreelanceYears = () => {
-    if (freelanceExperiences.length === 0) return 0
-
-    // For freelance, we'll count actual duration from first to last
+    if (freelanceExperiences.length === 0) return 0
     const [fromMonth, fromYear] = freelanceExperiences[0].from
       .split("-")
       .map((n) => parseInt(n))
-    const startDate = new Date(fromYear, fromMonth - 1)
-
-    // Assume the last freelance experience is ongoing or the latest
+    const startDate = new Date(fromYear, fromMonth - 1)
     const lastExp = freelanceExperiences[0] // We only have one freelance experience in this case
     let endDate: Date
     if (lastExp.to === "Present") {
@@ -203,10 +182,7 @@ const calculateExperienceStats = (
   }
 
   const employmentYears = calculateEmploymentYears()
-  const freelanceYears = calculateFreelanceYears()
-
-  // Total years is the maximum between employment and freelance
-  // since they were concurrent for much of the time
+  const freelanceYears = calculateFreelanceYears()
   const totalYears = Math.max(employmentYears, freelanceYears)
 
   const totalProjects = experiences.reduce(
@@ -219,9 +195,7 @@ const calculateExperienceStats = (
   )
   const currentRoles = experiences.filter(
     (exp) => exp.status === "current"
-  ).length
-
-  // Extract top technologies
+  ).length
   const techCount: Record<string, number> = {}
   experiences.forEach((exp) => {
     exp.techStack.forEach((tech) => {

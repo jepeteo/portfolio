@@ -74,8 +74,7 @@ const SkillCard: React.FC<SkillCardProps> = ({
         }}
         onClick={() => mobile && onHover(isHovered ? null : skill.name)}
       >
-        {mobile ? (
-          // Compact mobile layout
+        {mobile ? (
           <>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
@@ -115,7 +114,6 @@ const SkillCard: React.FC<SkillCardProps> = ({
               </span>
             </div>
 
-            {/* Compact progress bar */}
             <div
               className={`w-full h-2 rounded-full overflow-hidden ${
                 isDark ? "bg-slate-700/50" : "bg-slate-200/50"
@@ -136,7 +134,6 @@ const SkillCard: React.FC<SkillCardProps> = ({
               />
             </div>
 
-            {/* Expandable description for mobile */}
             <div
               className={`transition-all duration-300 overflow-hidden ${
                 isHovered ? "max-h-32 opacity-100 mt-3" : "max-h-0 opacity-0"
@@ -164,7 +161,6 @@ const SkillCard: React.FC<SkillCardProps> = ({
               </div>
             </div>
 
-            {/* Tap to expand hint */}
             {!isHovered && (
               <div
                 className={`text-center mt-2 text-xs opacity-60 ${
@@ -175,10 +171,9 @@ const SkillCard: React.FC<SkillCardProps> = ({
               </div>
             )}
           </>
-        ) : (
-          // Desktop layout (existing)
+        ) : (
           <>
-            {/* Header with personal touch */}
+            
             <div className="flex items-start justify-between mb-6">
               <div className="flex items-center gap-4">
                 <div className="relative">
@@ -202,7 +197,6 @@ const SkillCard: React.FC<SkillCardProps> = ({
               </div>
             </div>
 
-            {/* Mastery level with personality */}
             <div className="mb-4">
               <div className="flex justify-between items-center mb-3">
                 <span
@@ -225,7 +219,6 @@ const SkillCard: React.FC<SkillCardProps> = ({
                 </span>
               </div>
 
-              {/* Beautiful progress visualization */}
               <div
                 className={`w-full h-3 rounded-full overflow-hidden ${
                   isDark ? "bg-slate-700/50" : "bg-slate-200/50"
@@ -247,7 +240,6 @@ const SkillCard: React.FC<SkillCardProps> = ({
               </div>
             </div>
 
-            {/* Story on hover */}
             <div
               className={`transition-all duration-300 overflow-hidden ${
                 isHovered ? "max-h-40 opacity-100" : "max-h-0 opacity-0"

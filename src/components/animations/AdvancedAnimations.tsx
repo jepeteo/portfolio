@@ -1,18 +1,13 @@
-// Modern Animation System for 2025 Portfolio
-import { motion, type MotionProps } from "framer-motion"
-import React from "react"
 
-// Advanced animation variants
-export const animationVariants = {
-  // Page transitions
+import { motion, type MotionProps } from "framer-motion"
+import React from "react"
+export const animationVariants = {
   pageEnter: {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -20 },
     transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
-
-  // Stagger animations for lists
+  },
   staggerContainer: {
     initial: {},
     animate: {
@@ -35,9 +30,7 @@ export const animationVariants = {
         damping: 15,
       },
     },
-  },
-
-  // Hover effects
+  },
   hoverScale: {
     initial: { scale: 1 },
     whileHover: {
@@ -45,18 +38,14 @@ export const animationVariants = {
       transition: { type: "spring", stiffness: 300, damping: 20 },
     },
     whileTap: { scale: 0.98 },
-  },
-
-  // Advanced card animations
+  },
   cardFloat: {
     initial: { y: 0 },
     whileHover: {
       y: -8,
       transition: { type: "spring", stiffness: 200, damping: 15 },
     },
-  },
-
-  // Reveal animations with intersection observer
+  },
   reveal: {
     initial: { opacity: 0, y: 50 },
     whileInView: {
@@ -65,9 +54,7 @@ export const animationVariants = {
       transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
     },
     viewport: { once: true, margin: "-100px" },
-  },
-
-  // Advanced text animations
+  },
   textReveal: {
     initial: { opacity: 0, y: 20 },
     animate: (i: number) => ({
@@ -78,9 +65,7 @@ export const animationVariants = {
         duration: 0.6,
       },
     }),
-  },
-
-  // Magnetic effect for buttons
+  },
   magnetic: {
     initial: { scale: 1 },
     whileHover: {
@@ -89,9 +74,7 @@ export const animationVariants = {
     },
     whileTap: { scale: 0.95 },
   },
-} as const
-
-// Advanced motion components
+} as const
 interface AnimatedContainerProps extends MotionProps {
   children: React.ReactNode
   variant?: keyof typeof animationVariants
@@ -104,9 +87,7 @@ export const AnimatedContainer: React.FC<AnimatedContainerProps> = ({
   className,
   ...props
 }) => {
-  const variants = animationVariants[variant] as any
-
-  // Get the viewport config from the variant, or use default
+  const variants = animationVariants[variant] as any
   const viewport = variants.viewport || { once: true, margin: "-50px" }
 
   return (
@@ -124,9 +105,7 @@ export const AnimatedContainer: React.FC<AnimatedContainerProps> = ({
       {children}
     </motion.div>
   )
-}
-
-// Stagger animation wrapper
+}
 export const StaggerContainer: React.FC<{
   children: React.ReactNode
   className?: string
@@ -149,9 +128,7 @@ export const StaggerItem: React.FC<{
   <motion.div className={className} variants={animationVariants.staggerItem}>
     {children}
   </motion.div>
-)
-
-// Floating card component with advanced physics
+)
 export const FloatingCard: React.FC<{
   children: React.ReactNode
   className?: string
@@ -167,9 +144,7 @@ export const FloatingCard: React.FC<{
   >
     {children}
   </motion.div>
-)
-
-// Text animation with character splitting
+)
 export const AnimatedText: React.FC<{
   text: string
   className?: string
@@ -193,9 +168,7 @@ export const AnimatedText: React.FC<{
       ))}
     </motion.div>
   )
-}
-
-// Magnetic button effect
+}
 export const MagneticButton: React.FC<{
   children: React.ReactNode
   className?: string
@@ -242,13 +215,10 @@ export const MagneticButton: React.FC<{
       {children}
     </motion.div>
   )
-}
-
-// View transition API integration (2025 cutting-edge)
+}
 export const useViewTransition = () => {
   const startTransition = React.useCallback((callback: () => void) => {
-    if ("startViewTransition" in document) {
-      // @ts-ignore - New API
+    if ("startViewTransition" in document) {
       document.startViewTransition(callback)
     } else {
       callback()
@@ -256,9 +226,7 @@ export const useViewTransition = () => {
   }, [])
 
   return { startTransition }
-}
-
-// Performance optimized animation hooks
+}
 export const useReducedMotion = () => {
   const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false)
 
@@ -273,9 +241,7 @@ export const useReducedMotion = () => {
   }, [])
 
   return prefersReducedMotion
-}
-
-// Enhanced page transition component
+}
 export const PageTransition: React.FC<{
   children: React.ReactNode
   className?: string
@@ -289,9 +255,7 @@ export const PageTransition: React.FC<{
   >
     {children}
   </motion.div>
-)
-
-// Scroll-triggered reveal component
+)
 export const ScrollReveal: React.FC<{
   children: React.ReactNode
   className?: string

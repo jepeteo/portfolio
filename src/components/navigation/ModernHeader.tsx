@@ -1,4 +1,4 @@
-// Modern Header Component (2025 Version)
+
 import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { validateImageSrc } from "../../utils/validation"
@@ -12,9 +12,7 @@ interface ModernHeaderProps {
 
 const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = useState(false)
-  const logoSrc = validateImageSrc(logo, "Portfolio Logo")
-
-  // Handle scroll state for header styling
+  const logoSrc = validateImageSrc(logo, "Portfolio Logo")
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY
@@ -57,7 +55,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
           "py-4 px-6"
         )}
       >
-        {/* Logo Section */}
+        
         <motion.a
           href="#hero"
           className="flex items-center gap-4 cursor-pointer group"
@@ -69,14 +67,13 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
             const heroSection = document.getElementById("hero")
             if (heroSection) {
               heroSection.scrollIntoView({ behavior: "smooth" })
-            } else {
-              // If no hero section, scroll to top
+            } else {
               window.scrollTo({ top: 0, behavior: "smooth" })
             }
           }}
           aria-label="Go to homepage"
         >
-          {/* Logo Image */}
+          
           <motion.div
             className="relative"
             whileHover={{ rotate: 5 }}
@@ -100,7 +97,6 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
               />
             </div>
 
-            {/* Animated ring */}
             <motion.div
               className="absolute inset-0 rounded-full border-2 border-primary/30"
               animate={{
@@ -114,7 +110,6 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
             />
           </motion.div>
 
-          {/* Logo Text */}
           <motion.div
             className="hidden sm:block"
             initial={{ opacity: 0, x: -20 }}
@@ -142,7 +137,6 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
           </motion.div>
         </motion.a>
 
-        {/* Navigation */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -151,14 +145,14 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
           <ModernNav />
         </motion.div>
       </div>
-      {/* Header bottom accent line */}
+      
       <motion.div
         className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent"
         initial={{ opacity: 0, scaleX: 0 }}
         animate={{ opacity: 1, scaleX: 1 }}
         transition={{ delay: 0.5, duration: 0.8 }}
       />
-      {/* Progress bar (optional - shows scroll progress) */}
+      
       <motion.div
         className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary to-accent origin-left"
         style={{

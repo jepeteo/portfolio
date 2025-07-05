@@ -34,7 +34,7 @@ export const TopTechnologies: React.FC<TopTechnologiesProps> = ({
               isDark ? "bg-slate-700/50" : "bg-slate-100/50"
             }`}
           >
-            {/* Ranking indicator */}
+            
             <div
               className={`absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                 index === 0

@@ -1,5 +1,4 @@
-// Server-side Security Middleware for Portfolio (2025)
-// This middleware can be used with Express.js, Fastify, or other Node.js frameworks
+
 
 import { securityConfig } from "../utils/security"
 
@@ -7,9 +6,6 @@ export interface SecurityHeaders {
   [key: string]: string
 }
 
-/**
- * Generate comprehensive security headers for server-side enforcement
- */
 export function getSecurityHeaders(): SecurityHeaders {
   const csp = [
     "default-src 'self'",
@@ -27,23 +23,12 @@ export function getSecurityHeaders(): SecurityHeaders {
     .filter(Boolean)
     .join("; ")
 
-  return {
-    // Content Security Policy
-    "Content-Security-Policy": csp,
-
-    // XSS Protection
-    "X-XSS-Protection": "1; mode=block",
-
-    // Content Type Options
-    "X-Content-Type-Options": "nosniff",
-
-    // Frame Options
-    "X-Frame-Options": "DENY",
-
-    // Referrer Policy
-    "Referrer-Policy": "strict-origin-when-cross-origin",
-
-    // Permissions Policy
+  return {
+    "Content-Security-Policy": csp,
+    "X-XSS-Protection": "1; mode=block",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
     "Permissions-Policy": [
       "camera=()",
       "microphone=()",
@@ -54,29 +39,18 @@ export function getSecurityHeaders(): SecurityHeaders {
       "magnetometer=()",
       "gyroscope=()",
       "accelerometer=()",
-    ].join(", "),
-
-    // Cross-Origin Policies
+    ].join(", "),
     "Cross-Origin-Embedder-Policy": "require-corp",
     "Cross-Origin-Opener-Policy": "same-origin",
-    "Cross-Origin-Resource-Policy": "same-origin",
-
-    // HSTS (HTTP Strict Transport Security)
-    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-
-    // Expect-CT (Certificate Transparency)
-    "Expect-CT": "max-age=86400, enforce",
-
-    // Cache Control for security-sensitive responses
+    "Cross-Origin-Resource-Policy": "same-origin",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+    "Expect-CT": "max-age=86400, enforce",
     "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
     Pragma: "no-cache",
     Expires: "0",
   }
 }
 
-/**
- * Express.js middleware for adding security headers
- */
 export function expressSecurityMiddleware() {
   return (_req: any, res: any, next: any) => {
     const headers = getSecurityHeaders()
@@ -89,9 +63,6 @@ export function expressSecurityMiddleware() {
   }
 }
 
-/**
- * Fastify plugin for adding security headers
- */
 export function fastifySecurityPlugin(fastify: any, _options: any, done: any) {
   fastify.addHook("onSend", async (_request: any, reply: any) => {
     const headers = getSecurityHeaders()
@@ -104,16 +75,10 @@ export function fastifySecurityPlugin(fastify: any, _options: any, done: any) {
   done()
 }
 
-/**
- * Next.js middleware for adding security headers
- */
 export function nextSecurityHeaders() {
   return getSecurityHeaders()
 }
 
-/**
- * Vite plugin for adding security headers in development
- */
 export function viteSecurityPlugin() {
   return {
     name: "security-headers",
@@ -131,9 +96,6 @@ export function viteSecurityPlugin() {
   }
 }
 
-/**
- * Rate limiting middleware (to be used with express-rate-limit or similar)
- */
 export function createRateLimitConfig() {
   return {
     windowMs: securityConfig.rateLimiting.api.windowMs,
@@ -143,17 +105,12 @@ export function createRateLimitConfig() {
       retryAfter: Math.ceil(securityConfig.rateLimiting.api.windowMs / 1000),
     },
     standardHeaders: true,
-    legacyHeaders: false,
-    // Skip successful requests in count
-    skipSuccessfulRequests: false,
-    // Skip failed requests in count
+    legacyHeaders: false,
+    skipSuccessfulRequests: false,
     skipFailedRequests: false,
   }
 }
 
-/**
- * CSRF protection configuration for server-side
- */
 export function createCSRFConfig() {
   return {
     cookie: {

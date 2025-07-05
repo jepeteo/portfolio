@@ -8,12 +8,8 @@ export const BackToTopButton: React.FC = () => {
     const handleScroll = () => {
       const scrollTop = window.scrollY
       const windowHeight = window.innerHeight
-      const documentHeight = document.documentElement.scrollHeight
-
-      // Show button when scrolled down more than 300px
-      const shouldShow = scrollTop > 300
-
-      // Hide button when near footer (within 150px of bottom)
+      const documentHeight = document.documentElement.scrollHeight
+      const shouldShow = scrollTop > 300
       const nearFooter = scrollTop + windowHeight >= documentHeight - 150
 
       setShowButton(shouldShow && !nearFooter)
@@ -25,8 +21,7 @@ export const BackToTopButton: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  useEffect(() => {
-    // Add keyframes to document head
+  useEffect(() => {
     const style = document.createElement("style")
     style.textContent = `
       @keyframes backToTopFloat {
@@ -111,8 +106,7 @@ export const BackToTopButton: React.FC = () => {
           if (showButton) {
             e.currentTarget.style.transform = "translateY(0px) scale(1)"
             e.currentTarget.style.boxShadow =
-              "0 10px 25px rgba(0,0,0,0.2), 0 6px 15px rgba(102, 126, 234, 0.3)"
-            // Re-enable animations after a short delay to allow transition to complete
+              "0 10px 25px rgba(0,0,0,0.2), 0 6px 15px rgba(102, 126, 234, 0.3)"
             setTimeout(() => {
               if (showButton) {
                 e.currentTarget.style.animation =

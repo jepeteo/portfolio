@@ -22,7 +22,6 @@ const usePerformanceMonitor = (componentName: string) => {
   const metricsRef = useRef<PerformanceMetrics[]>([])
   const webVitalsRef = useRef<WebVitalsMetrics>({})
 
-  // Start timing when component mounts or updates
   useEffect(() => {
     startTimeRef.current = performance.now()
     renderCountRef.current += 1
@@ -31,7 +30,6 @@ const usePerformanceMonitor = (componentName: string) => {
       const endTime = performance.now()
       const renderTime = endTime - startTimeRef.current
 
-      // Get memory usage if available
       const memoryUsage = (performance as any).memory?.usedJSHeapSize
 
       const metrics: PerformanceMetrics = {
@@ -44,33 +42,23 @@ const usePerformanceMonitor = (componentName: string) => {
 
       metricsRef.current.push(metrics)
 
-      // Only log in development and for slow renders (>50ms threshold for complex components)
       if (process.env.NODE_ENV === "development" && renderTime > 50) {
-        console.warn(
-          `🐌 Slow render in ${componentName}: ${renderTime.toFixed(
-            2
-          )}ms (Render #${renderCountRef.current})`
-        )
       }
 
-      // Keep only last 10 metrics to avoid memory leak
       if (metricsRef.current.length > 10) {
         metricsRef.current = metricsRef.current.slice(-10)
       }
     }
   })
 
-  // Web Vitals monitoring - only initialize once
   useEffect(() => {
     if (!("PerformanceObserver" in window)) {
-      console.warn("PerformanceObserver not supported")
       return
     }
 
     const observers: PerformanceObserver[] = []
 
     try {
-      // Largest Contentful Paint
       const lcpObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries()
         const lastEntry = entries[entries.length - 1]
@@ -81,7 +69,6 @@ const usePerformanceMonitor = (componentName: string) => {
       lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] })
       observers.push(lcpObserver)
 
-      // First Input Delay
       const fidObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries()
         entries.forEach((entry: any) => {
@@ -93,7 +80,6 @@ const usePerformanceMonitor = (componentName: string) => {
       fidObserver.observe({ entryTypes: ["first-input"] })
       observers.push(fidObserver)
 
-      // Cumulative Layout Shift
       const clsObserver = new PerformanceObserver((list) => {
         let clsValue = 0
         const entries = list.getEntries()
@@ -106,11 +92,8 @@ const usePerformanceMonitor = (componentName: string) => {
       })
       clsObserver.observe({ entryTypes: ["layout-shift"] })
       observers.push(clsObserver)
-    } catch (error) {
-      console.warn("PerformanceObserver setup error:", error)
-    }
+    } catch (error) {}
 
-    // Navigation timing metrics - only once
     if (performance.getEntriesByType) {
       const navEntries = performance.getEntriesByType(
         "navigation"
@@ -123,18 +106,14 @@ const usePerformanceMonitor = (componentName: string) => {
     }
 
     return () => {
-      // Clean up all observers
       observers.forEach((observer) => {
         try {
           observer.disconnect()
-        } catch (error) {
-          console.warn("Error disconnecting performance observer:", error)
-        }
+        } catch (error) {}
       })
     }
   }, []) // Empty dependency array - only run once
 
-  // Performance report
   const getPerformanceReport = useCallback(() => {
     const avgRenderTime =
       metricsRef.current.length > 0

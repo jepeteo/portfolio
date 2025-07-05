@@ -20,12 +20,8 @@ const ModernExperience: React.FC = () => {
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
     threshold: 0.1,
     rootMargin: "50px",
-  })
-
-  // Performance monitoring
-  const performanceMetrics = usePerformanceMonitor("ModernExperience")
-
-  // Experience data
+  })
+  const performanceMetrics = usePerformanceMonitor("ModernExperience")
   const {
     experiences,
     stats,
@@ -33,17 +29,13 @@ const ModernExperience: React.FC = () => {
     pastExperiences,
     freelanceExperiences,
     employmentExperiences,
-  } = useExperienceData()
-
-  // State for UI controls
+  } = useExperienceData()
   const [filter, setFilter] = useState<
     "all" | "current" | "past" | "freelance" | "employment"
   >("all")
   const [selectedExperienceId, setSelectedExperienceId] = useState<
     string | null
-  >(null) // Start with null - nothing expanded by default
-
-  // Filter experiences based on current filter
+  >(null) // Start with null - nothing expanded by default
   const filteredExperiences =
     filter === "current"
       ? currentExperiences
@@ -53,31 +45,23 @@ const ModernExperience: React.FC = () => {
       ? freelanceExperiences
       : filter === "employment"
       ? employmentExperiences
-      : experiences
-
-  // Set the selected experience as the first one when filter changes (for desktop only)
+      : experiences
   useEffect(() => {
     if (
       filteredExperiences.length > 0 &&
       (!selectedExperienceId ||
         !filteredExperiences.some((exp) => exp.id === selectedExperienceId))
-    ) {
-      // Only auto-select on desktop, not mobile
+    ) {
       const isMobile = window.innerWidth < 768
       if (!isMobile) {
         setSelectedExperienceId(filteredExperiences[0].id)
-      } else {
-        // On mobile, reset to null so nothing is expanded by default
+      } else {
         setSelectedExperienceId(null)
       }
     }
-  }, [filteredExperiences, selectedExperienceId])
-
-  // Find the selected experience object
+  }, [filteredExperiences, selectedExperienceId])
   const selectedExperience =
-    filteredExperiences.find((exp) => exp.id === selectedExperienceId) || null
-
-  // Performance logging in development - throttled to avoid excessive logging
+    filteredExperiences.find((exp) => exp.id === selectedExperienceId) || null
   const renderCount = React.useRef(0)
   useEffect(() => {
     renderCount.current += 1
@@ -85,7 +69,6 @@ const ModernExperience: React.FC = () => {
       process.env.NODE_ENV === "development" &&
       renderCount.current % 10 === 0 // Only log every 10th render
     ) {
-      console.log("ModernExperience Performance:", performanceMetrics)
     }
   })
 
@@ -98,7 +81,7 @@ const ModernExperience: React.FC = () => {
       } ${isDark ? "bg-slate-900" : "bg-slate-50"}`}
     >
       <div className="container">
-        {/* Header */}
+        
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 mb-6">
             <Briefcase className="w-5 h-5 text-green-500" />
@@ -130,10 +113,8 @@ const ModernExperience: React.FC = () => {
           </p>
         </div>
 
-        {/* Experience Statistics */}
         <ExperienceStatsComponent stats={stats} isDark={isDark} />
 
-        {/* Filter Controls */}
         <div className="flex flex-col items-center gap-4 mb-8">
           <div className="flex items-center gap-3">
             <Filter
@@ -197,8 +178,6 @@ const ModernExperience: React.FC = () => {
           </div>
         </div>
 
-        {/* Experience with Sidebar Layout */}
-        {/* Mobile Layout */}
         <div className="md:hidden mb-16">
           <div className="text-center mb-6">
             <h3
@@ -217,7 +196,6 @@ const ModernExperience: React.FC = () => {
             </p>
           </div>
 
-          {/* Mobile Experience Cards */}
           <div className="space-y-4">
             {filteredExperiences.map((experience) => (
               <div
@@ -228,7 +206,7 @@ const ModernExperience: React.FC = () => {
                     : "bg-white/30 border-slate-200/50"
                 } backdrop-blur-sm`}
               >
-                {/* Experience Header - Always Visible */}
+                
                 <div className="p-4">
                   <div className="flex justify-between items-start">
                     <div className="flex-1 mr-3">
@@ -240,7 +218,7 @@ const ModernExperience: React.FC = () => {
                         >
                           {experience.company}
                         </h3>
-                        {/* Status indicators - moved to the right */}
+                        
                         <div className="flex items-center space-x-1 ml-2 flex-shrink-0">
                           {experience.isFreelance && (
                             <div
@@ -275,7 +253,6 @@ const ModernExperience: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Modern Toggle Button */}
                   <button
                     onClick={() =>
                       setSelectedExperienceId(
@@ -305,12 +282,10 @@ const ModernExperience: React.FC = () => {
                       <ChevronDown className="w-4 h-4 transition-all duration-300 group-hover:translate-y-[2px] group-hover:scale-110 relative z-10" />
                     )}
 
-                    {/* Subtle hover effect overlay */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%]" />
                   </button>
                 </div>
 
-                {/* Expandable Details with Smooth Animation */}
                 <div
                   className={`experience-details-container overflow-hidden transition-all duration-500 ease-in-out ${
                     selectedExperienceId === experience.id
@@ -340,9 +315,8 @@ const ModernExperience: React.FC = () => {
           </div>
         </div>
 
-        {/* Desktop Layout */}
         <div className="hidden md:grid md:grid-cols-3 gap-6 mb-16">
-          {/* Sidebar */}
+          
           <div className="md:col-span-1 md:border-r md:pr-4">
             <ExperienceSidebar
               experiences={filteredExperiences}
@@ -352,7 +326,6 @@ const ModernExperience: React.FC = () => {
             />
           </div>
 
-          {/* Details Panel */}
           <div className="md:col-span-2">
             <ExperienceDetails
               experience={selectedExperience}
@@ -361,7 +334,6 @@ const ModernExperience: React.FC = () => {
           </div>
         </div>
 
-        {/* Call to Action */}
         <ExperienceCallToAction isDark={isDark} />
       </div>
     </section>

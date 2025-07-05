@@ -51,7 +51,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
         experience.isFreelance ? "ring-2 ring-purple-500/20" : ""
       }`}
     >
-      {/* Status indicator */}
+      
       <div className="flex items-center justify-center gap-2 p-2 md:absolute md:top-4 md:right-4 md:p-0">
         {experience.isFreelance && (
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/30">
@@ -73,7 +73,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
 
       <div className="md:p-6">
         <div className="md:mb-6">
-          {/* Header */}
+          
           <h3
             className={`text-2xl font-bold mb-2 ${
               isDark ? "text-white" : "text-slate-900"
@@ -136,7 +136,6 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
             </div>
           </div>
 
-          {/* Description */}
           <p
             className={`mb-6 leading-relaxed ${
               isDark ? "text-slate-300" : "text-slate-700"
@@ -145,7 +144,6 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
             {experience.description}
           </p>
 
-          {/* Key Responsibilities */}
           {experience.keyResponsibilities &&
             experience.keyResponsibilities.length > 0 && (
               <div className="mb-6">

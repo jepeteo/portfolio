@@ -23,16 +23,10 @@ export interface RateLimitState {
   lastAttempt: number
   blocked: boolean
   blockUntil?: number
-}
-
-// Enhanced email validation with security checks
+}
 export const validateEmailSecure = (email: string): boolean => {
-  if (!email || typeof email !== "string") return false
-
-  // Remove any spaces (emails shouldn't have spaces)
-  const cleanEmail = email.replace(/\s/g, "")
-
-  // Check for suspicious patterns
+  if (!email || typeof email !== "string") return false
+  const cleanEmail = email.replace(/\s/g, "")
   const suspiciousPatterns = [
     /script/gi,
     /javascript/gi,
@@ -52,15 +46,11 @@ export const validateEmailSecure = (email: string): boolean => {
     cleanEmail.length >= 5 &&
     cleanEmail.length <= 254
   )
-}
-
-// Enhanced name validation with security checks
+}
 export const validateNameSecure = (name: string): boolean => {
   if (!name || typeof name !== "string") return false
 
-  const trimmed = name.trim()
-
-  // Check for suspicious patterns
+  const trimmed = name.trim()
   const suspiciousPatterns = [
     /script/gi,
     /javascript/gi,
@@ -77,17 +67,13 @@ export const validateNameSecure = (name: string): boolean => {
   }
 
   return validationPatterns.name.test(trimmed)
-}
-
-// Enhanced message validation with security checks
+}
 export const validateMessageSecure = (message: string): boolean => {
   if (!message || typeof message !== "string") return false
 
   const trimmed = message.trim()
 
-  if (trimmed.length < 10 || trimmed.length > 2000) return false
-
-  // Check for suspicious patterns
+  if (trimmed.length < 10 || trimmed.length > 2000) return false
   const suspiciousPatterns = [
     /script/gi,
     /javascript/gi,
@@ -106,17 +92,13 @@ export const validateMessageSecure = (message: string): boolean => {
   }
 
   return true
-}
-
-// Subject validation with security checks
+}
 export const validateSubjectSecure = (subject: string): boolean => {
   if (!subject || typeof subject !== "string") return false
 
   const trimmed = subject.trim()
 
-  if (trimmed.length < 3 || trimmed.length > 100) return false
-
-  // Check for suspicious patterns
+  if (trimmed.length < 3 || trimmed.length > 100) return false
   const suspiciousPatterns = [
     /script/gi,
     /javascript/gi,
@@ -132,9 +114,7 @@ export const validateSubjectSecure = (subject: string): boolean => {
   }
 
   return true
-}
-
-// Enhanced sanitization
+}
 export const sanitizeContactFormData = (
   data: SecureContactFormData
 ): SecureContactFormData => {
@@ -147,25 +127,17 @@ export const sanitizeContactFormData = (
     timestamp: data.timestamp,
     honeypot: data.honeypot, // Should always be empty for humans
   }
-}
-
-// Bot detection
-export const detectBot = (data: SecureContactFormData): boolean => {
-  // Check honeypot field (should be empty for humans)
+}
+export const detectBot = (data: SecureContactFormData): boolean => {
   if (data.honeypot && data.honeypot.trim() !== "") {
     return true
-  }
-
-  // Check submission speed (too fast = bot)
+  }
   if (data.timestamp) {
     const submissionTime = Date.now() - data.timestamp
-    if (submissionTime < 3000) {
-      // Less than 3 seconds
+    if (submissionTime < 3000) {
       return true
     }
-  }
-
-  // Check for suspicious patterns in combined text
+  }
   const combinedText =
     `${data.name} ${data.email} ${data.subject} ${data.message}`.toLowerCase()
 
@@ -185,9 +157,7 @@ export const detectBot = (data: SecureContactFormData): boolean => {
   }
 
   return false
-}
-
-// Rate limiting
+}
 export const checkRateLimit = (ip: string): RateLimitState => {
   const key = `rate_limit_${ip}`
   const stored = localStorage.getItem(key)
@@ -202,20 +172,15 @@ export const checkRateLimit = (ip: string): RateLimitState => {
   if (stored) {
     try {
       state = JSON.parse(stored)
-    } catch (error) {
-      // Reset if parsing fails
+    } catch (error) {
       state = { attempts: 0, lastAttempt: now, blocked: false }
     }
-  }
-
-  // Reset counter if enough time has passed (15 minutes)
+  }
   if (now - state.lastAttempt > 15 * 60 * 1000) {
     state.attempts = 0
     state.blocked = false
     state.blockUntil = undefined
-  }
-
-  // Check if still blocked
+  }
   if (state.blockUntil && now < state.blockUntil) {
     state.blocked = true
   } else {
@@ -234,17 +199,13 @@ export const updateRateLimit = (
   const state = checkRateLimit(ip)
   const now = Date.now()
 
-  if (success) {
-    // Reset on successful submission
+  if (success) {
     state.attempts = 0
     state.blocked = false
     state.blockUntil = undefined
-  } else {
-    // Increment attempts
+  } else {
     state.attempts += 1
-    state.lastAttempt = now
-
-    // Block if too many attempts
+    state.lastAttempt = now
     if (state.attempts >= 5) {
       state.blocked = true
       state.blockUntil = now + 30 * 60 * 1000 // Block for 30 minutes
@@ -253,9 +214,7 @@ export const updateRateLimit = (
 
   localStorage.setItem(key, JSON.stringify(state))
   return state
-}
-
-// Complete secure form validation
+}
 export const validateContactFormSecure = (
   data: SecureContactFormData
 ): {
@@ -263,9 +222,7 @@ export const validateContactFormSecure = (
   errors: ContactFormErrors
   isBot: boolean
 } => {
-  const errors: ContactFormErrors = {}
-
-  // Check for bot
+  const errors: ContactFormErrors = {}
   const isBot = detectBot(data)
   if (isBot) {
     return {
@@ -273,9 +230,7 @@ export const validateContactFormSecure = (
       errors: { general: "Invalid submission detected" },
       isBot: true,
     }
-  }
-
-  // Validate individual fields
+  }
   if (!validateNameSecure(data.name)) {
     errors.name = "Please enter a valid name (2-50 characters, letters only)"
   }

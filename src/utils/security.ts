@@ -1,8 +1,5 @@
-// Enhanced Security Configuration for Portfolio (2025)
 export const securityConfig = {
-  // Content Security Policy configuration - Enhanced
   csp: {
-    // Allow self and specific domains for scripts
     scriptSrc: [
       "'self'",
       "'unsafe-inline'", // Required for development - remove in production
@@ -12,7 +9,6 @@ export const securityConfig = {
       "https://www.google-analytics.com",
     ],
 
-    // Allow self and specific domains for styles
     styleSrc: [
       "'self'",
       "'unsafe-inline'", // Needed for Tailwind CSS
@@ -20,17 +16,14 @@ export const securityConfig = {
       "https://cdnjs.cloudflare.com",
     ],
 
-    // Allow images from self and common CDNs
     imgSrc: ["'self'", "data:", "https:", "blob:"],
 
-    // Font sources
     fontSrc: [
       "'self'",
       "https://fonts.gstatic.com",
       "https://cdnjs.cloudflare.com",
     ],
 
-    // Connect sources for API calls
     connectSrc: [
       "'self'",
       "https://formspree.io",
@@ -39,28 +32,20 @@ export const securityConfig = {
       "https://www.google-analytics.com",
     ],
 
-    // Frame sources
     frameSrc: ["'none'"],
 
-    // Object sources
     objectSrc: ["'none'"],
 
-    // Base URI
     baseUri: ["'self'"],
 
-    // Default source
     defaultSrc: ["'self'"],
 
-    // Form actions
     formAction: ["'self'", "https://formspree.io"],
 
-    // Upgrade insecure requests
     upgradeInsecureRequests: true,
   },
 
-  // Enhanced Rate limiting configuration
   rateLimiting: {
-    // Contact form rate limiting - More strict
     contactForm: {
       windowMs: 15 * 60 * 1000, // 15 minutes
       max: 3, // Reduced from 5 to 3 attempts
@@ -68,14 +53,12 @@ export const securityConfig = {
       message: "Too many contact form submissions, please try again later.",
     },
 
-    // General API rate limiting
     api: {
       windowMs: 15 * 60 * 1000, // 15 minutes
       max: 100, // limit each IP to 100 requests per windowMs
       message: "Too many requests, please try again later.",
     },
 
-    // Email specific limits
     email: {
       windowMs: 60 * 60 * 1000, // 1 hour
       max: 5, // Very strict for emails
@@ -84,21 +67,15 @@ export const securityConfig = {
     },
   },
 
-  // Enhanced Security headers
   headers: {
-    // Prevent clickjacking
     "X-Frame-Options": "DENY",
 
-    // Prevent MIME type sniffing
     "X-Content-Type-Options": "nosniff",
 
-    // Enable XSS protection
     "X-XSS-Protection": "1; mode=block",
 
-    // Referrer policy
     "Referrer-Policy": "strict-origin-when-cross-origin",
 
-    // Enhanced Permissions policy
     "Permissions-Policy": [
       "camera=()",
       "microphone=()",
@@ -110,16 +87,13 @@ export const securityConfig = {
       "gyroscope=()",
     ].join(", "),
 
-    // Strict Transport Security (HTTPS only)
     "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
 
-    // Cross-Origin policies
     "Cross-Origin-Embedder-Policy": "credentialless",
     "Cross-Origin-Opener-Policy": "same-origin",
     "Cross-Origin-Resource-Policy": "same-origin",
   },
 
-  // Enhanced CSRF configuration
   csrf: {
     tokenLength: 32,
     tokenTTL: 30 * 60 * 1000, // 30 minutes
@@ -133,7 +107,6 @@ export const securityConfig = {
     },
   },
 
-  // Enhanced validation rules
   validation: {
     name: {
       minLength: 2,
@@ -179,7 +152,6 @@ export const securityConfig = {
     },
   },
 
-  // Enhanced bot detection
   botDetection: {
     honeypotField: "website", // Hidden field name
     minSubmissionTime: 3000, // 3 seconds minimum
@@ -203,7 +175,6 @@ export const securityConfig = {
   },
 }
 
-// Generate enhanced CSP header string
 export const generateCSPHeader = (isDevelopment = false): string => {
   const { csp } = securityConfig
 
@@ -231,7 +202,6 @@ export const generateCSPHeader = (isDevelopment = false): string => {
   return directives.join("; ")
 }
 
-// Get all security headers including CSP
 export const getAllSecurityHeaders = (
   isDevelopment = false
 ): Record<string, string> => {
@@ -241,7 +211,6 @@ export const getAllSecurityHeaders = (
   }
 }
 
-// Sanitization utilities
 export const sanitizeInput = (input: string): string => {
   if (!input || typeof input !== "string") {
     return ""
@@ -257,7 +226,6 @@ export const sanitizeInput = (input: string): string => {
     .substring(0, 1000) // Limit length
 }
 
-// CSRF token generation and validation
 export const generateCSRFToken = (): string => {
   const array = new Uint8Array(32)
   crypto.getRandomValues(array)
@@ -273,7 +241,6 @@ export const validateCSRFToken = (
   return token === sessionToken && token.length === 64
 }
 
-// Input validation patterns
 export const validationPatterns = {
   email:
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
@@ -282,45 +249,33 @@ export const validationPatterns = {
   url: /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/,
 }
 
-// Secure storage utilities
 export const secureStorage = {
-  // Store data with encryption (basic implementation)
   setItem: (key: string, value: any): void => {
     try {
       const serialized = JSON.stringify(value)
-      // In a real implementation, you'd encrypt this
+
       localStorage.setItem(key, serialized)
-    } catch (error) {
-      console.error("Error storing data:", error)
-    }
+    } catch (error) {}
   },
 
-  // Retrieve and decrypt data
   getItem: (key: string): any => {
     try {
       const item = localStorage.getItem(key)
       return item ? JSON.parse(item) : null
     } catch (error) {
-      console.error("Error retrieving data:", error)
       return null
     }
   },
 
-  // Remove data
   removeItem: (key: string): void => {
     try {
       localStorage.removeItem(key)
-    } catch (error) {
-      console.error("Error removing data:", error)
-    }
+    } catch (error) {}
   },
 
-  // Clear all data
   clear: (): void => {
     try {
       localStorage.clear()
-    } catch (error) {
-      console.error("Error clearing data:", error)
-    }
+    } catch (error) {}
   },
 }

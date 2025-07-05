@@ -1,4 +1,4 @@
-// Enhanced Rate Limiting System for Portfolio (2025)
+
 import { securityConfig } from "./security"
 
 interface RateLimitState {
@@ -15,9 +15,7 @@ interface RateLimitResult {
   resetTime: number
   blocked: boolean
   message?: string
-}
-
-// Enhanced rate limiter with progressive blocking
+}
 export class EnhancedRateLimiter {
   private static getStorageKey(identifier: string, type: string): string {
     return `rate_limit_${type}_${identifier}`
@@ -38,9 +36,7 @@ export class EnhancedRateLimiter {
     if (stored) {
       try {
         state = JSON.parse(stored)
-      } catch (error) {
-        console.warn("Invalid rate limit data, resetting:", error)
-        // Reset if parsing fails
+      } catch (error) {
         state = {
           attempts: 0,
           lastAttempt: now,
@@ -62,7 +58,6 @@ export class EnhancedRateLimiter {
     try {
       localStorage.setItem(key, JSON.stringify(state))
     } catch (error) {
-      console.warn("Failed to save rate limit state:", error)
     }
   }
 
@@ -84,9 +79,7 @@ export class EnhancedRateLimiter {
   ): RateLimitResult {
     const config = securityConfig.rateLimiting[type]
     const state = this.getState(identifier, type)
-    const now = Date.now()
-
-    // Check if still in block period
+    const now = Date.now()
     if (this.isBlocked(state)) {
       const resetTime = state.blockUntil!
       return {
@@ -98,9 +91,7 @@ export class EnhancedRateLimiter {
           config.message
         }`,
       }
-    }
-
-    // Reset if window has expired
+    }
     if (this.isWindowExpired(state, config.windowMs)) {
       state.attempts = 0
       state.firstAttempt = now
@@ -127,9 +118,7 @@ export class EnhancedRateLimiter {
   ): RateLimitResult {
     const config = securityConfig.rateLimiting[type]
     const state = this.getState(identifier, type)
-    const now = Date.now()
-
-    // If successful, optionally reset (for certain types)
+    const now = Date.now()
     if (success && type === "contactForm") {
       state.attempts = 0
       state.blocked = false
@@ -143,25 +132,17 @@ export class EnhancedRateLimiter {
         resetTime: now + config.windowMs,
         blocked: false,
       }
-    }
-
-    // Check current limits
+    }
     const currentLimit = this.checkRateLimit(identifier, type)
-    if (!currentLimit.allowed && !currentLimit.blocked) {
-      // First time hitting limit - start blocking
+    if (!currentLimit.allowed && !currentLimit.blocked) {
       state.blocked = true
       const blockDuration =
         "blockDuration" in config ? config.blockDuration : config.windowMs
       state.blockUntil = now + blockDuration
-    }
-
-    // Increment attempts
+    }
     state.attempts += 1
-    state.lastAttempt = now
-
-    // Progressive blocking for repeat offenders
-    if (state.attempts > config.max * 2) {
-      // Double the block time for persistent attempts
+    state.lastAttempt = now
+    if (state.attempts > config.max * 2) {
       const blockDuration =
         "blockDuration" in config ? config.blockDuration : config.windowMs
       state.blockUntil = now + blockDuration * 2
@@ -177,7 +158,6 @@ export class EnhancedRateLimiter {
     try {
       localStorage.removeItem(key)
     } catch (error) {
-      console.warn("Failed to clear rate limit:", error)
     }
   }
 
@@ -191,9 +171,7 @@ export class EnhancedRateLimiter {
     }
     return 0
   }
-}
-
-// Convenience functions for specific use cases
+}
 export const checkContactFormLimit = (
   identifier = "default"
 ): RateLimitResult => {
@@ -216,9 +194,7 @@ export const recordEmailAttempt = (
   success = false
 ): RateLimitResult => {
   return EnhancedRateLimiter.recordAttempt(identifier, "email", success)
-}
-
-// Legacy compatibility functions
+}
 export const checkRateLimit = (
   identifier: string
 ): { blocked: boolean; blockUntil?: number } => {

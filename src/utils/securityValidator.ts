@@ -1,6 +1,3 @@
-// Security Configuration Validator
-// This utility validates that all security features are properly configured
-
 import { securityConfig } from "./security"
 import { CSRFProtection } from "./enhancedCSRF"
 import { EnhancedRateLimiter } from "./enhancedRateLimit"
@@ -16,7 +13,6 @@ export class SecurityValidator {
     const errors: string[] = []
     const warnings: string[] = []
 
-    // Validate CSP Configuration
     if (!securityConfig.csp.defaultSrc.includes("'self'")) {
       errors.push("CSP default-src must include 'self'")
     }
@@ -34,7 +30,6 @@ export class SecurityValidator {
       warnings.push("CSP object-src should be 'none' for security")
     }
 
-    // Validate Rate Limiting Configuration
     if (securityConfig.rateLimiting.contactForm.max > 5) {
       warnings.push("Contact form rate limit seems high (>5 attempts)")
     }
@@ -43,7 +38,6 @@ export class SecurityValidator {
       warnings.push("Contact form window seems short (<10 minutes)")
     }
 
-    // Validate CSRF Configuration
     if (securityConfig.csrf.tokenLength < 16) {
       errors.push("CSRF token length too short (minimum 16 characters)")
     }
@@ -52,7 +46,6 @@ export class SecurityValidator {
       warnings.push("CSRF token TTL seems long (>30 minutes)")
     }
 
-    // Validate Headers Configuration
     const requiredHeaders: (keyof typeof securityConfig.headers)[] = [
       "X-Frame-Options",
       "X-Content-Type-Options",
@@ -78,19 +71,16 @@ export class SecurityValidator {
     const warnings: string[] = []
 
     try {
-      // Test CSRF Token Generation
       const token = CSRFProtection.getCurrentToken()
       if (!token || token.length !== securityConfig.csrf.tokenLength * 2) {
         errors.push("CSRF token generation failed or invalid length")
       }
 
-      // Test CSRF Token Validation
       const isValid = CSRFProtection.validateToken(token)
       if (!isValid) {
         errors.push("CSRF token validation failed")
       }
 
-      // Test Rate Limiting
       const rateLimitResult = EnhancedRateLimiter.checkRateLimit(
         "test",
         "contactForm"
@@ -140,7 +130,6 @@ export class SecurityValidator {
       report += "\n"
     }
 
-    // Security Feature Status
     report += "## 🛡️ Security Features Status\n\n"
     report += "| Feature | Status | Details |\n"
     report += "|---------|--------|---------|\n"
@@ -174,21 +163,8 @@ export class SecurityValidator {
   }
 }
 
-// Auto-run validation when imported
 if (typeof window !== "undefined") {
-  console.group("🛡️ Security Configuration Validation")
-
-  const validation = SecurityValidator.validateConfiguration()
-
-  if (validation.passed) {
-    console.log("✅ Security configuration is valid!")
-  } else {
-    console.warn("⚠️ Security configuration has issues:")
-    validation.errors.forEach((error) => console.error("❌", error))
-    validation.warnings.forEach((warning) => console.warn("⚠️", warning))
-  }
-
-  console.groupEnd()
+  SecurityValidator.validateConfiguration()
 }
 
 export default SecurityValidator

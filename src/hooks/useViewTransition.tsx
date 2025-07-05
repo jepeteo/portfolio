@@ -1,26 +1,20 @@
-// View Transitions API Integration (2025 Cutting-Edge)
-import React, { useCallback } from 'react';
 
-// View Transition Hook with fallback
+import React, { useCallback } from 'react';
 export const useViewTransition = () => {
   const isSupported = React.useMemo(() => {
     return typeof window !== 'undefined' && 'startViewTransition' in document;
   }, []);
 
   const startTransition = useCallback((updateCallback: () => void | Promise<void>) => {
-    if (isSupported) {
-      // @ts-ignore - New API not in types yet
+    if (isSupported) {
       document.startViewTransition(updateCallback);
-    } else {
-      // Fallback for browsers without support
+    } else {
       updateCallback();
     }
   }, [isSupported]);
 
   return { startTransition, isSupported };
-};
-
-// View Transition Component
+};
 interface ViewTransitionProps {
   children: React.ReactNode;
   name?: string;
@@ -49,11 +43,9 @@ export const ViewTransition: React.FC<ViewTransitionProps> = ({
       {children}
     </div>
   );
-};
-
-// CSS View Transition styles (to be added to CSS)
+};
 export const viewTransitionStyles = `
-  /* View Transition API Styles */
+  
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation-duration: 0.5s;
@@ -102,9 +94,7 @@ export const viewTransitionStyles = `
       opacity: 0;
     }
   }
-`;
-
-// Enhanced Page Transition Component
+`;
 interface PageTransitionProps {
   children: React.ReactNode;
   transitionKey: string;
@@ -118,8 +108,7 @@ export const PageTransition: React.FC<PageTransitionProps> = ({
   
   React.useEffect(() => {
     if (isSupported) {
-      startTransition(() => {
-        // Update the DOM
+      startTransition(() => {
       });
     }
   }, [transitionKey, startTransition, isSupported]);

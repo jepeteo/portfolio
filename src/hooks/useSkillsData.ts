@@ -47,13 +47,10 @@ const useSkillsData = () => {
     return "Learning"
   }
 
-  const processedData = useMemo(() => {
-    // Filter only visible skills and cast to proper type
+  const processedData = useMemo(() => {
     const visibleSkills: Skill[] = (mySkills as any[]).filter(
       (skill: any) => skill.visible
-    ) as Skill[]
-
-    // Organize skills into categories
+    ) as Skill[]
     const skillCategories: Record<string, SkillCategory> = {
       languages: {
         title: "My Programming Languages",
@@ -195,9 +192,7 @@ const useSkillsData = () => {
           }))
           .sort((a, b) => b.level - a.level),
       },
-    }
-
-    // Calculate stats
+    }
     const totalSkills = visibleSkills.length
     const masteredSkills = visibleSkills.filter(
       (skill) => skill.level >= 90

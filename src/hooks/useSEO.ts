@@ -25,11 +25,8 @@ const useSEO = ({
   twitterCard = "summary_large_image",
   schema,
 }: SEOProps = {}) => {
-  useEffect(() => {
-    // Update document title
-    document.title = title
-
-    // Update meta tags
+  useEffect(() => {
+    document.title = title
     const updateMetaTag = (
       name: string,
       content: string,
@@ -45,9 +42,7 @@ const useSEO = ({
       }
 
       meta.setAttribute("content", content)
-    }
-
-    // Basic meta tags
+    }
     updateMetaTag("description", description)
     updateMetaTag("keywords", keywords)
 
@@ -59,9 +54,7 @@ const useSEO = ({
         document.head.appendChild(link)
       }
       link.setAttribute("href", canonical)
-    }
-
-    // Open Graph tags
+    }
     updateMetaTag("og:title", ogTitle || title, true)
     updateMetaTag("og:description", ogDescription || description, true)
     updateMetaTag("og:image", ogImage, true)
@@ -69,15 +62,11 @@ const useSEO = ({
 
     if (ogUrl) {
       updateMetaTag("og:url", ogUrl, true)
-    }
-
-    // Twitter Card tags
+    }
     updateMetaTag("twitter:card", twitterCard)
     updateMetaTag("twitter:title", ogTitle || title)
     updateMetaTag("twitter:description", ogDescription || description)
-    updateMetaTag("twitter:image", ogImage)
-
-    // Schema.org structured data
+    updateMetaTag("twitter:image", ogImage)
     if (schema) {
       let script = document.querySelector('script[type="application/ld+json"]')
       if (!script) {
@@ -86,11 +75,8 @@ const useSEO = ({
         document.head.appendChild(script)
       }
       script.textContent = JSON.stringify(schema)
-    }
-
-    // Cleanup function
-    return () => {
-      // Reset to default title when component unmounts
+    }
+    return () => {
       document.title = "Theodoros Mentis - Senior Full Stack Developer"
     }
   }, [

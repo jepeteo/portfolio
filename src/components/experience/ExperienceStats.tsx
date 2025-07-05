@@ -51,7 +51,7 @@ export const ExperienceStatsComponent: React.FC<ExperienceStatsProps> = ({
 
   return (
     <div className="mb-12">
-      {/* Main stats */}
+      
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         {statItems.map((item, index) =>
           item.tooltip ? (
@@ -133,7 +133,6 @@ export const ExperienceStatsComponent: React.FC<ExperienceStatsProps> = ({
         )}
       </div>
 
-      {/* Employment breakdown */}
       <div
         className={`rounded-xl p-5 ${
           isDark

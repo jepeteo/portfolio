@@ -1,11 +1,5 @@
 import { useCallback } from "react"
 
-/**
- * Creates a debounced version of a function
- * @param func The function to debounce
- * @param delay The delay in milliseconds
- * @returns The debounced function
- */
 const useDebounce = <T extends (...args: any[]) => any>(
   func: T,
   delay: number

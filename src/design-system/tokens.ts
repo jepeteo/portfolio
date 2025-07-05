@@ -1,21 +1,17 @@
-// Modern Design System Tokens
-export const designTokens = {
-  // Semantic color system instead of numbered variables
-  colors: {
-    // Brand colors
+
+export const designTokens = {
+  colors: {
     brand: {
       primary: "hsl(210, 100%, 50%)",
       secondary: "hsl(280, 80%, 60%)",
       accent: "hsl(45, 100%, 60%)",
-    },
-    // Semantic colors
+    },
     semantic: {
       success: "hsl(120, 60%, 50%)",
       warning: "hsl(40, 100%, 50%)",
       error: "hsl(0, 80%, 60%)",
       info: "hsl(200, 80%, 60%)",
-    },
-    // Neutral scale with better contrast ratios
+    },
     neutral: {
       50: "hsl(210, 40%, 98%)",
       100: "hsl(210, 40%, 96%)",
@@ -28,8 +24,7 @@ export const designTokens = {
       800: "hsl(217, 33%, 17%)",
       900: "hsl(222, 47%, 11%)",
       950: "hsl(229, 84%, 5%)",
-    },
-    // Context-aware colors
+    },
     surface: {
       background: "hsl(var(--background))",
       foreground: "hsl(var(--foreground))",
@@ -38,8 +33,7 @@ export const designTokens = {
       popover: "hsl(var(--popover))",
       popoverForeground: "hsl(var(--popover-foreground))",
     },
-  },
-  // Modern spacing scale
+  },
   spacing: {
     xs: "0.25rem", // 4px
     sm: "0.5rem", // 8px
@@ -50,8 +44,7 @@ export const designTokens = {
     "3xl": "3rem", // 48px
     "4xl": "4rem", // 64px
     "5xl": "6rem", // 96px
-  },
-  // Typography scale
+  },
   typography: {
     fontSizes: {
       xs: "0.75rem",
@@ -75,8 +68,7 @@ export const designTokens = {
       normal: "1.5",
       relaxed: "1.75",
     },
-  },
-  // Animation system
+  },
   animations: {
     durations: {
       fast: "150ms",
@@ -90,15 +82,13 @@ export const designTokens = {
       easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
       bounce: "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
     },
-  },
-  // Modern shadows
+  },
   shadows: {
     sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
     md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
     lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
     xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
-  },
-  // Border radius scale
+  },
   radii: {
     none: "0",
     sm: "0.25rem",
@@ -108,9 +98,7 @@ export const designTokens = {
     "2xl": "1rem",
     full: "9999px",
   },
-} as const
-
-// CSS Custom Properties for runtime theme switching
+} as const
 export const cssVariables = {
   light: {
     "--background": "0 0% 100%",

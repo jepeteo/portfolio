@@ -25,9 +25,7 @@ import {
   ChevronUp,
   Plus,
   Minus,
-} from "lucide-react"
-
-// Category icons mapping
+} from "lucide-react"
 const categoryIcons: Record<string, React.ComponentType<any>> = {
   "AI & Machine Learning": Zap,
   "Frontend Development": Code,
@@ -41,9 +39,7 @@ const categoryIcons: Record<string, React.ComponentType<any>> = {
   "Performance & Optimization": Zap,
   "E-commerce": Smartphone,
   "Productivity Tools": Settings,
-}
-
-// Add interface for expanded skills
+}
 interface ExpandedSkills {
   [certificateId: string]: boolean
 }
@@ -55,10 +51,8 @@ const ModernCertificates: React.FC = memo(() => {
     rootMargin: "50px",
   })
 
-  const [isLoading, setIsLoading] = useState(false)
-  // Add state for expanded categories in summary section
-  const [isSummaryExpanded, setIsSummaryExpanded] = useState(false)
-  // Add state for expanded skills per certificate
+  const [isLoading, setIsLoading] = useState(false)
+  const [isSummaryExpanded, setIsSummaryExpanded] = useState(false)
   const [expandedSkills, setExpandedSkills] = useState<ExpandedSkills>({})
 
   const { categories, certsByCategory, validCertificates } = useMemo(() => {
@@ -79,9 +73,7 @@ const ModernCertificates: React.FC = memo(() => {
         return acc
       },
       {}
-    )
-
-    // Sort categories alphabetically
+    )
     const sortedCategories = Object.keys(grouped).sort()
 
     return {
@@ -89,14 +81,10 @@ const ModernCertificates: React.FC = memo(() => {
       certsByCategory: grouped,
       validCertificates: validCerts,
     }
-  }, [])
-
-  // Set the first alphabetical category as default (instead of "All")
+  }, [])
   const [selectedCategory, setSelectedCategory] = useState<string>(() => {
     return categories.length > 0 ? categories[0] : "All"
-  })
-
-  // Update selectedCategory when categories change
+  })
   React.useEffect(() => {
     if (categories.length > 0 && !categories.includes(selectedCategory)) {
       setSelectedCategory(categories[0])
@@ -105,17 +93,12 @@ const ModernCertificates: React.FC = memo(() => {
 
   const handleCategoryChange = useCallback((category: string) => {
     setIsLoading(true)
-    setSelectedCategory(category)
-    // Simulate loading for better UX
+    setSelectedCategory(category)
     setTimeout(() => setIsLoading(false), 150)
-  }, [])
-
-  // Toggle function for summary expansion
+  }, [])
   const toggleSummaryExpansion = useCallback(() => {
     setIsSummaryExpanded((prev) => !prev)
-  }, [])
-
-  // Toggle function for skills expansion per certificate
+  }, [])
   const toggleSkillsExpansion = useCallback((certificateId: string) => {
     setExpandedSkills((prev) => ({
       ...prev,
@@ -133,17 +116,13 @@ const ModernCertificates: React.FC = memo(() => {
   const getCategoryIcon = (category: string) => {
     const IconComponent = categoryIcons[category] || Award
     return IconComponent
-  }
-
-  // Constants for summary display
+  }
   const INITIAL_CATEGORIES_DISPLAY = 5
   const hasMoreCategories = categories.length > INITIAL_CATEGORIES_DISPLAY
   const visibleCategories = isSummaryExpanded
     ? categories
     : categories.slice(0, INITIAL_CATEGORIES_DISPLAY)
-  const hiddenCategoriesCount = categories.length - INITIAL_CATEGORIES_DISPLAY
-
-  // Constants for skills display
+  const hiddenCategoriesCount = categories.length - INITIAL_CATEGORIES_DISPLAY
   const INITIAL_SKILLS_DISPLAY = 3
 
   if (validCertificates.length === 0) {
@@ -178,7 +157,7 @@ const ModernCertificates: React.FC = memo(() => {
       id="certificates"
     >
       <div className="container">
-        {/* Section Header */}
+        
         <div className="text-center mb-16">
           <div
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
@@ -211,7 +190,6 @@ const ModernCertificates: React.FC = memo(() => {
           </p>
         </div>
 
-        {/* Category Filter */}
         <div className="mb-12">
           <div
             className={`flex items-center gap-2 mb-6 ${
@@ -223,7 +201,7 @@ const ModernCertificates: React.FC = memo(() => {
           </div>
 
           <div className="flex flex-wrap gap-3 justify-center">
-            {/* All Categories Button */}
+            
             <button
               onClick={() => handleCategoryChange("All")}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 ${
@@ -242,7 +220,6 @@ const ModernCertificates: React.FC = memo(() => {
               </span>
             </button>
 
-            {/* Individual Category Buttons */}
             {categories.map((category) => {
               const IconComponent = getCategoryIcon(category)
               const count = certsByCategory[category]?.length || 0
@@ -271,14 +248,13 @@ const ModernCertificates: React.FC = memo(() => {
           </div>
         </div>
 
-        {/* Loading State */}
         {isLoading ? (
           <div className="flex justify-center py-12">
             <Loading />
           </div>
         ) : (
           <>
-            {/* Current Category Info */}
+            
             <div
               className={`text-center mb-8 ${
                 isDark ? "text-slate-400" : "text-slate-600"
@@ -301,14 +277,11 @@ const ModernCertificates: React.FC = memo(() => {
               </p>
             </div>
 
-            {/* Certificates Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {displayedCertificates.map((certificate, index) => {
                 const IconComponent = getCategoryIcon(
                   certificate.category || "Uncategorized"
-                )
-
-                // Skills expansion logic
+                )
                 const isSkillsExpanded = expandedSkills[certificate.id] || false
                 const hasMoreSkills =
                   certificate.skills &&
@@ -330,12 +303,11 @@ const ModernCertificates: React.FC = memo(() => {
                     }`}
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    {/* Background Gradient */}
+                    
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    {/* Certificate Content */}
                     <div className="relative p-6">
-                      {/* Header with Icon and Category */}
+                      
                       <div className="flex items-start justify-between mb-4">
                         <div
                           className={`w-12 h-12 rounded-xl flex items-center justify-center ${
@@ -360,7 +332,6 @@ const ModernCertificates: React.FC = memo(() => {
                         )}
                       </div>
 
-                      {/* Certificate Name */}
                       <h3
                         className={`text-lg font-bold mb-2 line-clamp-2 group-hover:text-purple-500 transition-colors ${
                           isDark ? "text-white" : "text-slate-900"
@@ -369,7 +340,6 @@ const ModernCertificates: React.FC = memo(() => {
                         {certificate.name}
                       </h3>
 
-                      {/* Issuer */}
                       <p
                         className={`text-sm font-medium mb-3 ${
                           isDark ? "text-purple-300" : "text-purple-600"
@@ -378,7 +348,6 @@ const ModernCertificates: React.FC = memo(() => {
                         {certificate.issuer}
                       </p>
 
-                      {/* Description */}
                       {certificate.description && (
                         <p
                           className={`text-sm mb-4 line-clamp-3 ${
@@ -389,7 +358,6 @@ const ModernCertificates: React.FC = memo(() => {
                         </p>
                       )}
 
-                      {/* Skills with Expandable Functionality */}
                       {certificate.skills && certificate.skills.length > 0 && (
                         <div className="mb-4">
                           <div className="flex flex-wrap gap-1 mb-2">
@@ -407,7 +375,6 @@ const ModernCertificates: React.FC = memo(() => {
                             ))}
                           </div>
 
-                          {/* Expandable Skills Button */}
                           {hasMoreSkills && (
                             <button
                               onClick={(e) => {
@@ -437,9 +404,8 @@ const ModernCertificates: React.FC = memo(() => {
                         </div>
                       )}
 
-                      {/* Footer */}
                       <div className="flex items-center justify-between">
-                        {/* Issue Date */}
+                        
                         <div
                           className={`flex items-center gap-2 text-sm ${
                             isDark ? "text-slate-400" : "text-slate-600"
@@ -457,7 +423,6 @@ const ModernCertificates: React.FC = memo(() => {
                           </span>
                         </div>
 
-                        {/* Credential Link */}
                         {certificate.credentialUrl && (
                           <a
                             href={certificate.credentialUrl}
@@ -480,7 +445,6 @@ const ModernCertificates: React.FC = memo(() => {
               })}
             </div>
 
-            {/* Category Summary with Expandable Categories */}
             <div className="mt-16">
               <div
                 className={`p-8 rounded-2xl text-center ${
@@ -511,7 +475,6 @@ const ModernCertificates: React.FC = memo(() => {
                   commitment to professional excellence
                 </p>
 
-                {/* Expandable Categories List */}
                 <div className="flex flex-wrap justify-center gap-3 mb-6">
                   {visibleCategories.map((category) => {
                     const IconComponent = getCategoryIcon(category)
@@ -531,7 +494,6 @@ const ModernCertificates: React.FC = memo(() => {
                   })}
                 </div>
 
-                {/* Expandable Button */}
                 {hasMoreCategories && (
                   <button
                     onClick={toggleSummaryExpansion}

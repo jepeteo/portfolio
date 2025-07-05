@@ -1,4 +1,4 @@
-// Modern Hero Section (2025 Version)
+
 import React from "react"
 import { motion } from "framer-motion"
 import { useTheme } from "../../context/ThemeContext"
@@ -80,9 +80,9 @@ const ModernHero: React.FC = () => {
       id="hero"
       style={{ viewTransitionName: "hero-section" }}
     >
-      {/* Background Elements */}
+      
       <div className="absolute inset-0 overflow-hidden">
-        {/* Animated gradient blobs */}
+        
         <motion.div
           className={cn(
             "absolute top-1/4 -left-1/4 w-96 h-96 rounded-full opacity-20",
@@ -123,9 +123,9 @@ const ModernHero: React.FC = () => {
         initial="hidden"
         animate="visible"
       >
-        {/* Text Content */}
+        
         <motion.div className="space-y-8" variants={itemVariants}>
-          {/* Greeting Badge */}
+          
           <motion.div
             className={cn(
               "inline-flex items-center gap-2 px-4 py-2 rounded-full border",
@@ -144,7 +144,6 @@ const ModernHero: React.FC = () => {
             <span className="text-sm font-medium">Hello, I'm Theodore</span>
           </motion.div>
 
-          {/* Main Heading */}
           <div className="space-y-4">
             <AnimatedText
               text="Senior Full Stack"
@@ -160,7 +159,7 @@ const ModernHero: React.FC = () => {
                 )}
                 delay={0.5}
               />
-              {/* Animated underline */}
+              
               <motion.div
                 className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-primary to-purple-500 rounded-full"
                 initial={{ width: 0 }}
@@ -170,7 +169,6 @@ const ModernHero: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Description */}
           <motion.p
             className={cn(
               typography.body.large,
@@ -184,7 +182,6 @@ const ModernHero: React.FC = () => {
             development.
           </motion.p>
 
-          {/* CTA Buttons */}
           <motion.div
             className="flex flex-col sm:flex-row gap-4"
             variants={itemVariants}
@@ -224,7 +221,6 @@ const ModernHero: React.FC = () => {
             </MagneticButton>
           </motion.div>
 
-          {/* Social Links */}
           <motion.div className="flex gap-4 pt-4" variants={itemVariants}>
             {[
               {
@@ -268,7 +264,6 @@ const ModernHero: React.FC = () => {
           </motion.div>
         </motion.div>
 
-        {/* Image Section */}
         <motion.div
           className="relative flex justify-center lg:justify-end"
           variants={itemVariants}
@@ -293,7 +288,6 @@ const ModernHero: React.FC = () => {
                 className="w-80 h-96 lg:w-96 lg:h-[28rem] rounded-3xl"
               />
 
-              {/* Decorative elements */}
               <motion.div
                 className="absolute -top-6 -right-6 w-12 h-12 bg-primary/20 rounded-full backdrop-blur-sm"
                 animate={{
@@ -321,7 +315,6 @@ const ModernHero: React.FC = () => {
             </motion.div>
           </motion.div>
 
-          {/* Floating tech icons */}
           <div className="absolute inset-0 pointer-events-none">
             {[
               { icon: icons.tech.code, position: "top-8 left-8", delay: 0 },
@@ -361,7 +354,6 @@ const ModernHero: React.FC = () => {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0, y: 20 }}

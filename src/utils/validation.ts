@@ -4,9 +4,7 @@ import {
   ModernCertificate,
   Skill,
   ModernReactProject,
-} from "../types"
-
-// Type guards for runtime validation
+} from "../types"
 export const isValidJob = (obj: any): obj is Job => {
   return (
     typeof obj === "object" &&
@@ -44,9 +42,7 @@ export const isValidReactProject = (obj: any): obj is ModernReactProject => {
     typeof obj.prDescription === "string" &&
     typeof obj.prImageSlug === "string"
   )
-}
-
-// Modern React Project validation (for new structure)
+}
 export const validateReactProject = (obj: any): boolean => {
   return (
     typeof obj === "object" &&
@@ -63,9 +59,7 @@ export const validateReactProject = (obj: any): boolean => {
     (obj.featured === undefined || typeof obj.featured === "boolean") &&
     (obj.performance === undefined || typeof obj.performance === "string")
   )
-}
-
-// Modern Certificate validation
+}
 export const validateCertificate = (obj: any): obj is ModernCertificate => {
   return (
     typeof obj === "object" &&
@@ -83,11 +77,8 @@ export const validateCertificate = (obj: any): obj is ModernCertificate => {
     (obj.description === undefined || typeof obj.description === "string") &&
     (obj.skills === undefined || Array.isArray(obj.skills))
   )
-}
-
-// Legacy certificate validation (for old structure)
-export const isValidCertificate = (obj: any): boolean => {
-  // For old certificate structure
+}
+export const isValidCertificate = (obj: any): boolean => {
   if (obj && typeof obj === "object" && obj.certName && obj.certUrl) {
     return (
       typeof obj.certName === "string" &&
@@ -96,9 +87,7 @@ export const isValidCertificate = (obj: any): boolean => {
       typeof obj.certVisible === "boolean" &&
       typeof obj.certCat === "string"
     )
-  }
-
-  // For new certificate structure
+  }
   return validateCertificate(obj)
 }
 
@@ -111,33 +100,24 @@ export const isValidSkill = (obj: any): obj is Skill => {
     typeof obj.description === "string" &&
     typeof obj.visible === "boolean"
   )
-}
-
-// Image validation helper
+}
 export const validateImageSrc = (
   src: string,
   fallback: string = "/placeholder-image.png"
 ): string => {
   if (!src || typeof src !== "string" || src.trim() === "") {
     return fallback
-  }
-
-  // Check if it's a valid URL or relative path
-  try {
-    // If it starts with http/https, validate as URL
+  }
+  try {
     if (src.startsWith("http")) {
       new URL(src)
       return src
-    }
-
-    // If it's a relative path, just return it (let the browser handle validation)
+    }
     return src
   } catch {
     return fallback
   }
-}
-
-// Validation helpers
+}
 export const validateEmail = (email: string): boolean => {
   if (!email || typeof email !== "string") return false
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -196,9 +176,7 @@ export const validateSubject = (subject: string): boolean => {
   if (!subject || typeof subject !== "string") return false
   const trimmed = subject.trim()
   return trimmed.length >= 3 && trimmed.length <= 100
-}
-
-// For form data validation
+}
 export interface ContactFormData {
   name: string
   email: string
@@ -240,9 +218,7 @@ export const validateContactForm = (
     isValid: Object.keys(errors).length === 0,
     errors,
   }
-}
-
-// Sanitize form data
+}
 export const sanitizeContactForm = (data: ContactFormData): ContactFormData => {
   return {
     name: sanitizeInput(data.name),

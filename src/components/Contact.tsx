@@ -42,9 +42,7 @@ const Contact: React.FC = memo(() => {
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
     threshold: 0.1,
     rootMargin: "50px",
-  })
-
-  // Accessibility hooks
+  })
   const { announce } = useScreenReader()
   const { errors: a11yErrors, validateField } = useAccessibleForm()
   const prefersReducedMotion = useReducedMotion()
@@ -61,48 +59,36 @@ const Contact: React.FC = memo(() => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
-  >("idle")
-
-  // Security state
+  >("idle")
   const [csrfToken, setCsrfToken] = useState(() =>
     CSRFProtection.getCurrentToken()
   )
   const [honeypot, setHoneypot] = useState("")
-  const [startTime] = useState(() => Date.now())
-
-  // EmailJS configuration from environment variables (Vite style)
+  const [startTime] = useState(() => Date.now())
   const emailjsConfig = {
     serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID || "",
     templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "",
     publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "",
-  }
-
-  // Handle input changes with proper sanitization
+  }
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target
 
       let sanitizedValue: string
 
-      if (name === "email") {
-        // For email, remove spaces and apply email-specific sanitization
+      if (name === "email") {
         sanitizedValue = sanitizeEmail(value)
-      } else {
-        // For other fields, preserve spaces but sanitize dangerous content
+      } else {
         sanitizedValue = sanitizeTextInput(value)
       }
 
-      setFormData((prev) => ({ ...prev, [name]: sanitizedValue }))
-
-      // Clear error when user starts typing
+      setFormData((prev) => ({ ...prev, [name]: sanitizedValue }))
       if (errors[name as keyof ContactFormErrors]) {
         setErrors((prev) => ({ ...prev, [name]: undefined }))
       }
     },
     [errors]
-  )
-
-  // Handle email field blur validation
+  )
   const handleEmailBlur = useCallback(() => {
     const emailError = validateFieldEmail(formData.email)
     if (emailError) {
@@ -110,11 +96,8 @@ const Contact: React.FC = memo(() => {
     } else {
       setErrors((prev) => ({ ...prev, email: undefined }))
     }
-  }, [formData.email])
-
-  // Enhanced form validation with security checks
-  const validateForm = useCallback((): boolean => {
-    // Check enhanced rate limiting first
+  }, [formData.email])
+  const validateForm = useCallback((): boolean => {
     const rateLimitResult = checkContactFormLimit("default") // Using 'default' as IP placeholder for client-side
     if (!rateLimitResult.allowed) {
       if (rateLimitResult.blocked) {
@@ -133,80 +116,57 @@ const Contact: React.FC = memo(() => {
         })
       }
       return false
-    }
-
-    // Create secure form data
+    }
     const secureData: SecureContactFormData = {
       ...formData,
       csrfToken,
       timestamp: Date.now(),
       honeypot,
-    }
-
-    // Detect bot behavior
+    }
     if (detectBot(secureData)) {
-      console.warn("Bot behavior detected")
       setErrors({ general: "Invalid submission detected. Please try again." })
       return false
-    }
-
-    // Validate with enhanced security
+    }
     const validationResult = validateContactFormSecure(secureData)
     if (!validationResult.isValid) {
       setErrors(validationResult.errors)
       return false
-    }
-
-    // Clear any previous errors
+    }
     setErrors({})
     return true
   }, [formData, csrfToken, honeypot])
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
-      e.preventDefault()
-
-      // Record the attempt first (for rate limiting tracking)
+      e.preventDefault()
       recordContactFormAttempt("default")
 
-      if (!validateForm()) return
-
-      // Validate CSRF token
+      if (!validateForm()) return
       if (!CSRFProtection.validateToken(csrfToken)) {
         setErrors({
           general:
             "Security validation failed. Please refresh the page and try again.",
         })
         return
-      }
-
-      // Additional security: check submission timing (prevent too fast submissions)
+      }
       const submissionTime = Date.now() - startTime
-      if (submissionTime < 3000) {
-        // Less than 3 seconds
+      if (submissionTime < 3000) {
         setErrors({
           general:
             "Please take a moment to review your message before submitting.",
         })
         return
-      }
-
-      // Check if EmailJS is configured
+      }
       if (
         !emailjsConfig.serviceId ||
         !emailjsConfig.templateId ||
         !emailjsConfig.publicKey
-      ) {
-        console.warn("EmailJS not configured. Using simulation mode.")
-
-        // Fallback to simulation if EmailJS is not configured
+      ) {
         setIsSubmitting(true)
         setSubmitStatus("idle")
 
         try {
-          await new Promise((resolve) => setTimeout(resolve, 2000))
-
-          // Generate new CSRF token for next submission
+          await new Promise((resolve) => setTimeout(resolve, 2000))
           setCsrfToken(CSRFProtection.getCurrentToken())
 
           setFormData({ name: "", email: "", subject: "", message: "" })
@@ -224,17 +184,14 @@ const Contact: React.FC = memo(() => {
       setIsSubmitting(true)
       setSubmitStatus("idle")
 
-      try {
-        // Sanitize form data before sending using secure sanitization
+      try {
         const secureData: SecureContactFormData = {
           ...formData,
           csrfToken,
           timestamp: Date.now(),
           honeypot,
         }
-        const sanitizedData = sanitizeContactFormData(secureData)
-
-        // Send email using EmailJS
+        const sanitizedData = sanitizeContactFormData(secureData)
         const templateParams = {
           from_name: sanitizedData.name,
           from_email: sanitizedData.email,
@@ -249,22 +206,13 @@ const Contact: React.FC = memo(() => {
           emailjsConfig.templateId,
           templateParams,
           emailjsConfig.publicKey
-        )
-
-        console.log("Email sent successfully:", result)
-
-        // Generate new CSRF token for next submission
-        setCsrfToken(CSRFProtection.getCurrentToken())
-
-        // Reset form on success
+        )
+        setCsrfToken(CSRFProtection.getCurrentToken())
         setFormData({ name: "", email: "", subject: "", message: "" })
         setErrors({})
-        setSubmitStatus("success")
-
-        // Clear success message after 5 seconds
+        setSubmitStatus("success")
         setTimeout(() => setSubmitStatus("idle"), 5000)
       } catch (error) {
-        console.error("Failed to send email:", error)
         setSubmitStatus("error")
         setTimeout(() => setSubmitStatus("idle"), 5000)
       } finally {
@@ -311,7 +259,7 @@ const Contact: React.FC = memo(() => {
       id="contact"
     >
       <div className="container">
-        {/* Section Header */}
+        
         <div className="text-center mb-16">
           <div
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
@@ -345,7 +293,7 @@ const Contact: React.FC = memo(() => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
+          
           <div className="space-y-8">
             <div>
               <h3
@@ -367,7 +315,6 @@ const Contact: React.FC = memo(() => {
               </p>
             </div>
 
-            {/* Contact Details */}
             <div className="space-y-4">
               {contactInfo.map((item, index) => (
                 <a
@@ -408,7 +355,6 @@ const Contact: React.FC = memo(() => {
               ))}
             </div>
 
-            {/* Social Links */}
             <div>
               <h4
                 className={`text-lg font-semibold mb-4 ${
@@ -439,7 +385,6 @@ const Contact: React.FC = memo(() => {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div
             className={`p-8 rounded-2xl ${
               isDark
@@ -447,7 +392,7 @@ const Contact: React.FC = memo(() => {
                 : "bg-white/50 backdrop-blur-sm border border-slate-200"
             }`}
           >
-            {/* Success Message */}
+            
             {submitStatus === "success" && (
               <div
                 className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
@@ -463,7 +408,6 @@ const Contact: React.FC = memo(() => {
               </div>
             )}
 
-            {/* Error Message */}
             {submitStatus === "error" && (
               <div
                 className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
@@ -478,7 +422,7 @@ const Contact: React.FC = memo(() => {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Name Field */}
+              
               <div>
                 <label
                   htmlFor="name"
@@ -510,7 +454,6 @@ const Contact: React.FC = memo(() => {
                 )}
               </div>
 
-              {/* Email Field */}
               <div>
                 <label
                   htmlFor="email"
@@ -543,7 +486,6 @@ const Contact: React.FC = memo(() => {
                 )}
               </div>
 
-              {/* Subject Field */}
               <div>
                 <label
                   htmlFor="subject"
@@ -575,7 +517,6 @@ const Contact: React.FC = memo(() => {
                 )}
               </div>
 
-              {/* Message Field */}
               <div>
                 <label
                   htmlFor="message"
@@ -607,7 +548,6 @@ const Contact: React.FC = memo(() => {
                 )}
               </div>
 
-              {/* Honeypot field - hidden from users, visible to bots */}
               <div style={{ display: "none" }}>
                 <label htmlFor="website">Website</label>
                 <input
@@ -621,14 +561,12 @@ const Contact: React.FC = memo(() => {
                 />
               </div>
 
-              {/* General error display */}
               {errors.general && (
                 <div className="p-4 rounded-xl bg-red-50 border border-red-200">
                   <p className="text-sm text-red-600">{errors.general}</p>
                 </div>
               )}
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={isSubmitting}

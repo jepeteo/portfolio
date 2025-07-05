@@ -12,15 +12,12 @@ const Hero: React.FC = memo(() => {
   const { isDark } = useTheme()
   const heroRef = useRef<HTMLElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  // Accessibility hooks
+  const [isVisible, setIsVisible] = useState(false)
   const prefersReducedMotion = useReducedMotion()
   const { announce } = useScreenReader()
   const { createSkipLink } = useSkipLinks()
 
-  useEffect(() => {
-    // Create skip link to main content - only once on mount
+  useEffect(() => {
     createSkipLink("main-content", "Skip to main content")
   }, []) // Remove dependency to prevent re-running
 
@@ -29,8 +26,7 @@ const Hero: React.FC = memo(() => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true)
-            // Announce hero section for screen readers
+            setIsVisible(true)
             announce("Hero section loaded", "polite")
           }
         })
@@ -55,7 +51,7 @@ const Hero: React.FC = memo(() => {
       role="banner"
       aria-label="Hero section - Theodore Mentis, Senior Full Stack Developer"
     >
-      {/* Tech Grid Background */}
+      
       <div className="absolute inset-0 overflow-hidden">
         <div
           className={`absolute inset-0 ${
@@ -64,7 +60,7 @@ const Hero: React.FC = memo(() => {
               : "bg-gradient-to-br from-slate-50 via-white to-slate-100"
           }`}
         >
-          {/* Grid Pattern */}
+          
           <div
             className={`absolute inset-0 ${
               isDark
@@ -73,7 +69,6 @@ const Hero: React.FC = memo(() => {
             } bg-[size:50px_50px]`}
           />
 
-          {/* Floating Tech Particles */}
           <div className="absolute inset-0">
             {[...Array(20)].map((_, i) => (
               <div
@@ -94,7 +89,7 @@ const Hero: React.FC = memo(() => {
       </div>
 
       <div className="container relative z-10 flex flex-col items-center justify-between min-h-[85vh] lg:flex-row py-16">
-        {/* Content Section */}
+        
         <div
           className={`flex-1 text-center lg:text-left transition-all duration-1000 delay-300 ${
             isVisible
@@ -102,7 +97,7 @@ const Hero: React.FC = memo(() => {
               : "opacity-0 -translate-x-10"
           }`}
         >
-          {/* Greeting */}
+          
           <div className="mb-6">
             <span
               className={`inline-block px-4 py-2 rounded-full text-sm font-medium ${
@@ -115,7 +110,6 @@ const Hero: React.FC = memo(() => {
             </span>
           </div>
 
-          {/* Main Heading */}
           <h1
             className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
             role="heading"
@@ -136,12 +130,10 @@ const Hero: React.FC = memo(() => {
             </span>
           </h1>
 
-          {/* Typed Text */}
           <div className="mb-8">
             <TypedText />
           </div>
 
-          {/* Description */}
           <p
             className={`text-lg md:text-xl mb-8 max-w-2xl ${
               isDark ? "text-slate-300" : "text-slate-600"
@@ -152,7 +144,6 @@ const Hero: React.FC = memo(() => {
             build something extraordinary together.
           </p>
 
-          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <a
               href="#projects"
@@ -186,7 +177,6 @@ const Hero: React.FC = memo(() => {
             </a>
           </div>
 
-          {/* Tech Stack Badges */}
           <div
             className="mt-12"
             role="group"
@@ -226,14 +216,13 @@ const Hero: React.FC = memo(() => {
           </div>
         </div>
 
-        {/* Image Section */}
         <div
           className={`flex-1 lg:flex-none lg:w-1/2 mt-12 lg:mt-0 transition-all duration-1000 delay-500 ${
             isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
           }`}
         >
           <div className="relative max-w-lg mx-auto">
-            {/* Decorative elements */}
+            
             <div
               className={`absolute -inset-4 rounded-3xl ${
                 isDark
@@ -264,7 +253,6 @@ const Hero: React.FC = memo(() => {
               />
             </div>
 
-            {/* Floating badges */}
             <div
               className={`absolute -top-4 -right-4 px-3 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 ${
                 isDark
@@ -278,7 +266,6 @@ const Hero: React.FC = memo(() => {
               Available for hire
             </div>
 
-            {/* Additional Status Bubble - Open for relocation */}
             <div
               className={`absolute -bottom-4 -left-4 px-3 py-2 rounded-xl text-sm font-semibold animate-pulse transition-all duration-1000 delay-700 ${
                 isVisible

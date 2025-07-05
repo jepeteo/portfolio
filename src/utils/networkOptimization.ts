@@ -1,25 +1,14 @@
-/**
- * API and Network Performance Optimization Utilities
- * Request deduplication, response caching, and error handling
- */
 
-import { useCallback, useEffect, useRef, useState } from "react"
 
-// Request cache interface
+import { useCallback, useEffect, useRef, useState } from "react"
 interface CacheEntry<T> {
   data: T
   timestamp: number
   expiry: number
-}
-
-// Request deduplication map
+}
 const requestMap = new Map<string, Promise<any>>()
-const responseCache = new Map<string, CacheEntry<any>>()
-
-// Default cache duration (5 minutes)
-const DEFAULT_CACHE_DURATION = 5 * 60 * 1000
-
-// Enhanced fetch with caching and deduplication
+const responseCache = new Map<string, CacheEntry<any>>()
+const DEFAULT_CACHE_DURATION = 5 * 60 * 1000
 export async function enhancedFetch<T>(
   url: string,
   options: RequestInit = {},
@@ -36,24 +25,16 @@ export async function enhancedFetch<T>(
   } = cacheOptions
 
   const cacheKey = `${url}:${JSON.stringify(options)}`
-  const now = Date.now()
-
-  // Check cache first
+  const now = Date.now()
   if (useCache) {
     const cached = responseCache.get(cacheKey)
     if (cached && now < cached.expiry) {
-      console.log(`📦 Cache hit for ${url}`)
       return cached.data
     }
-  }
-
-  // Check for ongoing request (deduplication)
+  }
   if (deduplicate && requestMap.has(cacheKey)) {
-    console.log(`🔄 Deduplicating request for ${url}`)
     return requestMap.get(cacheKey)!
-  }
-
-  // Create new request
+  }
   const requestPromise = fetch(url, {
     ...options,
     headers: {
@@ -67,36 +48,28 @@ export async function enhancedFetch<T>(
       }
       return response.json()
     })
-    .then((data) => {
-      // Cache the response
+    .then((data) => {
       if (useCache) {
         responseCache.set(cacheKey, {
           data,
           timestamp: now,
           expiry: now + cacheDuration,
         })
-      }
-
-      // Remove from request map
+      }
       requestMap.delete(cacheKey)
 
       return data
     })
-    .catch((error) => {
-      // Remove from request map on error
+    .catch((error) => {
       requestMap.delete(cacheKey)
       throw error
-    })
-
-  // Add to request map for deduplication
+    })
   if (deduplicate) {
     requestMap.set(cacheKey, requestPromise)
   }
 
   return requestPromise
-}
-
-// Hook for enhanced API calls with loading states
+}
 export function useEnhancedFetch<T>(
   url: string | null,
   options: RequestInit = {},
@@ -120,14 +93,10 @@ export function useEnhancedFetch<T>(
     async (requestUrl: string) => {
       try {
         setLoading(true)
-        setError(null)
-
-        // Cancel previous request
+        setError(null)
         if (abortControllerRef.current) {
           abortControllerRef.current.abort()
-        }
-
-        // Create new abort controller
+        }
         abortControllerRef.current = new AbortController()
 
         const requestOptions = {
@@ -144,20 +113,13 @@ export function useEnhancedFetch<T>(
         setData(result)
         retryCountRef.current = 0
       } catch (err) {
-        const error = err as Error
-
-        // Don't retry if request was aborted
+        const error = err as Error
         if (error.name === "AbortError") {
           return
-        }
-
-        // Retry logic
+        }
         if (retryCountRef.current < retryAttempts) {
           retryCountRef.current++
-          console.log(
-            `🔄 Retrying request (${retryCountRef.current}/${retryAttempts}) in ${retryDelay}ms`
-          )
-
+          
           setTimeout(() => {
             executeRequest(requestUrl)
           }, retryDelay * retryCountRef.current)
@@ -171,9 +133,7 @@ export function useEnhancedFetch<T>(
       }
     },
     [options, fetchOptions, retryAttempts, retryDelay]
-  )
-
-  // Execute request when URL changes
+  )
   useEffect(() => {
     if (!url) {
       setData(null)
@@ -182,9 +142,7 @@ export function useEnhancedFetch<T>(
       return
     }
 
-    executeRequest(url)
-
-    // Cleanup on unmount
+    executeRequest(url)
     return () => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort()
@@ -200,18 +158,12 @@ export function useEnhancedFetch<T>(
   }, [url, executeRequest])
 
   return { data, loading, error, refetch }
-}
-
-// Cache management utilities
-export const CacheManager = {
-  // Clear all cached responses
+}
+export const CacheManager = {
   clearAll() {
     responseCache.clear()
     requestMap.clear()
-    console.log("🗑️ Cleared all cache entries")
-  },
-
-  // Clear expired cache entries
+  },
   clearExpired() {
     const now = Date.now()
     let removedCount = 0
@@ -222,11 +174,7 @@ export const CacheManager = {
         removedCount++
       }
     }
-
-    console.log(`🗑️ Removed ${removedCount} expired cache entries`)
-  },
-
-  // Get cache statistics
+  },
   getStats() {
     const now = Date.now()
     let activeEntries = 0
@@ -249,9 +197,7 @@ export const CacheManager = {
       ongoingRequests: requestMap.size,
       totalSizeBytes: totalSize,
     }
-  },
-
-  // Preload data into cache
+  },
   async preload<T>(
     url: string,
     options: RequestInit = {},
@@ -259,14 +205,10 @@ export const CacheManager = {
   ) {
     try {
       await enhancedFetch<T>(url, options, { cacheDuration, useCache: true })
-      console.log(`📦 Preloaded data for ${url}`)
     } catch (error) {
-      console.warn(`⚠️ Failed to preload ${url}:`, error)
     }
   },
-}
-
-// Batch request utility
+}
 export async function batchRequests<T>(
   requests: Array<{
     url: string
@@ -279,9 +221,7 @@ export async function batchRequests<T>(
   } = {}
 ): Promise<Array<{ success: boolean; data?: T; error?: Error }>> {
   const { concurrency = 5, failFast = false } = options
-  const results: Array<{ success: boolean; data?: T; error?: Error }> = []
-
-  // Execute requests in batches
+  const results: Array<{ success: boolean; data?: T; error?: Error }> = []
   for (let i = 0; i < requests.length; i += concurrency) {
     const batch = requests.slice(i, i + concurrency)
 
@@ -310,9 +250,7 @@ export async function batchRequests<T>(
   }
 
   return results
-}
-
-// WebSocket connection manager with reconnection
+}
 export class WebSocketManager {
   private ws: WebSocket | null = null
   private url: string
@@ -341,7 +279,6 @@ export class WebSocketManager {
       this.ws = new WebSocket(this.url, this.protocols)
 
       this.ws.onopen = () => {
-        console.log("🔌 WebSocket connected")
         this.reconnectAttempts = 0
         this.emit("open")
       }
@@ -351,17 +288,14 @@ export class WebSocketManager {
       }
 
       this.ws.onclose = () => {
-        console.log("🔌 WebSocket disconnected")
         this.emit("close")
         this.handleReconnect()
       }
 
       this.ws.onerror = (error) => {
-        console.error("🔌 WebSocket error:", error)
         this.emit("error", error)
       }
     } catch (error) {
-      console.error("🔌 Failed to create WebSocket:", error)
       this.emit("error", error)
     }
   }
@@ -372,15 +306,10 @@ export class WebSocketManager {
       const delay =
         this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1)
 
-      console.log(
-        `🔄 Attempting to reconnect (${this.reconnectAttempts}/${this.maxReconnectAttempts}) in ${delay}ms`
-      )
-
       setTimeout(() => {
         this.connect()
       }, delay)
     } else {
-      console.error("🔌 Max reconnection attempts reached")
       this.emit("maxReconnectAttemptsReached")
     }
   }
@@ -389,7 +318,6 @@ export class WebSocketManager {
     if (this.ws && this.ws.readyState === WebSocket.OPEN) {
       this.ws.send(data)
     } else {
-      console.warn("🔌 WebSocket is not connected")
     }
   }
 
@@ -420,9 +348,7 @@ export class WebSocketManager {
       eventListeners.forEach((callback) => callback(data))
     }
   }
-}
-
-// Network performance monitoring
+}
 export function useNetworkPerformance() {
   const [connectionType, setConnectionType] = useState<string>("unknown")
   const [effectiveType, setEffectiveType] = useState<string>("unknown")
@@ -459,9 +385,7 @@ export function useNetworkPerformance() {
     rtt,
     isSlowConnection: effectiveType === "slow-2g" || effectiveType === "2g",
   }
-}
-
-// Automatic cache cleanup
+}
 setInterval(() => {
   CacheManager.clearExpired()
 }, 60000) // Run every minute

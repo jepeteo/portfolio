@@ -13,20 +13,12 @@ const ModernCertificates: React.FC = () => {
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
     threshold: 0.1,
     rootMargin: "50px",
-  })
-
-  // Performance monitoring
-  const performanceMetrics = usePerformanceMonitor("ModernCertificates")
-
-  // Certificates data
-  const { certificates, stats, categories } = useCertificatesData()
-
-  // State for UI controls
+  })
+  const performanceMetrics = usePerformanceMonitor("ModernCertificates")
+  const { certificates, stats, categories } = useCertificatesData()
   const [selectedCategory, setSelectedCategory] = useState<string>("all")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
-  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set())
-
-  // Filter certificates based on selected category
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set())
   const filteredCertificates =
     selectedCategory === "all"
       ? certificates
@@ -42,15 +34,12 @@ const ModernCertificates: React.FC = () => {
       }
       return newSet
     })
-  }, [])
-
-  // Performance logging in development
+  }, [])
   useEffect(() => {
     if (
       window.location.hostname === "localhost" ||
       window.location.hostname === "127.0.0.1"
     ) {
-      console.log("ModernCertificates Performance:", performanceMetrics)
     }
   }, [performanceMetrics])
 
@@ -63,7 +52,7 @@ const ModernCertificates: React.FC = () => {
       } ${isDark ? "bg-slate-900" : "bg-slate-50"}`}
     >
       <div className="container mx-auto px-4 max-w-7xl">
-        {/* Header */}
+        
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 mb-6">
             <GraduationCap className="w-5 h-5 text-blue-500" />
@@ -94,12 +83,10 @@ const ModernCertificates: React.FC = () => {
           </p>
         </div>
 
-        {/* Statistics */}
         <CertificateStatsComponent stats={stats} isDark={isDark} />
 
-        {/* Controls */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-          {/* Category Filter */}
+          
           <div className="flex items-center gap-3">
             <Filter
               className={`w-5 h-5 ${
@@ -133,7 +120,6 @@ const ModernCertificates: React.FC = () => {
             </select>
           </div>
 
-          {/* View Mode Toggle */}
           <div className="flex gap-2">
             <button
               onClick={() => setViewMode("grid")}
@@ -166,7 +152,6 @@ const ModernCertificates: React.FC = () => {
           </div>
         </div>
 
-        {/* Certificates Grid/List */}
         <div
           className={`mb-16 ${
             viewMode === "grid"
@@ -185,7 +170,6 @@ const ModernCertificates: React.FC = () => {
           ))}
         </div>
 
-        {/* Insights Section */}
         <div className="grid md:grid-cols-2 gap-8">
           <TopIssuers stats={stats} isDark={isDark} />
           <CertificationTimeline stats={stats} isDark={isDark} />

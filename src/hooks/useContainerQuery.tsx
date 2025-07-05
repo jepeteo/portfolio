@@ -1,26 +1,19 @@
-// CSS Container Queries Hook (2025 Cutting-Edge)
-import React, { useState, useEffect, useRef } from "react"
 
-// Container Query Hook
+import React, { useState, useEffect, useRef } from "react"
 export const useContainerQuery = (query: string) => {
   const [matches, setMatches] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const element = ref.current
-    if (!element) return
-
-    // Check if container queries are supported
-    if (!window.CSS?.supports?.("container-type: inline-size")) {
-      // Fallback for browsers without support
+    if (!element) return
+    if (!window.CSS?.supports?.("container-type: inline-size")) {
       return
     }
 
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        const { inlineSize } = entry.contentBoxSize[0]
-
-        // Parse query (simple implementation for width queries)
+        const { inlineSize } = entry.contentBoxSize[0]
         const match = query.match(/min-width:\s*(\d+)px/)
         if (match) {
           const minWidth = parseInt(match[1])
@@ -34,9 +27,7 @@ export const useContainerQuery = (query: string) => {
   }, [query])
 
   return { matches, ref }
-}
-
-// Container Query Component
+}
 interface ContainerQueryProps {
   query: string
   children: (matches: boolean) => React.ReactNode
@@ -61,9 +52,7 @@ export const ContainerQuery: React.FC<ContainerQueryProps> = ({
       {children(matches) || fallback}
     </div>
   )
-}
-
-// Responsive Grid with Container Queries
+}
 interface ResponsiveGridProps {
   children: React.ReactNode
   className?: string
@@ -84,9 +73,7 @@ export const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
       {children}
     </div>
   )
-}
-
-// Container-aware Card Component
+}
 interface ContainerCardProps {
   children: React.ReactNode
   className?: string

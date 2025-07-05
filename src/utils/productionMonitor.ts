@@ -1,8 +1,3 @@
-/**
- * Production Error Monitoring & Analytics
- * Real-time error tracking and performance monitoring
- */
-
 interface ErrorReport {
   id: string
   timestamp: number
@@ -69,7 +64,6 @@ class ProductionMonitor {
   }
 
   private getUserId(): string | undefined {
-    // Try to get user ID from localStorage or generate anonymous ID
     try {
       let userId = localStorage.getItem("portfolio_user_id")
       if (!userId) {
@@ -83,7 +77,6 @@ class ProductionMonitor {
   }
 
   private initializeMonitoring(): void {
-    // Global error handler
     window.addEventListener("error", (event) => {
       this.captureError({
         type: "javascript",
@@ -95,7 +88,6 @@ class ProductionMonitor {
       })
     })
 
-    // Unhandled promise rejections
     window.addEventListener("unhandledrejection", (event) => {
       this.captureError({
         type: "javascript",
@@ -106,23 +98,17 @@ class ProductionMonitor {
       })
     })
 
-    // Network errors
     this.monitorNetworkErrors()
 
-    // Performance monitoring
     this.monitorPerformance()
 
-    // Periodic flush
     setInterval(() => {
       this.flushQueues()
     }, this.flushInterval)
 
-    // Flush on page unload
     window.addEventListener("beforeunload", () => {
       this.flushQueues(true)
     })
-
-    console.log("🔍 Production monitoring initialized")
   }
 
   private captureError(errorData: any): void {
@@ -149,29 +135,23 @@ class ProductionMonitor {
 
     this.errorQueue.push(errorReport)
 
-    // Immediate flush for critical errors
     if (this.errorQueue.length >= this.maxQueueSize) {
       this.flushQueues()
     }
 
-    // Log to console in development
     if (!this.isProduction) {
-      console.error("Error captured:", errorReport)
     }
   }
 
   private monitorNetworkErrors(): void {
-    // Override fetch to monitor network errors
     const originalFetch = window.fetch
     window.fetch = async (...args) => {
       const startTime = performance.now()
       try {
         const response = await originalFetch(...args)
 
-        // Log slow requests
         const duration = performance.now() - startTime
         if (duration > 5000) {
-          // 5 seconds
           this.captureError({
             type: "performance",
             message: `Slow network request: ${args[0]}`,
@@ -180,7 +160,6 @@ class ProductionMonitor {
           })
         }
 
-        // Log HTTP errors
         if (!response.ok) {
           this.captureError({
             type: "network",
@@ -207,14 +186,12 @@ class ProductionMonitor {
   }
 
   private monitorPerformance(): void {
-    // Wait for page load
     window.addEventListener("load", () => {
       setTimeout(() => {
         this.capturePerformanceMetrics()
       }, 1000)
     })
 
-    // Monitor Core Web Vitals
     this.monitorWebVitals()
   }
 
@@ -252,14 +229,12 @@ class ProductionMonitor {
   }
 
   private monitorWebVitals(): void {
-    // LCP - Largest Contentful Paint
     if ("PerformanceObserver" in window) {
       try {
         new PerformanceObserver((list) => {
           const entries = list.getEntries()
           const lastEntry = entries[entries.length - 1]
           if (lastEntry.startTime > 2500) {
-            // Budget exceeded
             this.captureError({
               type: "performance",
               message: `LCP budget exceeded: ${lastEntry.startTime}ms`,
@@ -269,14 +244,12 @@ class ProductionMonitor {
           }
         }).observe({ entryTypes: ["largest-contentful-paint"] })
 
-        // CLS - Cumulative Layout Shift
         let clsValue = 0
         new PerformanceObserver((list) => {
           for (const entry of list.getEntries()) {
             if (!(entry as any).hadRecentInput) {
               clsValue += (entry as any).value
               if (clsValue > 0.1) {
-                // Budget exceeded
                 this.captureError({
                   type: "performance",
                   message: `CLS budget exceeded: ${clsValue}`,
@@ -287,14 +260,11 @@ class ProductionMonitor {
             }
           }
         }).observe({ entryTypes: ["layout-shift"] })
-      } catch (error) {
-        console.warn("PerformanceObserver not supported")
-      }
+      } catch (error) {}
     }
   }
 
   private getWebVitalsMetrics(): any {
-    // This would integrate with web-vitals library
     return {}
   }
 
@@ -340,12 +310,9 @@ class ProductionMonitor {
           timestamp: Date.now(),
         })
 
-        // Clear queues after successful send
         this.errorQueue = []
         this.performanceQueue = []
       } catch (error) {
-        console.warn("Failed to send analytics data:", error)
-        // Keep data in queue for retry, but limit size
         if (this.errorQueue.length > this.maxQueueSize * 2) {
           this.errorQueue = this.errorQueue.slice(-this.maxQueueSize)
         }
@@ -359,13 +326,7 @@ class ProductionMonitor {
   }
 
   private async sendToAnalytics(data: any): Promise<void> {
-    // Send to your analytics endpoint
-    // For now, we'll use a simple endpoint or service
-
-    const endpoints = [
-      "https://your-analytics-endpoint.com/api/track",
-      // Fallback endpoints
-    ]
+    const endpoints = ["https://your-analytics-endpoint.com/api/track"]
 
     for (const endpoint of endpoints) {
       try {
@@ -388,7 +349,6 @@ class ProductionMonitor {
     throw new Error("All analytics endpoints failed")
   }
 
-  // Public methods for manual tracking
   public trackEvent(event: string, properties?: Record<string, any>): void {
     if (!this.isProduction) return
 
@@ -414,19 +374,14 @@ class ProductionMonitor {
     this.userId = userId
     try {
       localStorage.setItem("portfolio_user_id", userId)
-    } catch {
-      // Ignore localStorage errors
-    }
+    } catch {}
   }
 }
 
-// Global instance
 const productionMonitor = new ProductionMonitor()
 
-// Export for manual tracking
 export default productionMonitor
 
-// Auto-track page views for SPA navigation
 let currentPath = window.location.pathname
 const observer = new MutationObserver(() => {
   if (window.location.pathname !== currentPath) {

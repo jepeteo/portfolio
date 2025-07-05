@@ -25,7 +25,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
         experience.isFreelance ? "ring-2 ring-purple-500/20" : ""
       }`}
     >
-      {/* Status indicator */}
+      
       <div className="absolute top-4 right-4 flex items-center gap-2">
         {experience.isFreelance && (
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/30">
@@ -46,9 +46,9 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
       </div>
 
       <div className="p-6">
-        {/* Two-column layout */}
+        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Left column - Role, Company, Dates */}
+          
           <div className="md:col-span-1 space-y-4">
             <h3
               className={`text-xl font-bold group-hover:text-green-500 transition-colors ${
@@ -110,7 +110,6 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
               </span>
             </div>
 
-            {/* Expand/Collapse Button - Moving to left column */}
             <button
               onClick={onToggleExpanded}
               className={`flex items-center gap-2 mt-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105 ${
@@ -128,9 +127,8 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
             </button>
           </div>
 
-          {/* Right column - Job details */}
           <div className="md:col-span-2 space-y-6">
-            {/* Description */}
+            
             <p
               className={`leading-relaxed ${
                 isDark ? "text-slate-300" : "text-slate-700"
@@ -139,7 +137,6 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
               {experience.description}
             </p>
 
-            {/* Metrics */}
             {Object.keys(experience.metrics).length > 0 && (
               <div className="grid grid-cols-2 gap-4">
                 {Object.entries(experience.metrics).map(([key, value]) => (
@@ -168,7 +165,6 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
               </div>
             )}
 
-            {/* Tech Stack */}
             {experience.techStack.length > 0 && (
               <div>
                 <h4
@@ -206,10 +202,9 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
               </div>
             )}
 
-            {/* Collapsible Content */}
             {isExpanded && (
               <div className="space-y-6">
-                {/* Key Responsibilities */}
+                
                 {experience.keyResponsibilities &&
                   experience.keyResponsibilities.length > 0 && (
                     <div>
@@ -238,7 +233,6 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
                     </div>
                   )}
 
-                {/* Highlights/Achievements */}
                 {experience.highlights.length > 0 && (
                   <div>
                     <h4

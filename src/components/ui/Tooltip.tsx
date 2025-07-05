@@ -10,9 +10,7 @@ interface TooltipProps {
 export const Tooltip: React.FC<TooltipProps> = ({ content, children }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [position, setPosition] = useState({ top: 0, left: 0 })
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  // Calculate position based on the trigger element
+  const containerRef = useRef<HTMLDivElement>(null)
   const updateTooltipPosition = () => {
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect()
@@ -21,9 +19,7 @@ export const Tooltip: React.FC<TooltipProps> = ({ content, children }) => {
         left: rect.left + rect.width / 2, // Center horizontally
       })
     }
-  }
-
-  // Handle showing/hiding the tooltip
+  }
   const handleMouseEnter = () => {
     updateTooltipPosition()
     setIsVisible(true)
@@ -31,9 +27,7 @@ export const Tooltip: React.FC<TooltipProps> = ({ content, children }) => {
 
   const handleMouseLeave = () => {
     setIsVisible(false)
-  }
-
-  // Update position on scroll or resize
+  }
   useEffect(() => {
     if (isVisible) {
       const handleWindowEvents = () => {

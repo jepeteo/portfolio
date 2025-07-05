@@ -1,7 +1,5 @@
-// Enhanced Code Splitting and Lazy Loading Utilities (2025)
-import React, { ComponentType, LazyExoticComponent } from "react"
 
-// Enhanced lazy loading with better error handling and preloading
+import React, { ComponentType, LazyExoticComponent } from "react"
 export function createLazyComponent<T extends ComponentType<any>>(
   importFunc: () => Promise<{ default: T }>,
   options: {
@@ -10,28 +8,17 @@ export function createLazyComponent<T extends ComponentType<any>>(
     chunkName?: string
   } = {}
 ): LazyExoticComponent<T> {
-  const { preload = false, chunkName } = options
-
-  // Create the lazy component
-  const LazyComponent = React.lazy(importFunc)
-
-  // Preload the component if requested
-  if (preload) {
-    // Preload after a short delay to not block initial render
+  const { preload = false, chunkName } = options
+  const LazyComponent = React.lazy(importFunc)
+  if (preload) {
     setTimeout(() => {
       importFunc().catch((error) => {
-        console.warn(
-          `Failed to preload component ${chunkName || "unknown"}:`,
-          error
-        )
       })
     }, 100)
   }
 
   return LazyComponent
-}
-
-// Preload utilities for better UX
+}
 export class ComponentPreloader {
   private static preloadedComponents = new Set<string>()
   private static preloadPromises = new Map<string, Promise<any>>()
@@ -54,7 +41,6 @@ export class ComponentPreloader {
         this.preloadPromises.delete(componentName)
       })
       .catch((error) => {
-        console.warn(`Failed to preload ${componentName}:`, error)
         this.preloadPromises.delete(componentName)
         throw error
       })
@@ -94,9 +80,7 @@ export class ComponentPreloader {
       return () => observer.disconnect()
     }
   }
-}
-
-// Route-based code splitting utilities
+}
 export const createRouteComponent = (
   importFunc: () => Promise<{ default: ComponentType<any> }>,
   routeName: string
@@ -105,9 +89,7 @@ export const createRouteComponent = (
     chunkName: `route-${routeName}`,
     preload: false, // Routes shouldn't preload by default
   })
-}
-
-// Feature-based code splitting
+}
 export const createFeatureComponent = (
   importFunc: () => Promise<{ default: ComponentType<any> }>,
   featureName: string,
@@ -117,14 +99,11 @@ export const createFeatureComponent = (
     chunkName: `feature-${featureName}`,
     preload: shouldPreload,
   })
-}
-
-// Critical vs non-critical component loading
+}
 export const loadCriticalComponent = (
   importFunc: () => Promise<{ default: ComponentType<any> }>,
   componentName: string
-) => {
-  // Critical components load immediately
+) => {
   return createLazyComponent(importFunc, {
     chunkName: `critical-${componentName}`,
     preload: true,
@@ -134,15 +113,12 @@ export const loadCriticalComponent = (
 export const loadNonCriticalComponent = (
   importFunc: () => Promise<{ default: ComponentType<any> }>,
   componentName: string
-) => {
-  // Non-critical components load on interaction
+) => {
   return createLazyComponent(importFunc, {
     chunkName: `non-critical-${componentName}`,
     preload: false,
   })
-}
-
-// Performance monitoring for lazy components
+}
 export const withPerformanceMonitoring = <P extends object>(
   WrappedComponent: ComponentType<P>,
   componentName: string
@@ -157,29 +133,19 @@ export const withPerformanceMonitoring = <P extends object>(
         const entries = list.getEntries()
         entries.forEach((entry) => {
           if (entry.name.includes(componentName)) {
-            console.log(
-              `🚀 ${componentName} loaded in ${entry.duration.toFixed(2)}ms`
-            )
           }
         })
       })
 
       try {
         observer.observe({ entryTypes: ["measure", "navigation"] })
-      } catch (error) {
-        // Performance Observer not supported
+      } catch (error) {
       }
 
       return () => {
         if (startTime.current) {
           const loadTime = performance.now() - startTime.current
           if (loadTime > 100) {
-            // Log slow loads
-            console.warn(
-              `⚠️ Slow component load: ${componentName} took ${loadTime.toFixed(
-                2
-              )}ms`
-            )
           }
         }
         observer?.disconnect()
@@ -191,9 +157,7 @@ export const withPerformanceMonitoring = <P extends object>(
 
   MonitoredComponent.displayName = `WithPerformanceMonitoring(${componentName})`
   return MonitoredComponent
-}
-
-// Export utility for bundle analyzer
+}
 export const getBundleInfo = () => {
   if (typeof window !== "undefined" && "performance" in window) {
     const navigation = performance.getEntriesByType(

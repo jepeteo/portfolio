@@ -170,7 +170,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         </p>
       </div>
 
-      {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
       </div>

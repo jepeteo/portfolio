@@ -21,12 +21,10 @@ import {
 } from "./utils/enhancedSEO"
 import useServiceWorker from "./hooks/useServiceWorker"
 import productionMonitor from "./utils/productionMonitor"
-// import { useRenderTracker } from "./utils/debugRenderLoop" // Temporarily disabled
 
 import "flowbite"
 import "flowbite/dist/flowbite.css"
 
-// Lazy load non-critical components with enhanced loading
 const ModernProjects = createLazyComponent(
   () => import("./components/ModernProjects"),
   { chunkName: "modern-projects", preload: true }
@@ -47,7 +45,6 @@ const ModernCertificates = createLazyComponent(
   { chunkName: "certificates" }
 )
 
-// Enhanced loading component for better UX
 const SectionLoader: React.FC = () => (
   <div className="flex justify-center items-center min-h-[200px] py-16">
     <LoadingSpinner size="lg" className="text-primary" />
@@ -57,33 +54,23 @@ const SectionLoader: React.FC = () => (
 const AppContent: React.FC = () => {
   const { isDark } = useTheme()
 
-  // Debug render tracking in development - TEMPORARILY DISABLED
-  // useRenderTracker("AppContent")
-
-  // Initialize service worker for performance
   useServiceWorker()
 
-  // Initialize production monitoring - only once
   React.useEffect(() => {
-    // Track initial page view
     productionMonitor.trackPageView()
   }, [])
 
-  // Track theme changes separately to avoid re-renders
   React.useEffect(() => {
     productionMonitor.trackEvent("theme_change", {
       theme: isDark ? "dark" : "light",
     })
   }, [isDark])
 
-  // Optimize Core Web Vitals
   React.useEffect(() => {
     seoManager.optimizeCorewWebVitals()
   }, [])
 
-  // Preload components on hover/intersection
   React.useEffect(() => {
-    // Preload experience section when user scrolls past skills
     const skillsSection = document.getElementById("skills")
     if (skillsSection) {
       ComponentPreloader.preloadOnIntersection(
@@ -92,7 +79,6 @@ const AppContent: React.FC = () => {
       )(skillsSection)
     }
 
-    // Preload projects when user interacts with navigation
     const projectsNav = document.querySelector('a[href*="projects"]')
     if (projectsNav) {
       const preloadHandlers = ComponentPreloader.preloadOnHover(
@@ -116,7 +102,6 @@ const AppContent: React.FC = () => {
     }
   }, [])
 
-  // Enhanced SEO configuration with structured data
   useEnhancedSEO({
     ...defaultSEOConfig,
     structuredData: seoManager.generatePersonSchema({
@@ -149,12 +134,10 @@ const AppContent: React.FC = () => {
     >
       <ModernHeader />
       <main>
-        {/* Critical above-the-fold content - loaded immediately */}
         <Hero />
         <ModernBio />
         <ModernSkills />
 
-        {/* Non-critical content - lazy loaded */}
         <ErrorBoundary>
           <Suspense fallback={<SectionLoader />}>
             <ModernExperience />
@@ -179,13 +162,11 @@ const AppContent: React.FC = () => {
           </Suspense>
         </ErrorBoundary>
 
-        {/* Contact is critical for user interaction */}
         <Contact />
         <BackToTopButton />
       </main>
       <Footer />
 
-      {/* Development Performance Dashboard */}
       <PerformanceDashboard />
     </div>
   )

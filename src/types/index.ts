@@ -1,4 +1,4 @@
-// Global type definitions for the portfolio application
+
 
 export interface Job {
   title: string
@@ -62,9 +62,7 @@ export interface Skill {
   name: string
   level: number
   category: string
-}
-
-// Add any other interfaces you need
+}
 
 export interface FormData {
   name: string
@@ -82,18 +80,12 @@ export interface NavLink {
 export interface FilterType {
   type: string | null
   label: string
-}
-
-// Theme types
-export type Theme = "light" | "dark"
-
-// API Response types
+}
+export type Theme = "light" | "dark"
 export interface EmailResponse {
   status: number
   text: string
-}
-
-// Utility types
+}
 export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 export type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>
 

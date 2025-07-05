@@ -1,11 +1,6 @@
-/**
- * Accessibility Optimization Utilities
- * Comprehensive A11y features for improved user experience
- */
 
-import { useEffect, useRef, useState, useCallback } from "react"
 
-// Keyboard navigation utilities
+import { useEffect, useRef, useState, useCallback } from "react"
 export function useKeyboardNavigation(
   containerRef: React.RefObject<HTMLElement>,
   options: {
@@ -105,9 +100,7 @@ export function useKeyboardNavigation(
     updateFocusableElements,
     focusElement,
   }
-}
-
-// Focus management utilities
+}
 export function useFocusManagement() {
   const lastFocusedElement = useRef<HTMLElement | null>(null)
 
@@ -156,9 +149,7 @@ export function useFocusManagement() {
   }, [])
 
   return { saveFocus, restoreFocus, trapFocus }
-}
-
-// Reduced motion detection
+}
 export function useReducedMotion() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
@@ -178,9 +169,7 @@ export function useReducedMotion() {
   }, [])
 
   return prefersReducedMotion
-}
-
-// High contrast mode detection
+}
 export function useHighContrast() {
   const [prefersHighContrast, setPrefersHighContrast] = useState(false)
 
@@ -200,14 +189,11 @@ export function useHighContrast() {
   }, [])
 
   return prefersHighContrast
-}
-
-// Screen reader announcements
+}
 export function useScreenReader() {
   const announceRef = useRef<HTMLDivElement | null>(null)
 
-  useEffect(() => {
-    // Create announcement container if it doesn't exist
+  useEffect(() => {
     if (!announceRef.current) {
       const announcer = document.createElement("div")
       announcer.setAttribute("aria-live", "polite")
@@ -239,9 +225,7 @@ export function useScreenReader() {
     (message: string, priority: "polite" | "assertive" = "polite") => {
       if (announceRef.current) {
         announceRef.current.setAttribute("aria-live", priority)
-        announceRef.current.textContent = message
-
-        // Clear the message after a brief delay to allow re-announcement of the same message
+        announceRef.current.textContent = message
         setTimeout(() => {
           if (announceRef.current) {
             announceRef.current.textContent = ""
@@ -253,9 +237,7 @@ export function useScreenReader() {
   )
 
   return { announce }
-}
-
-// Skip link functionality
+}
 export function useSkipLinks() {
   const skipLinkRef = useRef<HTMLAnchorElement | null>(null)
 
@@ -303,11 +285,8 @@ export function useSkipLinks() {
   }, [])
 
   return { createSkipLink }
-}
-
-// Color contrast utilities
-export const ColorContrast = {
-  // Calculate relative luminance
+}
+export const ColorContrast = {
   getLuminance(hex: string): number {
     const rgb = this.hexToRgb(hex)
     if (!rgb) return 0
@@ -318,9 +297,7 @@ export const ColorContrast = {
     })
 
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
-  },
-
-  // Calculate contrast ratio
+  },
   getContrastRatio(color1: string, color2: string): number {
     const lum1 = this.getLuminance(color1)
     const lum2 = this.getLuminance(color2)
@@ -328,9 +305,7 @@ export const ColorContrast = {
     const darkest = Math.min(lum1, lum2)
 
     return (brightest + 0.05) / (darkest + 0.05)
-  },
-
-  // Check if contrast meets WCAG standards
+  },
   meetsWCAG(
     color1: string,
     color2: string,
@@ -344,9 +319,7 @@ export const ColorContrast = {
     }
 
     return size === "large" ? ratio >= 3 : ratio >= 4.5
-  },
-
-  // Convert hex to RGB
+  },
   hexToRgb(hex: string): { r: number; g: number; b: number } | null {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
     return result
@@ -357,9 +330,7 @@ export const ColorContrast = {
         }
       : null
   },
-}
-
-// Accessible form utilities
+}
 export function useAccessibleForm() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const { announce } = useScreenReader()
@@ -395,9 +366,7 @@ export function useAccessibleForm() {
   }
 
   return { errors, validateField }
-}
-
-// Live region utilities
+}
 export function createLiveRegion(
   politeness: "polite" | "assertive" | "off" = "polite",
   atomic: boolean = true
@@ -420,11 +389,8 @@ export function createLiveRegion(
 
   document.body.appendChild(liveRegion)
   return liveRegion
-}
-
-// Accessibility checker utilities
-export const A11yChecker = {
-  // Check for missing alt text
+}
+export const A11yChecker = {
   checkImages(): string[] {
     const issues: string[] = []
     const images = document.querySelectorAll("img")
@@ -440,9 +406,7 @@ export const A11yChecker = {
     })
 
     return issues
-  },
-
-  // Check for proper heading hierarchy
+  },
   checkHeadings(): string[] {
     const issues: string[] = []
     const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6")
@@ -463,9 +427,7 @@ export const A11yChecker = {
     })
 
     return issues
-  },
-
-  // Check for keyboard accessibility
+  },
   checkKeyboardAccess(): string[] {
     const issues: string[] = []
     const interactiveElements = document.querySelectorAll(
@@ -488,9 +450,7 @@ export const A11yChecker = {
     })
 
     return issues
-  },
-
-  // Run all accessibility checks
+  },
   runAllChecks(): { images: string[]; headings: string[]; keyboard: string[] } {
     return {
       images: this.checkImages(),

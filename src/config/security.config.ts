@@ -1,5 +1,4 @@
-// Enhanced Security Configuration for Portfolio (2025)
-// This file centralizes all security configurations for easier management
+
 
 interface CSPDirectives {
   defaultSrc: string[]
@@ -93,8 +92,7 @@ interface SecurityConfig {
   }
 }
 
-export const SECURITY_CONFIG: SecurityConfig = {
-  // Content Security Policy - Production Ready
+export const SECURITY_CONFIG: SecurityConfig = {
   csp: {
     directives: {
       defaultSrc: ["'self'"],
@@ -138,23 +136,12 @@ export const SECURITY_CONFIG: SecurityConfig = {
       upgradeInsecureRequests: true,
       reportUri: "/api/csp-report", // For CSP violation reporting
     },
-  },
-
-  // Security Headers Configuration
-  headers: {
-    // Prevent clickjacking
-    "X-Frame-Options": "DENY",
-
-    // Prevent MIME type sniffing
-    "X-Content-Type-Options": "nosniff",
-
-    // Enable XSS protection
-    "X-XSS-Protection": "1; mode=block",
-
-    // Referrer policy
-    "Referrer-Policy": "strict-origin-when-cross-origin",
-
-    // Permissions policy (formerly Feature-Policy)
+  },
+  headers: {
+    "X-Frame-Options": "DENY",
+    "X-Content-Type-Options": "nosniff",
+    "X-XSS-Protection": "1; mode=block",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
     "Permissions-Policy": [
       "camera=()",
       "microphone=()",
@@ -164,45 +151,32 @@ export const SECURITY_CONFIG: SecurityConfig = {
       "magnetometer=()",
       "accelerometer=()",
       "gyroscope=()",
-    ].join(", "),
-
-    // Strict Transport Security (HTTPS enforcement)
-    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-
-    // Cross-Origin policies
+    ].join(", "),
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
     "Cross-Origin-Embedder-Policy": "credentialless",
     "Cross-Origin-Opener-Policy": "same-origin",
     "Cross-Origin-Resource-Policy": "same-origin",
-  },
-
-  // Rate Limiting Configuration
-  rateLimiting: {
-    // Contact form specific limits
+  },
+  rateLimiting: {
     contactForm: {
       windowMs: 15 * 60 * 1000, // 15 minutes
       maxAttempts: 3, // Stricter limit
       blockDuration: 30 * 60 * 1000, // 30 minutes block
       message:
         "Too many contact form submissions. Please wait before trying again.",
-    },
-
-    // General API limits
+    },
     api: {
       windowMs: 15 * 60 * 1000, // 15 minutes
       maxAttempts: 100, // Per IP
       message: "Rate limit exceeded. Please try again later.",
-    },
-
-    // Email submission limits
+    },
     email: {
       windowMs: 60 * 60 * 1000, // 1 hour
       maxAttempts: 5, // Very strict
       blockDuration: 24 * 60 * 60 * 1000, // 24 hours block
       message: "Too many email submissions. Please try again later.",
     },
-  },
-
-  // CSRF Configuration
+  },
   csrf: {
     tokenLength: 32,
     tokenTTL: 30 * 60 * 1000, // 30 minutes
@@ -214,9 +188,7 @@ export const SECURITY_CONFIG: SecurityConfig = {
       sameSite: "strict" as const,
       maxAge: 30 * 60 * 1000, // 30 minutes
     },
-  },
-
-  // Input Validation Rules
+  },
   validation: {
     name: {
       minLength: 2,
@@ -239,8 +211,7 @@ export const SECURITY_CONFIG: SecurityConfig = {
       blockedDomains: [
         "tempmail.org",
         "10minutemail.com",
-        "guerrillamail.com",
-        // Add more disposable email domains
+        "guerrillamail.com",
       ],
     },
     subject: {
@@ -259,9 +230,7 @@ export const SECURITY_CONFIG: SecurityConfig = {
         /eval\(/gi,
       ],
     },
-  },
-
-  // Bot Detection Configuration
+  },
   botDetection: {
     honeypotField: "website", // Hidden field name
     minSubmissionTime: 3000, // 3 seconds minimum
@@ -280,9 +249,7 @@ export const SECURITY_CONFIG: SecurityConfig = {
       /crypto/gi,
       /investment/gi,
     ],
-  },
-
-  // Environment specific settings
+  },
   development: {
     allowUnsafeInline: true,
     allowUnsafeEval: true,
@@ -297,17 +264,11 @@ export const SECURITY_CONFIG: SecurityConfig = {
     enableCSPReporting: true,
     logSecurityEvents: true,
   },
-} as const
-
-// Helper function to generate CSP string
+} as const
 export function generateCSPString(isDevelopment = false): string {
   const config = SECURITY_CONFIG.csp.directives
-  const directives: string[] = []
-
-  // Default source
-  directives.push(`default-src ${config.defaultSrc.join(" ")}`)
-
-  // Script source - add unsafe-inline only in development
+  const directives: string[] = []
+  directives.push(`default-src ${config.defaultSrc.join(" ")}`)
   const scriptSrc = [...config.scriptSrc]
   if (isDevelopment && SECURITY_CONFIG.development.allowUnsafeInline) {
     scriptSrc.push("'unsafe-inline'")
@@ -315,9 +276,7 @@ export function generateCSPString(isDevelopment = false): string {
   if (isDevelopment && SECURITY_CONFIG.development.allowUnsafeEval) {
     scriptSrc.push("'unsafe-eval'")
   }
-  directives.push(`script-src ${scriptSrc.join(" ")}`)
-
-  // Other directives
+  directives.push(`script-src ${scriptSrc.join(" ")}`)
   directives.push(`style-src ${config.styleSrc.join(" ")}`)
   directives.push(`img-src ${config.imgSrc.join(" ")}`)
   directives.push(`font-src ${config.fontSrc.join(" ")}`)
@@ -329,22 +288,15 @@ export function generateCSPString(isDevelopment = false): string {
 
   if (config.upgradeInsecureRequests) {
     directives.push("upgrade-insecure-requests")
-  }
-
-  // Add report URI in production
+  }
   if (!isDevelopment && config.reportUri) {
     directives.push(`report-uri ${config.reportUri}`)
   }
 
   return directives.join("; ")
-}
-
-// Helper function to get security headers
+}
 export function getSecurityHeaders(): SecurityHeaders {
-  const headers: SecurityHeaders = { ...SECURITY_CONFIG.headers }
-
-  // Add CSP header
-  // Note: In a real app, you'd detect environment properly
+  const headers: SecurityHeaders = { ...SECURITY_CONFIG.headers }
   const isDevelopment =
     typeof window !== "undefined" &&
     (window.location.hostname === "localhost" ||
