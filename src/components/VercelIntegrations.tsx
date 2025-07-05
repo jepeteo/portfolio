@@ -11,12 +11,13 @@ const getVercelConfig = (): VercelConfig => {
     typeof window !== "undefined" &&
     (window.location.hostname.includes("vercel.app") ||
       window.location.hostname === "theodorosmentis.com" ||
-      process.env.VERCEL === "1")
+      import.meta.env.VERCEL === "1")
 
-  const analyticsEnabled = process.env.VITE_VERCEL_ANALYTICS_ENABLED === "true"
+  const analyticsEnabled =
+    import.meta.env.VITE_VERCEL_ANALYTICS_ENABLED === "true"
   const speedInsightsEnabled =
-    process.env.VITE_VERCEL_SPEED_INSIGHTS_ENABLED === "true"
-  const debug = process.env.NODE_ENV === "development"
+    import.meta.env.VITE_VERCEL_SPEED_INSIGHTS_ENABLED === "true"
+  const debug = import.meta.env.DEV
 
   return {
     analyticsEnabled: isVercel && analyticsEnabled,
