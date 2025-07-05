@@ -276,6 +276,23 @@ const Hero: React.FC = memo(() => {
             >
               Available for hire
             </div>
+
+            {/* Additional Status Bubble - Open for relocation */}
+            <div
+              className={`absolute -bottom-4 -left-4 px-3 py-2 rounded-xl text-sm font-semibold animate-pulse transition-all duration-1000 delay-700 ${
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-10"
+              } ${prefersReducedMotion ? "!transition-none" : ""} ${
+                isDark
+                  ? "bg-blue-500/50 text-blue-300 border border-blue-500/70"
+                  : "bg-blue-100 text-blue-700 border border-blue-200"
+              }`}
+              role="status"
+              aria-label="Relocation availability status"
+            >
+              🌍 Open for relocation
+            </div>
           </div>
         </div>
       </div>
