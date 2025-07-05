@@ -163,6 +163,19 @@ const ModernSkills: React.FC = () => {
               />
             ))}
           </div>
+
+          {/* Scroll legend */}
+          <div className="text-center mt-3">
+            <p
+              className={`text-xs flex items-center justify-center gap-2 ${
+                isDark ? "text-slate-500" : "text-slate-400"
+              }`}
+            >
+              <span>←</span>
+              <span>Slide to see more skill categories</span>
+              <span>→</span>
+            </p>
+          </div>
         </div>
 
         {/* Mobile skills display */}
