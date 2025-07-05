@@ -293,8 +293,12 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
               id="mobile-menu"
               className={cn(
                 "fixed top-20 right-4 left-4 z-50 md:hidden",
-                "bg-surface-primary border border-border rounded-xl shadow-2xl",
-                "backdrop-blur-xl p-6 space-y-2"
+                "border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl",
+                "backdrop-blur-xl p-6 space-y-2",
+                // Enhanced background for better visibility
+                isDark
+                  ? "bg-slate-900/95 dark:bg-slate-900/95"
+                  : "bg-white/95 dark:bg-slate-900/95"
               )}
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
