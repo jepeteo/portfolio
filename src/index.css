@@ -138,6 +138,32 @@ body {
     background: rgb(var(--color-secondary));
 }
 
+/* Hide scrollbar for mobile horizontal scroll */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+}
+
+/* Smooth scrolling snap */
+.snap-x {
+    scroll-snap-type: x mandatory;
+}
+
+.snap-start {
+    scroll-snap-align: start;
+}
+
+.snap-mandatory {
+    scroll-snap-type: x mandatory;
+}
+
 /* Animation classes */
 @keyframes fadeInUp {
     from {

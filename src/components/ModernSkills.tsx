@@ -121,11 +121,98 @@ const ModernSkills: React.FC = () => {
           </p>
         </div>
 
-        {/* Main content with storytelling approach */}
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Category navigation - more personal */}
+        {/* Mobile-first responsive layout */}
+        {/* Compact stats bar for mobile */}
+        <div className="lg:hidden mb-8">
+          <SkillsStats
+            totalSkills={stats.totalSkills}
+            masteredSkills={stats.masteredSkills}
+            proficientSkills={stats.proficientSkills}
+            compact={true}
+          />
+        </div>
+
+        {/* Horizontal scrollable categories for mobile */}
+        <div className="lg:hidden mb-8">
+          <div className="text-center mb-6">
+            <h3
+              className={`text-xl font-bold mb-2 ${
+                isDark ? "text-white" : "text-slate-900"
+              }`}
+            >
+              Explore My Skills
+            </h3>
+            <p
+              className={`text-sm ${
+                isDark ? "text-slate-400" : "text-slate-600"
+              }`}
+            >
+              Tap a category to explore skills
+            </p>
+          </div>
+
+          <div className="flex gap-2 overflow-x-auto py-2 px-4 -mx-4 scrollbar-hide">
+            {Object.entries(skillCategories).map(([key, category]) => (
+              <CategoryCard
+                key={key}
+                categoryKey={key}
+                category={category}
+                isActive={activeCategory === key}
+                onClick={setActiveCategory}
+                mobile={true}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile skills display */}
+        <div className="lg:hidden">
+          {/* Compact category header for mobile */}
+          <div
+            className={`p-4 rounded-xl mb-6 text-white relative overflow-hidden`}
+            style={{
+              background: `linear-gradient(135deg, ${currentCategory.gradient
+                .replace("from-", "")
+                .replace(" via-", ", ")
+                .replace(" to-", ", ")})`,
+            }}
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm flex-shrink-0">
+                <currentCategory.icon className="w-6 h-6" />
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-lg font-bold truncate">
+                  {currentCategory.title}
+                </h3>
+                <p className="text-sm opacity-90 truncate">
+                  {currentCategory.subtitle}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Skills grid for mobile */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {currentCategory.skills.map((skill, index) => (
+              <SkillCard
+                key={skill.name}
+                skill={skill}
+                index={index}
+                isVisible={isVisible}
+                hoveredSkill={hoveredSkill}
+                onHover={setHoveredSkill}
+                mobile={true}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop layout (unchanged) */}
+        <div className="hidden lg:grid lg:grid-cols-3 gap-8">
+          {/* Category navigation - desktop */}
           <div className="lg:col-span-1 space-y-6">
-            <div className={`text-center lg:text-left mb-8`}>
+            <div className="text-left mb-8">
               <h3
                 className={`text-2xl font-bold mb-2 ${
                   isDark ? "text-white" : "text-slate-900"
@@ -152,7 +239,7 @@ const ModernSkills: React.FC = () => {
               />
             ))}
 
-            {/* Personal stats */}
+            {/* Desktop stats */}
             <SkillsStats
               totalSkills={stats.totalSkills}
               masteredSkills={stats.masteredSkills}
@@ -160,7 +247,7 @@ const ModernSkills: React.FC = () => {
             />
           </div>
 
-          {/* Skills showcase */}
+          {/* Skills showcase - desktop */}
           <div className="lg:col-span-2">
             {/* Category story header */}
             <CategoryHeader category={currentCategory} />

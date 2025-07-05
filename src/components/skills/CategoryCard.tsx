@@ -13,6 +13,7 @@ interface CategoryCardProps {
   }
   isActive: boolean
   onClick: (categoryKey: string) => void
+  mobile?: boolean
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({
@@ -20,9 +21,67 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   category,
   isActive,
   onClick,
+  mobile = false,
 }) => {
   const { isDark } = useTheme()
   const IconComponent = category.icon
+
+  if (mobile) {
+    return (
+      <button
+        onClick={() => onClick(categoryKey)}
+        className={`relative flex-shrink-0 px-3 py-2 rounded-lg text-left transition-all duration-300 ${
+          isActive ? "ring-2 ring-white/20 shadow-lg" : "hover:shadow-md"
+        }`}
+        style={{
+          background: isActive
+            ? `linear-gradient(135deg, ${category.gradient
+                .replace("from-", "")
+                .replace(" via-", ", ")
+                .replace(" to-", ", ")})`
+            : isDark
+            ? "rgba(30, 41, 59, 0.5)"
+            : "rgba(255, 255, 255, 0.8)",
+        }}
+      >
+        <div className="flex items-center gap-2">
+          <IconComponent
+            className={`w-4 h-4 flex-shrink-0 ${
+              isActive
+                ? "text-white"
+                : isDark
+                ? "text-slate-300"
+                : "text-slate-600"
+            }`}
+          />
+          <div className="min-w-0">
+            <div
+              className={`text-sm font-semibold truncate ${
+                isActive
+                  ? "text-white"
+                  : isDark
+                  ? "text-slate-200"
+                  : "text-slate-700"
+              }`}
+            >
+              {category.title}
+            </div>
+            <div
+              className={`text-xs opacity-80 ${
+                isActive
+                  ? "text-white"
+                  : isDark
+                  ? "text-slate-400"
+                  : "text-slate-600"
+              }`}
+            >
+              {category.skills.length} skills
+            </div>
+          </div>
+        </div>
+      </button>
+    )
+  }
 
   return (
     <button

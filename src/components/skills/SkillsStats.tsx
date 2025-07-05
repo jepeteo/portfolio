@@ -6,14 +6,67 @@ interface SkillsStatsProps {
   totalSkills: number
   masteredSkills: number
   proficientSkills: number
+  compact?: boolean
 }
 
 const SkillsStats: React.FC<SkillsStatsProps> = ({
   totalSkills,
   masteredSkills,
   proficientSkills,
+  compact = false,
 }) => {
   const { isDark } = useTheme()
+
+  if (compact) {
+    return (
+      <div
+        className={`flex justify-around items-center p-4 rounded-xl backdrop-blur-sm border ${
+          isDark
+            ? "bg-slate-800/30 border-slate-700/50"
+            : "bg-white/30 border-slate-200/50"
+        }`}
+      >
+        <div className="text-center">
+          <div
+            className={`text-lg font-bold ${
+              isDark ? "text-white" : "text-slate-900"
+            }`}
+          >
+            {totalSkills}
+          </div>
+          <div
+            className={`text-xs ${
+              isDark ? "text-slate-400" : "text-slate-600"
+            }`}
+          >
+            Total
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="text-lg font-bold text-red-500">{masteredSkills}</div>
+          <div
+            className={`text-xs ${
+              isDark ? "text-slate-400" : "text-slate-600"
+            }`}
+          >
+            Mastered
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="text-lg font-bold text-yellow-500">
+            {proficientSkills}
+          </div>
+          <div
+            className={`text-xs ${
+              isDark ? "text-slate-400" : "text-slate-600"
+            }`}
+          >
+            Proficient
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div
