@@ -5,16 +5,33 @@
 
 import { useEffect, useRef, useState } from "react"
 
-// Progressive image loading hook
+// Progressive image loading hook - simplified and fixed
 export function useProgressiveImage(src: string, fallback?: string) {
   const [currentSrc, setCurrentSrc] = useState(fallback || "")
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(!!src) // Only loading if we have a src
   const [hasError, setHasError] = useState(false)
   const imageRef = useRef<HTMLImageElement>()
 
   useEffect(() => {
+    if (!src) {
+      setIsLoading(false)
+      return
+    }
+
+    // Check if the image is already cached/loaded
     const img = new Image()
     imageRef.current = img
+
+    // If image is already in cache, it will load immediately
+    if (img.complete && img.naturalWidth > 0) {
+      setCurrentSrc(src)
+      setIsLoading(false)
+      setHasError(false)
+      return
+    }
+
+    setIsLoading(true)
+    setHasError(false)
 
     img.onload = () => {
       setCurrentSrc(src)
@@ -25,7 +42,7 @@ export function useProgressiveImage(src: string, fallback?: string) {
     img.onerror = () => {
       setIsLoading(false)
       setHasError(true)
-      if (fallback && fallback !== currentSrc) {
+      if (fallback) {
         setCurrentSrc(fallback)
       }
     }
@@ -38,7 +55,7 @@ export function useProgressiveImage(src: string, fallback?: string) {
         imageRef.current.onerror = null
       }
     }
-  }, [src, fallback, currentSrc])
+  }, [src, fallback])
 
   return { src: currentSrc, isLoading, hasError }
 }

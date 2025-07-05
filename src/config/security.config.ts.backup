@@ -138,22 +138,21 @@ export const SECURITY_CONFIG: SecurityConfig = {
       upgradeInsecureRequests: true,
       reportUri: "/api/csp-report", // For CSP violation reporting
     },
-  },
 
   // Security Headers Configuration
   headers: {
     // Prevent clickjacking
     "X-Frame-Options": "DENY",
-
+    
     // Prevent MIME type sniffing
     "X-Content-Type-Options": "nosniff",
-
+    
     // Enable XSS protection
     "X-XSS-Protection": "1; mode=block",
-
+    
     // Referrer policy
     "Referrer-Policy": "strict-origin-when-cross-origin",
-
+    
     // Permissions policy (formerly Feature-Policy)
     "Permissions-Policy": [
       "camera=()",
@@ -165,10 +164,10 @@ export const SECURITY_CONFIG: SecurityConfig = {
       "accelerometer=()",
       "gyroscope=()",
     ].join(", "),
-
+    
     // Strict Transport Security (HTTPS enforcement)
     "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-
+    
     // Cross-Origin policies
     "Cross-Origin-Embedder-Policy": "credentialless",
     "Cross-Origin-Opener-Policy": "same-origin",
@@ -182,23 +181,21 @@ export const SECURITY_CONFIG: SecurityConfig = {
       windowMs: 15 * 60 * 1000, // 15 minutes
       maxAttempts: 3, // Stricter limit
       blockDuration: 30 * 60 * 1000, // 30 minutes block
-      message:
-        "Too many contact form submissions. Please wait before trying again.",
+      message: "Too many contact form submissions. Please wait before trying again.",
     },
-
+    
     // General API limits
     api: {
       windowMs: 15 * 60 * 1000, // 15 minutes
       maxAttempts: 100, // Per IP
       message: "Rate limit exceeded. Please try again later.",
     },
-
+    
     // Email submission limits
     email: {
       windowMs: 60 * 60 * 1000, // 1 hour
       maxAttempts: 5, // Very strict
       blockDuration: 24 * 60 * 60 * 1000, // 24 hours block
-      message: "Too many email submissions. Please try again later.",
     },
   },
 
@@ -234,8 +231,7 @@ export const SECURITY_CONFIG: SecurityConfig = {
     },
     email: {
       maxLength: 254,
-      pattern:
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+      pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
       blockedDomains: [
         "tempmail.org",
         "10minutemail.com",
@@ -246,7 +242,12 @@ export const SECURITY_CONFIG: SecurityConfig = {
     subject: {
       minLength: 3,
       maxLength: 100,
-      blockedPatterns: [/script/gi, /javascript/gi, /vbscript/gi, /<.*>/gi],
+      blockedPatterns: [
+        /script/gi,
+        /javascript/gi,
+        /vbscript/gi,
+        /<.*>/gi,
+      ],
     },
     message: {
       minLength: 10,
@@ -342,14 +343,12 @@ export function generateCSPString(isDevelopment = false): string {
 // Helper function to get security headers
 export function getSecurityHeaders(): SecurityHeaders {
   const headers: SecurityHeaders = { ...SECURITY_CONFIG.headers }
-
+  
   // Add CSP header
   // Note: In a real app, you'd detect environment properly
-  const isDevelopment =
-    typeof window !== "undefined" &&
-    (window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1")
-
+  const isDevelopment = typeof window !== "undefined" && 
+    (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+  
   headers["Content-Security-Policy"] = generateCSPString(isDevelopment)
 
   return headers

@@ -20,7 +20,6 @@ import {
   CheckCircle,
   ArrowRight,
   Github,
-  Play,
 } from "lucide-react"
 
 // Import the image (this should work if the image is in src/assets)
@@ -397,6 +396,7 @@ const ModernBio: React.FC = () => {
                     src={profileImage}
                     alt="Theodoros Mentis"
                     className="w-full h-full object-cover rounded-3xl"
+                    loading="lazy"
                   />
 
                   {/* Fallback icon (hidden by default) */}

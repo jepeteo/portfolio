@@ -20,9 +20,9 @@ const Hero: React.FC = memo(() => {
   const { createSkipLink } = useSkipLinks()
 
   useEffect(() => {
-    // Create skip link to main content
+    // Create skip link to main content - only once on mount
     createSkipLink("main-content", "Skip to main content")
-  }, [createSkipLink])
+  }, []) // Remove dependency to prevent re-running
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -43,7 +43,7 @@ const Hero: React.FC = memo(() => {
     }
 
     return () => observer.disconnect()
-  }, [announce])
+  }, []) // Remove announce dependency to prevent re-creating observer
 
   return (
     <section

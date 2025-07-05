@@ -10,7 +10,7 @@ const useDebounce = <T extends (...args: any[]) => any>(
   func: T,
   delay: number
 ): T => {
-  let timeoutId: number
+  let timeoutId: ReturnType<typeof setTimeout>
 
   const debouncedFunction = useCallback(
     (...args: Parameters<T>) => {
