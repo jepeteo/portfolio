@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { validateImageSrc } from "../../utils/validation"
 import { cn, typography } from "../../utils/styles"
 import ModernNav from "../navigation/ModernNav"
-import logo from "../../assets/images/teo.png"
+import logo from "../../assets/images/gteo.webp"
 
 interface ModernHeaderProps {
   className?: string
@@ -12,7 +11,8 @@ interface ModernHeaderProps {
 
 const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = useState(false)
-  const logoSrc = validateImageSrc(logo, "Portfolio Logo")
+  const logoSrc = validateImageSrc(logo, "Portfolio Logo")
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY
@@ -55,7 +55,6 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
           "py-4 px-6"
         )}
       >
-        
         <motion.a
           href="#hero"
           className="flex items-center gap-4 cursor-pointer group"
@@ -67,13 +66,12 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
             const heroSection = document.getElementById("hero")
             if (heroSection) {
               heroSection.scrollIntoView({ behavior: "smooth" })
-            } else {
+            } else {
               window.scrollTo({ top: 0, behavior: "smooth" })
             }
           }}
           aria-label="Go to homepage"
         >
-          
           <motion.div
             className="relative"
             whileHover={{ rotate: 5 }}
@@ -145,14 +143,12 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
           <ModernNav />
         </motion.div>
       </div>
-      
       <motion.div
         className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent"
         initial={{ opacity: 0, scaleX: 0 }}
         animate={{ opacity: 1, scaleX: 1 }}
         transition={{ delay: 0.5, duration: 0.8 }}
       />
-      
       <motion.div
         className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary to-accent origin-left"
         style={{
