@@ -54,6 +54,7 @@ VITE_EMAILJS_PUBLIC_KEY=your_public_key
 ```
 
 > **Important**: The Vercel Analytics and Speed Insights will only load when:
+>
 > 1. The environment variables are set to `true`
 > 2. The site is running on Vercel (vercel.app domain or theodorosmentis.com)
 > 3. They fail gracefully if disabled or unavailable

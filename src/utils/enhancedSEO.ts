@@ -1,32 +1,40 @@
 
 
-import { useEffect } from "react"
-export interface EnhancedSEOConfig {
+import { useEffect } from "react"
+
+export interface EnhancedSEOConfig {
+
   title?: string
   description?: string
   keywords?: string[]
-  canonical?: string
+  canonical?: string
+
   ogTitle?: string
   ogDescription?: string
   ogImage?: string
   ogUrl?: string
   ogType?: "website" | "article" | "profile"
-  ogSiteName?: string
+  ogSiteName?: string
+
   twitterCard?: "summary" | "summary_large_image" | "app" | "player"
   twitterSite?: string
   twitterCreator?: string
   twitterTitle?: string
   twitterDescription?: string
-  twitterImage?: string
+  twitterImage?: string
+
   articleAuthor?: string
   articlePublishedTime?: string
   articleModifiedTime?: string
   articleSection?: string
-  articleTags?: string[]
-  structuredData?: any
+  articleTags?: string[]
+
+  structuredData?: any
+
   robots?: string
   language?: string
-  alternateUrls?: { lang: string; href: string }[]
+  alternateUrls?: { lang: string; href: string }[]
+
   preloadResources?: { href: string; as: string; type?: string }[]
   prefetchUrls?: string[]
 }
@@ -42,15 +50,19 @@ class SEOManager {
       SEOManager.instance = new SEOManager()
     }
     return SEOManager.instance
-  }
-  applySEO(config: EnhancedSEOConfig): () => void {
+  }
+
+  applySEO(config: EnhancedSEOConfig): () => void {
+
     if (config.title) {
       document.title = config.title
-    }
+    }
+
     this.setMetaTag("description", config.description)
     this.setMetaTag("keywords", config.keywords?.join(", "))
     this.setMetaTag("robots", config.robots || "index,follow")
-    this.setMetaTag("language", config.language || "en")
+    this.setMetaTag("language", config.language || "en")
+
     this.setMetaTag("og:title", config.ogTitle || config.title, true)
     this.setMetaTag(
       "og:description",
@@ -60,7 +72,8 @@ class SEOManager {
     this.setMetaTag("og:image", config.ogImage, true)
     this.setMetaTag("og:url", config.ogUrl || window.location.href, true)
     this.setMetaTag("og:type", config.ogType || "website", true)
-    this.setMetaTag("og:site_name", config.ogSiteName, true)
+    this.setMetaTag("og:site_name", config.ogSiteName, true)
+
     this.setMetaTag("twitter:card", config.twitterCard || "summary_large_image")
     this.setMetaTag("twitter:site", config.twitterSite)
     this.setMetaTag("twitter:creator", config.twitterCreator)
@@ -69,7 +82,8 @@ class SEOManager {
       "twitter:description",
       config.twitterDescription || config.description
     )
-    this.setMetaTag("twitter:image", config.twitterImage || config.ogImage)
+    this.setMetaTag("twitter:image", config.twitterImage || config.ogImage)
+
     if (config.articleAuthor) {
       this.setMetaTag("article:author", config.articleAuthor, true)
       this.setMetaTag(
@@ -83,15 +97,18 @@ class SEOManager {
       config.articleTags?.forEach((tag, index) => {
         this.setMetaTag(`article:tag${index}`, tag, true)
       })
-    }
+    }
+
     if (config.canonical) {
       this.setLinkTag("canonical", config.canonical, "canonical")
-    }
+    }
+
     config.alternateUrls?.forEach(({ lang, href }) => {
       this.setLinkTag(`alternate-${lang}`, href, "alternate", {
         hreflang: lang,
       })
-    })
+    })
+
     config.preloadResources?.forEach(({ href, as, type }) => {
       const attributes: Record<string, string> = { as }
       if (type) attributes.type = type
@@ -100,10 +117,12 @@ class SEOManager {
 
     config.prefetchUrls?.forEach((url) => {
       this.setLinkTag(`prefetch-${url}`, url, "prefetch")
-    })
+    })
+
     if (config.structuredData) {
       this.setStructuredData(config.structuredData)
-    }
+    }
+
     return () => {
       this.cleanup()
     }
@@ -154,21 +173,25 @@ class SEOManager {
     this.linkTags.set(key, link)
   }
 
-  private setStructuredData(data: any): void {
+  private setStructuredData(data: any): void {
+
     if (this.structuredDataScript) {
       document.head.removeChild(this.structuredDataScript)
-    }
+    }
+
     this.structuredDataScript = document.createElement("script")
     this.structuredDataScript.type = "application/ld+json"
     this.structuredDataScript.textContent = JSON.stringify(data)
     document.head.appendChild(this.structuredDataScript)
   }
 
-  private cleanup(): void {
+  private cleanup(): void {
+
     if (document.title !== "Theodoros Mentis - Senior Full Stack Developer") {
       document.title = "Theodoros Mentis - Senior Full Stack Developer"
     }
-  }
+  }
+
   generatePersonSchema(config: {
     name: string
     jobTitle: string
@@ -193,7 +216,8 @@ class SEOManager {
         addressLocality: config.location,
       },
       description: config.description,
-      sameAs: [
+      sameAs: [
+
       ],
     }
   }
@@ -245,16 +269,19 @@ class SEOManager {
         dateCreated: project.dateCreated,
       })),
     }
-  }
-  optimizeCorewWebVitals() {
-    this.preloadCriticalResources()
-    this.optimizeFonts()
+  }
+
+  optimizeCorewWebVitals() {
+
+    this.preloadCriticalResources()
+
+    this.optimizeFonts()
+
     this.addResourceHints()
   }
 
   private preloadCriticalResources() {
     const criticalResources = [
-      { href: "/portfolio/src/assets/images/teo.png", as: "image" },
       {
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap",
         as: "style",
@@ -266,7 +293,8 @@ class SEOManager {
     })
   }
 
-  private optimizeFonts() {
+  private optimizeFonts() {
+
     const fontLinks = document.querySelectorAll(
       'link[href*="fonts.googleapis.com"]'
     )
@@ -291,7 +319,8 @@ class SEOManager {
       this.setLinkTag(`dns-prefetch-${domain}`, `//${domain}`, "dns-prefetch")
     })
   }
-}
+}
+
 export function useEnhancedSEO(config: EnhancedSEOConfig) {
   useEffect(() => {
     const seoManager = SEOManager.getInstance()
@@ -306,14 +335,17 @@ export function useEnhancedSEO(config: EnhancedSEOConfig) {
     JSON.stringify(config.keywords),
     JSON.stringify(config.structuredData),
   ])
-}
-export class SEOUtils {
+}
+
+export class SEOUtils {
+
   static generateTitle(
     pageName: string,
     siteName = "Theodoros Mentis"
   ): string {
     return `${pageName} | ${siteName} - Senior Full Stack Developer`
-  }
+  }
+
   static generateDescription(content: string, maxLength = 160): string {
     if (content.length <= maxLength) return content
 
@@ -321,7 +353,8 @@ export class SEOUtils {
     const lastSpace = trimmed.lastIndexOf(" ")
 
     return trimmed.substring(0, lastSpace) + "..."
-  }
+  }
+
   static extractKeywords(text: string, maxKeywords = 10): string[] {
     const commonWords = [
       "the",
@@ -354,8 +387,10 @@ export class SEOUtils {
       .sort(([, a], [, b]) => b - a)
       .slice(0, maxKeywords)
       .map(([word]) => word)
-  }
-  static async validateOGImage(imageUrl: string): Promise<boolean> {
+  }
+
+  static async validateOGImage(imageUrl: string): Promise<boolean> {
+
     const img = new Image()
     img.src = imageUrl
 
@@ -368,8 +403,10 @@ export class SEOUtils {
       img.onerror = () => resolve(false)
     })
   }
-}
-export const seoManager = SEOManager.getInstance()
+}
+
+export const seoManager = SEOManager.getInstance()
+
 export const defaultSEOConfig: EnhancedSEOConfig = {
   title: "Theodoros Mentis - Senior Full Stack Developer Portfolio",
   description:
