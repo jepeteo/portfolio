@@ -32,7 +32,7 @@ const ModernProjects = createLazyComponent(
 
 const ModernExperience = createLazyComponent(
   () => import("./components/ModernExperience"),
-  { chunkName: "experience" }
+  { chunkName: "experience", preload: true }
 )
 
 const ReactProjects = createLazyComponent(
