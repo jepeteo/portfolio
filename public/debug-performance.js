@@ -282,9 +282,56 @@ function checkCurrentPerformance() {
     }
 }
 
+// Test function to check if performance dashboard is properly hidden in production
+function testProductionBuild() {
+    console.log('🔍 Testing production build detection...');
+
+    const nodeEnv = process.env.NODE_ENV;
+    const hostname = window.location.hostname;
+
+    console.log('Environment details:', {
+        'NODE_ENV': nodeEnv,
+        'hostname': hostname,
+        'isDevelopment': nodeEnv === 'development' &&
+            (hostname === 'localhost' || hostname === '127.0.0.1' || hostname.includes('localhost'))
+    });
+
+    // Check if performance dashboard exists in DOM
+    const perfDashboard = document.querySelector('[class*="performance"], [class*="dashboard"]');
+    const perfButton = document.querySelector('button[class*="performance"]');
+
+    console.log('Performance UI elements:', {
+        'dashboardInDOM': !!perfDashboard,
+        'buttonInDOM': !!perfButton,
+        'shouldBeVisible': nodeEnv === 'development'
+    });
+
+    if (nodeEnv === 'production' && (perfDashboard || perfButton)) {
+        console.warn('⚠️ Performance dashboard detected in production build!')
+    } else if (nodeEnv === 'development' && !perfDashboard && !perfButton) {
+        console.warn('⚠️ Performance dashboard not found in development build!')
+    } else {
+        console.log('✅ Performance dashboard visibility is correct for this environment')
+    }
+}
+
+// Function to explain why cache metrics were removed
+function explainCacheRemoval() {
+    console.log('ℹ️ Cache Performance section removed from dashboard');
+    console.log('Reason: Portfolio uses static JSON imports rather than HTTP requests');
+    console.log('Data sources:');
+    console.log('- Projects: Static import from assets/myProjects.json');
+    console.log('- Skills: Static import from assets/mySkills.json');
+    console.log('- Experience: Static import from assets/jobExperience.json');
+    console.log('- Certificates: Static import from assets/myCertificates.json');
+    console.log('💡 No HTTP caching needed since all data is bundled at build time');
+}
+
 // Add to global debug object
 window.debugPerformance = {
-    checkCurrentPerformance
+    checkCurrentPerformance,
+    testProductionBuild,
+    explainCacheRemoval
 }
 
 console.log('🛠️ Performance debugging tools loaded!')
@@ -295,3 +342,7 @@ console.log('- window.monitorPerformance(10000) - Monitor for 10 seconds')
 console.log('- window.debugImageLoading() - Debug image loading states')
 console.log('- window.monitorImageLoading(5000) - Monitor image loading for 5 seconds')
 console.log('- window.debugPerformance.checkCurrentPerformance() - Quick performance check')
+console.log('- window.debugPerformance.testProductionBuild() - Test production build detection')
+console.log('- window.debugPerformance.explainCacheRemoval() - Why cache metrics were removed')
+console.log('- window.debugPerformance.testProductionBuild() - Test production build detection')
+console.log('- window.debugPerformance.simulateCacheActivity() - Simulate cache activity for testing')
