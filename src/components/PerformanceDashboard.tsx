@@ -3,7 +3,6 @@
 
 import React, { useState, useEffect } from "react"
 import { getBundleInfo } from "../utils/performanceOptimization"
-import { CacheManager } from "../utils/networkOptimization"
 import { A11yChecker } from "../utils/accessibilityOptimization"
 
 interface PerformanceMetrics {
@@ -23,13 +22,6 @@ interface PerformanceMetrics {
     total: number
     limit: number
   } | null
-  cacheStats?: {
-    totalEntries: number
-    activeEntries: number
-    expiredEntries: number
-    ongoingRequests: number
-    totalSizeBytes: number
-  }
   accessibilityIssues?: {
     images: string[]
     headings: string[]
@@ -46,10 +38,12 @@ interface WebVitals {
 }
 
 const PerformanceDashboard: React.FC = () => {
-  // Early return for production to reduce DOM nodes
+  // Enhanced production detection - hide in production builds
   const isDevelopment =
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1"
+    process.env.NODE_ENV === "development" &&
+    (window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1" ||
+      window.location.hostname.includes("localhost"))
 
   if (!isDevelopment) {
     return null
@@ -63,20 +57,20 @@ const PerformanceDashboard: React.FC = () => {
   useEffect(() => {
     // Only show in development
     const isDevelopment =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
+      process.env.NODE_ENV === "development" &&
+      (window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1" ||
+        window.location.hostname.includes("localhost"))
 
     if (!isDevelopment) return
 
     // Collect performance metrics
     const collectMetrics = () => {
       const bundleInfo = getBundleInfo()
-      const cacheStats = CacheManager.getStats()
       const accessibilityIssues = A11yChecker.runAllChecks()
 
       const metricsData: PerformanceMetrics = {
         ...bundleInfo,
-        cacheStats,
         accessibilityIssues,
       }
 
@@ -339,39 +333,6 @@ const PerformanceDashboard: React.FC = () => {
                     </span>
                   </div>
                 ))}
-            </div>
-          </div>
-        )}
-
-        {/* Cache Statistics */}
-        {metrics?.cacheStats && (
-          <div>
-            <h4 className="font-medium mb-2">Cache Performance</h4>
-            <div className="space-y-1">
-              <div className="flex justify-between">
-                <span>Active Entries:</span>
-                <span className="font-mono text-green-600">
-                  {metrics.cacheStats.activeEntries}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Expired:</span>
-                <span className="font-mono text-yellow-600">
-                  {metrics.cacheStats.expiredEntries}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Ongoing Requests:</span>
-                <span className="font-mono text-blue-600">
-                  {metrics.cacheStats.ongoingRequests}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Cache Size:</span>
-                <span className="font-mono">
-                  {formatBytes(metrics.cacheStats.totalSizeBytes)}
-                </span>
-              </div>
             </div>
           </div>
         )}
