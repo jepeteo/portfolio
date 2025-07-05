@@ -354,7 +354,7 @@ const ModernBio: React.FC = () => {
               isDark ? "text-slate-300" : "text-slate-600"
             }`}
           >
-            Crafting exceptional digital experiences with 25+ years of expertise
+            Crafting exceptional digital experiences with 18+ years of expertise
           </p>
         </div>
 

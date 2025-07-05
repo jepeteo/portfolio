@@ -147,7 +147,7 @@ const Hero: React.FC = memo(() => {
               isDark ? "text-slate-300" : "text-slate-600"
             }`}
           >
-            With 15+ years of experience crafting scalable web solutions, I
+            With 18+ years of experience crafting scalable web solutions, I
             specialize in WordPress, React, and modern web technologies. Let's
             build something extraordinary together.
           </p>
