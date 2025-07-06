@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favicon Generator - Theodoros Mentis</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: #f3f4f6;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .container {
+        max-width: 800px;
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #1f2937;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .favicon-preview {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .favicon-option {
+        text-align: center;
+        padding: 20px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .favicon-option:hover {
+        border-color: #059669;
+        transform: translateY(-2px);
+      }
+
+      .favicon-canvas {
+        margin: 10px auto;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      label {
+        font-weight: 500;
+        color: #374151;
+      }
+
+      input[type="color"],
+      input[type="text"],
+      select {
+        padding: 8px;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      button {
+        background: #059669;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background 0.3s ease;
+        margin-top: 20px;
+      }
+
+      button:hover {
+        background: #047857;
+      }
+
+      .instructions {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: 6px;
+        padding: 15px;
+        margin-top: 20px;
+        color: #166534;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Favicon Generator for Theodoros Mentis</h1>
+
+      <div class="favicon-preview">
+        <div class="favicon-option" onclick="selectOption('monogram')">
+          <h3>TM Monogram</h3>
+          <canvas
+            class="favicon-canvas"
+            id="monogram"
+            width="64"
+            height="64"
+          ></canvas>
+          <p>Clean initials design</p>
+        </div>
+
+        <div class="favicon-option" onclick="selectOption('geometric')">
+          <h3>Geometric</h3>
+          <canvas
+            class="favicon-canvas"
+            id="geometric"
+            width="64"
+            height="64"
+          ></canvas>
+          <p>Modern geometric shape</p>
+        </div>
+
+        <div class="favicon-option" onclick="selectOption('developer')">
+          <h3>Developer Icon</h3>
+          <canvas
+            class="favicon-canvas"
+            id="developer"
+            width="64"
+            height="64"
+          ></canvas>
+          <p>Tech-focused design</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="control-group">
+          <label for="primaryColor">Primary Color</label>
+          <input type="color" id="primaryColor" value="#059669" />
+        </div>
+
+        <div class="control-group">
+          <label for="backgroundColor">Background Color</label>
+          <input type="color" id="backgroundColor" value="#ffffff" />
+        </div>
+
+        <div class="control-group">
+          <label for="style">Style</label>
+          <select id="style">
+            <option value="modern">Modern</option>
+            <option value="minimal">Minimal</option>
+            <option value="rounded">Rounded</option>
+          </select>
+        </div>
+      </div>
+
+      <button onclick="downloadFavicon()">
+        Download Selected Favicon (32x32)
+      </button>
+
+      <div class="instructions">
+        <strong>Instructions:</strong>
+        <ol>
+          <li>Click on a favicon design to select it</li>
+          <li>Customize colors and style</li>
+          <li>Download the favicon</li>
+          <li>Save as "favicon.png" in your public folder</li>
+          <li>The favicon will appear in browser tabs and bookmarks</li>
+        </ol>
+      </div>
+    </div>
+
+    <script>
+      let selectedOption = "monogram"
+
+      function selectOption(option) {
+        selectedOption = option
+        document.querySelectorAll(".favicon-option").forEach((el) => {
+          el.style.borderColor = "#e5e7eb"
+        })
+        document.querySelector(
+          `[onclick="selectOption('${option}')"]`
+        ).style.borderColor = "#059669"
+        updatePreviews()
+      }
+
+      function updatePreviews() {
+        const primaryColor = document.getElementById("primaryColor").value
+        const backgroundColor = document.getElementById("backgroundColor").value
+        const style = document.getElementById("style").value
+
+        drawMonogram(primaryColor, backgroundColor, style)
+        drawGeometric(primaryColor, backgroundColor, style)
+        drawDeveloper(primaryColor, backgroundColor, style)
+      }
+
+      function drawMonogram(primary, bg, style) {
+        const canvas = document.getElementById("monogram")
+        const ctx = canvas.getContext("2d")
+
+        // Clear canvas
+        ctx.clearRect(0, 0, 64, 64)
+
+        // Background
+        ctx.fillStyle = bg
+        if (style === "rounded") {
+          ctx.beginPath()
+          ctx.roundRect(0, 0, 64, 64, 8)
+          ctx.fill()
+        } else {
+          ctx.fillRect(0, 0, 64, 64)
+        }
+
+        // Text
+        ctx.fillStyle = primary
+        ctx.font = "bold 28px Arial"
+        ctx.textAlign = "center"
+        ctx.textBaseline = "middle"
+        ctx.fillText("TM", 32, 32)
+      }
+
+      function drawGeometric(primary, bg, style) {
+        const canvas = document.getElementById("geometric")
+        const ctx = canvas.getContext("2d")
+
+        ctx.clearRect(0, 0, 64, 64)
+
+        // Background
+        ctx.fillStyle = bg
+        ctx.fillRect(0, 0, 64, 64)
+
+        // Geometric shape
+        ctx.fillStyle = primary
+        ctx.beginPath()
+        ctx.moveTo(32, 8)
+        ctx.lineTo(56, 32)
+        ctx.lineTo(32, 56)
+        ctx.lineTo(8, 32)
+        ctx.closePath()
+        ctx.fill()
+
+        // Inner shape
+        ctx.fillStyle = bg
+        ctx.beginPath()
+        ctx.moveTo(32, 20)
+        ctx.lineTo(44, 32)
+        ctx.lineTo(32, 44)
+        ctx.lineTo(20, 32)
+        ctx.closePath()
+        ctx.fill()
+      }
+
+      function drawDeveloper(primary, bg, style) {
+        const canvas = document.getElementById("developer")
+        const ctx = canvas.getContext("2d")
+
+        ctx.clearRect(0, 0, 64, 64)
+
+        // Background
+        ctx.fillStyle = bg
+        ctx.fillRect(0, 0, 64, 64)
+
+        // Code brackets
+        ctx.fillStyle = primary
+        ctx.font = "bold 32px monospace"
+        ctx.textAlign = "center"
+        ctx.textBaseline = "middle"
+        ctx.fillText("<>", 32, 32)
+      }
+
+      function downloadFavicon() {
+        const canvas = document.getElementById(selectedOption)
+
+        // Create a higher resolution version
+        const highResCanvas = document.createElement("canvas")
+        highResCanvas.width = 32
+        highResCanvas.height = 32
+        const ctx = highResCanvas.getContext("2d")
+
+        // Scale down the preview
+        ctx.drawImage(canvas, 0, 0, 64, 64, 0, 0, 32, 32)
+
+        // Download
+        const link = document.createElement("a")
+        link.download = "favicon.png"
+        link.href = highResCanvas.toDataURL()
+        link.click()
+      }
+
+      // Initialize
+      document
+        .getElementById("primaryColor")
+        .addEventListener("input", updatePreviews)
+      document
+        .getElementById("backgroundColor")
+        .addEventListener("input", updatePreviews)
+      document
+        .getElementById("style")
+        .addEventListener("change", updatePreviews)
+
+      selectOption("monogram")
+      updatePreviews()
+    </script>
+  </body>
+</html>
