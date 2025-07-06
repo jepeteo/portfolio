@@ -3,7 +3,6 @@ import { motion } from "framer-motion"
 import { validateImageSrc } from "../../utils/validation"
 import { cn, typography } from "../../utils/styles"
 import ModernNav from "../navigation/ModernNav"
-import logo from "../../assets/images/gteo.webp"
 
 interface ModernHeaderProps {
   className?: string
@@ -11,7 +10,7 @@ interface ModernHeaderProps {
 
 const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = useState(false)
-  const logoSrc = validateImageSrc(logo, "Portfolio Logo")
+  const logoSrc = validateImageSrc("/images/teo-square.webp", "Portfolio Logo")
 
   useEffect(() => {
     const handleScroll = () => {
@@ -87,7 +86,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
             >
               <img
                 src={logoSrc}
-                alt="Theodoros Mentis Portfolio Logo"
+                alt="Theodoros Mentis - Portfolio Logo"
                 width={48}
                 height={48}
                 className="w-full h-full object-cover relative z-10"
