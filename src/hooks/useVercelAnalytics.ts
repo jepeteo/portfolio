@@ -41,15 +41,10 @@ export const useVercelAnalytics = () => {
         .then((_analytics) => {
           if (typeof window !== "undefined") {
             analyticsLoaded = true
-            if (config.debug) {
-              console.log("✅ Vercel Analytics loaded")
-            }
           }
         })
-        .catch((error) => {
-          if (config.debug) {
-            console.warn("⚠️ Failed to load Vercel Analytics:", error)
-          }
+        .catch(() => {
+          // Silently fail
         })
     }
 
@@ -59,27 +54,11 @@ export const useVercelAnalytics = () => {
         .then((_speedInsights) => {
           if (typeof window !== "undefined") {
             speedInsightsLoaded = true
-            if (config.debug) {
-              console.log("✅ Vercel Speed Insights loaded")
-            }
           }
         })
-        .catch((error) => {
-          if (config.debug) {
-            console.warn("⚠️ Failed to load Vercel Speed Insights:", error)
-          }
+        .catch(() => {
+          // Silently fail
         })
-    }
-
-    if (config.debug) {
-      console.log("🔍 Vercel Config:", {
-        analyticsEnabled: config.analyticsEnabled,
-        speedInsightsEnabled: config.speedInsightsEnabled,
-        isVercel:
-          typeof window !== "undefined" &&
-          (window.location.hostname.includes("vercel.app") ||
-            window.location.hostname === "theodorosmentis.com"),
-      })
     }
   }, [])
 
@@ -96,26 +75,17 @@ export const injectVercelAnalytics = () => {
   if (config.analyticsEnabled && typeof window !== "undefined") {
     // Inject analytics script
     const script = document.createElement("script")
-    script.src = "https://va.vercel-scripts.com/v1/script.debug.js"
+    script.src = "https://va.vercel-scripts.com/v1/script.js"
     script.defer = true
     document.head.appendChild(script)
-
-    if (config.debug) {
-      console.log("📊 Vercel Analytics script injected")
-    }
   }
 
   if (config.speedInsightsEnabled && typeof window !== "undefined") {
     // Inject speed insights script
     const script = document.createElement("script")
-    script.src =
-      "https://va.vercel-scripts.com/v1/speed-insights/script.debug.js"
+    script.src = "https://va.vercel-scripts.com/v1/speed-insights/script.js"
     script.defer = true
     document.head.appendChild(script)
-
-    if (config.debug) {
-      console.log("⚡ Vercel Speed Insights script injected")
-    }
   }
 }
 

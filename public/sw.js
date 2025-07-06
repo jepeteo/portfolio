@@ -43,8 +43,6 @@ const CACHE_STRATEGIES = {
 
 // Install event - cache critical resources
 self.addEventListener('install', (event) => {
-    console.log('[SW] Installing service worker v2...')
-
     event.waitUntil(
         Promise.all([
             // Cache static assets
@@ -59,11 +57,11 @@ self.addEventListener('install', (event) => {
                     'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZJhiJ-Ek-_EeA.woff2'
                 ]).catch(() => {
                     // Font loading failures are non-critical
-                    console.warn('[SW] Failed to cache fonts')
+
                 })
             })
         ]).then(() => {
-            console.log('[SW] Installation complete')
+
             // Force activation of new service worker
             return self.skipWaiting()
         })
@@ -72,7 +70,7 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-    console.log('[SW] Activating service worker v2...')
+
 
     event.waitUntil(
         Promise.all([
@@ -83,7 +81,7 @@ self.addEventListener('activate', (event) => {
                         if (cacheName !== STATIC_CACHE &&
                             cacheName !== DYNAMIC_CACHE &&
                             cacheName !== IMAGE_CACHE) {
-                            console.log('[SW] Deleting old cache:', cacheName)
+
                             return caches.delete(cacheName)
                         }
                     })
@@ -93,7 +91,7 @@ self.addEventListener('activate', (event) => {
             // Take control of all clients
             self.clients.claim()
         ]).then(() => {
-            console.log('[SW] Activation complete')
+
         })
     )
 })
@@ -145,7 +143,7 @@ async function handleRequest(request) {
         return await networkFirst(request, DYNAMIC_CACHE)
 
     } catch (error) {
-        console.error('[SW] Request failed:', error)
+
 
         // Return offline fallback for navigation requests
         if (request.mode === 'navigate') {
@@ -199,7 +197,7 @@ async function networkFirst(request, cacheName, timeout = 3000) {
         // Fall back to cache
         const cached = await cache.match(request)
         if (cached) {
-            console.warn('[SW] Network failed, serving from cache:', request.url)
+
             return cached
         }
         throw error
@@ -238,7 +236,7 @@ self.addEventListener('sync', (event) => {
 })
 
 async function doBackgroundSync() {
-    console.log('[SW] Performing background sync...')
+
     // Implement background sync logic here
     // e.g., send queued form submissions
 }
@@ -270,4 +268,4 @@ self.addEventListener('message', (event) => {
     }
 })
 
-console.log('[SW] Service Worker v2 loaded successfully')
+
