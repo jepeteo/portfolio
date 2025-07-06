@@ -1,0 +1,20 @@
+/* TEAM */
+Developer: Theodoros Mentis
+Contact: th.mentis@gmail.com
+From: Greece
+
+/* SITE */
+Last update: 2025/01/15
+Language: English
+Doctype: HTML5
+IDE: Visual Studio Code
+Technologies: React, TypeScript, Vite, Tailwind CSS
+Analytics: Vercel Analytics, Google Analytics
+Hosting: Vercel
+
+/* THANKS */
+React Team
+Vite Team
+Tailwind CSS Team
+Vercel Team
+GitHub Copilot

@@ -14,6 +14,13 @@
     <meta name="author" content="Theodoros Mentis" />
     <meta name="robots" content="index, follow" />
 
+    <!-- Language and Region Meta Tags -->
+    <meta name="language" content="en" />
+    <meta name="geo.region" content="GR" />
+    <meta name="geo.placename" content="Greece" />
+    <meta name="geo.position" content="39.074208;21.824312" />
+    <meta name="ICBM" content="39.074208, 21.824312" />
+
     <!-- Google Search Console Verification -->
     <meta
       name="google-site-verification"
@@ -51,6 +58,18 @@
       content="https://theodorosmentis.com/src/assets/images/teo.png"
     />
 
+    <!-- LinkedIn Meta Tags -->
+    <meta property="article:author" content="Theodoros Mentis" />
+    <meta property="profile:first_name" content="Theodoros" />
+    <meta property="profile:last_name" content="Mentis" />
+    <meta property="profile:username" content="thmentis" />
+
+    <!-- International/Regional Meta Tags -->
+    <meta name="geo.region" content="GR" />
+    <meta name="geo.placename" content="Greece" />
+    <meta name="language" content="en" />
+    <meta name="content-language" content="en" />
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="./src/assets/images/teo.png" />
     <link rel="apple-touch-icon" href="./src/assets/images/teo.png" />
@@ -74,41 +93,89 @@
 
     <title>Theodoros Mentis - Senior Full Stack Developer Portfolio</title>
 
-    <!-- Structured Data -->
+    <!-- Enhanced Structured Data -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Theodoros Mentis",
-        "jobTitle": "Senior Full Stack Developer",
-        "description": "Senior Full Stack Developer specializing in WordPress, React, and modern web technologies",
-        "url": "https://theodorosmentis.com/",
-        "image": "https://theodorosmentis.com/src/assets/images/teo.png",
-        "sameAs": [
-          "https://www.linkedin.com/in/thmentis/",
-          "https://github.com/jepeteo"
-        ],
-        "knowsAbout": [
-          "WordPress Development",
-          "React Development",
-          "Full Stack Development",
-          "Server Administration",
-          "Web Development",
-          "JavaScript",
-          "TypeScript",
-          "PHP",
-          "MySQL"
-        ],
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Freelancer"
-        },
-        "address": {
-          "@type": "PostalAddress",
-          "addressCountry": "Greece"
-        }
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://theodorosmentis.com/#website",
+            "url": "https://theodorosmentis.com/",
+            "name": "Theodoros Mentis - Senior Full Stack Developer",
+            "description": "Professional portfolio showcasing expertise in WordPress, React, and modern web development",
+            "inLanguage": "en-US",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://theodorosmentis.com/?q={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://theodorosmentis.com/#person",
+            "name": "Theodoros Mentis",
+            "url": "https://theodorosmentis.com/",
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://theodorosmentis.com/src/assets/images/teo.png"
+            },
+            "sameAs": [
+              "https://github.com/thmentis",
+              "https://linkedin.com/in/thmentis"
+            ],
+            "jobTitle": "Senior Full Stack Developer",
+            "description": "Experienced developer creating seamless web experiences with WordPress, React, and modern web technologies",
+            "email": "contact@theodorosmentis.com",
+            "nationality": "Greek",
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "GR"
+            },
+            "knowsAbout": [
+              "WordPress Development",
+              "React",
+              "TypeScript",
+              "PHP",
+              "JavaScript",
+              "Web Development",
+              "Full Stack Development"
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://theodorosmentis.com/#organization",
+            "name": "Theodoros Mentis Development",
+            "url": "https://theodorosmentis.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://theodorosmentis.com/src/assets/images/teo.png"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "contact@theodorosmentis.com",
+              "contactType": "Customer Service"
+            },
+            "founder": {
+              "@id": "https://theodorosmentis.com/#person"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "GR"
+            }
+          }
+        ]
       }
     </script>
+
+    <!-- Additional Resource Hints -->
+    <link rel="preload" href="/src/assets/images/teo.png" as="image" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="author" href="/humans.txt" />
   </head>
   <body>
     <div id="root"></div>
