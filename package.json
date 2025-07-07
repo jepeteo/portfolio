@@ -14,6 +14,7 @@
     "deploy:redirect": "echo 'Deploying redirect page to GitHub Pages...' && git add redirect.html .github/workflows/redirect-deploy.yml && git commit -m 'deploy: update GitHub Pages redirect' && git push",
     "performance:analyze": "npm run build && npx vite-bundle-visualizer -o bundle-report.html",
     "clean": "npx rimraf dist node_modules/.vite",
+    "check-urls": "node scripts/check-project-urls.js",
     "prepare": "echo \"Skipping lint and type-check in prepare script\""
   },
   "dependencies": {
