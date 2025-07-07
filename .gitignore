@@ -35,3 +35,7 @@ updateDescriptions.js
 
 # Ignore root docs folder (except README)
 /docs/
+
+# Personal tools (not for deployment)
+instagram-card-generator.html
+og-image-generator.html
