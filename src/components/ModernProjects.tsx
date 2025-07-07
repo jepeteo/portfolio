@@ -461,7 +461,7 @@ const ModernProjects = memo(() => {
           >
             Explore my portfolio of web development projects, from WordPress
             sites to modern React applications. Each project represents a unique
-            challenge and creative solution.
+            challenge and innovative result.
           </p>
         </div>
 
