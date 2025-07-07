@@ -1,5 +1,3 @@
-
-
 import { A11yChecker, ColorContrast } from "../utils/accessibilityOptimization"
 
 export interface AccessibilityReport {
@@ -26,7 +24,8 @@ export class AccessibilityTester {
       AccessibilityTester.instance = new AccessibilityTester()
     }
     return AccessibilityTester.instance
-  }
+  }
+
   async runAudit(
     containerId?: string,
     options: {
@@ -35,11 +34,7 @@ export class AccessibilityTester {
       includeKeyboardTest?: boolean
     } = {}
   ): Promise<AccessibilityReport> {
-    const {
-      includeColorContrast = true,
-      includeLighthouseMetrics = false,
-      includeKeyboardTest = true,
-    } = options
+    const { includeColorContrast = true, includeKeyboardTest = true } = options
 
     const container = containerId
       ? document.getElementById(containerId)
@@ -53,23 +48,29 @@ export class AccessibilityTester {
       critical: [] as string[],
       warning: [] as string[],
       info: [] as string[],
-    }
+    }
+
     const basicChecks = A11yChecker.runAllChecks()
     issues.critical.push(...basicChecks.images)
     issues.warning.push(...basicChecks.headings)
-    issues.warning.push(...basicChecks.keyboard)
-    this.checkSemanticStructure(container, issues)
-    this.checkARIAImplementation(container, issues)
+    issues.warning.push(...basicChecks.keyboard)
+
+    this.checkSemanticStructure(container, issues)
+
+    this.checkARIAImplementation(container, issues)
+
     if (includeColorContrast) {
       await this.checkColorContrast(container, issues)
-    }
+    }
+
     if (includeKeyboardTest) {
       this.checkKeyboardNavigation(container, issues)
-    }
-    this.checkFocusManagement(container, issues)
-    this.checkScreenReaderCompatibility(container, issues)
-    const totalIssues =
-      issues.critical.length + issues.warning.length + issues.info.length
+    }
+
+    this.checkFocusManagement(container, issues)
+
+    this.checkScreenReaderCompatibility(container, issues)
+
     const score = Math.max(
       0,
       100 -
@@ -92,7 +93,7 @@ export class AccessibilityTester {
   private checkSemanticStructure(
     container: Element,
     issues: AccessibilityReport["issues"]
-  ): void {
+  ): void {
     const headings = container.querySelectorAll("h1, h2, h3, h4, h5, h6")
     let previousLevel = 0
 
@@ -110,13 +111,15 @@ export class AccessibilityTester {
       }
 
       previousLevel = level
-    })
+    })
+
     const landmarks = container.querySelectorAll(
       "main, nav, aside, section, article, header, footer"
     )
     if (landmarks.length === 0) {
       issues.warning.push("No landmark elements found for navigation")
-    }
+    }
+
     const lists = container.querySelectorAll("ul, ol")
     lists.forEach((list) => {
       const listItems = list.querySelectorAll("li")
@@ -129,7 +132,7 @@ export class AccessibilityTester {
   private checkARIAImplementation(
     container: Element,
     issues: AccessibilityReport["issues"]
-  ): void {
+  ): void {
     const interactiveElements = container.querySelectorAll(
       "button, a, input, select, textarea, [role='button'], [role='link']"
     )
@@ -146,7 +149,8 @@ export class AccessibilityTester {
           `Interactive element ${index + 1} lacks accessible name`
         )
       }
-    })
+    })
+
     const elementsWithRoles = container.querySelectorAll("[role]")
     elementsWithRoles.forEach((element) => {
       const role = element.getAttribute("role")
@@ -174,7 +178,8 @@ export class AccessibilityTester {
       if (role && !validRoles.includes(role)) {
         issues.warning.push(`Invalid ARIA role: ${role}`)
       }
-    })
+    })
+
     const ariaElements = container.querySelectorAll(
       "[aria-expanded], [aria-hidden], [aria-current]"
     )
@@ -223,8 +228,7 @@ export class AccessibilityTester {
               )}:1) for text element`
             )
           }
-        } catch (error) {
-        }
+        } catch (error) {}
       }
     }
   }
@@ -247,7 +251,8 @@ export class AccessibilityTester {
           } has positive tabindex which can disrupt tab order`
         )
       }
-    })
+    })
+
     const skipLinks = container.querySelectorAll("a[href^='#']")
     if (skipLinks.length === 0) {
       issues.info.push("Consider adding skip links for keyboard navigation")
@@ -274,13 +279,14 @@ export class AccessibilityTester {
   private checkScreenReaderCompatibility(
     container: Element,
     issues: AccessibilityReport["issues"]
-  ): void {
+  ): void {
     const srOnlyElements = container.querySelectorAll(
       ".sr-only, .visually-hidden"
     )
     if (srOnlyElements.length === 0) {
       issues.info.push("Consider adding screen reader only content for context")
-    }
+    }
+
     const liveRegions = container.querySelectorAll("[aria-live]")
     liveRegions.forEach((element) => {
       const politeness = element.getAttribute("aria-live")
@@ -342,7 +348,8 @@ export class AccessibilityTester {
         "🔊 Add screen reader announcements for dynamic content"
       )
       recommendations.push("🎨 Implement high contrast mode support")
-    }
+    }
+
     recommendations.push(
       "🧪 Test with actual screen readers (NVDA, JAWS, VoiceOver)"
     )
@@ -350,29 +357,40 @@ export class AccessibilityTester {
     recommendations.push("🔄 Set up automated accessibility testing in CI/CD")
 
     return recommendations
-  }
+  }
+
   async getLighthouseScore(): Promise<number> {
-    try {
+    try {
       const report = await this.runAudit()
       return report.score
     } catch (error) {
       return 0
     }
   }
-}
-export const accessibilityTester = AccessibilityTester.getInstance()
+}
+
+export const accessibilityTester = AccessibilityTester.getInstance()
+
 export async function quickA11yCheck(containerId?: string): Promise<void> {
   const report = await accessibilityTester.runAudit(containerId)
   if (report.issues.critical.length > 0) {
-    report.issues.critical.forEach((issue) => 
+    report.issues.critical.forEach((issue) => {
+      console.error("Critical A11y Issue:", issue)
+    })
   }
 
   if (report.issues.warning.length > 0) {
-    report.issues.warning.forEach((issue) => 
+    report.issues.warning.forEach((issue) => {
+      console.warn("A11y Warning:", issue)
+    })
   }
 
   if (report.issues.info.length > 0) {
-    report.issues.info.forEach((issue) => 
+    report.issues.info.forEach((issue) => {
+      console.info("A11y Info:", issue)
+    })
   }
-  report.recommendations.forEach((rec) => 
+  report.recommendations.forEach((rec) => {
+    console.log("A11y Recommendation:", rec)
+  })
 }
