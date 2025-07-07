@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "../../context/ThemeContext"
@@ -21,14 +20,14 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
   const links: NavigationLink[] = [
     { href: "#top", text: "Home", ariaLabel: "Navigate to home section" },
     {
-      href: "#skills",
-      text: "Skills",
-      ariaLabel: "Navigate to skills section",
-    },
-    {
       href: "#experience",
       text: "Experience",
       ariaLabel: "Navigate to experience section",
+    },
+    {
+      href: "#skills",
+      text: "Skills",
+      ariaLabel: "Navigate to skills section",
     },
     {
       href: "#projects",
@@ -39,6 +38,11 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       href: "#certificates",
       text: "Certificates",
       ariaLabel: "Navigate to certificates section",
+    },
+    {
+      href: "#about",
+      text: "About",
+      ariaLabel: "Navigate to about section",
     },
     {
       href: "#contact",
@@ -53,7 +57,8 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
 
   const closeMenu = useCallback(() => {
     setIsOpen(false)
-  }, [])
+  }, [])
+
   const handleNavigation = useCallback(
     (href: string) => {
       if (startTransition) {
@@ -67,24 +72,29 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       }
     },
     [startTransition, closeMenu]
-  )
+  )
+
   const handleNavClick = useCallback(
     (e: React.MouseEvent, sectionId: string) => {
-      e.preventDefault()
-      closeMenu()
+      e.preventDefault()
+
+      closeMenu()
+
       const targetId = sectionId === "top" ? "" : sectionId
       const element = targetId
         ? document.getElementById(targetId)
         : document.body
 
-      if (element) {
+      if (element) {
         const headerOffset = 80
         const elementPosition = element.offsetTop
-        const offsetPosition = elementPosition - headerOffset
+        const offsetPosition = elementPosition - headerOffset
+
         window.scrollTo({
           top: targetId ? offsetPosition : 0,
           behavior: "smooth",
-        })
+        })
+
         if (targetId) {
           history.pushState(null, "", `#${targetId}`)
         } else {
@@ -93,7 +103,8 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       }
     },
     [closeMenu]
-  )
+  )
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = links.map((link) => link.href.slice(1))
@@ -120,7 +131,8 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
     handleScroll() // Set initial active section
 
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [links])
+  }, [links])
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -139,7 +151,8 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       document.removeEventListener("keydown", handleEscape)
       document.body.style.overflow = ""
     }
-  }, [isOpen, closeMenu])
+  }, [isOpen, closeMenu])
+
   const NavLink: React.FC<{
     link: NavigationLink
     isMobile?: boolean
@@ -160,7 +173,6 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       aria-label={link.ariaLabel}
       aria-current={isActive ? "page" : undefined}
     >
-      
       {isActive && !isMobile && (
         <motion.div
           className="absolute bottom-0 left-1/2 h-0.5 bg-primary rounded-full"
@@ -198,7 +210,6 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       aria-label="Main navigation"
     >
       <div className="flex items-center gap-4">
-        
         <ul className="hidden md:flex items-center gap-2" role="menubar">
           {links.map((link) => (
             <li key={link.href} role="none">
@@ -256,7 +267,6 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       <AnimatePresence>
         {isOpen && (
           <>
-            
             <motion.div
               className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
               initial={{ opacity: 0 }}
@@ -270,7 +280,8 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
               className={cn(
                 "fixed top-20 right-4 left-4 z-50 md:hidden",
                 "border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl",
-                "backdrop-blur-xl p-6 space-y-2",
+                "backdrop-blur-xl p-6 space-y-2",
+
                 isDark
                   ? "bg-slate-900/95 dark:bg-slate-900/95"
                   : "bg-white/95 dark:bg-slate-900/95"

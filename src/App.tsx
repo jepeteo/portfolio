@@ -73,12 +73,12 @@ const AppContent: React.FC = () => {
   }, [])
 
   React.useEffect(() => {
-    const skillsSection = document.getElementById("skills")
-    if (skillsSection) {
+    const experienceSection = document.getElementById("experience")
+    if (experienceSection) {
       ComponentPreloader.preloadOnIntersection(
-        "experience",
-        () => import("./components/ModernExperience")
-      )(skillsSection)
+        "modern-projects",
+        () => import("./components/ModernProjects")
+      )(experienceSection)
     }
 
     const projectsNav = document.querySelector('a[href*="projects"]')
@@ -137,14 +137,14 @@ const AppContent: React.FC = () => {
       <ModernHeader />
       <main>
         <Hero />
-        <ModernBio />
-        <ModernSkills />
 
         <ErrorBoundary>
           <Suspense fallback={<SectionLoader />}>
             <ModernExperience />
           </Suspense>
         </ErrorBoundary>
+
+        <ModernSkills />
 
         <ErrorBoundary>
           <Suspense fallback={<SectionLoader />}>
@@ -163,6 +163,8 @@ const AppContent: React.FC = () => {
             <ModernCertificates />
           </Suspense>
         </ErrorBoundary>
+
+        <ModernBio />
 
         <Contact />
         <BackToTopButton />
