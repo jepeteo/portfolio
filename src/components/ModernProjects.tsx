@@ -223,12 +223,24 @@ const ModernProjects = memo(() => {
       const hasImageError = imageErrors.has(project.prName)
 
       const [imageError, setImageError] = React.useState(false)
-      const [imageLoading, setImageLoading] = React.useState(true)
+      const [imageLoading, setImageLoading] = React.useState(false)
+      const imageRef = React.useRef<HTMLImageElement>(null)
 
       React.useEffect(() => {
-        setImageError(false)
-        setImageLoading(true)
-      }, [project.prName])
+        if (shouldLoadImage && !hasImageError && !imageError) {
+          setImageError(false)
+          setImageLoading(true)
+
+          // Check if image is already loaded (cached)
+          if (
+            imageRef.current &&
+            imageRef.current.complete &&
+            imageRef.current.naturalHeight > 0
+          ) {
+            setImageLoading(false)
+          }
+        }
+      }, [project.prName, shouldLoadImage, hasImageError, imageError])
 
       const handleImageLoad = React.useCallback(() => {
         setImageError(false)
@@ -273,6 +285,7 @@ const ModernProjects = memo(() => {
               {shouldLoadImage && !hasImageError && !imageError ? (
                 <>
                   <img
+                    ref={imageRef}
                     src={imageSrc}
                     alt={`${project.prName} project preview`}
                     className={`w-full h-full object-cover object-top transition-all duration-[3000ms] ease-in-out group-hover:object-bottom ${
