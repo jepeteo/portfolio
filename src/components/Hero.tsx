@@ -304,6 +304,142 @@ const Hero: React.FC = memo(() => {
         </div>
       </div>
 
+      {/* My Approach Section */}
+      <div
+        className={`container mx-auto px-6 py-12 transition-all duration-1000 delay-700 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        } ${prefersReducedMotion ? "!transition-none" : ""}`}
+        role="region"
+        aria-labelledby="approach-title"
+      >
+        <div className="relative flex items-center justify-center mb-6">
+          {/* Left decorative line */}
+          <div className="flex-1 h-px relative mr-6">
+            <div
+              className={`absolute inset-0 bg-gradient-to-r ${
+                isDark
+                  ? "from-transparent via-purple-500/40 to-blue-500/40"
+                  : "from-transparent via-purple-400/40 to-blue-400/40"
+              } animate-pulse`}
+              style={{
+                animationDuration: "3s",
+                animationDelay: "0s",
+              }}
+            />
+            <div
+              className={`absolute inset-0 bg-gradient-to-r ${
+                isDark
+                  ? "from-transparent via-blue-500/30 to-purple-500/30"
+                  : "from-transparent via-blue-400/30 to-purple-400/30"
+              } animate-pulse`}
+              style={{
+                animationDuration: "2.5s",
+                animationDelay: "1s",
+              }}
+            />
+          </div>
+
+          {/* Title */}
+          <h2
+            id="approach-title"
+            className={`text-sm font-medium whitespace-nowrap ${
+              isDark ? "text-slate-300" : "text-slate-600"
+            }`}
+          >
+            My Approach
+          </h2>
+
+          {/* Right decorative line */}
+          <div className="flex-1 h-px relative ml-6">
+            <div
+              className={`absolute inset-0 bg-gradient-to-l ${
+                isDark
+                  ? "from-transparent via-purple-500/40 to-blue-500/40"
+                  : "from-transparent via-purple-400/40 to-blue-400/40"
+              } animate-pulse`}
+              style={{
+                animationDuration: "3s",
+                animationDelay: "0.5s",
+              }}
+            />
+            <div
+              className={`absolute inset-0 bg-gradient-to-l ${
+                isDark
+                  ? "from-transparent via-blue-500/30 to-purple-500/30"
+                  : "from-transparent via-blue-400/30 to-purple-400/30"
+              } animate-pulse`}
+              style={{
+                animationDuration: "2.5s",
+                animationDelay: "1.5s",
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div
+            className={`p-6 rounded-xl border transition-all duration-300 ${
+              isDark
+                ? "bg-slate-800/40 border-slate-700 hover:border-blue-500/30"
+                : "bg-white/60 border-slate-200 hover:border-blue-300"
+            }`}
+          >
+            <h3
+              className={`text-xl font-semibold mb-3 ${
+                isDark ? "text-blue-300" : "text-blue-600"
+              }`}
+            >
+              Collaborative Partnership
+            </h3>
+            <p className={`${isDark ? "text-slate-300" : "text-slate-600"}`}>
+              I believe in working alongside you as a true partner, sharing
+              insights and expertise to achieve your vision together.
+            </p>
+          </div>
+
+          <div
+            className={`p-6 rounded-xl border transition-all duration-300 ${
+              isDark
+                ? "bg-slate-800/40 border-slate-700 hover:border-purple-500/30"
+                : "bg-white/60 border-slate-200 hover:border-purple-300"
+            }`}
+          >
+            <h3
+              className={`text-xl font-semibold mb-3 ${
+                isDark ? "text-purple-300" : "text-purple-600"
+              }`}
+            >
+              Strategic Thinking
+            </h3>
+            <p className={`${isDark ? "text-slate-300" : "text-slate-600"}`}>
+              Each project begins with understanding your goals and audience,
+              ensuring we create experiences with purpose and direction.
+            </p>
+          </div>
+
+          <div
+            className={`p-6 rounded-xl border transition-all duration-300 ${
+              isDark
+                ? "bg-slate-800/40 border-slate-700 hover:border-emerald-500/30"
+                : "bg-white/60 border-slate-200 hover:border-emerald-300"
+            }`}
+          >
+            <h3
+              className={`text-xl font-semibold mb-3 ${
+                isDark ? "text-emerald-300" : "text-emerald-600"
+              }`}
+            >
+              Continuous Innovation
+            </h3>
+            <p className={`${isDark ? "text-slate-300" : "text-slate-600"}`}>
+              I constantly explore new technologies and techniques to enhance
+              your projects with cutting-edge capabilities.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Expertise Badges Section */}
       <div
         className={`container mx-auto px-6 pb-16 transition-all duration-1000 delay-800 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"

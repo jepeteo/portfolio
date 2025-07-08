@@ -20,8 +20,10 @@ import {
   CheckCircle,
   ArrowRight,
   Github,
-} from "lucide-react"
-import profileImage from "../assets/images/gteo.webp"
+} from "lucide-react"
+
+import profileImage from "../assets/images/gteo.webp"
+
 const resumePDF = "./cv/Theodoros-Mentis-CV.pdf"
 
 const StatsCard = memo(
@@ -39,12 +41,14 @@ const StatsCard = memo(
     const [displayValue, setDisplayValue] = useState("0")
     const [hasAnimated, setHasAnimated] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
-    const cardRef = useRef<HTMLDivElement>(null)
+    const cardRef = useRef<HTMLDivElement>(null)
+
     useEffect(() => {
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting && !hasAnimated) {
-            setIsVisible(true)
+            setIsVisible(true)
+
             const timeout = setTimeout(() => {
               const numericValue = parseInt(stat.value.replace(/\D/g, ""))
               const suffix = stat.value.replace(/\d/g, "")
@@ -134,8 +138,8 @@ const ModernBio: React.FC = () => {
     scalable web solutions and managing complex server environments. My expertise spans from 
     front-end development with modern frameworks to back-end architecture and database optimization.`,
 
-    passion: `What drives me is the challenge of solving complex problems and turning ideas into 
-    reality through clean, efficient code. I specialize in WordPress development, React applications, 
+    passion: `What drives me is the opportunity to transform creative visions into digital reality 
+    through collaborative development. I specialize in WordPress development, React applications, 
     and full-stack solutions that deliver exceptional user experiences.`,
 
     current: `Currently, I focus on building modern web applications using cutting-edge technologies 
@@ -281,7 +285,8 @@ const ModernBio: React.FC = () => {
       <Icon className="w-4 h-4" />
       {label}
     </button>
-  )
+  )
+
   const scrollToContact = () => {
     const contactSection = document.getElementById("contact")
     if (contactSection) {
@@ -316,7 +321,6 @@ const ModernBio: React.FC = () => {
       id="about"
     >
       <div className="container">
-        
         <div className="text-center mb-16">
           <div
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
@@ -361,7 +365,6 @@ const ModernBio: React.FC = () => {
         </div>
 
         <div className="grid lg:grid-cols-5 gap-12 items-start">
-          
           <div className="lg:col-span-2 space-y-8">
             <div
               className={`p-8 rounded-2xl border ${
@@ -370,7 +373,6 @@ const ModernBio: React.FC = () => {
                   : "bg-white/50 backdrop-blur-sm border-slate-200"
               }`}
             >
-              
               <div className="text-center mb-8">
                 <div
                   className={`w-32 h-32 mx-auto mb-4 rounded-3xl flex items-center justify-center relative overflow-hidden ${
@@ -379,7 +381,6 @@ const ModernBio: React.FC = () => {
                       : "bg-gradient-to-br from-blue-100 to-purple-100"
                   }`}
                 >
-                  
                   <img
                     src={profileImage}
                     alt="Theodoros Mentis"
@@ -522,7 +523,6 @@ const ModernBio: React.FC = () => {
                   : "bg-white/50 backdrop-blur-sm border-slate-200"
               }`}
             >
-              
               <div className="flex flex-wrap gap-3 mb-8">
                 <TabButton id="about" label="About" icon={User} />
                 <TabButton id="expertise" label="Expertise" icon={Code2} />
@@ -530,7 +530,6 @@ const ModernBio: React.FC = () => {
               </div>
 
               <div className="min-h-[500px]">
-                
                 {activeSection === "about" && (
                   <div className="space-y-6 animate-fadeIn">
                     <div className="space-y-6">
@@ -712,7 +711,6 @@ const ModernBio: React.FC = () => {
                 : "bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200"
             }`}
           >
-            
             <div className="absolute inset-0 opacity-5">
               <div className="absolute top-0 left-0 w-32 h-32 bg-blue-500 rounded-full -translate-x-16 -translate-y-16"></div>
               <div className="absolute bottom-0 right-0 w-32 h-32 bg-purple-500 rounded-full translate-x-16 translate-y-16"></div>
