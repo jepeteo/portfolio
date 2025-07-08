@@ -11,11 +11,10 @@ const useServiceWorker = () => {
 
           navigator.serviceWorker
             .register(swPath)
-            .then((registration) => {
-              console.log("SW registered successfully: ", registration)
+            .then((_registration) => {
+              // Service worker registered successfully
             })
-            .catch((registrationError) => {
-              console.log("SW registration failed: ", registrationError)
+            .catch((_registrationError) => {
               // If registration fails, unregister any existing ones
               navigator.serviceWorker
                 .getRegistrations()
