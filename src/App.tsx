@@ -7,6 +7,7 @@ import ModernHeader from "./components/navigation/ModernHeader"
 import ModernBio from "./components/ModernBio"
 import ErrorBoundary from "./components/ErrorBoundary"
 import PerformanceDashboard from "./components/PerformanceDashboard"
+import PortfolioSchema from "./components/PortfolioSchema"
 import { LoadingSpinner } from "./components/loading/ModernLoadingStates"
 import { BackToTopButton } from "./components/ui/BackToTopButton"
 import { VercelIntegrations } from "./components/VercelIntegrations"
@@ -23,6 +24,11 @@ import {
 import useServiceWorker from "./hooks/useServiceWorker"
 
 import productionMonitor from "./utils/productionMonitor"
+
+// Import schema testing utilities in development
+if (process.env.NODE_ENV === "development") {
+  import("./utils/schemaTesting")
+}
 
 import "flowbite"
 import "flowbite/dist/flowbite.css"
@@ -106,13 +112,21 @@ const AppContent: React.FC = () => {
 
   useEnhancedSEO({
     ...defaultSEOConfig,
-    structuredData: seoManager.generatePersonSchema({
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": "https://theodorosmentis.com/#person",
       name: "Theodoros Mentis",
+      alternateName: "Theodore Mentis",
       jobTitle: "Senior Full Stack Developer",
       email: "th.mentis@gmail.com",
       url: "https://theodorosmentis.com",
       image: "https://theodorosmentis.com/src/assets/images/teo.png",
-      skills: [
+      sameAs: [
+        "https://github.com/jepeteo",
+        "https://linkedin.com/in/theodorosmentis",
+      ],
+      knowsAbout: [
         "WordPress Development",
         "React Development",
         "JavaScript",
@@ -121,11 +135,44 @@ const AppContent: React.FC = () => {
         "MySQL",
         "Server Administration",
         "Web Development",
+        "Full Stack Development",
+        "E-commerce Development",
+        "Custom Web Applications",
       ],
       location: "Greece",
       description:
-        "Senior Full Stack Developer with 15+ years of experience in WordPress, React, and modern web technologies.",
-    }),
+        "Senior Full Stack Developer with 15+ years of experience in WordPress, React, and modern web technologies. Specializing in scalable web solutions and server administration.",
+      hasCredential: [
+        {
+          "@type": "EducationalOccupationalCredential",
+          name: "15+ Years Professional Web Development Experience",
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          name: "WordPress Expert Developer",
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          name: "React Specialist",
+        },
+      ],
+      worksFor: {
+        "@type": "Organization",
+        name: "Freelance Web Development Services",
+      },
+      owns: [
+        {
+          "@type": "CreativeWork",
+          "@id": "https://theodorosmentis.com/#portfolio",
+          name: "Professional Portfolio",
+        },
+      ],
+      address: {
+        "@type": "Place",
+        addressCountry: "GR",
+        addressLocality: "Greece",
+      },
+    },
   })
 
   return (
@@ -134,6 +181,10 @@ const AppContent: React.FC = () => {
         isDark ? "bg-slate-900 text-white" : "bg-white text-slate-900"
       }`}
     >
+      <PortfolioSchema
+        includePersonSchema={false}
+        includeOrganizationSchema={true}
+      />
       <ModernHeader />
       <main>
         <Hero />

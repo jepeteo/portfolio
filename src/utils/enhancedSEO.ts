@@ -238,27 +238,154 @@ class SEOManager {
     projects: Array<{
       name: string
       description: string
-      url: string
+      url?: string
       technologies: string[]
-      dateCreated: string
+      dateCreated?: string
+      type?: string
+      featured?: boolean
+      imageUrl?: string
+    }>
+  ) {
+    const currentYear = new Date().getFullYear()
+
+    return {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://theodorosmentis.com/#portfolio",
+      name: "Theodoros Mentis Portfolio",
+      description:
+        "Professional portfolio showcasing web development projects, applications, and technical expertise",
+      creator: {
+        "@type": "Person",
+        "@id": "https://theodorosmentis.com/#person",
+        name: "Theodoros Mentis",
+        jobTitle: "Senior Full Stack Developer",
+        sameAs: [
+          "https://github.com/jepeteo",
+          "https://linkedin.com/in/theodorosmentis",
+        ],
+      },
+      dateCreated: "2010",
+      dateModified: currentYear.toString(),
+      inLanguage: "en-US",
+      genre: ["Web Development", "Software Development", "Portfolio"],
+      hasPart: projects.map((project, index) => ({
+        "@type":
+          project.type === "E-Shop" || project.type === "E-commerce"
+            ? "WebApplication"
+            : "SoftwareApplication",
+        "@id": `https://theodorosmentis.com/#project-${index}`,
+        name: project.name,
+        description: project.description,
+        url: project.url || `https://theodorosmentis.com/#project-${index}`,
+        applicationCategory: this.mapProjectTypeToCategory(project.type),
+        programmingLanguage: project.technologies,
+        dateCreated: project.dateCreated || currentYear.toString(),
+        ...(project.imageUrl && { image: project.imageUrl }),
+        ...(project.featured && {
+          additionalProperty: {
+            "@type": "PropertyValue",
+            name: "featured",
+            value: "true",
+          },
+        }),
+        creator: {
+          "@type": "Person",
+          "@id": "https://theodorosmentis.com/#person",
+          name: "Theodoros Mentis",
+        },
+      })),
+      additionalProperty: [
+        {
+          "@type": "PropertyValue",
+          name: "totalProjects",
+          value: projects.length.toString(),
+        },
+        {
+          "@type": "PropertyValue",
+          name: "featuredProjects",
+          value: projects.filter((p) => p.featured).length.toString(),
+        },
+      ],
+    }
+  }
+
+  private mapProjectTypeToCategory(type?: string): string {
+    const categoryMap: Record<string, string> = {
+      "E-Shop": "E-commerce Application",
+      "E-commerce": "E-commerce Application",
+      "Dynamic Site": "Web Application",
+      Portfolio: "Portfolio Website",
+      Business: "Business Application",
+      Blog: "Content Management System",
+    }
+    return categoryMap[type || ""] || "Web Application"
+  }
+
+  generateReactProjectSchema(
+    projects: Array<{
+      id: string
+      title: string
+      description: string
+      technologies: string[]
+      githubUrl?: string
+      liveUrl?: string
+      date?: string
+      status?: string
+      featured?: boolean
+      performance?: string
+      image?: string
     }>
   ) {
     return {
       "@context": "https://schema.org",
-      "@type": "CreativeWork",
-      name: "Theodore Mentis Portfolio",
-      description: "Portfolio showcasing web development projects and skills",
-      creator: {
-        "@type": "Person",
-        name: "Theodore Mentis",
-      },
-      hasPart: projects.map((project) => ({
-        "@type": "SoftwareApplication",
-        name: project.name,
-        description: project.description,
-        url: project.url,
-        programmingLanguage: project.technologies,
-        dateCreated: project.dateCreated,
+      "@type": "ItemList",
+      "@id": "https://theodorosmentis.com/#react-projects",
+      name: "React Projects by Theodoros Mentis",
+      description:
+        "Collection of React applications and components showcasing modern web development skills",
+      numberOfItems: projects.length,
+      itemListElement: projects.map((project, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "SoftwareApplication",
+          "@id": `https://theodorosmentis.com/#react-project-${project.id}`,
+          name: project.title,
+          description: project.description,
+          applicationCategory: "Web Application",
+          programmingLanguage: project.technologies,
+          ...(project.liveUrl && { url: project.liveUrl }),
+          ...(project.githubUrl && {
+            codeRepository: project.githubUrl,
+            sameAs: [project.githubUrl],
+          }),
+          dateCreated: project.date || new Date().getFullYear().toString(),
+          ...(project.image && { image: project.image }),
+          ...(project.performance && {
+            additionalProperty: {
+              "@type": "PropertyValue",
+              name: "performanceScore",
+              value: project.performance,
+            },
+          }),
+          applicationSubCategory:
+            project.status === "completed"
+              ? "Production Application"
+              : "Development Project",
+          creator: {
+            "@type": "Person",
+            "@id": "https://theodorosmentis.com/#person",
+            name: "Theodoros Mentis",
+          },
+          ...(project.featured && {
+            isPartOf: {
+              "@type": "CreativeWork",
+              "@id": "https://theodorosmentis.com/#featured-projects",
+              name: "Featured Projects",
+            },
+          }),
+        },
       })),
     }
   }
