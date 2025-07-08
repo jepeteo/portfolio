@@ -102,7 +102,7 @@ export const SECURITY_CONFIG: SecurityConfig = {
         "https://www.google-analytics.com",
         "https://va.vercel-scripts.com", // Vercel Analytics
         "https://vitals.vercel-insights.com", // Vercel Speed Insights
-        "https://us-assets.i.posthog.com", // PostHog assets
+        "https://eu-assets.i.posthog.com", // PostHog assets (EU region)
         "https://app.posthog.com", // PostHog main domain
       ] as string[],
       styleSrc: [
@@ -131,8 +131,8 @@ export const SECURITY_CONFIG: SecurityConfig = {
         "https://www.google-analytics.com", // For analytics
         "https://analytics.google.com",
         "https://vitals.vercel-insights.com", // Vercel Speed Insights
-        "https://us.i.posthog.com", // PostHog events endpoint
-        "https://us-assets.i.posthog.com", // PostHog assets
+        "https://eu.i.posthog.com", // PostHog events endpoint (EU region)
+        "https://eu-assets.i.posthog.com", // PostHog assets (EU region)
         "https://app.posthog.com", // PostHog main domain
       ],
       frameSrc: ["'none'"],

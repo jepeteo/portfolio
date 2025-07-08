@@ -7,11 +7,11 @@ export interface SecurityHeaders {
 export function getSecurityHeaders(): SecurityHeaders {
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://cdn.emailjs.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://us-assets.i.posthog.com https://app.posthog.com",
+    "script-src 'self' 'unsafe-inline' https://cdn.emailjs.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu-assets.i.posthog.com https://app.posthog.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: https:",
-    "connect-src 'self' https://api.emailjs.com https://vitals.vercel-insights.com https://us.i.posthog.com https://us-assets.i.posthog.com https://app.posthog.com",
+    "connect-src 'self' https://api.emailjs.com https://vitals.vercel-insights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://app.posthog.com",
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",

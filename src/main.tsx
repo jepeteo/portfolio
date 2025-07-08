@@ -8,7 +8,7 @@ import "/src/index.css"
 // PostHog configuration
 const posthogKey = import.meta.env.VITE_PUBLIC_POSTHOG_KEY
 const posthogHost =
-  import.meta.env.VITE_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com"
+  import.meta.env.VITE_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com"
 const posthogEnabled = import.meta.env.VITE_ENABLE_POSTHOG === "true"
 
 const options = {
@@ -16,12 +16,6 @@ const options = {
   // Development-friendly settings
   capture_pageview: false, // We'll manually track pageviews
   disable_session_recording: import.meta.env.DEV,
-  loaded: (posthog: any) => {
-    // PostHog is ready - can be used for debugging
-    if (import.meta.env.DEV && posthog) {
-      console.log("PostHog initialized successfully")
-    }
-  },
 }
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
