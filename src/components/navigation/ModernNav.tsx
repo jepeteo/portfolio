@@ -210,7 +210,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       aria-label="Main navigation"
     >
       <div className="flex items-center gap-4">
-        <ul className="hidden md:flex items-center gap-2" role="menubar">
+        <ul className="hidden lg:flex items-center gap-2" role="menubar">
           {links.map((link) => (
             <li key={link.href} role="none">
               <NavLink link={link} isActive={activeSection === link.href} />
@@ -247,7 +247,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
           variant="ghost"
           size="sm"
           onClick={toggleMenu}
-          className="md:hidden p-2 rounded-lg"
+          className="lg:hidden p-2 rounded-lg"
           aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={isOpen}
           aria-controls="mobile-menu"
@@ -268,7 +268,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
         {isOpen && (
           <>
             <motion.div
-              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -278,7 +278,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
             <motion.div
               id="mobile-menu"
               className={cn(
-                "fixed top-20 right-4 left-4 z-50 md:hidden",
+                "fixed top-20 right-4 left-4 z-50 lg:hidden",
                 "border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl",
                 "backdrop-blur-xl p-6 space-y-2",
 

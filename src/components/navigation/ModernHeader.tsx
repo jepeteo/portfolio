@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { validateImageSrc } from "../../utils/validation"
 import { cn, typography } from "../../utils/styles"
 import ModernNav from "../navigation/ModernNav"
 
@@ -10,7 +9,7 @@ interface ModernHeaderProps {
 
 const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = useState(false)
-  const logoSrc = validateImageSrc("/images/teo-square.webp", "Portfolio Logo")
+  // Logo temporarily removed until professional photo is available
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,44 +70,10 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
           }}
           aria-label="Go to homepage"
         >
-          <motion.div
-            className="relative"
-            whileHover={{ rotate: 5 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
-            <div
-              className={cn(
-                "relative w-12 h-12 rounded-full overflow-hidden",
-                "border-2 border-primary/20 shadow-lg",
-                "before:absolute before:inset-0 before:bg-gradient-to-br",
-                "before:from-primary/10 before:to-accent/10 before:rounded-full"
-              )}
-            >
-              <img
-                src={logoSrc}
-                alt="Theodoros Mentis - Portfolio Logo"
-                width={48}
-                height={48}
-                className="w-full h-full object-cover relative z-10"
-                loading="eager"
-              />
-            </div>
-
-            <motion.div
-              className="absolute inset-0 rounded-full border-2 border-primary/30"
-              animate={{
-                rotate: 360,
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                rotate: { duration: 8, repeat: Infinity, ease: "linear" },
-                scale: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-              }}
-            />
-          </motion.div>
+          {/* Logo temporarily removed until professional photo is available */}
 
           <motion.div
-            className="hidden sm:block"
+            className="block" // Show title on all screen sizes
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
@@ -117,7 +82,9 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
               className={cn(
                 typography.heading.h4,
                 "font-bold text-text-primary leading-tight",
-                "group-hover:text-primary transition-colors duration-200"
+                "group-hover:text-primary transition-colors duration-200",
+                // Responsive text sizing for better mobile display
+                "text-base sm:text-lg lg:text-xl xl:text-2xl"
               )}
             >
               <span className="text-text-primary">Theodoros</span>{" "}
@@ -126,7 +93,9 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
             <p
               className={cn(
                 typography.body.small,
-                "text-text-muted opacity-80 hidden md:block"
+                "text-text-muted opacity-80 hidden lg:block",
+                // Consistent subtitle sizing - show only on desktop (lg+)
+                "text-xs lg:text-sm"
               )}
             >
               Full Stack Developer • WordPress Expert
