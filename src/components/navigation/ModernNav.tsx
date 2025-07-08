@@ -309,32 +309,6 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
                   </motion.div>
                 ))}
               </div>
-
-              <motion.div
-                className="pt-4 mt-4 border-t border-border"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-              >
-                <div className="flex items-center justify-between">
-                  <span
-                    className={cn(typography.body.small, "text-text-muted")}
-                  >
-                    {isDark ? "Dark" : "Light"} Mode
-                  </span>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={toggleTheme}
-                    className="p-2 rounded-lg"
-                  >
-                    <Icon
-                      icon={isDark ? icons.theme.sun : icons.theme.moon}
-                      size="sm"
-                    />
-                  </Button>
-                </div>
-              </motion.div>
             </motion.div>
           </>
         )}
