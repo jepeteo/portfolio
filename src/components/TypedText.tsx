@@ -8,9 +8,10 @@ const TypedText: React.FC = memo(() => {
   return (
     <ReactTyped
       strings={[
-        "SENIOR FULL STACK DEVELOPER",
-        "WORDPRESS &amp; WOOCOMMERCE EXPERT",
-        "SERVER ADMINISTRATOR",
+        "Building your vision together",
+        "Listening to your ideas first",
+        "Co-creating digital experiences",
+        "Partnering for your success",
       ]}
       typeSpeed={48}
       backSpeed={24}

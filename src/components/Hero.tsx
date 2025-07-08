@@ -12,12 +12,13 @@ const Hero: React.FC = memo(() => {
   const { isDark } = useTheme()
   const heroRef = useRef<HTMLElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+
   const prefersReducedMotion = useReducedMotion()
   const { announce } = useScreenReader()
   const { createSkipLink } = useSkipLinks()
 
-  useEffect(() => {
+  useEffect(() => {
     createSkipLink("main-content", "Skip to main content")
   }, []) // Remove dependency to prevent re-running
 
@@ -26,7 +27,8 @@ const Hero: React.FC = memo(() => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true)
+            setIsVisible(true)
+
             announce("Hero section loaded", "polite")
           }
         })
@@ -44,29 +46,48 @@ const Hero: React.FC = memo(() => {
   return (
     <section
       ref={heroRef}
-      className={`relative min-h-screen flex items-center justify-center pt-24 pb-20 transition-all duration-1000 ${
+      className={`relative min-h-screen flex flex-col items-center justify-center pt-24 pb-20 transition-all duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       } ${prefersReducedMotion ? "!transition-none" : ""}`}
       id="top"
       role="banner"
       aria-label="Hero section - Theodore Mentis, Senior Full Stack Developer"
     >
-      
       <div className="absolute inset-0 overflow-hidden">
         <div
           className={`absolute inset-0 ${
             isDark
-              ? "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
-              : "bg-gradient-to-br from-slate-50 via-white to-slate-100"
+              ? "bg-gradient-to-b from-slate-900 via-slate-800 to-transparent"
+              : "bg-gradient-to-b from-slate-50 via-white to-transparent"
           }`}
         >
-          
           <div
             className={`absolute inset-0 ${
               isDark
                 ? "bg-[linear-gradient(to_right,rgba(148,163,184,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.1)_1px,transparent_1px)]"
                 : "bg-[linear-gradient(to_right,rgba(71,85,105,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(71,85,105,0.1)_1px,transparent_1px)]"
             } bg-[size:50px_50px]`}
+            style={{
+              maskImage:
+                "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
+            }}
+          />
+
+          {/* Bottom fade overlay for seamless transition */}
+          <div
+            className={`absolute inset-x-0 bottom-0 h-32 ${
+              isDark
+                ? "bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent"
+                : "bg-gradient-to-t from-white via-white/80 to-transparent"
+            }`}
+            style={{
+              maskImage:
+                "linear-gradient(to top, black 0%, black 60%, transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to top, black 0%, black 60%, transparent 100%)",
+            }}
           />
 
           <div className="absolute inset-0">
@@ -78,7 +99,7 @@ const Hero: React.FC = memo(() => {
                 } rounded-full animate-pulse`}
                 style={{
                   left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 80}%`, // Keep dots in upper 80% to respect fade
                   animationDelay: `${Math.random() * 3}s`,
                   animationDuration: `${2 + Math.random() * 2}s`,
                 }}
@@ -89,7 +110,6 @@ const Hero: React.FC = memo(() => {
       </div>
 
       <div className="container relative z-10 flex flex-col items-center justify-between min-h-[85vh] lg:flex-row py-16">
-        
         <div
           className={`flex-1 text-center lg:text-left transition-all duration-1000 delay-300 ${
             isVisible
@@ -97,7 +117,6 @@ const Hero: React.FC = memo(() => {
               : "opacity-0 -translate-x-10"
           }`}
         >
-          
           <div className="mb-6">
             <span
               className={`inline-block px-4 py-2 rounded-full text-sm font-medium ${
@@ -139,9 +158,10 @@ const Hero: React.FC = memo(() => {
               isDark ? "text-slate-300" : "text-slate-600"
             }`}
           >
-            With 18+ years of experience crafting scalable web solutions, I
-            specialize in WordPress, React, and modern web technologies. Let's
-            build something extraordinary together.
+            With 18+ years of experience partnering with clients to bring their
+            digital visions to life, I believe the best projects emerge from
+            close collaboration. Together, we transform your ideas into
+            extraordinary web experiences.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -182,15 +202,15 @@ const Hero: React.FC = memo(() => {
             role="group"
             aria-labelledby="tech-stack-title"
           >
-            <h2
+            <h3
               id="tech-stack-title"
-              className={`text-sm font-medium mb-4 ${
+              className={`text-xs font-medium mb-3 ${
                 isDark ? "text-slate-400" : "text-slate-500"
               }`}
             >
               Technologies I work with:
-            </h2>
-            <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+            </h3>
+            <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
               {[
                 "React",
                 "TypeScript",
@@ -222,7 +242,6 @@ const Hero: React.FC = memo(() => {
           }`}
         >
           <div className="relative max-w-lg mx-auto">
-            
             <div
               className={`absolute -inset-4 rounded-3xl ${
                 isDark
@@ -282,6 +301,102 @@ const Hero: React.FC = memo(() => {
               🌍 Open for relocation
             </div>
           </div>
+        </div>
+      </div>
+
+      <div
+        className={`container mx-auto px-6 pb-16 transition-all duration-1000 delay-800 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        } ${prefersReducedMotion ? "!transition-none" : ""}`}
+        role="group"
+        aria-labelledby="expertise-title"
+      >
+        <div className="relative flex items-center justify-center mb-6">
+          {/* Left decorative line */}
+          <div className="flex-1 h-px relative mr-6">
+            <div
+              className={`absolute inset-0 bg-gradient-to-r ${
+                isDark
+                  ? "from-transparent via-blue-500/40 to-purple-500/40"
+                  : "from-transparent via-blue-400/40 to-purple-400/40"
+              } animate-pulse`}
+              style={{
+                animationDuration: "3s",
+                animationDelay: "0s",
+              }}
+            />
+            <div
+              className={`absolute inset-0 bg-gradient-to-r ${
+                isDark
+                  ? "from-transparent via-purple-500/30 to-blue-500/30"
+                  : "from-transparent via-purple-400/30 to-blue-400/30"
+              } animate-pulse`}
+              style={{
+                animationDuration: "2.5s",
+                animationDelay: "1s",
+              }}
+            />
+          </div>
+
+          {/* Title */}
+          <h2
+            id="expertise-title"
+            className={`text-sm font-medium whitespace-nowrap ${
+              isDark ? "text-slate-300" : "text-slate-600"
+            }`}
+          >
+            My expertise areas
+          </h2>
+
+          {/* Right decorative line */}
+          <div className="flex-1 h-px relative ml-6">
+            <div
+              className={`absolute inset-0 bg-gradient-to-l ${
+                isDark
+                  ? "from-transparent via-blue-500/40 to-purple-500/40"
+                  : "from-transparent via-blue-400/40 to-purple-400/40"
+              } animate-pulse`}
+              style={{
+                animationDuration: "3s",
+                animationDelay: "0.5s",
+              }}
+            />
+            <div
+              className={`absolute inset-0 bg-gradient-to-l ${
+                isDark
+                  ? "from-transparent via-purple-500/30 to-blue-500/30"
+                  : "from-transparent via-purple-400/30 to-blue-400/30"
+              } animate-pulse`}
+              style={{
+                animationDuration: "2.5s",
+                animationDelay: "1.5s",
+              }}
+            />
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-4 justify-center items-center">
+          {[
+            "Senior Full Stack Developer",
+            "WordPress & WooCommerce Expert",
+            "Server Administrator",
+          ].map((expertise) => (
+            <span
+              key={expertise}
+              className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                expertise === "WordPress & WooCommerce Expert"
+                  ? isDark
+                    ? "bg-gradient-to-r from-emerald-600/20 to-teal-600/20 text-emerald-300 border border-emerald-500/30 hover:from-emerald-600/30 hover:to-teal-600/30"
+                    : "bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-700 border border-emerald-200 hover:from-emerald-200 hover:to-teal-200"
+                  : isDark
+                  ? "bg-gradient-to-r from-blue-600/20 to-purple-600/20 text-blue-300 border border-blue-500/30 hover:from-blue-600/30 hover:to-purple-600/30"
+                  : "bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 border border-blue-200 hover:from-blue-200 hover:to-purple-200"
+              }`}
+              role="listitem"
+              aria-label={`Expertise: ${expertise}`}
+            >
+              {expertise}
+            </span>
+          ))}
         </div>
       </div>
     </section>
