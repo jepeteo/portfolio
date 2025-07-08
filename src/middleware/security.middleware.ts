@@ -1,5 +1,3 @@
-
-
 import { securityConfig } from "../utils/security"
 
 export interface SecurityHeaders {
@@ -9,11 +7,11 @@ export interface SecurityHeaders {
 export function getSecurityHeaders(): SecurityHeaders {
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://cdn.emailjs.com",
+    "script-src 'self' 'unsafe-inline' https://cdn.emailjs.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://us-assets.i.posthog.com https://app.posthog.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: https:",
-    "connect-src 'self' https://api.emailjs.com",
+    "connect-src 'self' https://api.emailjs.com https://vitals.vercel-insights.com https://us.i.posthog.com https://us-assets.i.posthog.com https://app.posthog.com",
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -23,12 +21,17 @@ export function getSecurityHeaders(): SecurityHeaders {
     .filter(Boolean)
     .join("; ")
 
-  return {
-    "Content-Security-Policy": csp,
-    "X-XSS-Protection": "1; mode=block",
-    "X-Content-Type-Options": "nosniff",
-    "X-Frame-Options": "DENY",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
+  return {
+    "Content-Security-Policy": csp,
+
+    "X-XSS-Protection": "1; mode=block",
+
+    "X-Content-Type-Options": "nosniff",
+
+    "X-Frame-Options": "DENY",
+
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+
     "Permissions-Policy": [
       "camera=()",
       "microphone=()",
@@ -39,12 +42,16 @@ export function getSecurityHeaders(): SecurityHeaders {
       "magnetometer=()",
       "gyroscope=()",
       "accelerometer=()",
-    ].join(", "),
+    ].join(", "),
+
     "Cross-Origin-Embedder-Policy": "require-corp",
     "Cross-Origin-Opener-Policy": "same-origin",
-    "Cross-Origin-Resource-Policy": "same-origin",
-    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-    "Expect-CT": "max-age=86400, enforce",
+    "Cross-Origin-Resource-Policy": "same-origin",
+
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+
+    "Expect-CT": "max-age=86400, enforce",
+
     "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
     Pragma: "no-cache",
     Expires: "0",
@@ -105,8 +112,10 @@ export function createRateLimitConfig() {
       retryAfter: Math.ceil(securityConfig.rateLimiting.api.windowMs / 1000),
     },
     standardHeaders: true,
-    legacyHeaders: false,
-    skipSuccessfulRequests: false,
+    legacyHeaders: false,
+
+    skipSuccessfulRequests: false,
+
     skipFailedRequests: false,
   }
 }

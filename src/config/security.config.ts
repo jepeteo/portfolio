@@ -1,5 +1,3 @@
-
-
 interface CSPDirectives {
   defaultSrc: string[]
   scriptSrc: string[]
@@ -92,7 +90,7 @@ interface SecurityConfig {
   }
 }
 
-export const SECURITY_CONFIG: SecurityConfig = {
+export const SECURITY_CONFIG: SecurityConfig = {
   csp: {
     directives: {
       defaultSrc: ["'self'"],
@@ -102,6 +100,10 @@ export const SECURITY_CONFIG: SecurityConfig = {
         "https://cdnjs.cloudflare.com",
         "https://www.googletagmanager.com", // For analytics
         "https://www.google-analytics.com",
+        "https://va.vercel-scripts.com", // Vercel Analytics
+        "https://vitals.vercel-insights.com", // Vercel Speed Insights
+        "https://us-assets.i.posthog.com", // PostHog assets
+        "https://app.posthog.com", // PostHog main domain
       ] as string[],
       styleSrc: [
         "'self'",
@@ -128,6 +130,10 @@ export const SECURITY_CONFIG: SecurityConfig = {
         "https://api.github.com",
         "https://www.google-analytics.com", // For analytics
         "https://analytics.google.com",
+        "https://vitals.vercel-insights.com", // Vercel Speed Insights
+        "https://us.i.posthog.com", // PostHog events endpoint
+        "https://us-assets.i.posthog.com", // PostHog assets
+        "https://app.posthog.com", // PostHog main domain
       ],
       frameSrc: ["'none'"],
       objectSrc: ["'none'"],
@@ -136,12 +142,17 @@ export const SECURITY_CONFIG: SecurityConfig = {
       upgradeInsecureRequests: true,
       reportUri: "/api/csp-report", // For CSP violation reporting
     },
-  },
-  headers: {
-    "X-Frame-Options": "DENY",
-    "X-Content-Type-Options": "nosniff",
-    "X-XSS-Protection": "1; mode=block",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
+  },
+
+  headers: {
+    "X-Frame-Options": "DENY",
+
+    "X-Content-Type-Options": "nosniff",
+
+    "X-XSS-Protection": "1; mode=block",
+
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+
     "Permissions-Policy": [
       "camera=()",
       "microphone=()",
@@ -151,32 +162,38 @@ export const SECURITY_CONFIG: SecurityConfig = {
       "magnetometer=()",
       "accelerometer=()",
       "gyroscope=()",
-    ].join(", "),
-    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+    ].join(", "),
+
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+
     "Cross-Origin-Embedder-Policy": "credentialless",
     "Cross-Origin-Opener-Policy": "same-origin",
     "Cross-Origin-Resource-Policy": "same-origin",
-  },
-  rateLimiting: {
+  },
+
+  rateLimiting: {
     contactForm: {
       windowMs: 15 * 60 * 1000, // 15 minutes
       maxAttempts: 3, // Stricter limit
       blockDuration: 30 * 60 * 1000, // 30 minutes block
       message:
         "Too many contact form submissions. Please wait before trying again.",
-    },
+    },
+
     api: {
       windowMs: 15 * 60 * 1000, // 15 minutes
       maxAttempts: 100, // Per IP
       message: "Rate limit exceeded. Please try again later.",
-    },
+    },
+
     email: {
       windowMs: 60 * 60 * 1000, // 1 hour
       maxAttempts: 5, // Very strict
       blockDuration: 24 * 60 * 60 * 1000, // 24 hours block
       message: "Too many email submissions. Please try again later.",
     },
-  },
+  },
+
   csrf: {
     tokenLength: 32,
     tokenTTL: 30 * 60 * 1000, // 30 minutes
@@ -188,7 +205,8 @@ export const SECURITY_CONFIG: SecurityConfig = {
       sameSite: "strict" as const,
       maxAge: 30 * 60 * 1000, // 30 minutes
     },
-  },
+  },
+
   validation: {
     name: {
       minLength: 2,
@@ -208,11 +226,7 @@ export const SECURITY_CONFIG: SecurityConfig = {
       maxLength: 254,
       pattern:
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-      blockedDomains: [
-        "tempmail.org",
-        "10minutemail.com",
-        "guerrillamail.com",
-      ],
+      blockedDomains: ["tempmail.org", "10minutemail.com", "guerrillamail.com"],
     },
     subject: {
       minLength: 3,
@@ -230,7 +244,8 @@ export const SECURITY_CONFIG: SecurityConfig = {
         /eval\(/gi,
       ],
     },
-  },
+  },
+
   botDetection: {
     honeypotField: "website", // Hidden field name
     minSubmissionTime: 3000, // 3 seconds minimum
@@ -249,7 +264,8 @@ export const SECURITY_CONFIG: SecurityConfig = {
       /crypto/gi,
       /investment/gi,
     ],
-  },
+  },
+
   development: {
     allowUnsafeInline: true,
     allowUnsafeEval: true,
@@ -264,11 +280,14 @@ export const SECURITY_CONFIG: SecurityConfig = {
     enableCSPReporting: true,
     logSecurityEvents: true,
   },
-} as const
+} as const
+
 export function generateCSPString(isDevelopment = false): string {
   const config = SECURITY_CONFIG.csp.directives
-  const directives: string[] = []
-  directives.push(`default-src ${config.defaultSrc.join(" ")}`)
+  const directives: string[] = []
+
+  directives.push(`default-src ${config.defaultSrc.join(" ")}`)
+
   const scriptSrc = [...config.scriptSrc]
   if (isDevelopment && SECURITY_CONFIG.development.allowUnsafeInline) {
     scriptSrc.push("'unsafe-inline'")
@@ -276,7 +295,8 @@ export function generateCSPString(isDevelopment = false): string {
   if (isDevelopment && SECURITY_CONFIG.development.allowUnsafeEval) {
     scriptSrc.push("'unsafe-eval'")
   }
-  directives.push(`script-src ${scriptSrc.join(" ")}`)
+  directives.push(`script-src ${scriptSrc.join(" ")}`)
+
   directives.push(`style-src ${config.styleSrc.join(" ")}`)
   directives.push(`img-src ${config.imgSrc.join(" ")}`)
   directives.push(`font-src ${config.fontSrc.join(" ")}`)
@@ -288,15 +308,18 @@ export function generateCSPString(isDevelopment = false): string {
 
   if (config.upgradeInsecureRequests) {
     directives.push("upgrade-insecure-requests")
-  }
+  }
+
   if (!isDevelopment && config.reportUri) {
     directives.push(`report-uri ${config.reportUri}`)
   }
 
   return directives.join("; ")
-}
+}
+
 export function getSecurityHeaders(): SecurityHeaders {
-  const headers: SecurityHeaders = { ...SECURITY_CONFIG.headers }
+  const headers: SecurityHeaders = { ...SECURITY_CONFIG.headers }
+
   const isDevelopment =
     typeof window !== "undefined" &&
     (window.location.hostname === "localhost" ||
