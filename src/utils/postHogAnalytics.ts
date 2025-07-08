@@ -1,4 +1,8 @@
-import posthog from "posthog-js"
+// NOTE: This file is deprecated in favor of the official PostHog React integration
+// Use the usePostHog() hook from 'posthog-js/react' instead of importing this directly
+// This file is kept for backward compatibility with existing productionMonitor
+
+let posthogInstance: any = null
 
 interface PostHogConfig {
   apiKey: string
@@ -8,7 +12,6 @@ interface PostHogConfig {
 
 class PostHogAnalytics {
   private static instance: PostHogAnalytics
-  private isInitialized = false
 
   static getInstance(): PostHogAnalytics {
     if (!PostHogAnalytics.instance) {
@@ -17,209 +20,154 @@ class PostHogAnalytics {
     return PostHogAnalytics.instance
   }
 
-  initialize(config: PostHogConfig) {
-    if (this.isInitialized) {
-      console.debug("PostHog already initialized, skipping...")
+  // Set the PostHog instance from the React provider
+  setPostHogInstance(instance: any) {
+    posthogInstance = instance
+  }
+
+  initialize(_config: PostHogConfig) {
+    // This method is now deprecated - initialization is handled by PostHogProvider
+    console.warn(
+      "PostHogAnalytics.initialize() is deprecated. Use PostHogProvider instead."
+    )
+    return
+  }
+
+  trackPageView(path?: string, additionalProperties?: Record<string, any>) {
+    if (!posthogInstance) {
       return
     }
 
-    try {
-      // Initialize PostHog
-      posthog.init(config.apiKey, {
-        api_host: config.host || "https://app.posthog.com",
-        // Privacy-focused configuration
-        capture_pageview: false, // We'll manually track pageviews
-        capture_pageleave: true,
-        disable_session_recording: false, // Enable session recordings for UX insights
-        disable_surveys: false,
-        disable_compression: false,
-
-        // Performance optimizations
-        loaded: (posthog) => {
-          if (process.env.NODE_ENV === "development") {
-            // PostHog initialized successfully - console logging disabled
-            posthog.debug(false) // Disable debug mode to reduce console noise
-          }
-        },
-
-        // Custom configuration for portfolio
-        person_profiles: "identified_only", // Only create profiles for identified users
-        bootstrap: {
-          // Preload user properties if available
-        },
-
-        // GDPR compliance
-        opt_out_capturing_by_default: false,
-        respect_dnt: true, // Respect Do Not Track headers
-
-        ...config.options,
-      })
-
-      this.isInitialized = true
-    } catch (error) {
-      console.error("Failed to initialize PostHog:", error)
-      // Don't set isInitialized to true if initialization failed
-    }
-  }
-
-  // Page tracking
-  trackPageView(path?: string, properties?: Record<string, any>) {
-    if (!this.isInitialized) return
-
-    posthog.capture("$pageview", {
+    posthogInstance.capture("$pageview", {
       $current_url: path || window.location.href,
-      ...properties,
+      timestamp: Date.now(),
+      ...additionalProperties,
     })
   }
 
-  // Custom event tracking
   trackEvent(eventName: string, properties?: Record<string, any>) {
-    if (!this.isInitialized) return
+    if (!posthogInstance) {
+      return
+    }
 
-    posthog.capture(eventName, {
-      timestamp: new Date().toISOString(),
-      user_agent: navigator.userAgent,
+    posthogInstance.capture(eventName, {
+      timestamp: Date.now(),
+      url: window.location.href,
       ...properties,
     })
   }
 
-  // Portfolio-specific tracking methods
-  trackProjectView(
-    projectName: string,
-    projectType: string,
-    featured: boolean = false
-  ) {
-    this.trackEvent("project_viewed", {
-      project_name: projectName,
-      project_type: projectType,
-      is_featured: featured,
-      section: "portfolio",
-    })
-  }
-
-  trackSkillsInteraction(skillCategory: string, skillName?: string) {
-    this.trackEvent("skills_interaction", {
-      skill_category: skillCategory,
-      skill_name: skillName,
-      section: "skills",
-    })
-  }
-
-  trackContactFormSubmission(formData: {
-    hasName: boolean
-    hasEmail: boolean
-    hasPhone: boolean
-    hasCompany: boolean
-    messageLength: number
-  }) {
-    this.trackEvent("contact_form_submitted", {
-      form_completion: {
-        name_provided: formData.hasName,
-        email_provided: formData.hasEmail,
-        phone_provided: formData.hasPhone,
-        company_provided: formData.hasCompany,
-        message_length: formData.messageLength,
-      },
-      section: "contact",
-    })
-  }
-
-  trackCVDownload() {
-    this.trackEvent("cv_downloaded", {
-      section: "bio",
-      document_type: "pdf",
-    })
-  }
-
-  trackThemeChange(theme: "light" | "dark") {
-    this.trackEvent("theme_changed", {
-      new_theme: theme,
-      section: "ui",
-    })
-  }
-
-  trackPerformanceMetric(metric: string, value: number, context?: string) {
-    this.trackEvent("performance_metric", {
-      metric_name: metric,
-      metric_value: value,
-      context: context || "general",
-      section: "performance",
-    })
-  }
-
-  trackError(error: {
-    name: string
+  trackError(errorData: {
     message: string
     stack?: string
+    url?: string
+    lineNumber?: number
+    columnNumber?: number
+    userAgent?: string
+    timestamp?: number
     component?: string
+    props?: Record<string, any>
     severity?: "low" | "medium" | "high" | "critical"
   }) {
+    if (!posthogInstance) {
+      return
+    }
+
     this.trackEvent("error_occurred", {
-      error_name: error.name,
-      error_message: error.message,
-      error_stack: error.stack?.substring(0, 500), // Limit stack trace length
-      component: error.component,
-      severity: error.severity || "medium",
-      section: "errors",
+      error_message: errorData.message,
+      error_stack: errorData.stack,
+      error_url: errorData.url || window.location.href,
+      error_line: errorData.lineNumber,
+      error_column: errorData.columnNumber,
+      user_agent: errorData.userAgent || navigator.userAgent,
+      component: errorData.component,
+      props: errorData.props,
+      severity: errorData.severity || "medium",
+      timestamp: errorData.timestamp || Date.now(),
     })
   }
 
-  // User identification (for contact form leads)
-  identifyUser(userId: string, properties?: Record<string, any>) {
-    if (!this.isInitialized) return
+  trackPerformanceMetric(metricName: string, value: number, unit?: string) {
+    if (!posthogInstance) {
+      return
+    }
 
-    posthog.identify(userId, {
-      timestamp: new Date().toISOString(),
-      source: "portfolio_contact",
+    this.trackEvent("performance_metric", {
+      metric_name: metricName,
+      metric_value: value,
+      metric_unit: unit || "ms",
+      url: window.location.href,
+    })
+  }
+
+  trackUserFlow(flowStep: string, additionalData?: Record<string, any>) {
+    if (!posthogInstance) {
+      return
+    }
+
+    this.trackEvent("user_flow_step", {
+      flow_step: flowStep,
+      timestamp: Date.now(),
+      url: window.location.href,
+      ...additionalData,
+    })
+  }
+
+  identify(userId: string, properties?: Record<string, any>) {
+    if (!posthogInstance) {
+      return
+    }
+
+    posthogInstance.identify(userId, {
       ...properties,
     })
   }
 
-  // A/B testing and feature flags
-  isFeatureEnabled(featureKey: string, defaultValue: boolean = false): boolean {
-    if (!this.isInitialized) return defaultValue
-
-    return posthog.isFeatureEnabled(featureKey) ?? defaultValue
+  isFeatureEnabled(featureKey: string, defaultValue = false): boolean {
+    if (!posthogInstance) {
+      return defaultValue
+    }
+    return posthogInstance.isFeatureEnabled(featureKey) ?? defaultValue
   }
 
-  // Set user properties
-  setUserProperties(properties: Record<string, any>) {
-    if (!this.isInitialized) return
-
-    posthog.people.set(properties)
+  updateUserProperties(properties: Record<string, any>) {
+    if (!posthogInstance) {
+      return
+    }
+    posthogInstance.people?.set(properties)
   }
 
-  // Opt-out functionality for privacy compliance
   optOut() {
-    if (!this.isInitialized) return
-    posthog.opt_out_capturing()
+    if (!posthogInstance) {
+      return
+    }
+    posthogInstance.opt_out_capturing()
   }
 
   optIn() {
-    if (!this.isInitialized) return
-    posthog.opt_in_capturing()
+    if (!posthogInstance) {
+      return
+    }
+    posthogInstance.opt_in_capturing()
   }
 
-  // Get session information
   getSessionInfo() {
-    if (!this.isInitialized) return null
-
+    if (!posthogInstance) {
+      return null
+    }
     return {
-      sessionId: posthog.get_session_id(),
-      distinctId: posthog.get_distinct_id(),
-      isIdentified: posthog.get_property("$identified") || false,
+      sessionId: posthogInstance.get_session_id(),
+      distinctId: posthogInstance.get_distinct_id(),
+      isIdentified: posthogInstance.get_property("$identified") || false,
     }
   }
 
-  // Cleanup
-  shutdown() {
-    if (!this.isInitialized) return
-
-    posthog.capture("session_ended")
-    // PostHog doesn't have explicit shutdown, but we can mark as uninitialized
-    this.isInitialized = false
+  endSession() {
+    if (!posthogInstance) {
+      return
+    }
+    posthogInstance.capture("session_ended")
   }
 }
 
 export const postHogAnalytics = PostHogAnalytics.getInstance()
-export default PostHogAnalytics

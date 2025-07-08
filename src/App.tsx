@@ -22,7 +22,8 @@ import {
   seoManager,
 } from "./utils/enhancedSEO"
 import useServiceWorker from "./hooks/useServiceWorker"
-import usePostHog from "./hooks/usePostHog"
+import { usePostHog } from "posthog-js/react"
+import { postHogAnalytics } from "./utils/postHogAnalytics"
 
 import productionMonitor from "./utils/productionMonitor"
 
@@ -63,11 +64,15 @@ const SectionLoader: React.FC = () => (
 const AppContent: React.FC = () => {
   const { isDark } = useTheme()
 
-  // Initialize PostHog analytics
-  const postHog = usePostHog({
-    enableInDevelopment: true,
-    autoPageTracking: true,
-  })
+  // Initialize PostHog analytics (official React hook)
+  const postHog = usePostHog()
+
+  // Connect PostHog instance to our legacy analytics utility
+  React.useEffect(() => {
+    if (postHog) {
+      postHogAnalytics.setPostHogInstance(postHog)
+    }
+  }, [postHog])
 
   useServiceWorker()
 
@@ -80,8 +85,10 @@ const AppContent: React.FC = () => {
       theme: isDark ? "dark" : "light",
     })
 
-    // Also track theme change in PostHog
-    postHog.trackThemeChange(isDark ? "dark" : "light")
+    // Also track theme change in PostHog using standard capture method
+    postHog?.capture("theme_changed", {
+      theme: isDark ? "dark" : "light",
+    })
   }, [isDark, postHog])
 
   React.useEffect(() => {
