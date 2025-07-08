@@ -22,6 +22,7 @@ import {
   seoManager,
 } from "./utils/enhancedSEO"
 import useServiceWorker from "./hooks/useServiceWorker"
+import usePostHog from "./hooks/usePostHog"
 
 import productionMonitor from "./utils/productionMonitor"
 
@@ -62,6 +63,12 @@ const SectionLoader: React.FC = () => (
 const AppContent: React.FC = () => {
   const { isDark } = useTheme()
 
+  // Initialize PostHog analytics
+  const postHog = usePostHog({
+    enableInDevelopment: true,
+    autoPageTracking: true,
+  })
+
   useServiceWorker()
 
   React.useEffect(() => {
@@ -72,7 +79,10 @@ const AppContent: React.FC = () => {
     productionMonitor.trackEvent("theme_change", {
       theme: isDark ? "dark" : "light",
     })
-  }, [isDark])
+
+    // Also track theme change in PostHog
+    postHog.trackThemeChange(isDark ? "dark" : "light")
+  }, [isDark, postHog])
 
   React.useEffect(() => {
     seoManager.optimizeCorewWebVitals()

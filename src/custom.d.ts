@@ -22,5 +22,8 @@ interface ImportMeta {
     VITE_EMAILJS_TEMPLATE_ID: string
     VITE_CONTACT_EMAIL: string
     VITE_ENABLE_MONITORING: string
+    VITE_POSTHOG_API_KEY?: string
+    VITE_POSTHOG_HOST?: string
+    VITE_ENABLE_POSTHOG?: string
   }
 }

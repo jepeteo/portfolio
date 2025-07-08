@@ -1,3 +1,5 @@
+import { postHogAnalytics } from "./postHogAnalytics"
+
 interface ErrorReport {
   id: string
   timestamp: number
@@ -328,47 +330,161 @@ class ProductionMonitor {
   }
 
   private async sendToAnalytics(data: any): Promise<void> {
-    const endpoints = ["https://your-analytics-endpoint.com/api/track"]
-
-    for (const endpoint of endpoints) {
-      try {
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
+    try {
+      // Send errors to PostHog
+      if (data.errors && data.errors.length > 0) {
+        data.errors.forEach((error: ErrorReport) => {
+          postHogAnalytics.trackError({
+            name: error.type,
+            message: error.message,
+            stack: error.stack,
+            component: "production_monitor",
+            severity: this.getErrorSeverity(error),
+          })
         })
-
-        if (response.ok) {
-          return // Success
-        }
-      } catch (error) {
-        continue // Try next endpoint
       }
+
+      // Send performance data to PostHog
+      if (data.performance && data.performance.length > 0) {
+        data.performance.forEach((perf: PerformanceReport) => {
+          // Track Core Web Vitals
+          if (perf.metrics.lcp) {
+            postHogAnalytics.trackPerformanceMetric(
+              "LCP",
+              perf.metrics.lcp,
+              "core_web_vitals"
+            )
+          }
+          if (perf.metrics.fcp) {
+            postHogAnalytics.trackPerformanceMetric(
+              "FCP",
+              perf.metrics.fcp,
+              "core_web_vitals"
+            )
+          }
+          if (perf.metrics.cls) {
+            postHogAnalytics.trackPerformanceMetric(
+              "CLS",
+              perf.metrics.cls,
+              "core_web_vitals"
+            )
+          }
+          if (perf.metrics.fid) {
+            postHogAnalytics.trackPerformanceMetric(
+              "FID",
+              perf.metrics.fid,
+              "core_web_vitals"
+            )
+          }
+          if (perf.metrics.ttfb) {
+            postHogAnalytics.trackPerformanceMetric(
+              "TTFB",
+              perf.metrics.ttfb,
+              "core_web_vitals"
+            )
+          }
+
+          // Track navigation performance
+          postHogAnalytics.trackEvent("navigation_performance", {
+            navigation_type: perf.navigation.type,
+            redirect_count: perf.navigation.redirectCount,
+            dom_content_loaded: perf.navigation.domContentLoaded,
+            load_complete: perf.navigation.loadComplete,
+            session_id: data.sessionId,
+          })
+
+          // Track resource performance for large resources
+          const largeResources = perf.resources.filter(
+            (r) => r.duration > 1000 || r.size > 100000
+          )
+          if (largeResources.length > 0) {
+            postHogAnalytics.trackEvent("large_resources_detected", {
+              resources: largeResources,
+              session_id: data.sessionId,
+            })
+          }
+
+          // Track memory usage if available
+          if (perf.memory) {
+            const memoryUsagePercent =
+              (perf.memory.used / perf.memory.total) * 100
+            if (memoryUsagePercent > 75) {
+              postHogAnalytics.trackEvent("high_memory_usage", {
+                memory_used: perf.memory.used,
+                memory_total: perf.memory.total,
+                usage_percent: memoryUsagePercent,
+                session_id: data.sessionId,
+              })
+            }
+          }
+        })
+      }
+
+      // Track session data
+      postHogAnalytics.trackEvent("monitoring_data_batch", {
+        session_id: data.sessionId,
+        error_count: data.errors?.length || 0,
+        performance_reports: data.performance?.length || 0,
+        batch_timestamp: data.timestamp,
+      })
+    } catch (error) {
+      // Fallback: if PostHog fails, we could still try a backup endpoint
+      console.error("Failed to send analytics to PostHog:", error)
+      throw new Error("PostHog analytics failed")
+    }
+  }
+
+  private getErrorSeverity(
+    error: ErrorReport
+  ): "low" | "medium" | "high" | "critical" {
+    // Determine severity based on error characteristics
+    if (error.type === "javascript" && error.message.includes("Script error")) {
+      return "low" // Often cross-origin script errors
     }
 
-    throw new Error("All analytics endpoints failed")
+    if (error.type === "network" && error.metadata?.status >= 500) {
+      return "high" // Server errors
+    }
+
+    if (error.type === "performance") {
+      const metric = error.metadata?.metric
+      const value = error.metadata?.value
+
+      if (metric === "LCP" && value > 4000) return "high"
+      if (metric === "CLS" && value > 0.25) return "high"
+      if (metric === "FID" && value > 300) return "medium"
+
+      return "medium"
+    }
+
+    if (
+      error.message.includes("ChunkLoadError") ||
+      error.message.includes("Loading CSS chunk")
+    ) {
+      return "medium" // Build/deployment issues
+    }
+
+    return "medium" // Default severity
   }
 
   public trackEvent(event: string, properties?: Record<string, any>): void {
-    if (!this.isProduction) return
-
-    this.captureError({
-      type: "event",
-      message: event,
-      url: window.location.href,
-      properties,
+    // Track in both production and development for PostHog
+    postHogAnalytics.trackEvent(event, {
+      source: "production_monitor",
+      session_id: this.sessionId,
+      user_id: this.userId,
+      ...properties,
     })
   }
 
   public trackPageView(path?: string): void {
-    if (!this.isProduction) return
-
-    this.trackEvent("page_view", {
-      path: path || window.location.pathname,
+    // Track in both production and development for PostHog
+    postHogAnalytics.trackPageView(path, {
+      source: "production_monitor",
       referrer: document.referrer,
       title: document.title,
+      session_id: this.sessionId,
+      user_id: this.userId,
     })
   }
 

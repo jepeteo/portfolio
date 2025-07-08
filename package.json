@@ -31,6 +31,7 @@
     "framer-motion": "^12.15.0",
     "lucide-react": "^0.511.0",
     "nanoid": "^5.0.9",
+    "posthog-js": "^1.256.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
