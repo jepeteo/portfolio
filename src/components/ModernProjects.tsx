@@ -1,6 +1,7 @@
 import React, { useState, useMemo, memo, useCallback } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
+import { useProjectImage } from "../hooks/useProjectImage"
 import myProjects from "../assets/myProjects.json"
 import { Project } from "../types"
 import { isValidProject } from "../utils/validation"
@@ -220,38 +221,15 @@ const ModernProjects = memo(() => {
         project.prName.toLowerCase().replace(/\s+/g, "-")
       const imageSrc = `./images/projects/${imageSlug}.webp`
 
-      const hasImageError = imageErrors.has(project.prName)
+      const hasGlobalImageError = imageErrors.has(project.prName)
 
-      const [imageError, setImageError] = React.useState(false)
-      const [imageLoading, setImageLoading] = React.useState(false)
-      const imageRef = React.useRef<HTMLImageElement>(null)
-
-      React.useEffect(() => {
-        if (shouldLoadImage && !hasImageError && !imageError) {
-          setImageError(false)
-          setImageLoading(true)
-
-          // Check if image is already loaded (cached)
-          if (
-            imageRef.current &&
-            imageRef.current.complete &&
-            imageRef.current.naturalHeight > 0
-          ) {
-            setImageLoading(false)
-          }
-        }
-      }, [project.prName, shouldLoadImage, hasImageError, imageError])
-
-      const handleImageLoad = React.useCallback(() => {
-        setImageError(false)
-        setImageLoading(false)
-      }, [])
-
-      const handleImageErrorLocal = React.useCallback(() => {
-        setImageError(true)
-        setImageLoading(false)
-        handleImageError(project.prName)
-      }, [handleImageError, project.prName])
+      // Use consolidated image loading hook
+      const { imageRef, isLoading, hasError } = useProjectImage({
+        src: imageSrc,
+        shouldLoad: shouldLoadImage && !hasGlobalImageError,
+        onError: handleImageError,
+        projectName: project.prName,
+      })
 
       return (
         <div
@@ -282,20 +260,18 @@ const ModernProjects = memo(() => {
             }`}
           >
             <div className="relative w-full h-64 overflow-hidden">
-              {shouldLoadImage && !hasImageError && !imageError ? (
+              {shouldLoadImage && !hasGlobalImageError && !hasError ? (
                 <>
                   <img
                     ref={imageRef}
                     src={imageSrc}
                     alt={`${project.prName} project preview`}
                     className={`w-full h-full object-cover object-top transition-all duration-[3000ms] ease-in-out group-hover:object-bottom ${
-                      imageLoading ? "opacity-50" : "opacity-100"
+                      isLoading ? "opacity-50" : "opacity-100"
                     }`}
-                    onLoad={handleImageLoad}
-                    onError={handleImageErrorLocal}
                     loading="lazy"
                   />
-                  {imageLoading && (
+                  {isLoading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-slate-200/50 dark:bg-slate-800/50">
                       <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                     </div>
@@ -405,7 +381,7 @@ const ModernProjects = memo(() => {
                 {project.prDescription}
               </p>
 
-              {hasImageError && (
+              {(hasGlobalImageError || hasError) && (
                 <div className="flex items-center justify-center mt-4">
                   <a
                     href={project.prUrl}
