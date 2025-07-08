@@ -19,42 +19,47 @@ class PostHogAnalytics {
 
   initialize(config: PostHogConfig) {
     if (this.isInitialized) {
-      console.warn("PostHog already initialized")
+      console.debug("PostHog already initialized, skipping...")
       return
     }
 
-    // Initialize PostHog
-    posthog.init(config.apiKey, {
-      api_host: config.host || "https://app.posthog.com",
-      // Privacy-focused configuration
-      capture_pageview: false, // We'll manually track pageviews
-      capture_pageleave: true,
-      disable_session_recording: false, // Enable session recordings for UX insights
-      disable_surveys: false,
-      disable_compression: false,
+    try {
+      // Initialize PostHog
+      posthog.init(config.apiKey, {
+        api_host: config.host || "https://app.posthog.com",
+        // Privacy-focused configuration
+        capture_pageview: false, // We'll manually track pageviews
+        capture_pageleave: true,
+        disable_session_recording: false, // Enable session recordings for UX insights
+        disable_surveys: false,
+        disable_compression: false,
 
-      // Performance optimizations
-      loaded: (posthog) => {
-        if (process.env.NODE_ENV === "development") {
-          console.log("🔍 PostHog initialized successfully")
-          posthog.debug() // Enable debug mode in development
-        }
-      },
+        // Performance optimizations
+        loaded: (posthog) => {
+          if (process.env.NODE_ENV === "development") {
+            // PostHog initialized successfully - console logging disabled
+            posthog.debug(false) // Disable debug mode to reduce console noise
+          }
+        },
 
-      // Custom configuration for portfolio
-      person_profiles: "identified_only", // Only create profiles for identified users
-      bootstrap: {
-        // Preload user properties if available
-      },
+        // Custom configuration for portfolio
+        person_profiles: "identified_only", // Only create profiles for identified users
+        bootstrap: {
+          // Preload user properties if available
+        },
 
-      // GDPR compliance
-      opt_out_capturing_by_default: false,
-      respect_dnt: true, // Respect Do Not Track headers
+        // GDPR compliance
+        opt_out_capturing_by_default: false,
+        respect_dnt: true, // Respect Do Not Track headers
 
-      ...config.options,
-    })
+        ...config.options,
+      })
 
-    this.isInitialized = true
+      this.isInitialized = true
+    } catch (error) {
+      console.error("Failed to initialize PostHog:", error)
+      // Don't set isInitialized to true if initialization failed
+    }
   }
 
   // Page tracking

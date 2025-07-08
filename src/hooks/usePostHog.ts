@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { postHogAnalytics } from "../utils/postHogAnalytics"
 
 interface UsePostHogOptions {
@@ -8,8 +8,14 @@ interface UsePostHogOptions {
 
 export const usePostHog = (options: UsePostHogOptions = {}) => {
   const { enableInDevelopment = true, autoPageTracking = true } = options
+  const initializationAttempted = useRef(false)
 
   useEffect(() => {
+    // Prevent multiple initialization attempts
+    if (initializationAttempted.current) {
+      return
+    }
+    initializationAttempted.current = true
     // Get environment variables
     const apiKey = import.meta.env.VITE_POSTHOG_API_KEY
     const host = import.meta.env.VITE_POSTHOG_HOST || "https://app.posthog.com"
@@ -60,8 +66,7 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
             })
 
             if (isDevelopment) {
-              console.log("🚀 PostHog initialized successfully")
-              console.log("📊 Analytics ready for tracking")
+              // PostHog initialized successfully - console logging disabled
             }
           },
         },
@@ -111,7 +116,7 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
         page: window.location.pathname,
       })
     }
-  }, [enableInDevelopment, autoPageTracking])
+  }, []) // Empty dependency array to run only once
 
   // Return PostHog utilities for components to use
   return {

@@ -174,12 +174,9 @@ if (process.env.NODE_ENV === "development") {
   // Run validation after page load
   window.addEventListener("load", () => {
     setTimeout(() => {
-      console.log("🚀 Portfolio Schema Testing Tools Available:")
-      console.log("- window.testPortfolioSchema() - Test all schemas")
-      console.log("- window.validateAllSchemas() - Validate schemas")
-      console.log(
-        "- window.exportSchemaForTesting() - Export for external tools"
-      )
+      // Schema testing tools are available but console logging is disabled
+      // Use window.testPortfolioSchema(), window.validateAllSchemas(),
+      // or window.exportSchemaForTesting() if needed
     }, 1000)
   })
 }

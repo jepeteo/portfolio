@@ -31,6 +31,8 @@ updateDescriptions.js
 
 # Environment variables
 .env
+.env.local
+.env.production
 /src/docs/
 
 # Ignore root docs folder (except README)
