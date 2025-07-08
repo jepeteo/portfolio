@@ -8,9 +8,9 @@ const IMAGE_CACHE = 'portfolio-images-v2'
 
 // Resources to cache immediately
 const STATIC_ASSETS = [
-    '/portfolio/',
-    '/portfolio/index.html',
-    '/portfolio/manifest.json',
+    '/',
+    '/index.html',
+    '/manifest.json',
     // Core CSS and JS will be added dynamically
 ]
 
@@ -148,7 +148,7 @@ async function handleRequest(request) {
         // Return offline fallback for navigation requests
         if (request.mode === 'navigate') {
             const cache = await caches.open(STATIC_CACHE)
-            return await cache.match('/portfolio/index.html') ||
+            return await cache.match('/index.html') ||
                 new Response('Offline', { status: 503, statusText: 'Service Unavailable' })
         }
 
@@ -248,8 +248,8 @@ self.addEventListener('push', (event) => {
         event.waitUntil(
             self.registration.showNotification(data.title, {
                 body: data.body,
-                icon: '/portfolio/icons/icon-192x192.png',
-                badge: '/portfolio/icons/icon-72x72.png'
+                icon: '/icons/icon-192x192.png',
+                badge: '/icons/icon-72x72.png'
             })
         )
     }
