@@ -14,6 +14,12 @@
     <meta name="author" content="Theodoros Mentis" />
     <meta name="robots" content="index, follow" />
 
+    <!-- Content Security Policy for Development -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.emailjs.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://us-assets.i.posthog.com https://app.posthog.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://us.i.posthog.com https://us-assets.i.posthog.com https://app.posthog.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests;"
+    />
+
     <!-- Language and Region Meta Tags -->
     <meta name="language" content="en" />
     <meta name="geo.region" content="GR" />
