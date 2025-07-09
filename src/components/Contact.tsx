@@ -29,13 +29,7 @@ import {
   recordContactFormAttempt,
 } from "../utils/enhancedRateLimit"
 import { CSRFProtection } from "../utils/enhancedCSRF"
-import {
-  useScreenReader,
-  useAccessibleForm,
-  useReducedMotion,
-  useFocusManagement,
-} from "../utils/accessibilityOptimization"
-import { LiveRegion } from "./accessibility/LiveRegion"
+// Accessibility imports removed - not currently used in this component
 
 const Contact: React.FC = memo(() => {
   const { isDark } = useTheme()
@@ -44,10 +38,7 @@ const Contact: React.FC = memo(() => {
     rootMargin: "50px",
   })
 
-  const { announce } = useScreenReader()
-  const { errors: a11yErrors, validateField } = useAccessibleForm()
-  const prefersReducedMotion = useReducedMotion()
-  const { saveFocus, restoreFocus } = useFocusManagement()
+  // Accessibility hooks removed - not currently used in this component
 
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
@@ -81,10 +72,8 @@ const Contact: React.FC = memo(() => {
       let sanitizedValue: string
 
       if (name === "email") {
-
         sanitizedValue = sanitizeEmail(value)
       } else {
-
         sanitizedValue = sanitizeTextInput(value)
       }
 
@@ -108,10 +97,10 @@ const Contact: React.FC = memo(() => {
 
   const validateForm = useCallback((): boolean => {
     console.log("Validating form...")
-    
+
     const rateLimitResult = checkContactFormLimit("default") // Using 'default' as IP placeholder for client-side
     console.log("Rate limit result:", rateLimitResult)
-    
+
     if (!rateLimitResult.allowed) {
       if (rateLimitResult.blocked) {
         setErrors({
@@ -140,18 +129,20 @@ const Contact: React.FC = memo(() => {
 
     console.log("Secure data for bot detection:", {
       ...secureData,
-      submissionTime: Date.now() - startTime
+      submissionTime: Date.now() - startTime,
     })
 
     if (detectBot(secureData)) {
       console.log("Form submission blocked by bot detection")
-      setErrors({ general: "Please wait at least 3 seconds before submitting the form." })
+      setErrors({
+        general: "Please wait at least 3 seconds before submitting the form.",
+      })
       return false
     }
 
     const validationResult = validateContactFormSecure(secureData)
     console.log("Validation result:", validationResult)
-    
+
     if (!validationResult.isValid) {
       setErrors(validationResult.errors)
       return false
@@ -179,7 +170,6 @@ const Contact: React.FC = memo(() => {
 
       const submissionTime = Date.now() - startTime
       if (submissionTime < 3000) {
-
         setErrors({
           general:
             "Please take a moment to review your message before submitting.",
@@ -192,7 +182,6 @@ const Contact: React.FC = memo(() => {
         !emailjsConfig.templateId ||
         !emailjsConfig.publicKey
       ) {
-
         setIsSubmitting(true)
         setSubmitStatus("idle")
 
@@ -217,7 +206,6 @@ const Contact: React.FC = memo(() => {
       setSubmitStatus("idle")
 
       try {
-
         const secureData: SecureContactFormData = {
           ...formData,
           csrfToken,
@@ -235,7 +223,7 @@ const Contact: React.FC = memo(() => {
           reply_to: sanitizedData.email,
         }
 
-        const result = await emailjs.send(
+        await emailjs.send(
           emailjsConfig.serviceId,
           emailjsConfig.templateId,
           templateParams,
@@ -296,7 +284,6 @@ const Contact: React.FC = memo(() => {
       id="contact"
     >
       <div className="container">
-        
         <div className="text-center mb-16">
           <div
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
@@ -330,7 +317,6 @@ const Contact: React.FC = memo(() => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          
           <div className="space-y-8">
             <div>
               <h3
@@ -429,7 +415,6 @@ const Contact: React.FC = memo(() => {
                 : "bg-white/50 backdrop-blur-sm border border-slate-200"
             }`}
           >
-            
             {submitStatus === "success" && (
               <div
                 className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
@@ -459,7 +444,6 @@ const Contact: React.FC = memo(() => {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              
               <div>
                 <label
                   htmlFor="name"
