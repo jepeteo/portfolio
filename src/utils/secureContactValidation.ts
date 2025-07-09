@@ -142,15 +142,12 @@ export const sanitizeContactFormData = (
 export const detectBot = (data: SecureContactFormData): boolean => {
   // Check honeypot field (should be empty for humans)
   if (data.honeypot && data.honeypot.trim() !== "") {
-    console.log("Bot detected: honeypot field filled")
     return true
   }
 
   if (data.timestamp) {
     const submissionTime = Date.now() - data.timestamp
-    console.log(`Submission timing: ${submissionTime}ms since form load`)
     if (submissionTime < 3000) {
-      console.log(`Bot detected: submission too fast (${submissionTime}ms)`)
       return true
     }
   }
@@ -183,10 +180,6 @@ export const detectBot = (data: SecureContactFormData): boolean => {
     pattern.test(combinedText)
   )
   if (matchedPattern) {
-    console.log("Bot detected: suspicious content patterns", {
-      pattern: matchedPattern.toString(),
-      combinedText,
-    })
     return true
   }
 

@@ -65,18 +65,6 @@ const Contact: React.FC = memo(() => {
     publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "",
   }
 
-  // Debug EmailJS config
-  console.log("EmailJS Config:", {
-    serviceId: emailjsConfig.serviceId,
-    templateId: emailjsConfig.templateId,
-    publicKey: emailjsConfig.publicKey ? "***set***" : "***not set***",
-    hasValidConfig: !!(
-      emailjsConfig.serviceId &&
-      emailjsConfig.templateId &&
-      emailjsConfig.publicKey
-    ),
-  })
-
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target
@@ -108,10 +96,7 @@ const Contact: React.FC = memo(() => {
   }, [formData.email])
 
   const validateForm = useCallback((): boolean => {
-    console.log("Validating form...")
-
-    const rateLimitResult = checkContactFormLimit("default") // Using 'default' as IP placeholder for client-side
-    console.log("Rate limit result:", rateLimitResult)
+    const rateLimitResult = checkContactFormLimit("default")
 
     if (!rateLimitResult.allowed) {
       if (rateLimitResult.blocked) {
@@ -135,17 +120,11 @@ const Contact: React.FC = memo(() => {
     const secureData: SecureContactFormData = {
       ...formData,
       csrfToken,
-      timestamp: startTime, // Use the form's start time for bot detection
+      timestamp: startTime,
       honeypot,
     }
 
-    console.log("Secure data for bot detection:", {
-      ...secureData,
-      submissionTime: Date.now() - startTime,
-    })
-
     if (detectBot(secureData)) {
-      console.log("Form submission blocked by bot detection")
       setErrors({
         general: "Please wait at least 3 seconds before submitting the form.",
       })
@@ -153,7 +132,6 @@ const Contact: React.FC = memo(() => {
     }
 
     const validationResult = validateContactFormSecure(secureData)
-    console.log("Validation result:", validationResult)
 
     if (!validationResult.isValid) {
       setErrors(validationResult.errors)
@@ -194,15 +172,7 @@ const Contact: React.FC = memo(() => {
         !emailjsConfig.templateId ||
         !emailjsConfig.publicKey
       ) {
-        console.warn(
-          "EmailJS not configured - simulating successful submission"
-        )
-        console.log("Missing EmailJS configuration:", {
-          serviceId: !emailjsConfig.serviceId,
-          templateId: !emailjsConfig.templateId,
-          publicKey: !emailjsConfig.publicKey,
-        })
-
+        // EmailJS not configured - simulate success for development
         setIsSubmitting(true)
         setSubmitStatus("idle")
 
