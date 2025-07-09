@@ -42,7 +42,8 @@ const Contact: React.FC = memo(() => {
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
     threshold: 0.1,
     rootMargin: "50px",
-  })
+  })
+
   const { announce } = useScreenReader()
   const { errors: a11yErrors, validateField } = useAccessibleForm()
   const prefersReducedMotion = useReducedMotion()
@@ -59,36 +60,43 @@ const Contact: React.FC = memo(() => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
-  >("idle")
+  >("idle")
+
   const [csrfToken, setCsrfToken] = useState(() =>
     CSRFProtection.getCurrentToken()
   )
   const [honeypot, setHoneypot] = useState("")
-  const [startTime] = useState(() => Date.now())
+  const [startTime] = useState(() => Date.now())
+
   const emailjsConfig = {
     serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID || "",
     templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "",
     publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "",
-  }
+  }
+
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target
 
       let sanitizedValue: string
 
-      if (name === "email") {
+      if (name === "email") {
+
         sanitizedValue = sanitizeEmail(value)
-      } else {
+      } else {
+
         sanitizedValue = sanitizeTextInput(value)
       }
 
-      setFormData((prev) => ({ ...prev, [name]: sanitizedValue }))
+      setFormData((prev) => ({ ...prev, [name]: sanitizedValue }))
+
       if (errors[name as keyof ContactFormErrors]) {
         setErrors((prev) => ({ ...prev, [name]: undefined }))
       }
     },
     [errors]
-  )
+  )
+
   const handleEmailBlur = useCallback(() => {
     const emailError = validateFieldEmail(formData.email)
     if (emailError) {
@@ -96,9 +104,14 @@ const Contact: React.FC = memo(() => {
     } else {
       setErrors((prev) => ({ ...prev, email: undefined }))
     }
-  }, [formData.email])
-  const validateForm = useCallback((): boolean => {
+  }, [formData.email])
+
+  const validateForm = useCallback((): boolean => {
+    console.log("Validating form...")
+    
     const rateLimitResult = checkContactFormLimit("default") // Using 'default' as IP placeholder for client-side
+    console.log("Rate limit result:", rateLimitResult)
+    
     if (!rateLimitResult.allowed) {
       if (rateLimitResult.blocked) {
         setErrors({
@@ -116,57 +129,76 @@ const Contact: React.FC = memo(() => {
         })
       }
       return false
-    }
+    }
+
     const secureData: SecureContactFormData = {
       ...formData,
       csrfToken,
-      timestamp: Date.now(),
+      timestamp: startTime, // Use the form's start time for bot detection
       honeypot,
-    }
+    }
+
+    console.log("Secure data for bot detection:", {
+      ...secureData,
+      submissionTime: Date.now() - startTime
+    })
+
     if (detectBot(secureData)) {
-      setErrors({ general: "Invalid submission detected. Please try again." })
+      console.log("Form submission blocked by bot detection")
+      setErrors({ general: "Please wait at least 3 seconds before submitting the form." })
       return false
-    }
+    }
+
     const validationResult = validateContactFormSecure(secureData)
+    console.log("Validation result:", validationResult)
+    
     if (!validationResult.isValid) {
       setErrors(validationResult.errors)
       return false
-    }
+    }
+
     setErrors({})
     return true
   }, [formData, csrfToken, honeypot])
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
-      e.preventDefault()
+      e.preventDefault()
+
       recordContactFormAttempt("default")
 
-      if (!validateForm()) return
+      if (!validateForm()) return
+
       if (!CSRFProtection.validateToken(csrfToken)) {
         setErrors({
           general:
             "Security validation failed. Please refresh the page and try again.",
         })
         return
-      }
+      }
+
       const submissionTime = Date.now() - startTime
-      if (submissionTime < 3000) {
+      if (submissionTime < 3000) {
+
         setErrors({
           general:
             "Please take a moment to review your message before submitting.",
         })
         return
-      }
+      }
+
       if (
         !emailjsConfig.serviceId ||
         !emailjsConfig.templateId ||
         !emailjsConfig.publicKey
-      ) {
+      ) {
+
         setIsSubmitting(true)
         setSubmitStatus("idle")
 
         try {
-          await new Promise((resolve) => setTimeout(resolve, 2000))
+          await new Promise((resolve) => setTimeout(resolve, 2000))
+
           setCsrfToken(CSRFProtection.getCurrentToken())
 
           setFormData({ name: "", email: "", subject: "", message: "" })
@@ -184,14 +216,16 @@ const Contact: React.FC = memo(() => {
       setIsSubmitting(true)
       setSubmitStatus("idle")
 
-      try {
+      try {
+
         const secureData: SecureContactFormData = {
           ...formData,
           csrfToken,
-          timestamp: Date.now(),
+          timestamp: startTime, // Use the form's start time for bot detection
           honeypot,
         }
-        const sanitizedData = sanitizeContactFormData(secureData)
+        const sanitizedData = sanitizeContactFormData(secureData)
+
         const templateParams = {
           from_name: sanitizedData.name,
           from_email: sanitizedData.email,
@@ -206,11 +240,14 @@ const Contact: React.FC = memo(() => {
           emailjsConfig.templateId,
           templateParams,
           emailjsConfig.publicKey
-        )
-        setCsrfToken(CSRFProtection.getCurrentToken())
+        )
+
+        setCsrfToken(CSRFProtection.getCurrentToken())
+
         setFormData({ name: "", email: "", subject: "", message: "" })
         setErrors({})
-        setSubmitStatus("success")
+        setSubmitStatus("success")
+
         setTimeout(() => setSubmitStatus("idle"), 5000)
       } catch (error) {
         setSubmitStatus("error")

@@ -1,4 +1,3 @@
-
 import { securityConfig } from "./security"
 
 interface RateLimitState {
@@ -15,7 +14,8 @@ interface RateLimitResult {
   resetTime: number
   blocked: boolean
   message?: string
-}
+}
+
 export class EnhancedRateLimiter {
   private static getStorageKey(identifier: string, type: string): string {
     return `rate_limit_${type}_${identifier}`
@@ -36,7 +36,7 @@ export class EnhancedRateLimiter {
     if (stored) {
       try {
         state = JSON.parse(stored)
-      } catch (error) {
+      } catch (error) {
         state = {
           attempts: 0,
           lastAttempt: now,
@@ -57,8 +57,7 @@ export class EnhancedRateLimiter {
     const key = this.getStorageKey(identifier, type)
     try {
       localStorage.setItem(key, JSON.stringify(state))
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   private static isWindowExpired(
@@ -79,7 +78,8 @@ export class EnhancedRateLimiter {
   ): RateLimitResult {
     const config = securityConfig.rateLimiting[type]
     const state = this.getState(identifier, type)
-    const now = Date.now()
+    const now = Date.now()
+
     if (this.isBlocked(state)) {
       const resetTime = state.blockUntil!
       return {
@@ -91,7 +91,8 @@ export class EnhancedRateLimiter {
           config.message
         }`,
       }
-    }
+    }
+
     if (this.isWindowExpired(state, config.windowMs)) {
       state.attempts = 0
       state.firstAttempt = now
@@ -118,7 +119,8 @@ export class EnhancedRateLimiter {
   ): RateLimitResult {
     const config = securityConfig.rateLimiting[type]
     const state = this.getState(identifier, type)
-    const now = Date.now()
+    const now = Date.now()
+
     if (success && type === "contactForm") {
       state.attempts = 0
       state.blocked = false
@@ -132,17 +134,20 @@ export class EnhancedRateLimiter {
         resetTime: now + config.windowMs,
         blocked: false,
       }
-    }
+    }
+
     const currentLimit = this.checkRateLimit(identifier, type)
-    if (!currentLimit.allowed && !currentLimit.blocked) {
+    if (!currentLimit.allowed && !currentLimit.blocked) {
       state.blocked = true
       const blockDuration =
         "blockDuration" in config ? config.blockDuration : config.windowMs
       state.blockUntil = now + blockDuration
-    }
+    }
+
     state.attempts += 1
-    state.lastAttempt = now
-    if (state.attempts > config.max * 2) {
+    state.lastAttempt = now
+
+    if (state.attempts > config.max * 2) {
       const blockDuration =
         "blockDuration" in config ? config.blockDuration : config.windowMs
       state.blockUntil = now + blockDuration * 2
@@ -157,8 +162,7 @@ export class EnhancedRateLimiter {
     const key = this.getStorageKey(identifier, type)
     try {
       localStorage.removeItem(key)
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   public static getRemainingTime(
@@ -171,7 +175,8 @@ export class EnhancedRateLimiter {
     }
     return 0
   }
-}
+}
+
 export const checkContactFormLimit = (
   identifier = "default"
 ): RateLimitResult => {
@@ -194,7 +199,8 @@ export const recordEmailAttempt = (
   success = false
 ): RateLimitResult => {
   return EnhancedRateLimiter.recordAttempt(identifier, "email", success)
-}
+}
+
 export const checkRateLimit = (
   identifier: string
 ): { blocked: boolean; blockUntil?: number } => {
