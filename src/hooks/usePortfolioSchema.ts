@@ -27,8 +27,7 @@ interface ReactSchemaProject {
   image?: string
 }
 
-export const usePortfolioSchema = () => {
-  // Transform regular projects for schema
+export const usePortfolioSchema = () => {
   const portfolioProjects = useMemo((): PortfolioSchemaProject[] => {
     return myProjects
       .filter((project: any) => project.prName && project.prDescription)
@@ -42,9 +41,7 @@ export const usePortfolioSchema = () => {
         featured: project.prFeatured || false,
         imageUrl: generateImageUrl(project.prImageSlug),
       }))
-  }, [])
-
-  // Transform React projects for schema
+  }, [])
   const reactProjects = useMemo((): ReactSchemaProject[] => {
     return myReactProjects
       .filter((project: any) => project.title && project.description)
@@ -61,9 +58,7 @@ export const usePortfolioSchema = () => {
         performance: project.performance,
         image: project.image,
       }))
-  }, [])
-
-  // Combined portfolio statistics
+  }, [])
   const portfolioStats = useMemo(() => {
     const totalProjects = portfolioProjects.length + reactProjects.length
     const featuredProjects =
@@ -96,13 +91,9 @@ export const usePortfolioSchema = () => {
     reactProjects,
     portfolioStats,
   }
-}
-
-// Helper functions
+}
 function extractTechnologiesFromProject(project: any): string[] {
-  const technologies: string[] = []
-
-  // Extract from project type
+  const technologies: string[] = []
   if (project.prType) {
     if (
       project.prType.includes("WordPress") ||
@@ -130,9 +121,7 @@ function extractTechnologiesFromProject(project: any): string[] {
         "HTML5"
       )
     }
-  }
-
-  // Extract from tags
+  }
   if (project.prTags) {
     const tags = Array.isArray(project.prTags)
       ? project.prTags
@@ -145,9 +134,7 @@ function extractTechnologiesFromProject(project: any): string[] {
         technologies.push("React", "JavaScript", "CSS3", "HTML5")
       }
     })
-  }
-
-  // Extract from employer/context
+  }
   if (project.prEmployer) {
     technologies.push("Professional Development")
   }
@@ -155,34 +142,22 @@ function extractTechnologiesFromProject(project: any): string[] {
   return [...new Set(technologies)]
 }
 
-function estimateProjectDate(project: any): string {
-  // If we have explicit date information, use it
-  if (project.dateCreated) return project.dateCreated
-
-  // Estimate based on project characteristics
-  const currentYear = new Date().getFullYear()
-
-  // Featured projects are likely more recent
+function estimateProjectDate(project: any): string {
+  if (project.dateCreated) return project.dateCreated
+  const currentYear = new Date().getFullYear()
   if (project.prFeatured) {
     return (currentYear - 1).toString()
-  }
-
-  // E-commerce projects might be more recent
+  }
   if (
     project.prType?.includes("E-Shop") ||
     project.prType?.includes("E-commerce")
   ) {
     return (currentYear - 2).toString()
-  }
-
-  // Default to a reasonable timeframe
+  }
   return (currentYear - 3).toString()
 }
 
 function generateImageUrl(imageSlug?: string): string | undefined {
-  if (!imageSlug) return undefined
-
-  // Generate the expected image URL based on the slug
-  // This matches the pattern used in your project images
+  if (!imageSlug) return undefined
   return `/src/assets/images/projects/${imageSlug}.jpg`
 }

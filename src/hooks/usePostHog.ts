@@ -10,19 +10,15 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
   const { enableInDevelopment = true, autoPageTracking = true } = options
   const initializationAttempted = useRef(false)
 
-  useEffect(() => {
-    // Prevent multiple initialization attempts
+  useEffect(() => {
     if (initializationAttempted.current) {
       return
     }
-    initializationAttempted.current = true
-    // Get environment variables
+    initializationAttempted.current = true
     const apiKey = import.meta.env.VITE_POSTHOG_API_KEY
     const host = import.meta.env.VITE_POSTHOG_HOST || "https://app.posthog.com"
     const enabled = import.meta.env.VITE_ENABLE_POSTHOG === "true"
-    const isDevelopment = import.meta.env.DEV
-
-    // Check if PostHog should be initialized
+    const isDevelopment = import.meta.env.DEV
     const shouldInitialize =
       apiKey && enabled && (enableInDevelopment || !isDevelopment)
 
@@ -34,29 +30,19 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
         )
       }
       return
-    }
-
-    // Initialize PostHog
+    }
     try {
       postHogAnalytics.initialize({
         apiKey,
         host,
-        options: {
-          // Development-friendly settings
+        options: {
           capture_pageview: autoPageTracking,
           disable_session_recording: isDevelopment ? true : false,
-          disable_surveys: isDevelopment,
-
-          // Privacy settings
+          disable_surveys: isDevelopment,
           respect_dnt: true,
-          opt_out_capturing_by_default: false,
-
-          // Performance settings
-          disable_compression: isDevelopment,
-
-          // Custom properties for portfolio context
-          loaded: (posthog: any) => {
-            // Set initial context
+          opt_out_capturing_by_default: false,
+          disable_compression: isDevelopment,
+          loaded: (posthog: any) => {
             posthog.register({
               portfolio_version: "2.0",
               site_type: "portfolio",
@@ -65,40 +51,32 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
               deployment: "vercel",
             })
 
-            if (isDevelopment) {
-              // PostHog initialized successfully - console logging disabled
+            if (isDevelopment) {
             }
           },
         },
-      })
-
-      // Track initial page view if auto tracking is enabled
+      })
       if (autoPageTracking) {
         postHogAnalytics.trackPageView(window.location.pathname, {
           initial_load: true,
           referrer: document.referrer || "direct",
           timestamp: new Date().toISOString(),
         })
-      }
-
-      // Set up user identification based on contact form interactions
+      }
       const handleContactInteraction = () => {
         const contactForm = document.querySelector('form[id*="contact"]')
         if (contactForm) {
           const emailInput = contactForm.querySelector(
             'input[type="email"]'
           ) as HTMLInputElement
-          if (emailInput && emailInput.value) {
-            // Identify user when they start filling contact form
+          if (emailInput && emailInput.value) {
             postHogAnalytics.identifyUser(emailInput.value, {
               interaction_type: "contact_form",
               page: window.location.pathname,
             })
           }
         }
-      }
-
-      // Listen for contact form interactions
+      }
       document.addEventListener("input", (e) => {
         if ((e.target as HTMLElement).closest('form[id*="contact"]')) {
           handleContactInteraction()
@@ -106,19 +84,14 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
       })
     } catch (error) {
       console.error("Failed to initialize PostHog:", error)
-    }
-
-    // Cleanup function
-    return () => {
-      // PostHog doesn't need explicit cleanup, but we can track session end
+    }
+    return () => {
       postHogAnalytics.trackEvent("session_ended", {
         session_duration: Date.now() - performance.timeOrigin,
         page: window.location.pathname,
       })
     }
-  }, []) // Empty dependency array to run only once
-
-  // Return PostHog utilities for components to use
+  }, []) // Empty dependency array to run only once
   return {
     trackEvent: postHogAnalytics.trackEvent.bind(postHogAnalytics),
     trackPageView: postHogAnalytics.trackPageView.bind(postHogAnalytics),

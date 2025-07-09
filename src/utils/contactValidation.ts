@@ -10,10 +10,13 @@ export interface ContactFormErrors {
   email?: string
   subject?: string
   message?: string
-}
+}
+
 export const validateEmail = (email: string): boolean => {
-  if (!email || typeof email !== "string") return false
-  const cleanEmail = email.replace(/\s/g, "")
+  if (!email || typeof email !== "string") return false
+
+  const cleanEmail = email.replace(/\s/g, "")
+
   const emailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
@@ -22,37 +25,46 @@ export const validateEmail = (email: string): boolean => {
     cleanEmail.length >= 5 &&
     cleanEmail.length <= 254
   )
-}
+}
+
 export const validateName = (name: string): boolean => {
   if (!name || typeof name !== "string") return false
 
   const trimmed = name.trim()
 
-  if (trimmed.length < 2 || trimmed.length > 50) return false
-  const nameRegex = /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s\-\'\.]+$/
+  if (trimmed.length < 2 || trimmed.length > 50) return false
+
+  const nameRegex = /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s\-'.]+$/
 
   return nameRegex.test(trimmed)
-}
+}
+
 export const validateSubject = (subject: string): boolean => {
   if (!subject || typeof subject !== "string") return false
 
   const trimmed = subject.trim()
 
-  if (trimmed.length < 3 || trimmed.length > 100) return false
-  const subjectRegex = /^[^<>{}[\]\\\/]*$/
+  if (trimmed.length < 3 || trimmed.length > 100) return false
+
+  // Use a regex that excludes dangerous characters without unnecessary escapes
+  const subjectRegex =
+    /^[^<>{}[\]\\\/]*$/ /* eslint-disable-line no-useless-escape */
 
   return subjectRegex.test(trimmed)
-}
+}
+
 export const validateMessage = (message: string): boolean => {
   if (!message || typeof message !== "string") return false
 
   const trimmed = message.trim()
 
-  if (trimmed.length < 10 || trimmed.length > 2000) return false
+  if (trimmed.length < 10 || trimmed.length > 2000) return false
+
   const messageRegex = /^[^<>{}[\]\\]*$/
 
   return messageRegex.test(trimmed)
-}
+}
+
 export const sanitizeEmail = (email: string): string => {
   if (!email || typeof email !== "string") return ""
 
@@ -72,7 +84,8 @@ export const sanitizeTextInput = (input: string): string => {
     .replace(/javascript:/gi, "") // Remove javascript: protocol
     .replace(/on\w+\s*=/gi, "") // Remove event handlers
     .replace(/data:/gi, "") // Remove data: protocol
-}
+}
+
 export const validateFieldName = (name: string): string | null => {
   if (!name || !name.trim()) {
     return "Name is required"
@@ -144,7 +157,8 @@ export const validateFieldMessage = (message: string): string | null => {
   }
 
   return null
-}
+}
+
 export const validateContactForm = (
   data: ContactFormData
 ): ContactFormErrors => {
@@ -163,10 +177,12 @@ export const validateContactForm = (
   if (messageError) errors.message = messageError
 
   return errors
-}
+}
+
 export const isFormValid = (errors: ContactFormErrors): boolean => {
   return Object.keys(errors).length === 0
-}
+}
+
 export const sanitizeContactForm = (data: ContactFormData): ContactFormData => {
   return {
     name: sanitizeTextInput(data.name),

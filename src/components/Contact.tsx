@@ -29,7 +29,6 @@ import {
   recordContactFormAttempt,
 } from "../utils/enhancedRateLimit"
 import { CSRFProtection } from "../utils/enhancedCSRF"
-// Accessibility imports removed - not currently used in this component
 
 const Contact: React.FC = memo(() => {
   const { isDark } = useTheme()
@@ -37,8 +36,6 @@ const Contact: React.FC = memo(() => {
     threshold: 0.1,
     rootMargin: "50px",
   })
-
-  // Accessibility hooks removed - not currently used in this component
 
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
@@ -140,7 +137,7 @@ const Contact: React.FC = memo(() => {
 
     setErrors({})
     return true
-  }, [formData, csrfToken, honeypot])
+  }, [formData, csrfToken, honeypot, startTime])
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -150,12 +147,17 @@ const Contact: React.FC = memo(() => {
 
       if (!validateForm()) return
 
-      if (!CSRFProtection.validateToken(csrfToken)) {
-        setErrors({
-          general:
-            "Security validation failed. Please refresh the page and try again.",
-        })
-        return
+      if (!CSRFProtection.isTokenValid(csrfToken)) {
+        const newToken = CSRFProtection.getCurrentToken()
+        setCsrfToken(newToken)
+
+        if (!CSRFProtection.isTokenValid(newToken)) {
+          setErrors({
+            general:
+              "Security validation failed. Please refresh the page and try again.",
+          })
+          return
+        }
       }
 
       const submissionTime = Date.now() - startTime
@@ -172,7 +174,6 @@ const Contact: React.FC = memo(() => {
         !emailjsConfig.templateId ||
         !emailjsConfig.publicKey
       ) {
-        // EmailJS not configured - simulate success for development
         setIsSubmitting(true)
         setSubmitStatus("idle")
 
@@ -184,7 +185,7 @@ const Contact: React.FC = memo(() => {
           setFormData({ name: "", email: "", subject: "", message: "" })
           setSubmitStatus("success")
           setTimeout(() => setSubmitStatus("idle"), 5000)
-        } catch (error) {
+        } catch {
           setSubmitStatus("error")
           setTimeout(() => setSubmitStatus("idle"), 5000)
         } finally {
@@ -197,6 +198,15 @@ const Contact: React.FC = memo(() => {
       setSubmitStatus("idle")
 
       try {
+        if (!CSRFProtection.validateToken(csrfToken)) {
+          setErrors({
+            general:
+              "Security validation failed. Please refresh the page and try again.",
+          })
+          setIsSubmitting(false)
+          return
+        }
+
         const secureData: SecureContactFormData = {
           ...formData,
           csrfToken,
@@ -228,7 +238,7 @@ const Contact: React.FC = memo(() => {
         setSubmitStatus("success")
 
         setTimeout(() => setSubmitStatus("idle"), 5000)
-      } catch (error) {
+      } catch {
         setSubmitStatus("error")
         setTimeout(() => setSubmitStatus("idle"), 5000)
       } finally {

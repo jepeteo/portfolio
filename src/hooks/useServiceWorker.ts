@@ -2,20 +2,16 @@ import { useEffect } from "react"
 
 const useServiceWorker = () => {
   useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      // Only register service worker in production mode
+    if ("serviceWorker" in navigator) {
       if (import.meta.env.MODE === "production") {
-        window.addEventListener("load", () => {
-          // Use correct path for Vercel deployment
+        window.addEventListener("load", () => {
           const swPath = "/sw.js"
 
           navigator.serviceWorker
             .register(swPath)
-            .then((_registration) => {
-              // Service worker registered successfully
+            .then((_registration) => {
             })
-            .catch((_registrationError) => {
-              // If registration fails, unregister any existing ones
+            .catch((_registrationError) => {
               navigator.serviceWorker
                 .getRegistrations()
                 .then((registrations) => {
@@ -23,8 +19,7 @@ const useServiceWorker = () => {
                 })
             })
         })
-      } else {
-        // In development, unregister any existing service workers to avoid conflicts
+      } else {
         navigator.serviceWorker.getRegistrations().then((registrations) => {
           registrations.forEach((registration) => {
             registration.unregister()

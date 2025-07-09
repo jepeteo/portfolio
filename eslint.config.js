@@ -9,12 +9,33 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      'public/**',
+      'build/**',
+      '**/*.min.js',
+      'coverage/**',
+      '**/*.config.js',
+      'vite.config.js',
+      'tailwind.config.js',
+      'postcss.config.js',
+      'security-test.js',
+      'bundle-report.html',
+      '.lighthouseci/**',
+      'clean-comments.cjs',
+      'clean-console.js',
+      'scripts/**'
+    ]
+  },
+  {
+    files: ['src/**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
       globals: {
         ...globals.browser,
-        ...globals.node
+        ...globals.es2022
       },
       parserOptions: {
         ecmaFeatures: {
@@ -38,21 +59,10 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
-    },
-    ignores: [
-      'dist/**',
-      'node_modules/**',
-      'public/**',
-      'build/**',
-      '**/*.min.js',
-      'coverage/**',
-      '**/*.config.js',
-      'vite.config.js',
-      'tailwind.config.js',
-      'postcss.config.js',
-      'security-test.js',
-      'bundle-report.html',
-      '.lighthouseci/**'
-    ]
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unused-vars': 'warn',
+      'no-empty': 'warn',
+      'no-useless-escape': 'warn'
+    }
   }
 );

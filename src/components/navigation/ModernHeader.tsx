@@ -8,8 +8,7 @@ interface ModernHeaderProps {
 }
 
 const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
-  const [isScrolled, setIsScrolled] = useState(false)
-  // Logo temporarily removed until professional photo is available
+  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,7 +69,6 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
           }}
           aria-label="Go to homepage"
         >
-          {/* Logo temporarily removed until professional photo is available */}
 
           <motion.div
             className="block" // Show title on all screen sizes
@@ -82,8 +80,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
               className={cn(
                 typography.heading.h4,
                 "font-bold text-text-primary leading-tight",
-                "group-hover:text-primary transition-colors duration-200",
-                // Responsive text sizing for better mobile display
+                "group-hover:text-primary transition-colors duration-200",
                 "text-base sm:text-lg lg:text-xl xl:text-2xl"
               )}
             >
@@ -93,8 +90,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
             <p
               className={cn(
                 typography.body.small,
-                "text-text-muted opacity-80 hidden lg:block",
-                // Consistent subtitle sizing - show only on desktop (lg+)
+                "text-text-muted opacity-80 hidden lg:block",
                 "text-xs lg:text-sm"
               )}
             >

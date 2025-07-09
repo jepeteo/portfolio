@@ -44,9 +44,7 @@ export const useProjectImage = ({
       setHasError(false)
       setIsLoaded(false)
       return
-    }
-
-    // Check if image is already cached
+    }
     if (
       imageRef.current &&
       imageRef.current.complete &&
@@ -55,20 +53,14 @@ export const useProjectImage = ({
       setIsLoaded(true)
       setIsLoading(false)
       return
-    }
-
-    // Start loading
+    }
     setIsLoading(true)
     setHasError(false)
-    setIsLoaded(false)
-
-    // Create new image for preloading
+    setIsLoaded(false)
     const img = new Image()
     img.onload = handleLoad
     img.onerror = handleError
-    img.src = src
-
-    // Cleanup function
+    img.src = src
     return () => {
       img.onload = null
       img.onerror = null

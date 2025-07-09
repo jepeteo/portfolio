@@ -1,6 +1,4 @@
-// NOTE: This file is deprecated in favor of the official PostHog React integration
-// Use the usePostHog() hook from 'posthog-js/react' instead of importing this directly
-// This file is kept for backward compatibility with existing productionMonitor
+
 
 let posthogInstance: any = null
 
@@ -18,15 +16,12 @@ class PostHogAnalytics {
       PostHogAnalytics.instance = new PostHogAnalytics()
     }
     return PostHogAnalytics.instance
-  }
-
-  // Set the PostHog instance from the React provider
+  }
   setPostHogInstance(instance: any) {
     posthogInstance = instance
   }
 
-  initialize(_config: PostHogConfig) {
-    // This method is now deprecated - initialization is handled by PostHogProvider
+  initialize(_config: PostHogConfig) {
     console.warn(
       "PostHogAnalytics.initialize() is deprecated. Use PostHogProvider instead."
     )

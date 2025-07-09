@@ -25,9 +25,7 @@ import useServiceWorker from "./hooks/useServiceWorker"
 import { usePostHog } from "posthog-js/react"
 import { postHogAnalytics } from "./utils/postHogAnalytics"
 
-import productionMonitor from "./utils/productionMonitor"
-
-// Import schema testing utilities in development
+import productionMonitor from "./utils/productionMonitor"
 if (process.env.NODE_ENV === "development") {
   import("./utils/schemaTesting")
 }
@@ -62,12 +60,8 @@ const SectionLoader: React.FC = () => (
 )
 
 const AppContent: React.FC = () => {
-  const { isDark } = useTheme()
-
-  // Initialize PostHog analytics (official React hook)
-  const postHog = usePostHog()
-
-  // Connect PostHog instance to our legacy analytics utility
+  const { isDark } = useTheme()
+  const postHog = usePostHog()
   React.useEffect(() => {
     if (postHog) {
       postHogAnalytics.setPostHogInstance(postHog)
@@ -83,9 +77,7 @@ const AppContent: React.FC = () => {
   React.useEffect(() => {
     productionMonitor.trackEvent("theme_change", {
       theme: isDark ? "dark" : "light",
-    })
-
-    // Also track theme change in PostHog using standard capture method
+    })
     postHog?.capture("theme_changed", {
       theme: isDark ? "dark" : "light",
     })

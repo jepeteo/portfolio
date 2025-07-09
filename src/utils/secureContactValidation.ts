@@ -140,7 +140,6 @@ export const sanitizeContactFormData = (
 }
 
 export const detectBot = (data: SecureContactFormData): boolean => {
-  // Check honeypot field (should be empty for humans)
   if (data.honeypot && data.honeypot.trim() !== "") {
     return true
   }
@@ -200,7 +199,7 @@ export const checkRateLimit = (ip: string): RateLimitState => {
   if (stored) {
     try {
       state = JSON.parse(stored)
-    } catch (error) {
+    } catch {
       state = { attempts: 0, lastAttempt: now, blocked: false }
     }
   }

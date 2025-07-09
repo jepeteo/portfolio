@@ -13,16 +13,10 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
   includeOrganizationSchema = false,
 }) => {
   const { portfolioProjects, reactProjects, portfolioStats } =
-    usePortfolioSchema()
-
-  // Generate main portfolio schema
-  const portfolioSchema = seoManager.generatePortfolioSchema(portfolioProjects)
-
-  // Generate React projects schema
+    usePortfolioSchema()
+  const portfolioSchema = seoManager.generatePortfolioSchema(portfolioProjects)
   const reactProjectsSchema =
-    seoManager.generateReactProjectSchema(reactProjects)
-
-  // Generate website schema with portfolio focus
+    seoManager.generateReactProjectSchema(reactProjects)
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -53,9 +47,7 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
       "@type": "Person",
       "@id": "https://theodorosmentis.com/#person",
     },
-  }
-
-  // Optional person schema (enhanced version)
+  }
   const personSchema = includePersonSchema
     ? {
         "@context": "https://schema.org",
@@ -91,9 +83,7 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
           addressLocality: "Greece",
         },
       }
-    : null
-
-  // Optional organization schema for freelance business
+    : null
   const organizationSchema = includeOrganizationSchema
     ? {
         "@context": "https://schema.org",
@@ -151,9 +141,7 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
           ],
         },
       }
-    : null
-
-  // Breadcrumb schema for navigation
+    : null
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -177,9 +165,7 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
         item: "https://theodorosmentis.com/#react-projects",
       },
     ],
-  }
-
-  // FAQ Schema for common questions
+  }
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -228,9 +214,7 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
       ...(personSchema ? [personSchema] : []),
       ...(organizationSchema ? [organizationSchema] : []),
     ],
-  }
-
-  // Validate schema in development
+  }
   React.useEffect(() => {
     validateSchemaInDev(portfolioSchema, "Portfolio Schema")
     validateSchemaInDev(reactProjectsSchema, "React Projects Schema")

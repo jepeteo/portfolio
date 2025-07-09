@@ -1,6 +1,5 @@
+import { useEffect, useRef, useState, useCallback } from "react"
 
-
-import { useEffect, useRef, useState, useCallback } from "react"
 export function useKeyboardNavigation(
   containerRef: React.RefObject<HTMLElement>,
   options: {
@@ -42,16 +41,17 @@ export function useKeyboardNavigation(
 
       switch (event.key) {
         case "ArrowDown":
-        case "ArrowRight":
+        case "ArrowRight": {
           event.preventDefault()
           const nextIndex = loop
             ? (currentIndex + 1) % elements.length
             : Math.min(currentIndex + 1, elements.length - 1)
           focusElement(nextIndex)
           break
+        }
 
         case "ArrowUp":
-        case "ArrowLeft":
+        case "ArrowLeft": {
           event.preventDefault()
           const prevIndex = loop
             ? currentIndex === 0
@@ -60,6 +60,7 @@ export function useKeyboardNavigation(
             : Math.max(currentIndex - 1, 0)
           focusElement(prevIndex)
           break
+        }
 
         case "Home":
           event.preventDefault()
@@ -100,7 +101,8 @@ export function useKeyboardNavigation(
     updateFocusableElements,
     focusElement,
   }
-}
+}
+
 export function useFocusManagement() {
   const lastFocusedElement = useRef<HTMLElement | null>(null)
 
@@ -149,7 +151,8 @@ export function useFocusManagement() {
   }, [])
 
   return { saveFocus, restoreFocus, trapFocus }
-}
+}
+
 export function useReducedMotion() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
@@ -169,7 +172,8 @@ export function useReducedMotion() {
   }, [])
 
   return prefersReducedMotion
-}
+}
+
 export function useHighContrast() {
   const [prefersHighContrast, setPrefersHighContrast] = useState(false)
 
@@ -189,11 +193,12 @@ export function useHighContrast() {
   }, [])
 
   return prefersHighContrast
-}
+}
+
 export function useScreenReader() {
   const announceRef = useRef<HTMLDivElement | null>(null)
 
-  useEffect(() => {
+  useEffect(() => {
     if (!announceRef.current) {
       const announcer = document.createElement("div")
       announcer.setAttribute("aria-live", "polite")
@@ -225,7 +230,8 @@ export function useScreenReader() {
     (message: string, priority: "polite" | "assertive" = "polite") => {
       if (announceRef.current) {
         announceRef.current.setAttribute("aria-live", priority)
-        announceRef.current.textContent = message
+        announceRef.current.textContent = message
+
         setTimeout(() => {
           if (announceRef.current) {
             announceRef.current.textContent = ""
@@ -237,7 +243,8 @@ export function useScreenReader() {
   )
 
   return { announce }
-}
+}
+
 export function useSkipLinks() {
   const skipLinkRef = useRef<HTMLAnchorElement | null>(null)
 
@@ -285,8 +292,9 @@ export function useSkipLinks() {
   }, [])
 
   return { createSkipLink }
-}
-export const ColorContrast = {
+}
+
+export const ColorContrast = {
   getLuminance(hex: string): number {
     const rgb = this.hexToRgb(hex)
     if (!rgb) return 0
@@ -297,7 +305,8 @@ export const ColorContrast = {
     })
 
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
-  },
+  },
+
   getContrastRatio(color1: string, color2: string): number {
     const lum1 = this.getLuminance(color1)
     const lum2 = this.getLuminance(color2)
@@ -305,7 +314,8 @@ export const ColorContrast = {
     const darkest = Math.min(lum1, lum2)
 
     return (brightest + 0.05) / (darkest + 0.05)
-  },
+  },
+
   meetsWCAG(
     color1: string,
     color2: string,
@@ -319,7 +329,8 @@ export const ColorContrast = {
     }
 
     return size === "large" ? ratio >= 3 : ratio >= 4.5
-  },
+  },
+
   hexToRgb(hex: string): { r: number; g: number; b: number } | null {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
     return result
@@ -330,7 +341,8 @@ export const ColorContrast = {
         }
       : null
   },
-}
+}
+
 export function useAccessibleForm() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const { announce } = useScreenReader()
@@ -366,7 +378,8 @@ export function useAccessibleForm() {
   }
 
   return { errors, validateField }
-}
+}
+
 export function createLiveRegion(
   politeness: "polite" | "assertive" | "off" = "polite",
   atomic: boolean = true
@@ -389,8 +402,9 @@ export function createLiveRegion(
 
   document.body.appendChild(liveRegion)
   return liveRegion
-}
-export const A11yChecker = {
+}
+
+export const A11yChecker = {
   checkImages(): string[] {
     const issues: string[] = []
     const images = document.querySelectorAll("img")
@@ -406,7 +420,8 @@ export const A11yChecker = {
     })
 
     return issues
-  },
+  },
+
   checkHeadings(): string[] {
     const issues: string[] = []
     const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6")
@@ -427,7 +442,8 @@ export const A11yChecker = {
     })
 
     return issues
-  },
+  },
+
   checkKeyboardAccess(): string[] {
     const issues: string[] = []
     const interactiveElements = document.querySelectorAll(
@@ -450,7 +466,8 @@ export const A11yChecker = {
     })
 
     return issues
-  },
+  },
+
   runAllChecks(): { images: string[]; headings: string[]; keyboard: string[] } {
     return {
       images: this.checkImages(),

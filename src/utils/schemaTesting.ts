@@ -1,7 +1,4 @@
-/**
- * Schema Testing Utilities for Development
- * Run these in browser console to test schema markup
- */
+
 
 declare global {
   interface Window {
@@ -9,9 +6,7 @@ declare global {
     validateAllSchemas: () => void
     exportSchemaForTesting: () => string
   }
-}
-
-// Test portfolio schema in browser console
+}
 window.testPortfolioSchema = () => {
   console.group("🧪 Portfolio Schema Testing")
 
@@ -28,9 +23,7 @@ window.testPortfolioSchema = () => {
         "Type:",
         schema["@type"] || schema["@graph"]?.[0]?.["@type"] || "Unknown"
       )
-      console.log("Content:", schema)
-
-      // Basic validation
+      console.log("Content:", schema)
       if (!schema["@context"]) {
         console.warn("⚠️ Missing @context")
       }
@@ -45,9 +38,7 @@ window.testPortfolioSchema = () => {
   })
 
   console.groupEnd()
-}
-
-// Validate all schemas on page
+}
 window.validateAllSchemas = () => {
   console.group("✅ Schema Validation Report")
 
@@ -59,9 +50,7 @@ window.validateAllSchemas = () => {
     try {
       const schema = JSON.parse(script.textContent || "")
 
-      console.group(`Schema ${index + 1} - ${schema["@type"] || "Graph"}`)
-
-      // Check for common SEO issues
+      console.group(`Schema ${index + 1} - ${schema["@type"] || "Graph"}`)
       const issues: string[] = []
       const suggestions: string[] = []
 
@@ -73,9 +62,7 @@ window.validateAllSchemas = () => {
             item.name || item["@id"]
           )
         })
-      }
-
-      // Person schema checks
+      }
       if (
         schema["@type"] === "Person" ||
         schema["@graph"]?.some((item: any) => item["@type"] === "Person")
@@ -89,9 +76,7 @@ window.validateAllSchemas = () => {
         if (!person.sameAs?.length) suggestions.push("Add social media links")
         if (!person.knowsAbout?.length)
           suggestions.push("Add skills/knowledge areas")
-      }
-
-      // Portfolio/Creative Work checks
+      }
       if (
         schema["@type"] === "CreativeWork" ||
         schema["@graph"]?.some((item: any) => item["@type"] === "CreativeWork")
@@ -131,9 +116,7 @@ window.validateAllSchemas = () => {
   })
 
   console.groupEnd()
-}
-
-// Export schema for external validation tools
+}
 window.exportSchemaForTesting = () => {
   const schemas = document.querySelectorAll(
     'script[type="application/ld+json"]'
@@ -149,9 +132,7 @@ window.exportSchemaForTesting = () => {
     }
   })
 
-  const exportData = JSON.stringify(allSchemas, null, 2)
-
-  // Copy to clipboard if available
+  const exportData = JSON.stringify(allSchemas, null, 2)
   if (navigator.clipboard) {
     navigator.clipboard.writeText(exportData).then(() => {
       console.log("📋 Schema data copied to clipboard!")
@@ -167,16 +148,10 @@ window.exportSchemaForTesting = () => {
   console.log(exportData)
 
   return exportData
-}
-
-// Auto-run validation in development
-if (process.env.NODE_ENV === "development") {
-  // Run validation after page load
+}
+if (process.env.NODE_ENV === "development") {
   window.addEventListener("load", () => {
-    setTimeout(() => {
-      // Schema testing tools are available but console logging is disabled
-      // Use window.testPortfolioSchema(), window.validateAllSchemas(),
-      // or window.exportSchemaForTesting() if needed
+    setTimeout(() => {
     }, 1000)
   })
 }

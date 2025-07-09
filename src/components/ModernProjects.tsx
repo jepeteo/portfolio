@@ -221,9 +221,7 @@ const ModernProjects = memo(() => {
         project.prName.toLowerCase().replace(/\s+/g, "-")
       const imageSrc = `./images/projects/${imageSlug}.webp`
 
-      const hasGlobalImageError = imageErrors.has(project.prName)
-
-      // Use consolidated image loading hook
+      const hasGlobalImageError = imageErrors.has(project.prName)
       const { imageRef, isLoading, hasError } = useProjectImage({
         src: imageSrc,
         shouldLoad: shouldLoadImage && !hasGlobalImageError,

@@ -1,4 +1,3 @@
-
 import { securityConfig } from "./security"
 
 interface CSRFToken {
@@ -10,14 +9,16 @@ interface CSRFToken {
 
 export class CSRFProtection {
   private static STORAGE_KEY = "csrf_tokens"
-  private static SESSION_KEY = "csrf_session"
+  private static SESSION_KEY = "csrf_session"
+
   public static generateToken(): string {
     const array = new Uint8Array(securityConfig.csrf.tokenLength)
     crypto.getRandomValues(array)
     return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join(
       ""
     )
-  }
+  }
+
   public static createToken(): CSRFToken {
     const now = Date.now()
     const token: CSRFToken = {
@@ -25,30 +26,38 @@ export class CSRFProtection {
       createdAt: now,
       expiresAt: now + securityConfig.csrf.tokenTTL,
       used: false,
-    }
+    }
+
     this.storeToken(token)
 
     return token
-  }
+  }
+
   private static storeToken(csrfToken: CSRFToken): void {
-    try {
-      const tokens = this.getStoredTokens()
-      const validTokens = tokens.filter((t) => t.expiresAt > Date.now())
-      validTokens.push(csrfToken)
+    try {
+      const tokens = this.getStoredTokens()
+
+      const validTokens = tokens.filter((t) => t.expiresAt > Date.now())
+
+      validTokens.push(csrfToken)
+
       const limitedTokens = validTokens.slice(-5)
 
       sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(limitedTokens))
-    } catch (error) {
+    } catch {
+      // Silent fail for security
     }
-  }
+  }
+
   private static getStoredTokens(): CSRFToken[] {
     try {
       const stored = sessionStorage.getItem(this.STORAGE_KEY)
       return stored ? JSON.parse(stored) : []
-    } catch (error) {
+    } catch {
       return []
     }
-  }
+  }
+
   public static validateToken(tokenToValidate: string): boolean {
     if (
       !tokenToValidate ||
@@ -58,54 +67,84 @@ export class CSRFProtection {
     }
 
     const tokens = this.getStoredTokens()
-    const now = Date.now()
+    const now = Date.now()
+
     const tokenIndex = tokens.findIndex(
       (t) => t.token === tokenToValidate && t.expiresAt > now && !t.used
     )
 
     if (tokenIndex === -1) {
       return false
-    }
-    tokens[tokenIndex].used = true
+    }
+
+    tokens[tokenIndex].used = true
+
     try {
       sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(tokens))
-    } catch (error) {
+    } catch {
+      // Silent fail for security
     }
 
     return true
-  }
+  }
+
+  public static isTokenValid(tokenToValidate: string): boolean {
+    if (
+      !tokenToValidate ||
+      tokenToValidate.length !== securityConfig.csrf.tokenLength * 2
+    ) {
+      return false
+    }
+
+    const tokens = this.getStoredTokens()
+    const now = Date.now()
+
+    const tokenIndex = tokens.findIndex(
+      (t) => t.token === tokenToValidate && t.expiresAt > now && !t.used
+    )
+
+    return tokenIndex !== -1
+  }
+
   public static getCurrentToken(): string {
     const tokens = this.getStoredTokens()
-    const now = Date.now()
+    const now = Date.now()
+
     const validToken = tokens.find((t) => t.expiresAt > now && !t.used)
 
     if (validToken) {
       return validToken.token
-    }
+    }
+
     const newToken = this.createToken()
     return newToken.token
-  }
+  }
+
   public static hasValidToken(): boolean {
     const tokens = this.getStoredTokens()
     const now = Date.now()
 
     return tokens.some((t) => t.expiresAt > now && !t.used)
-  }
+  }
+
   public static clearTokens(): void {
     try {
       sessionStorage.removeItem(this.STORAGE_KEY)
       sessionStorage.removeItem(this.SESSION_KEY)
-    } catch (error) {
+    } catch {
+      // Silent fail for security
     }
-  }
+  }
+
   public static getTokenForForm(): { token: string; fieldName: string } {
     return {
       token: this.getCurrentToken(),
       fieldName: securityConfig.csrf.headerName.toLowerCase().replace("x-", ""),
     }
-  }
+  }
+
   public static validateFromFormData(
-    formData: FormData | Record<string, any>
+    formData: FormData | Record<string, unknown>
   ): boolean {
     const fieldName = securityConfig.csrf.headerName
       .toLowerCase()
@@ -116,7 +155,7 @@ export class CSRFProtection {
     if (formData instanceof FormData) {
       token = formData.get(fieldName) as string
     } else {
-      token = formData[fieldName] || formData.csrfToken
+      token = (formData[fieldName] || formData.csrfToken) as string
     }
 
     if (!token) {
@@ -124,22 +163,26 @@ export class CSRFProtection {
     }
 
     return this.validateToken(token)
-  }
+  }
+
   public static createSession(): string {
     const sessionId = this.generateToken()
     try {
       sessionStorage.setItem(this.SESSION_KEY, sessionId)
-    } catch (error) {
+    } catch {
+      // Silent fail for security
     }
     return sessionId
-  }
+  }
+
   public static getCurrentSession(): string | null {
     try {
       return sessionStorage.getItem(this.SESSION_KEY)
-    } catch (error) {
+    } catch {
       return null
     }
-  }
+  }
+
   public static cleanup(): void {
     const tokens = this.getStoredTokens()
     const now = Date.now()
@@ -148,22 +191,23 @@ export class CSRFProtection {
 
     try {
       sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(validTokens))
-    } catch (error) {
+    } catch {
+      // Silent fail for security
     }
   }
-}
+}
+
 export const generateCSRFToken = (): string => {
   return CSRFProtection.getCurrentToken()
 }
 
-export const validateCSRFToken = (
-  token: string,
-  _sessionToken?: string
-): boolean => {
+export const validateCSRFToken = (token: string): boolean => {
   return CSRFProtection.validateToken(token)
-}
-if (typeof window !== "undefined") {
-  CSRFProtection.cleanup()
+}
+
+if (typeof window !== "undefined") {
+  CSRFProtection.cleanup()
+
   setInterval(() => {
     CSRFProtection.cleanup()
   }, 5 * 60 * 1000)

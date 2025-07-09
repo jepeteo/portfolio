@@ -330,8 +330,7 @@ class ProductionMonitor {
   }
 
   private async sendToAnalytics(data: any): Promise<void> {
-    try {
-      // Send errors to PostHog
+    try {
       if (data.errors && data.errors.length > 0) {
         data.errors.forEach((error: ErrorReport) => {
           postHogAnalytics.trackError({
@@ -342,12 +341,9 @@ class ProductionMonitor {
             severity: this.getErrorSeverity(error),
           })
         })
-      }
-
-      // Send performance data to PostHog
+      }
       if (data.performance && data.performance.length > 0) {
-        data.performance.forEach((perf: PerformanceReport) => {
-          // Track Core Web Vitals
+        data.performance.forEach((perf: PerformanceReport) => {
           if (perf.metrics.lcp) {
             postHogAnalytics.trackPerformanceMetric(
               "LCP",
@@ -382,18 +378,14 @@ class ProductionMonitor {
               perf.metrics.ttfb,
               "core_web_vitals"
             )
-          }
-
-          // Track navigation performance
+          }
           postHogAnalytics.trackEvent("navigation_performance", {
             navigation_type: perf.navigation.type,
             redirect_count: perf.navigation.redirectCount,
             dom_content_loaded: perf.navigation.domContentLoaded,
             load_complete: perf.navigation.loadComplete,
             session_id: data.sessionId,
-          })
-
-          // Track resource performance for large resources
+          })
           const largeResources = perf.resources.filter(
             (r) => r.duration > 1000 || r.size > 100000
           )
@@ -402,9 +394,7 @@ class ProductionMonitor {
               resources: largeResources,
               session_id: data.sessionId,
             })
-          }
-
-          // Track memory usage if available
+          }
           if (perf.memory) {
             const memoryUsagePercent =
               (perf.memory.used / perf.memory.total) * 100
@@ -418,17 +408,14 @@ class ProductionMonitor {
             }
           }
         })
-      }
-
-      // Track session data
+      }
       postHogAnalytics.trackEvent("monitoring_data_batch", {
         session_id: data.sessionId,
         error_count: data.errors?.length || 0,
         performance_reports: data.performance?.length || 0,
         batch_timestamp: data.timestamp,
       })
-    } catch (error) {
-      // Fallback: if PostHog fails, we could still try a backup endpoint
+    } catch (error) {
       console.error("Failed to send analytics to PostHog:", error)
       throw new Error("PostHog analytics failed")
     }
@@ -436,8 +423,7 @@ class ProductionMonitor {
 
   private getErrorSeverity(
     error: ErrorReport
-  ): "low" | "medium" | "high" | "critical" {
-    // Determine severity based on error characteristics
+  ): "low" | "medium" | "high" | "critical" {
     if (error.type === "javascript" && error.message.includes("Script error")) {
       return "low" // Often cross-origin script errors
     }
@@ -467,8 +453,7 @@ class ProductionMonitor {
     return "medium" // Default severity
   }
 
-  public trackEvent(event: string, properties?: Record<string, any>): void {
-    // Track in both production and development for PostHog
+  public trackEvent(event: string, properties?: Record<string, any>): void {
     postHogAnalytics.trackEvent(event, {
       source: "production_monitor",
       session_id: this.sessionId,
@@ -477,8 +462,7 @@ class ProductionMonitor {
     })
   }
 
-  public trackPageView(path?: string): void {
-    // Track in both production and development for PostHog
+  public trackPageView(path?: string): void {
     postHogAnalytics.trackPageView(path, {
       source: "production_monitor",
       referrer: document.referrer,

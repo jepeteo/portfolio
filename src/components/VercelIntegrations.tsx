@@ -1,8 +1,6 @@
 import React from "react"
 import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/react"
-
-// Simple, direct implementation - no debug logs in development
+import { SpeedInsights } from "@vercel/speed-insights/react"
 export const VercelIntegrations: React.FC = () => {
   return (
     <>

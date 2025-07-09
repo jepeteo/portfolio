@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSRF Token Test</title>
+  </head>
+  <body>
+    <h1>CSRF Token Test</h1>
+    <button onclick="testCSRF()">Test CSRF Token Flow</button>
+    <pre id="output"></pre>
+
+    <script>
+      function log(message) {
+        const output = document.getElementById("output")
+        output.textContent += message + "\n"
+      }
+
+      function testCSRF() {
+        const output = document.getElementById("output")
+        output.textContent = ""
+
+        // Simulate the CSRF token flow
+        const securityConfig = {
+          csrf: {
+            tokenLength: 32,
+            tokenTTL: 30 * 60 * 1000, // 30 minutes
+            headerName: "X-CSRF-Token",
+          },
+        }
+
+        // Test token generation
+        function generateToken() {
+          const array = new Uint8Array(securityConfig.csrf.tokenLength)
+          crypto.getRandomValues(array)
+          return Array.from(array, (byte) =>
+            byte.toString(16).padStart(2, "0")
+          ).join("")
+        }
+
+        // Test token storage and validation
+        function createToken() {
+          const now = Date.now()
+          const token = {
+            token: generateToken(),
+            createdAt: now,
+            expiresAt: now + securityConfig.csrf.tokenTTL,
+            used: false,
+          }
+
+          // Store in sessionStorage
+          const tokens = JSON.parse(
+            sessionStorage.getItem("csrf_tokens") || "[]"
+          )
+          tokens.push(token)
+          sessionStorage.setItem("csrf_tokens", JSON.stringify(tokens))
+
+          return token
+        }
+
+        function isTokenValid(tokenToValidate) {
+          const tokens = JSON.parse(
+            sessionStorage.getItem("csrf_tokens") || "[]"
+          )
+          const now = Date.now()
+
+          const tokenIndex = tokens.findIndex(
+            (t) => t.token === tokenToValidate && t.expiresAt > now && !t.used
+          )
+
+          return tokenIndex !== -1
+        }
+
+        function validateToken(tokenToValidate) {
+          const tokens = JSON.parse(
+            sessionStorage.getItem("csrf_tokens") || "[]"
+          )
+          const now = Date.now()
+
+          const tokenIndex = tokens.findIndex(
+            (t) => t.token === tokenToValidate && t.expiresAt > now && !t.used
+          )
+
+          if (tokenIndex === -1) {
+            return false
+          }
+
+          tokens[tokenIndex].used = true
+          sessionStorage.setItem("csrf_tokens", JSON.stringify(tokens))
+
+          return true
+        }
+
+        // Test the flow
+        log("1. Creating CSRF token...")
+        const tokenObj = createToken()
+        log("   Token created: " + tokenObj.token.substring(0, 16) + "...")
+
+        log("2. Checking if token is valid (without consuming)...")
+        const isValid = isTokenValid(tokenObj.token)
+        log("   Token is valid: " + isValid)
+
+        log("3. Checking if token is still valid after check...")
+        const stillValid = isTokenValid(tokenObj.token)
+        log("   Token still valid: " + stillValid)
+
+        log("4. Validating and consuming token...")
+        const validated = validateToken(tokenObj.token)
+        log("   Token validated: " + validated)
+
+        log("5. Checking if token is still valid after consumption...")
+        const validAfterUse = isTokenValid(tokenObj.token)
+        log("   Token valid after use: " + validAfterUse)
+
+        log("6. Trying to validate again (should fail)...")
+        const doubleValidation = validateToken(tokenObj.token)
+        log("   Double validation: " + doubleValidation)
+
+        log(
+          "\nTest completed. The token should be valid before consumption and invalid after."
+        )
+      }
+    </script>
+  </body>
+</html>

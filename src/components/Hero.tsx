@@ -75,7 +75,6 @@ const Hero: React.FC = memo(() => {
             }}
           />
 
-          {/* Bottom fade overlay for seamless transition */}
           <div
             className={`absolute inset-x-0 bottom-0 h-32 ${
               isDark
@@ -304,7 +303,6 @@ const Hero: React.FC = memo(() => {
         </div>
       </div>
 
-      {/* My Approach Section */}
       <div
         className={`container mx-auto px-6 py-12 transition-all duration-1000 delay-700 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -313,7 +311,7 @@ const Hero: React.FC = memo(() => {
         aria-labelledby="approach-title"
       >
         <div className="relative flex items-center justify-center mb-6">
-          {/* Left decorative line */}
+          
           <div className="flex-1 h-px relative mr-6">
             <div
               className={`absolute inset-0 bg-gradient-to-r ${
@@ -339,7 +337,6 @@ const Hero: React.FC = memo(() => {
             />
           </div>
 
-          {/* Title */}
           <h2
             id="approach-title"
             className={`text-sm font-medium whitespace-nowrap ${
@@ -349,7 +346,6 @@ const Hero: React.FC = memo(() => {
             My Approach
           </h2>
 
-          {/* Right decorative line */}
           <div className="flex-1 h-px relative ml-6">
             <div
               className={`absolute inset-0 bg-gradient-to-l ${
@@ -439,7 +435,6 @@ const Hero: React.FC = memo(() => {
         </div>
       </div>
 
-      {/* Expertise Badges Section */}
       <div
         className={`container mx-auto px-6 pb-16 transition-all duration-1000 delay-800 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -448,7 +443,7 @@ const Hero: React.FC = memo(() => {
         aria-labelledby="expertise-title"
       >
         <div className="relative flex items-center justify-center mb-6">
-          {/* Left decorative line */}
+          
           <div className="flex-1 h-px relative mr-6">
             <div
               className={`absolute inset-0 bg-gradient-to-r ${
@@ -474,7 +469,6 @@ const Hero: React.FC = memo(() => {
             />
           </div>
 
-          {/* Title */}
           <h2
             id="expertise-title"
             className={`text-sm font-medium whitespace-nowrap ${
@@ -484,7 +478,6 @@ const Hero: React.FC = memo(() => {
             My expertise areas
           </h2>
 
-          {/* Right decorative line */}
           <div className="flex-1 h-px relative ml-6">
             <div
               className={`absolute inset-0 bg-gradient-to-l ${

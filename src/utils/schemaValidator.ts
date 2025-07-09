@@ -1,7 +1,4 @@
-/**
- * Schema validation and optimization utilities
- * Helps ensure schema markup follows Google's guidelines and best practices
- */
+
 
 export interface SchemaValidationResult {
   isValid: boolean
@@ -11,30 +8,23 @@ export interface SchemaValidationResult {
 }
 
 export class SchemaValidator {
-  static validateSchemaInConsole(_schema: any, _label: string) {
-    // Console logging disabled - schemas are working correctly
+  static validateSchemaInConsole(_schema: any, _label: string) {
     return
   }
 
   static validatePersonSchema(schema: any): SchemaValidationResult {
     const errors: string[] = []
     const warnings: string[] = []
-    const suggestions: string[] = []
-
-    // Required fields
+    const suggestions: string[] = []
     if (!schema.name) errors.push("Person schema missing required 'name' field")
     if (!schema["@type"] || schema["@type"] !== "Person") {
       errors.push("Schema must have @type: 'Person'")
-    }
-
-    // Recommended fields
+    }
     if (!schema.jobTitle)
       warnings.push("Consider adding 'jobTitle' for better SEO")
     if (!schema.image)
       warnings.push("Consider adding 'image' for rich snippets")
-    if (!schema.url) warnings.push("Consider adding 'url' field")
-
-    // Best practices
+    if (!schema.url) warnings.push("Consider adding 'url' field")
     if (
       !schema.sameAs ||
       !Array.isArray(schema.sameAs) ||
@@ -60,14 +50,10 @@ export class SchemaValidator {
   static validatePortfolioSchema(schema: any): SchemaValidationResult {
     const errors: string[] = []
     const warnings: string[] = []
-    const suggestions: string[] = []
-
-    // Basic structure validation
+    const suggestions: string[] = []
     if (!schema["@context"]) errors.push("Missing @context")
     if (!schema["@type"]) errors.push("Missing @type")
-    if (!schema.name) errors.push("Missing name field")
-
-    // Portfolio-specific validation
+    if (!schema.name) errors.push("Missing name field")
     if (!schema.hasPart || !Array.isArray(schema.hasPart)) {
       errors.push("Portfolio schema should have 'hasPart' array with projects")
     } else {
@@ -82,9 +68,7 @@ export class SchemaValidator {
           warnings.push(`Project ${index} missing URL or ID`)
         }
       })
-    }
-
-    // SEO best practices
+    }
     if (!schema.creator) {
       suggestions.push("Add creator field to link portfolio to person")
     }
@@ -185,8 +169,7 @@ export class SchemaValidator {
       case "BreadcrumbList":
       case "FAQPage":
       case "Question":
-      case "Answer":
-        // These are valid schema types, no validation needed
+      case "Answer":
         result = {
           isValid: true,
           errors: [],
@@ -231,30 +214,19 @@ export class SchemaValidator {
     return report
   }
 
-  /**
-   * Optimize schema for better SEO performance
-   */
   static optimizeSchema(schema: any): any {
-    const optimized = { ...schema }
-
-    // Ensure required fields
+    const optimized = { ...schema }
     if (!optimized["@context"]) {
       optimized["@context"] = "https://schema.org"
-    }
-
-    // Add missing IDs for better linking
+    }
     if (!optimized["@id"] && optimized.url) {
       optimized["@id"] = `${optimized.url}#${optimized["@type"].toLowerCase()}`
-    }
-
-    // Optimize arrays (remove empty values)
+    }
     Object.keys(optimized).forEach((key) => {
       if (Array.isArray(optimized[key])) {
         optimized[key] = optimized[key].filter(
           (item: any) => item !== null && item !== undefined && item !== ""
-        )
-
-        // Remove empty arrays
+        )
         if (optimized[key].length === 0) {
           delete optimized[key]
         }
@@ -264,18 +236,13 @@ export class SchemaValidator {
     return optimized
   }
 
-  /**
-   * Test schema against Google's Rich Results Test (simulation)
-   */
   static async testGoogleRichResults(schema: any): Promise<{
     eligible: boolean
     richResultTypes: string[]
     issues: string[]
   }> {
     const issues: string[] = []
-    const richResultTypes: string[] = []
-
-    // Simulate Google's validation
+    const richResultTypes: string[] = []
     if (schema["@type"] === "Person") {
       if (schema.name && schema.jobTitle) {
         richResultTypes.push("Person Rich Card")
@@ -300,14 +267,11 @@ export class SchemaValidator {
       issues,
     }
   }
-}
-
-// Development helper - logs schema validation in development mode
+}
 export const validateSchemaInDev = (
   _schema: any,
   _label: string = "Schema"
-) => {
-  // Console logging disabled - schemas are working correctly
+) => {
   return
 }
 
