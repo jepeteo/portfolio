@@ -166,11 +166,27 @@ export const detectBot = (data: SecureContactFormData): boolean => {
     /increase.*traffic/gi,
     /seo.*service/gi,
     /lorem ipsum/gi,
-    /test.*test/gi,
+    /viagra/gi,
+    /casino/gi,
+    /pharmacy/gi,
+    /debt.*relief/gi,
+    /weight.*loss/gi,
+    /work.*from.*home/gi,
+    /make.*money.*fast/gi,
+    /free.*consultation/gi,
+    /no.*obligation/gi,
+    /limited.*time.*offer/gi,
+    /act.*now/gi,
   ]
 
-  if (botPatterns.some((pattern) => pattern.test(combinedText))) {
-    console.log("Bot detected: suspicious content patterns")
+  const matchedPattern = botPatterns.find((pattern) =>
+    pattern.test(combinedText)
+  )
+  if (matchedPattern) {
+    console.log("Bot detected: suspicious content patterns", {
+      pattern: matchedPattern.toString(),
+      combinedText,
+    })
     return true
   }
 
