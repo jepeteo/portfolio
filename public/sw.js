@@ -27,6 +27,12 @@ const CACHE_STRATEGIES = {
         /\.(png|jpg|jpeg|gif|webp|svg|ico)$/
     ],
 
+    // Fonts - Cache First with long TTL
+    fonts: [
+        /fonts\.googleapis\.com/,
+        /fonts\.gstatic\.com/
+    ],
+
     // API calls - Network First
     api: [
         /\/api\//,
@@ -50,18 +56,11 @@ self.addEventListener('install', (event) => {
                 return cache.addAll(STATIC_ASSETS)
             }),
 
-            // Cache critical fonts and styles
-            caches.open(IMAGE_CACHE).then(cache => {
-                return cache.addAll([
-                    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap',
-                    'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZJhiJ-Ek-_EeA.woff2'
-                ]).catch(() => {
-                    // Font loading failures are non-critical
-
-                })
-            })
+            // Skip font preloading to avoid CSP issues during install
+            // Fonts will be cached on first request
+            Promise.resolve()
         ]).then(() => {
-
+            console.log('✅ Service Worker installed successfully')
             // Force activation of new service worker
             return self.skipWaiting()
         })
@@ -127,6 +126,11 @@ async function handleRequest(request) {
         // Images - Cache First with long TTL
         if (CACHE_STRATEGIES.images.some(pattern => pattern.test(url.pathname))) {
             return await cacheFirst(request, IMAGE_CACHE)
+        }
+
+        // Fonts - Cache First with very long TTL
+        if (CACHE_STRATEGIES.fonts.some(pattern => pattern.test(url.href))) {
+            return await cacheFirst(request, STATIC_CACHE)
         }
 
         // API calls - Network First

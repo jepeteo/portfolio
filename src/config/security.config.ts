@@ -134,6 +134,8 @@ export const SECURITY_CONFIG: SecurityConfig = {
         "https://eu.i.posthog.com", // PostHog events endpoint (EU region)
         "https://eu-assets.i.posthog.com", // PostHog assets (EU region)
         "https://app.posthog.com", // PostHog main domain
+        "https://fonts.googleapis.com", // Required for font loading
+        "https://fonts.gstatic.com", // Required for font assets
       ],
       frameSrc: ["'none'"],
       objectSrc: ["'none'"],

@@ -26,7 +26,7 @@
     <!-- Content Security Policy for Development -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.emailjs.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu-assets.i.posthog.com https://app.posthog.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://app.posthog.com; base-uri 'self'; form-action 'self'; object-src 'none';"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.emailjs.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu-assets.i.posthog.com https://app.posthog.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://app.posthog.com https://fonts.googleapis.com https://fonts.gstatic.com; base-uri 'self'; form-action 'self'; object-src 'none';"
     />
 
     <!-- Language and Region Meta Tags -->
@@ -194,10 +194,7 @@
       }
     </script>
 
-    <!-- Additional Resource Hints -->
-    <link rel="preload" href="/social-card.webp" as="image" />
-    <link rel="preload" href="/images/teo-square.webp" as="image" />
-    <link rel="preload" href="/favicon.png" as="image" />
+    <!-- Resource Hints for Performance -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="author" href="/humans.txt" />
