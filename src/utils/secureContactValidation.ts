@@ -192,7 +192,6 @@ export const checkRateLimit = (ip: string): RateLimitState => {
     try {
       state = JSON.parse(stored)
     } catch (error) {
-
       state = { attempts: 0, lastAttempt: now, blocked: false }
     }
   }
@@ -222,12 +221,10 @@ export const updateRateLimit = (
   const now = Date.now()
 
   if (success) {
-
     state.attempts = 0
     state.blocked = false
     state.blockUntil = undefined
   } else {
-
     state.attempts += 1
     state.lastAttempt = now
 
