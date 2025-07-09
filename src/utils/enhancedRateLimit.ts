@@ -178,16 +178,30 @@ export class EnhancedRateLimiter {
 }
 
 export const checkContactFormLimit = (
-  identifier = "default"
+  _identifier = "default"
 ): RateLimitResult => {
-  return EnhancedRateLimiter.checkRateLimit(identifier, "contactForm")
+  // TEMPORARILY DISABLED: Always allow requests
+  return {
+    allowed: true,
+    remaining: 999,
+    resetTime: Date.now() + 60000,
+    blocked: false,
+  }
+  // return EnhancedRateLimiter.checkRateLimit(identifier, "contactForm")
 }
 
 export const recordContactFormAttempt = (
-  identifier = "default",
-  success = false
+  _identifier = "default",
+  _success = false
 ): RateLimitResult => {
-  return EnhancedRateLimiter.recordAttempt(identifier, "contactForm", success)
+  // TEMPORARILY DISABLED: Always return successful result
+  return {
+    allowed: true,
+    remaining: 999,
+    resetTime: Date.now() + 60000,
+    blocked: false,
+  }
+  // return EnhancedRateLimiter.recordAttempt(identifier, "contactForm", success)
 }
 
 export const checkEmailLimit = (identifier = "default"): RateLimitResult => {
