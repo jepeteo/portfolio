@@ -65,6 +65,18 @@ const Contact: React.FC = memo(() => {
     publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "",
   }
 
+  // Debug EmailJS config
+  console.log("EmailJS Config:", {
+    serviceId: emailjsConfig.serviceId,
+    templateId: emailjsConfig.templateId,
+    publicKey: emailjsConfig.publicKey ? "***set***" : "***not set***",
+    hasValidConfig: !!(
+      emailjsConfig.serviceId &&
+      emailjsConfig.templateId &&
+      emailjsConfig.publicKey
+    ),
+  })
+
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target
@@ -182,6 +194,15 @@ const Contact: React.FC = memo(() => {
         !emailjsConfig.templateId ||
         !emailjsConfig.publicKey
       ) {
+        console.warn(
+          "EmailJS not configured - simulating successful submission"
+        )
+        console.log("Missing EmailJS configuration:", {
+          serviceId: !emailjsConfig.serviceId,
+          templateId: !emailjsConfig.templateId,
+          publicKey: !emailjsConfig.publicKey,
+        })
+
         setIsSubmitting(true)
         setSubmitStatus("idle")
 
