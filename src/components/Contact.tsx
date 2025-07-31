@@ -30,6 +30,67 @@ import {
 } from "../utils/enhancedRateLimit"
 import { CSRFProtection } from "../utils/enhancedCSRF"
 
+// SEO Schema generation for Contact section
+const generateContactSchema = () => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Theodoros Mentis",
+    jobTitle: "Frontend Developer & Web Designer",
+    email: "th.mentis@gmail.com",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Piraeus",
+      addressRegion: "Attica", 
+      addressCountry: "Greece"
+    },
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "professional",
+        email: "th.mentis@gmail.com",
+        availableLanguage: ["English", "Greek"]
+      }
+    ],
+    sameAs: [
+      "https://github.com/jepeteo",
+      "https://www.linkedin.com/in/thmentis/"
+    ],
+    url: "https://theodorosmentis.vercel.app",
+    worksFor: {
+      "@type": "Organization", 
+      name: "Freelance Web Development"
+    }
+  }
+}
+
+// Individual Contact Method Schema Component
+const ContactMethodSchema: React.FC<{ method: { icon: any; label: string; value: string; href: string } }> = ({ method }) => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPoint",
+    contactType: method.label.toLowerCase(),
+    ...(method.label === "Email" && { email: method.value }),
+    ...(method.label === "Location" && { 
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Piraeus",
+        addressRegion: "Attica",
+        addressCountry: "Greece"
+      }
+    })
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(schema, null, 2)
+      }}
+    />
+  )
+}
+
 const Contact: React.FC = memo(() => {
   const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
@@ -277,13 +338,22 @@ const Contact: React.FC = memo(() => {
   ]
 
   return (
-    <section
-      ref={targetRef}
-      className={`py-20 transition-all duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
-      id="contact"
-    >
+    <>
+      {/* SEO Schema for Contact */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateContactSchema(), null, 2)
+        }}
+      />
+      
+      <section
+        ref={targetRef}
+        className={`py-20 transition-all duration-1000 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+        id="contact"
+      >
       <div className="container">
         <div className="text-center mb-16">
           <div
@@ -341,15 +411,16 @@ const Contact: React.FC = memo(() => {
 
             <div className="space-y-4">
               {contactInfo.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.href}
-                  className={`flex items-center gap-4 p-4 rounded-xl transition-all hover:scale-105 ${
-                    isDark
-                      ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-green-500/50"
-                      : "bg-white/50 backdrop-blur-sm border border-slate-200 hover:border-green-500/50"
-                  }`}
-                >
+                <React.Fragment key={index}>
+                  <ContactMethodSchema method={item} />
+                  <a
+                    href={item.href}
+                    className={`flex items-center gap-4 p-4 rounded-xl transition-all hover:scale-105 ${
+                      isDark
+                        ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-green-500/50"
+                        : "bg-white/50 backdrop-blur-sm border border-slate-200 hover:border-green-500/50"
+                    }`}
+                  >
                   <div
                     className={`w-12 h-12 rounded-xl flex items-center justify-center ${
                       isDark
@@ -376,6 +447,7 @@ const Contact: React.FC = memo(() => {
                     </div>
                   </div>
                 </a>
+                </React.Fragment>
               ))}
             </div>
 
@@ -615,6 +687,7 @@ const Contact: React.FC = memo(() => {
         </div>
       </div>
     </section>
+    </>
   )
 })
 
