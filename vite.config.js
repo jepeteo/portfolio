@@ -27,10 +27,10 @@ export default defineConfig({
           'framer-motion': ['framer-motion'],
 
           // UI library chunks
-          'ui-vendor': ['lucide-react', 'flowbite-react'],
+          'ui-vendor': ['lucide-react'],
 
           // Utils and smaller dependencies
-          'utils': ['nanoid', 'react-typed'],
+          'utils': ['react-typed'],
 
           // EmailJS (only loaded when contact form is used)
           'emailjs': ['@emailjs/browser'],
@@ -70,7 +70,7 @@ export default defineConfig({
   },
   // Enhanced development server
   server: {
-    host: true,
+    host: 'localhost',
     port: 5173,
     // Enable HTTP/2 for development
     https: false,
