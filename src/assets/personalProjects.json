@@ -1,0 +1,60 @@
+[
+    {
+        "id": "url-shortener",
+        "title": "URL Shortener - Mikrouli.link",
+        "url": "https://mikrouli.link/",
+        "githubUrl": "https://github.com/jepeteo/url-shortener",
+        "description": "A modern URL shortener application built with Next.js and Tailwind CSS. Features custom short URLs, analytics tracking, QR code generation, and a clean, responsive interface for managing links efficiently.",
+        "tech": [
+            "Next.js",
+            "React",
+            "Tailwind CSS",
+            "TypeScript",
+            "Vercel",
+            "Database"
+        ],
+        "category": "Web App",
+        "type": "personal",
+        "featured": true,
+        "status": "Live",
+        "year": "2024"
+    },
+    {
+        "id": "color-palette-generator",
+        "title": "React Color Palette Generator",
+        "url": "https://jepeteo.github.io/react-color-palette-generator/",
+        "githubUrl": "https://github.com/jepeteo/react-color-palette-generator",
+        "description": "An intuitive color palette generator built with React that creates harmonious color schemes based on your selected base color. Features multiple color harmony algorithms, export functionality, and accessibility considerations.",
+        "tech": [
+            "React",
+            "JavaScript",
+            "CSS3",
+            "Color Theory",
+            "Design Tools"
+        ],
+        "category": "Tool",
+        "type": "personal",
+        "featured": true,
+        "status": "Live",
+        "year": "2024"
+    },
+    {
+        "id": "notes-app",
+        "title": "JepeNotes - React Notes App",
+        "url": "https://jepeteo.github.io/notes-app/",
+        "githubUrl": "https://github.com/jepeteo/notes-app",
+        "description": "A clean and minimalist notes application built with React and Tailwind CSS. Features markdown support, local storage persistence, search functionality, and an intuitive user interface for organizing thoughts and ideas.",
+        "tech": [
+            "React",
+            "Tailwind CSS",
+            "Local Storage",
+            "Markdown",
+            "JavaScript"
+        ],
+        "category": "Productivity",
+        "type": "personal",
+        "featured": true,
+        "status": "Live",
+        "year": "2024"
+    }
+]

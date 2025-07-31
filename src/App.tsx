@@ -25,7 +25,8 @@ import useServiceWorker from "./hooks/useServiceWorker"
 import { usePostHog } from "posthog-js/react"
 import { postHogAnalytics } from "./utils/postHogAnalytics"
 
-import productionMonitor from "./utils/productionMonitor"
+import productionMonitor from "./utils/productionMonitor"
+
 if (process.env.NODE_ENV === "development") {
   import("./utils/schemaTesting")
 }
@@ -43,9 +44,9 @@ const ModernExperience = createLazyComponent(
   { chunkName: "experience", preload: true }
 )
 
-const ReactProjects = createLazyComponent(
-  () => import("./components/ReactProjects"),
-  { chunkName: "react-projects" }
+const UnifiedProjects = createLazyComponent(
+  () => import("./components/UnifiedProjects"),
+  { chunkName: "unified-projects", preload: true }
 )
 
 const ModernCertificates = createLazyComponent(
@@ -60,8 +61,10 @@ const SectionLoader: React.FC = () => (
 )
 
 const AppContent: React.FC = () => {
-  const { isDark } = useTheme()
-  const postHog = usePostHog()
+  const { isDark } = useTheme()
+
+  const postHog = usePostHog()
+
   React.useEffect(() => {
     if (postHog) {
       postHogAnalytics.setPostHogInstance(postHog)
@@ -77,7 +80,8 @@ const AppContent: React.FC = () => {
   React.useEffect(() => {
     productionMonitor.trackEvent("theme_change", {
       theme: isDark ? "dark" : "light",
-    })
+    })
+
     postHog?.capture("theme_changed", {
       theme: isDark ? "dark" : "light",
     })
@@ -214,7 +218,7 @@ const AppContent: React.FC = () => {
 
         <ErrorBoundary>
           <Suspense fallback={<SectionLoader />}>
-            <ReactProjects />
+            <UnifiedProjects />
           </Suspense>
         </ErrorBoundary>
 

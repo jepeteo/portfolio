@@ -1,0 +1,72 @@
+[
+    {
+        "id": "mtx-studio",
+        "title": "MTX Studio",
+        "url": "https://www.mtxstudio.com",
+        "description": "Professional web agency offering comprehensive digital services including 24/7 website support, custom web design, and managed hosting with guaranteed 2-hour response times.",
+        "tech": [
+            "React",
+            "Next.js",
+            "Professional UI/UX",
+            "Business Analytics"
+        ],
+        "category": "Business",
+        "type": "client",
+        "featured": true,
+        "status": "Live",
+        "year": "2024"
+    },
+    {
+        "id": "mentis-gaming",
+        "title": "Mentis Gaming",
+        "url": "https://www.mentisgaming.com",
+        "description": "Indie game studio focused on crafting idle and mobile-first gaming experiences with community-driven development and respectful monetization principles.",
+        "tech": [
+            "React",
+            "Next.js",
+            "Gaming Community Features",
+            "Modern Design"
+        ],
+        "category": "Gaming",
+        "type": "client",
+        "featured": false,
+        "status": "Live",
+        "year": "2024"
+    },
+    {
+        "id": "chronogarden",
+        "title": "ChronoGarden",
+        "url": "https://www.chronogarden.com",
+        "description": "Immersive game landing page for a narrative-rich idle mobile game featuring time manipulation mechanics, mystical gardens, and deep environmental storytelling.",
+        "tech": [
+            "React",
+            "Next.js",
+            "Framer Motion",
+            "Interactive Features",
+            "Rich Media"
+        ],
+        "category": "Gaming",
+        "type": "client",
+        "featured": true,
+        "status": "Live",
+        "year": "2024"
+    },
+    {
+        "id": "dionysia-menti",
+        "title": "Dionysia Menti",
+        "url": "https://www.dionysiamenti.com",
+        "description": "Elegant artisan portfolio showcasing traditional hat-making craftsmanship, featuring detailed work galleries and custom sewing techniques with beautiful visual presentation.",
+        "tech": [
+            "React",
+            "Next.js",
+            "Portfolio Design",
+            "Image Galleries",
+            "Professional Photography"
+        ],
+        "category": "Portfolio",
+        "type": "client",
+        "featured": false,
+        "status": "In Development",
+        "year": "2024"
+    }
+]

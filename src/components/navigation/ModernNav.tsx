@@ -35,6 +35,11 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       ariaLabel: "Navigate to projects section",
     },
     {
+      href: "#web-projects",
+      text: "Web Projects",
+      ariaLabel: "Navigate to web projects section",
+    },
+    {
       href: "#certificates",
       text: "Certificates",
       ariaLabel: "Navigate to certificates section",
