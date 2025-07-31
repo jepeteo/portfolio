@@ -20,7 +20,8 @@ const generateProjectsSchema = (projects: Project[]) => {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Professional Projects Portfolio",
-    description: "A collection of web development projects including dynamic sites, e-commerce platforms, and custom applications",
+    description:
+      "A collection of web development projects including dynamic sites, e-commerce platforms, and custom applications",
     numberOfItems: projects.length,
     itemListElement: projects.map((project, index) => ({
       "@type": "ListItem",
@@ -33,19 +34,21 @@ const generateProjectsSchema = (projects: Project[]) => {
         url: project.prUrl,
         creator: {
           "@type": "Person",
-          name: "Theodoros Mentis"
+          name: "Theodoros Mentis",
         },
         about: project.prType,
-        keywords: Array.isArray(project.prTags) ? project.prTags.join(", ") : project.prTags,
-        ...(project.prFeatured && { 
+        keywords: Array.isArray(project.prTags)
+          ? project.prTags.join(", ")
+          : project.prTags,
+        ...(project.prFeatured && {
           additionalProperty: {
-            "@type": "PropertyValue", 
+            "@type": "PropertyValue",
             name: "featured",
-            value: "true"
-          }
-        })
-      }
-    }))
+            value: "true",
+          },
+        }),
+      },
+    })),
   }
 }
 
@@ -61,30 +64,32 @@ const ProjectSchema: React.FC<{ project: Project }> = ({ project }) => {
     creator: {
       "@type": "Person",
       name: "Theodoros Mentis",
-      jobTitle: "Frontend Developer"
+      jobTitle: "Frontend Developer",
     },
     about: project.prType,
-    keywords: Array.isArray(project.prTags) ? project.prTags.join(", ") : project.prTags,
+    keywords: Array.isArray(project.prTags)
+      ? project.prTags.join(", ")
+      : project.prTags,
     workExample: {
       "@type": "WebSite",
       name: project.prName,
       url: project.prUrl,
-      category: project.prType
+      category: project.prType,
     },
-    ...(project.prFeatured && { 
+    ...(project.prFeatured && {
       additionalProperty: {
-        "@type": "PropertyValue", 
+        "@type": "PropertyValue",
         name: "featured",
-        value: "true"
-      }
-    })
+        value: "true",
+      },
+    }),
   }
 
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(schema, null, 2)
+        __html: JSON.stringify(schema, null, 2),
       }}
     />
   )
@@ -495,10 +500,14 @@ const ModernProjects = memo(() => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateProjectsSchema(validatedProjects), null, 2)
+          __html: JSON.stringify(
+            generateProjectsSchema(validatedProjects),
+            null,
+            2
+          ),
         }}
       />
-      
+
       <section
         ref={ref}
         id="projects"
@@ -507,184 +516,184 @@ const ModernProjects = memo(() => {
             ? "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
             : "bg-gradient-to-br from-slate-50 via-white to-slate-100"
         }`}
-    >
-      <div className="container">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 mb-6">
-            <Layers className="w-5 h-5 text-blue-500" />
-            <span className="text-blue-500 font-semibold">
-              Portfolio & Projects
-            </span>
+      >
+        <div className="container">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 mb-6">
+              <Layers className="w-5 h-5 text-blue-500" />
+              <span className="text-blue-500 font-semibold">
+                Portfolio & Projects
+              </span>
+            </div>
+
+            <h2
+              className={`text-5xl md:text-7xl font-bold mb-8 ${
+                isDark ? "text-white" : "text-slate-900"
+              }`}
+            >
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+                My Work
+              </span>
+            </h2>
+
+            <p
+              className={`text-xl max-w-3xl mx-auto leading-relaxed ${
+                isDark ? "text-slate-300" : "text-slate-700"
+              }`}
+            >
+              Explore my portfolio of web development projects, from WordPress
+              sites to modern React applications. Each project represents a
+              unique challenge and innovative result.
+            </p>
           </div>
 
-          <h2
-            className={`text-5xl md:text-7xl font-bold mb-8 ${
-              isDark ? "text-white" : "text-slate-900"
-            }`}
-          >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
-              My Work
-            </span>
-          </h2>
-
-          <p
-            className={`text-xl max-w-3xl mx-auto leading-relaxed ${
-              isDark ? "text-slate-300" : "text-slate-700"
-            }`}
-          >
-            Explore my portfolio of web development projects, from WordPress
-            sites to modern React applications. Each project represents a unique
-            challenge and innovative result.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          <button
-            onClick={() => handleProjectTypeChange(null)}
-            className={`px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105 ${
-              projectType === null
-                ? isDark
-                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25"
-                  : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25"
-                : isDark
-                ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
-                : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
-            }`}
-          >
-            All Projects ({validatedProjects.length})
-          </button>
-          {projectTypes.map((type: string) => {
-            const count = validatedProjects.filter(
-              (project) => project.prType === type
-            ).length
-            return (
-              <button
-                key={type}
-                onClick={() => handleProjectTypeChange(type)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105 ${
-                  projectType === type
-                    ? isDark
-                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25"
-                      : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25"
-                    : isDark
-                    ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
-                    : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
-                }`}
-              >
-                {React.createElement(getProjectIcon(type), {
-                  className: "w-4 h-4",
-                })}
-                {type} ({count})
-              </button>
-            )
-          })}
-        </div>
-
-        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3 mb-12">
-          {displayProjects.map((project: Project, index: number) => {
-            const globalIndex = filteredProjects.findIndex(
-              (p) => p.prName === project.prName
-            )
-            return (
-              <React.Fragment key={project.prName}>
-                <ProjectSchema project={project} />
-                <ProjectCard
-                project={project}
-                index={index}
-                isDark={isDark}
-                globalIndex={globalIndex}
-              />
-              </React.Fragment>
-            )
-          })}
-        </div>
-
-        <div className="text-center mt-8">
-          <p
-            className={`text-sm ${
-              isDark ? "text-slate-400" : "text-slate-600"
-            }`}
-          >
-            Showing {displayProjects.length} of {filteredProjects.length}{" "}
-            projects
-            {projectType && ` (filtered by ${projectType})`} • Page{" "}
-            {currentPage} of {totalPages}
-          </p>
-        </div>
-
-        {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-2 mt-8">
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
             <button
-              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
-                currentPage === 1
+              onClick={() => handleProjectTypeChange(null)}
+              className={`px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105 ${
+                projectType === null
                   ? isDark
-                    ? "bg-slate-800/50 text-slate-600 cursor-not-allowed"
-                    : "bg-slate-100/50 text-slate-400 cursor-not-allowed"
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25"
+                    : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25"
                   : isDark
                   ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
                   : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
               }`}
             >
-              Previous
+              All Projects ({validatedProjects.length})
             </button>
-
-            {generatePaginationNumbers().map((pageItem, index) => {
-              if (pageItem === "...") {
-                return (
-                  <span
-                    key={`ellipsis-${index}`}
-                    className={`w-10 h-10 flex items-center justify-center text-sm ${
-                      isDark ? "text-slate-500" : "text-slate-400"
-                    }`}
-                  >
-                    ...
-                  </span>
-                )
-              }
-
-              const pageNum = pageItem as number
+            {projectTypes.map((type: string) => {
+              const count = validatedProjects.filter(
+                (project) => project.prType === type
+              ).length
               return (
                 <button
-                  key={pageNum}
-                  onClick={() => handlePageChange(pageNum)}
-                  className={`w-10 h-10 rounded-lg font-medium text-sm transition-all ${
-                    currentPage === pageNum
+                  key={type}
+                  onClick={() => handleProjectTypeChange(type)}
+                  className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105 ${
+                    projectType === type
                       ? isDark
-                        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
-                        : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
+                        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25"
+                        : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25"
                       : isDark
                       ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
                       : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
                   }`}
                 >
-                  {pageNum}
+                  {React.createElement(getProjectIcon(type), {
+                    className: "w-4 h-4",
+                  })}
+                  {type} ({count})
                 </button>
               )
             })}
+          </div>
 
-            <button
-              onClick={() =>
-                handlePageChange(Math.min(totalPages, currentPage + 1))
-              }
-              disabled={currentPage === totalPages}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
-                currentPage === totalPages
-                  ? isDark
-                    ? "bg-slate-800/50 text-slate-600 cursor-not-allowed"
-                    : "bg-slate-100/50 text-slate-400 cursor-not-allowed"
-                  : isDark
-                  ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
-                  : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3 mb-12">
+            {displayProjects.map((project: Project, index: number) => {
+              const globalIndex = filteredProjects.findIndex(
+                (p) => p.prName === project.prName
+              )
+              return (
+                <React.Fragment key={project.prName}>
+                  <ProjectSchema project={project} />
+                  <ProjectCard
+                    project={project}
+                    index={index}
+                    isDark={isDark}
+                    globalIndex={globalIndex}
+                  />
+                </React.Fragment>
+              )
+            })}
+          </div>
+
+          <div className="text-center mt-8">
+            <p
+              className={`text-sm ${
+                isDark ? "text-slate-400" : "text-slate-600"
               }`}
             >
-              Next
-            </button>
+              Showing {displayProjects.length} of {filteredProjects.length}{" "}
+              projects
+              {projectType && ` (filtered by ${projectType})`} • Page{" "}
+              {currentPage} of {totalPages}
+            </p>
           </div>
-        )}
-      </div>
-    </section>
+
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-8">
+              <button
+                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                  currentPage === 1
+                    ? isDark
+                      ? "bg-slate-800/50 text-slate-600 cursor-not-allowed"
+                      : "bg-slate-100/50 text-slate-400 cursor-not-allowed"
+                    : isDark
+                    ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
+                    : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+                }`}
+              >
+                Previous
+              </button>
+
+              {generatePaginationNumbers().map((pageItem, index) => {
+                if (pageItem === "...") {
+                  return (
+                    <span
+                      key={`ellipsis-${index}`}
+                      className={`w-10 h-10 flex items-center justify-center text-sm ${
+                        isDark ? "text-slate-500" : "text-slate-400"
+                      }`}
+                    >
+                      ...
+                    </span>
+                  )
+                }
+
+                const pageNum = pageItem as number
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    className={`w-10 h-10 rounded-lg font-medium text-sm transition-all ${
+                      currentPage === pageNum
+                        ? isDark
+                          ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
+                          : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
+                        : isDark
+                        ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
+                        : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                )
+              })}
+
+              <button
+                onClick={() =>
+                  handlePageChange(Math.min(totalPages, currentPage + 1))
+                }
+                disabled={currentPage === totalPages}
+                className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                  currentPage === totalPages
+                    ? isDark
+                      ? "bg-slate-800/50 text-slate-600 cursor-not-allowed"
+                      : "bg-slate-100/50 text-slate-400 cursor-not-allowed"
+                    : isDark
+                    ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
+                    : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+                }`}
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
     </>
   )
 })

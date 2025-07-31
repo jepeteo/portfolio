@@ -41,51 +41,53 @@ const generateContactSchema = () => {
     address: {
       "@type": "PostalAddress",
       addressLocality: "Piraeus",
-      addressRegion: "Attica", 
-      addressCountry: "Greece"
+      addressRegion: "Attica",
+      addressCountry: "Greece",
     },
     contactPoint: [
       {
         "@type": "ContactPoint",
         contactType: "professional",
         email: "th.mentis@gmail.com",
-        availableLanguage: ["English", "Greek"]
-      }
+        availableLanguage: ["English", "Greek"],
+      },
     ],
     sameAs: [
       "https://github.com/jepeteo",
-      "https://www.linkedin.com/in/thmentis/"
+      "https://www.linkedin.com/in/thmentis/",
     ],
     url: "https://theodorosmentis.vercel.app",
     worksFor: {
-      "@type": "Organization", 
-      name: "Freelance Web Development"
-    }
+      "@type": "Organization",
+      name: "Freelance Web Development",
+    },
   }
 }
 
 // Individual Contact Method Schema Component
-const ContactMethodSchema: React.FC<{ method: { icon: any; label: string; value: string; href: string } }> = ({ method }) => {
+const ContactMethodSchema: React.FC<{
+  method: { icon: any; label: string; value: string; href: string }
+}> = ({ method }) => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "ContactPoint",
     contactType: method.label.toLowerCase(),
     ...(method.label === "Email" && { email: method.value }),
-    ...(method.label === "Location" && { 
+    ...(method.label === "Location" && {
       address: {
         "@type": "PostalAddress",
         addressLocality: "Piraeus",
         addressRegion: "Attica",
-        addressCountry: "Greece"
-      }
-    })
+        addressCountry: "Greece",
+      },
+    }),
   }
 
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(schema, null, 2)
+        __html: JSON.stringify(schema, null, 2),
       }}
     />
   )
@@ -343,10 +345,10 @@ const Contact: React.FC = memo(() => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateContactSchema(), null, 2)
+          __html: JSON.stringify(generateContactSchema(), null, 2),
         }}
       />
-      
+
       <section
         ref={targetRef}
         className={`py-20 transition-all duration-1000 ${
@@ -354,339 +356,343 @@ const Contact: React.FC = memo(() => {
         }`}
         id="contact"
       >
-      <div className="container">
-        <div className="text-center mb-16">
-          <div
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
-              isDark
-                ? "bg-green-500/20 text-green-300 border border-green-500/30"
-                : "bg-green-100 text-green-700 border border-green-200"
-            }`}
-          >
-            <Mail className="w-4 h-4" />
-            Get In Touch
+        <div className="container">
+          <div className="text-center mb-16">
+            <div
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
+                isDark
+                  ? "bg-green-500/20 text-green-300 border border-green-500/30"
+                  : "bg-green-100 text-green-700 border border-green-200"
+              }`}
+            >
+              <Mail className="w-4 h-4" />
+              Get In Touch
+            </div>
+
+            <h2
+              className={`text-6xl md:text-8xl font-bold mb-8 ${
+                isDark ? "text-white" : "text-slate-900"
+              }`}
+            >
+              <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-red-500 bg-clip-text text-transparent">
+                Conversations I Welcome
+              </span>
+            </h2>
+
+            <p
+              className={`text-xl max-w-3xl mx-auto ${
+                isDark ? "text-slate-300" : "text-slate-600"
+              }`}
+            >
+              Ready to collaborate? Let's discuss your next project and bring
+              your ideas to life.
+            </p>
           </div>
 
-          <h2
-            className={`text-6xl md:text-8xl font-bold mb-8 ${
-              isDark ? "text-white" : "text-slate-900"
-            }`}
-          >
-            <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-red-500 bg-clip-text text-transparent">
-              Conversations I Welcome
-            </span>
-          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="space-y-8">
+              <div>
+                <h3
+                  className={`text-2xl font-semibold mb-6 ${
+                    isDark ? "text-white" : "text-slate-900"
+                  }`}
+                >
+                  Let's Connect
+                </h3>
 
-          <p
-            className={`text-xl max-w-3xl mx-auto ${
-              isDark ? "text-slate-300" : "text-slate-600"
-            }`}
-          >
-            Ready to collaborate? Let's discuss your next project and bring your
-            ideas to life.
-          </p>
-        </div>
+                <p
+                  className={`text-lg mb-8 ${
+                    isDark ? "text-slate-300" : "text-slate-600"
+                  }`}
+                >
+                  I'm always interested in hearing about new opportunities and
+                  exciting projects. Whether you're a company looking to hire,
+                  or you're looking for a freelancer, I'd love to hear from you.
+                </p>
+              </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className="space-y-8">
-            <div>
-              <h3
-                className={`text-2xl font-semibold mb-6 ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
-              >
-                Let's Connect
-              </h3>
-
-              <p
-                className={`text-lg mb-8 ${
-                  isDark ? "text-slate-300" : "text-slate-600"
-                }`}
-              >
-                I'm always interested in hearing about new opportunities and
-                exciting projects. Whether you're a company looking to hire, or
-                you're looking for a freelancer, I'd love to hear from you.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              {contactInfo.map((item, index) => (
-                <React.Fragment key={index}>
-                  <ContactMethodSchema method={item} />
-                  <a
-                    href={item.href}
-                    className={`flex items-center gap-4 p-4 rounded-xl transition-all hover:scale-105 ${
-                      isDark
-                        ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-green-500/50"
-                        : "bg-white/50 backdrop-blur-sm border border-slate-200 hover:border-green-500/50"
-                    }`}
-                  >
-                  <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                      isDark
-                        ? "bg-green-500/20 text-green-300"
-                        : "bg-green-100 text-green-600"
-                    }`}
-                  >
-                    <item.icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div
-                      className={`text-sm font-medium ${
-                        isDark ? "text-slate-400" : "text-slate-600"
+              <div className="space-y-4">
+                {contactInfo.map((item, index) => (
+                  <React.Fragment key={index}>
+                    <ContactMethodSchema method={item} />
+                    <a
+                      href={item.href}
+                      className={`flex items-center gap-4 p-4 rounded-xl transition-all hover:scale-105 ${
+                        isDark
+                          ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-green-500/50"
+                          : "bg-white/50 backdrop-blur-sm border border-slate-200 hover:border-green-500/50"
                       }`}
                     >
-                      {item.label}
-                    </div>
-                    <div
-                      className={`font-semibold ${
-                        isDark ? "text-white" : "text-slate-900"
-                      }`}
-                    >
-                      {item.value}
-                    </div>
-                  </div>
-                </a>
-                </React.Fragment>
-              ))}
-            </div>
-
-            <div>
-              <h4
-                className={`text-lg font-semibold mb-4 ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
-              >
-                Follow Me
-              </h4>
-
-              <div className="flex gap-4">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all hover:scale-110 ${
-                      isDark
-                        ? "bg-slate-800 text-slate-400 hover:bg-green-500 hover:text-white"
-                        : "bg-slate-100 text-slate-600 hover:bg-green-500 hover:text-white"
-                    }`}
-                    aria-label={social.label}
-                  >
-                    <social.icon className="w-5 h-5" />
-                  </a>
+                      <div
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                          isDark
+                            ? "bg-green-500/20 text-green-300"
+                            : "bg-green-100 text-green-600"
+                        }`}
+                      >
+                        <item.icon className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <div
+                          className={`text-sm font-medium ${
+                            isDark ? "text-slate-400" : "text-slate-600"
+                          }`}
+                        >
+                          {item.label}
+                        </div>
+                        <div
+                          className={`font-semibold ${
+                            isDark ? "text-white" : "text-slate-900"
+                          }`}
+                        >
+                          {item.value}
+                        </div>
+                      </div>
+                    </a>
+                  </React.Fragment>
                 ))}
               </div>
+
+              <div>
+                <h4
+                  className={`text-lg font-semibold mb-4 ${
+                    isDark ? "text-white" : "text-slate-900"
+                  }`}
+                >
+                  Follow Me
+                </h4>
+
+                <div className="flex gap-4">
+                  {socialLinks.map((social, index) => (
+                    <a
+                      key={index}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all hover:scale-110 ${
+                        isDark
+                          ? "bg-slate-800 text-slate-400 hover:bg-green-500 hover:text-white"
+                          : "bg-slate-100 text-slate-600 hover:bg-green-500 hover:text-white"
+                      }`}
+                      aria-label={social.label}
+                    >
+                      <social.icon className="w-5 h-5" />
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div
-            className={`p-8 rounded-2xl ${
-              isDark
-                ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700"
-                : "bg-white/50 backdrop-blur-sm border border-slate-200"
-            }`}
-          >
-            {submitStatus === "success" && (
-              <div
-                className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
-                  isDark
-                    ? "bg-green-500/20 text-green-300 border border-green-500/30"
-                    : "bg-green-100 text-green-700 border border-green-200"
-                }`}
-              >
-                <CheckCircle className="w-5 h-5" />
-                <span>
-                  Message sent successfully! I'll get back to you soon.
-                </span>
-              </div>
-            )}
-
-            {submitStatus === "error" && (
-              <div
-                className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
-                  isDark
-                    ? "bg-red-500/20 text-red-300 border border-red-500/30"
-                    : "bg-red-100 text-red-700 border border-red-200"
-                }`}
-              >
-                <AlertCircle className="w-5 h-5" />
-                <span>Failed to send message. Please try again.</span>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className={`block text-sm font-medium mb-2 ${
-                    isDark ? "text-slate-300" : "text-slate-700"
+            <div
+              className={`p-8 rounded-2xl ${
+                isDark
+                  ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700"
+                  : "bg-white/50 backdrop-blur-sm border border-slate-200"
+              }`}
+            >
+              {submitStatus === "success" && (
+                <div
+                  className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
+                    isDark
+                      ? "bg-green-500/20 text-green-300 border border-green-500/30"
+                      : "bg-green-100 text-green-700 border border-green-200"
                   }`}
                 >
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.name
-                      ? "border-red-500"
-                      : isDark
-                      ? "bg-slate-700 border-slate-600 text-white placeholder-slate-400"
-                      : "bg-white border-slate-300 text-slate-900 placeholder-slate-500"
-                  }`}
-                  placeholder="Your full name"
-                  disabled={isSubmitting}
-                  maxLength={50}
-                />
-                {errors.name && (
-                  <p className="mt-2 text-sm text-red-500">{errors.name}</p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="email"
-                  className={`block text-sm font-medium mb-2 ${
-                    isDark ? "text-slate-300" : "text-slate-700"
-                  }`}
-                >
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  onBlur={handleEmailBlur}
-                  className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.email
-                      ? "border-red-500"
-                      : isDark
-                      ? "bg-slate-700 border-slate-600 text-white placeholder-slate-400"
-                      : "bg-white border-slate-300 text-slate-900 placeholder-slate-500"
-                  }`}
-                  placeholder="your.email@example.com"
-                  disabled={isSubmitting}
-                  maxLength={254}
-                />
-                {errors.email && (
-                  <p className="mt-2 text-sm text-red-500">{errors.email}</p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="subject"
-                  className={`block text-sm font-medium mb-2 ${
-                    isDark ? "text-slate-300" : "text-slate-700"
-                  }`}
-                >
-                  Subject *
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.subject
-                      ? "border-red-500"
-                      : isDark
-                      ? "bg-slate-700 border-slate-600 text-white placeholder-slate-400"
-                      : "bg-white border-slate-300 text-slate-900 placeholder-slate-500"
-                  }`}
-                  placeholder="Project inquiry, collaboration, etc."
-                  disabled={isSubmitting}
-                  maxLength={100}
-                />
-                {errors.subject && (
-                  <p className="mt-2 text-sm text-red-500">{errors.subject}</p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="message"
-                  className={`block text-sm font-medium mb-2 ${
-                    isDark ? "text-slate-300" : "text-slate-700"
-                  }`}
-                >
-                  Message *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={6}
-                  className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none ${
-                    errors.message
-                      ? "border-red-500"
-                      : isDark
-                      ? "bg-slate-700 border-slate-600 text-white placeholder-slate-400"
-                      : "bg-white border-slate-300 text-slate-900 placeholder-slate-500"
-                  }`}
-                  placeholder="Tell me about your project, requirements, timeline, etc."
-                  disabled={isSubmitting}
-                  maxLength={2000}
-                />
-                {errors.message && (
-                  <p className="mt-2 text-sm text-red-500">{errors.message}</p>
-                )}
-              </div>
-
-              <div style={{ display: "none" }}>
-                <label htmlFor="website">Website</label>
-                <input
-                  type="text"
-                  id="website"
-                  name="website"
-                  value={honeypot}
-                  onChange={(e) => setHoneypot(e.target.value)}
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
-              </div>
-
-              {errors.general && (
-                <div className="p-4 rounded-xl bg-red-50 border border-red-200">
-                  <p className="text-sm text-red-600">{errors.general}</p>
+                  <CheckCircle className="w-5 h-5" />
+                  <span>
+                    Message sent successfully! I'll get back to you soon.
+                  </span>
                 </div>
               )}
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-semibold text-white transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
-                  isDark
-                    ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500"
-                    : "bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
-                }`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-5 h-5" />
-                    Send Message
-                  </>
+              {submitStatus === "error" && (
+                <div
+                  className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
+                    isDark
+                      ? "bg-red-500/20 text-red-300 border border-red-500/30"
+                      : "bg-red-100 text-red-700 border border-red-200"
+                  }`}
+                >
+                  <AlertCircle className="w-5 h-5" />
+                  <span>Failed to send message. Please try again.</span>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className={`block text-sm font-medium mb-2 ${
+                      isDark ? "text-slate-300" : "text-slate-700"
+                    }`}
+                  >
+                    Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                      errors.name
+                        ? "border-red-500"
+                        : isDark
+                        ? "bg-slate-700 border-slate-600 text-white placeholder-slate-400"
+                        : "bg-white border-slate-300 text-slate-900 placeholder-slate-500"
+                    }`}
+                    placeholder="Your full name"
+                    disabled={isSubmitting}
+                    maxLength={50}
+                  />
+                  {errors.name && (
+                    <p className="mt-2 text-sm text-red-500">{errors.name}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className={`block text-sm font-medium mb-2 ${
+                      isDark ? "text-slate-300" : "text-slate-700"
+                    }`}
+                  >
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    onBlur={handleEmailBlur}
+                    className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                      errors.email
+                        ? "border-red-500"
+                        : isDark
+                        ? "bg-slate-700 border-slate-600 text-white placeholder-slate-400"
+                        : "bg-white border-slate-300 text-slate-900 placeholder-slate-500"
+                    }`}
+                    placeholder="your.email@example.com"
+                    disabled={isSubmitting}
+                    maxLength={254}
+                  />
+                  {errors.email && (
+                    <p className="mt-2 text-sm text-red-500">{errors.email}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="subject"
+                    className={`block text-sm font-medium mb-2 ${
+                      isDark ? "text-slate-300" : "text-slate-700"
+                    }`}
+                  >
+                    Subject *
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent ${
+                      errors.subject
+                        ? "border-red-500"
+                        : isDark
+                        ? "bg-slate-700 border-slate-600 text-white placeholder-slate-400"
+                        : "bg-white border-slate-300 text-slate-900 placeholder-slate-500"
+                    }`}
+                    placeholder="Project inquiry, collaboration, etc."
+                    disabled={isSubmitting}
+                    maxLength={100}
+                  />
+                  {errors.subject && (
+                    <p className="mt-2 text-sm text-red-500">
+                      {errors.subject}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="message"
+                    className={`block text-sm font-medium mb-2 ${
+                      isDark ? "text-slate-300" : "text-slate-700"
+                    }`}
+                  >
+                    Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={6}
+                    className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none ${
+                      errors.message
+                        ? "border-red-500"
+                        : isDark
+                        ? "bg-slate-700 border-slate-600 text-white placeholder-slate-400"
+                        : "bg-white border-slate-300 text-slate-900 placeholder-slate-500"
+                    }`}
+                    placeholder="Tell me about your project, requirements, timeline, etc."
+                    disabled={isSubmitting}
+                    maxLength={2000}
+                  />
+                  {errors.message && (
+                    <p className="mt-2 text-sm text-red-500">
+                      {errors.message}
+                    </p>
+                  )}
+                </div>
+
+                <div style={{ display: "none" }}>
+                  <label htmlFor="website">Website</label>
+                  <input
+                    type="text"
+                    id="website"
+                    name="website"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
+                {errors.general && (
+                  <div className="p-4 rounded-xl bg-red-50 border border-red-200">
+                    <p className="text-sm text-red-600">{errors.general}</p>
+                  </div>
                 )}
-              </button>
-            </form>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-semibold text-white transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
+                    isDark
+                      ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500"
+                      : "bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5" />
+                      Send Message
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
     </>
   )
 })
