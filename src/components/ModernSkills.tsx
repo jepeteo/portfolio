@@ -10,6 +10,142 @@ import SkillsStats from "./skills/SkillsStats"
 import SkillsCallToAction from "./skills/SkillsCallToAction"
 import { Sparkles } from "lucide-react"
 
+// Local type definitions for schema
+type SkillData = {
+  name: string
+  level: number
+  experience: string
+  experienceYears: number
+  icon: string
+  trend: "up" | "stable" | "down"
+  description: string
+  mastery: string
+}
+
+type SkillCategoryData = {
+  title: string
+  subtitle: string
+  icon: any
+  gradient: string
+  description: string
+  skills: SkillData[]
+}
+
+// Schema.org structured data for skills
+const generateSkillsSchema = (skillCategories: SkillCategoryData[]) => {
+  const allSkills = skillCategories.flatMap((category: SkillCategoryData) => 
+    category.skills.map((skill: SkillData) => ({
+      ...skill,
+      category: category.title
+    }))
+  )
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": "https://theodorosmentis.com/#skills",
+    name: "Technical Skills & Expertise",
+    description: "Professional technical skills and technologies mastered by Theodoros Mentis",
+    numberOfItems: allSkills.length,
+    itemListElement: allSkills.map((skill: SkillData & { category: string }, index: number) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "DefinedTerm",
+        "@id": `https://theodorosmentis.com/#skill-${skill.name.toLowerCase().replace(/\s+/g, '-')}`,
+        name: skill.name,
+        description: skill.description,
+        inDefinedTermSet: {
+          "@type": "DefinedTermSet",
+          name: skill.category,
+          description: `${skill.category} technologies and skills`
+        },
+        about: {
+          "@type": "Person",
+          "@id": "https://theodorosmentis.com/#person",
+          name: "Theodoros Mentis",
+          knowsAbout: skill.name
+        },
+        additionalProperty: [
+          {
+            "@type": "PropertyValue",
+            name: "Proficiency Level",
+            value: `${skill.level}%`
+          },
+          {
+            "@type": "PropertyValue", 
+            name: "Experience Years",
+            value: skill.experienceYears
+          },
+          {
+            "@type": "PropertyValue",
+            name: "Mastery Level",
+            value: skill.mastery
+          },
+          {
+            "@type": "PropertyValue",
+            name: "Skill Trend",
+            value: skill.trend
+          }
+        ]
+      }
+    }))
+  }
+}
+
+// Individual skill schema component
+const SkillSchema: React.FC<{ skill: SkillData & { category: string } }> = ({ skill }) => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Skill",
+    "@id": `https://theodorosmentis.com/#skill-${skill.name.toLowerCase().replace(/\s+/g, '-')}`,
+    name: skill.name,
+    description: skill.description,
+    skillType: skill.category,
+    proficiencyLevel: `${skill.level}%`,
+    experienceLevel: skill.mastery,
+    yearsOfExperience: skill.experienceYears,
+    skillOwner: {
+      "@type": "Person",
+      "@id": "https://theodorosmentis.com/#person",
+      name: "Theodoros Mentis",
+      jobTitle: "Senior Full Stack Developer"
+    },
+    applicationArea: getApplicationArea(skill.category),
+    skillAssessment: {
+      "@type": "Assessment",
+      assessmentOutput: {
+        "@type": "QuantitativeValue",
+        value: skill.level,
+        unitText: "percent",
+        maxValue: 100
+      }
+    }
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(schema, null, 2)
+      }}
+    />
+  )
+}
+
+// Helper function to map skill categories to application areas
+const getApplicationArea = (category: string): string => {
+  const mapping: Record<string, string> = {
+    "Programming Languages": "Software Development",
+    "Backend & Databases": "Backend Development", 
+    "Frontend Technologies": "Frontend Development",
+    "DevOps & Infrastructure": "Infrastructure Management",
+    "Tools & Workflow": "Development Tools",
+    "CMS & Frameworks": "Content Management"
+  }
+  return mapping[category] || "Web Development"
+}
+
 const ModernSkills: React.FC = () => {
   const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
@@ -68,13 +204,22 @@ const ModernSkills: React.FC = () => {
     skillCategories[activeCategory as keyof typeof skillCategories]
 
   return (
-    <section
-      ref={targetRef}
-      className={`py-24 transition-all duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
-      id="skills"
-    >
+    <>
+      {/* SEO Schema for Skills */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateSkillsSchema(Object.values(skillCategories)), null, 2)
+        }}
+      />
+      
+      <section
+        ref={targetRef}
+        className={`py-24 transition-all duration-1000 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+        id="skills"
+      >
       <div className="container">
         <div className="text-center mb-20">
           <div
@@ -262,6 +407,7 @@ const ModernSkills: React.FC = () => {
         />
       </div>
     </section>
+    </>
   )
 }
 
