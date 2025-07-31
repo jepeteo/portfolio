@@ -14,6 +14,82 @@ import {
   Image as ImageIcon,
 } from "lucide-react"
 
+// SEO Schema generation for Projects
+const generateProjectsSchema = (projects: Project[]) => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Professional Projects Portfolio",
+    description: "A collection of web development projects including dynamic sites, e-commerce platforms, and custom applications",
+    numberOfItems: projects.length,
+    itemListElement: projects.map((project, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "CreativeWork",
+        "@id": `#${project.id}`,
+        name: project.prName,
+        description: project.prDescription,
+        url: project.prUrl,
+        creator: {
+          "@type": "Person",
+          name: "Theodoros Mentis"
+        },
+        about: project.prType,
+        keywords: Array.isArray(project.prTags) ? project.prTags.join(", ") : project.prTags,
+        ...(project.prFeatured && { 
+          additionalProperty: {
+            "@type": "PropertyValue", 
+            name: "featured",
+            value: "true"
+          }
+        })
+      }
+    }))
+  }
+}
+
+// Individual Project Schema Component
+const ProjectSchema: React.FC<{ project: Project }> = ({ project }) => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": `#${project.id}`,
+    name: project.prName,
+    description: project.prDescription,
+    url: project.prUrl,
+    creator: {
+      "@type": "Person",
+      name: "Theodoros Mentis",
+      jobTitle: "Frontend Developer"
+    },
+    about: project.prType,
+    keywords: Array.isArray(project.prTags) ? project.prTags.join(", ") : project.prTags,
+    workExample: {
+      "@type": "WebSite",
+      name: project.prName,
+      url: project.prUrl,
+      category: project.prType
+    },
+    ...(project.prFeatured && { 
+      additionalProperty: {
+        "@type": "PropertyValue", 
+        name: "featured",
+        value: "true"
+      }
+    })
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(schema, null, 2)
+      }}
+    />
+  )
+}
+
 const ModernProjects = memo(() => {
   const { isDark } = useTheme()
   const [projectType, setProjectType] = useState<string | null>(null)
@@ -221,7 +297,8 @@ const ModernProjects = memo(() => {
         project.prName.toLowerCase().replace(/\s+/g, "-")
       const imageSrc = `./images/projects/${imageSlug}.webp`
 
-      const hasGlobalImageError = imageErrors.has(project.prName)
+      const hasGlobalImageError = imageErrors.has(project.prName)
+
       const { imageRef, isLoading, hasError } = useProjectImage({
         src: imageSrc,
         shouldLoad: shouldLoadImage && !hasGlobalImageError,
@@ -413,14 +490,23 @@ const ModernProjects = memo(() => {
   ProjectCard.displayName = "ProjectCard"
 
   return (
-    <section
-      ref={ref}
-      id="projects"
-      className={`relative min-h-screen py-24 transition-all duration-1000 ${
-        isDark
-          ? "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
-          : "bg-gradient-to-br from-slate-50 via-white to-slate-100"
-      }`}
+    <>
+      {/* SEO Schema for Projects */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateProjectsSchema(validatedProjects), null, 2)
+        }}
+      />
+      
+      <section
+        ref={ref}
+        id="projects"
+        className={`relative min-h-screen py-24 transition-all duration-1000 ${
+          isDark
+            ? "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
+            : "bg-gradient-to-br from-slate-50 via-white to-slate-100"
+        }`}
     >
       <div className="container">
         <div className="text-center mb-16">
@@ -500,13 +586,15 @@ const ModernProjects = memo(() => {
               (p) => p.prName === project.prName
             )
             return (
-              <ProjectCard
-                key={project.prName}
+              <React.Fragment key={project.prName}>
+                <ProjectSchema project={project} />
+                <ProjectCard
                 project={project}
                 index={index}
                 isDark={isDark}
                 globalIndex={globalIndex}
               />
+              </React.Fragment>
             )
           })}
         </div>
@@ -597,6 +685,7 @@ const ModernProjects = memo(() => {
         )}
       </div>
     </section>
+    </>
   )
 })
 
