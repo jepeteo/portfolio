@@ -25,7 +25,130 @@ import {
   ChevronUp,
   Plus,
   Minus,
-} from "lucide-react"
+} from "lucide-react"
+
+// Schema.org structured data for certificates
+const generateCertificatesSchema = (certificates: ModernCertificate[]) => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": "https://theodorosmentis.com/#certificates",
+    name: "Professional Certifications & Credentials",
+    description: "Educational and professional certifications earned by Theodoros Mentis",
+    numberOfItems: certificates.length,
+    itemListElement: certificates.map((certificate, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "EducationalOccupationalCredential",
+        "@id": `https://theodorosmentis.com/#certificate-${certificate.id}`,
+        name: certificate.name,
+        description: certificate.description,
+        dateCreated: certificate.issueDate,
+        url: certificate.credentialUrl,
+        credentialCategory: mapCategoryToCredentialCategory(certificate.category || "Technology"),
+        educationalLevel: "Professional Development",
+        competencyRequired: certificate.skills,
+        recognizedBy: {
+          "@type": "Organization",
+          name: certificate.issuer,
+          url: getIssuerUrl(certificate.issuer)
+        },
+        about: certificate.skills?.map((skill: string) => ({
+          "@type": "DefinedTerm",
+          name: skill,
+          inDefinedTermSet: {
+            "@type": "DefinedTermSet",
+            name: certificate.category
+          }
+        })),
+        credentialSubject: {
+          "@type": "Person",
+          "@id": "https://theodorosmentis.com/#person",
+          name: "Theodoros Mentis",
+          hasCredential: certificate.name
+        }
+      }
+    }))
+  }
+}
+
+// Individual certificate schema component
+const CertificateSchema: React.FC<{ certificate: ModernCertificate }> = ({ certificate }) => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOccupationalCredential",
+    "@id": `https://theodorosmentis.com/#credential-${certificate.id}`,
+    name: certificate.name,
+    description: certificate.description,
+    dateCreated: certificate.issueDate,
+    url: certificate.credentialUrl,
+    credentialCategory: mapCategoryToCredentialCategory(certificate.category || "Technology"),
+    educationalLevel: "Professional Development",
+    competencyRequired: certificate.skills,
+    recognizedBy: {
+      "@type": "Organization",
+      name: certificate.issuer,
+      url: getIssuerUrl(certificate.issuer)
+    },
+    teaches: certificate.skills?.map((skill: string) => ({
+      "@type": "DefinedTerm",
+      name: skill
+    })),
+    credentialSubject: {
+      "@type": "Person",
+      "@id": "https://theodorosmentis.com/#person",
+      name: "Theodoros Mentis",
+      jobTitle: "Senior Full Stack Developer"
+    },
+    isPartOf: {
+      "@type": "CreativeWork",
+      "@id": "https://theodorosmentis.com/#portfolio",
+      name: "Theodoros Mentis Professional Portfolio"
+    }
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(schema, null, 2)
+      }}
+    />
+  )
+}
+
+// Helper functions
+const mapCategoryToCredentialCategory = (category: string): string => {
+  const mapping: Record<string, string> = {
+    "AI & Machine Learning": "Technology",
+    "Frontend Development": "Technology",
+    "Backend Development": "Technology", 
+    "Programming Fundamentals": "Technology",
+    "Digital Marketing": "Marketing",
+    "Security & Compliance": "Security",
+    "CMS Development": "Technology",
+    "DevOps & Infrastructure": "Technology",
+    "Database Management": "Technology",
+    "Performance & Optimization": "Technology",
+    "E-commerce": "Business",
+    "Productivity Tools": "Technology"
+  }
+  return mapping[category] || "Technology"
+}
+
+const getIssuerUrl = (issuer: string): string => {
+  const mapping: Record<string, string> = {
+    "LinkedIn Learning": "https://www.linkedin.com/learning/",
+    "Coursera": "https://www.coursera.org/",
+    "Udemy": "https://www.udemy.com/",
+    "Microsoft": "https://docs.microsoft.com/en-us/learn/",
+    "Google": "https://developers.google.com/training/",
+    "Amazon Web Services": "https://aws.amazon.com/training/"
+  }
+  return mapping[issuer] || `https://www.${issuer.toLowerCase().replace(/\s+/g, '')}.com/`
+}
+
 const categoryIcons: Record<string, React.ComponentType<any>> = {
   "AI & Machine Learning": Zap,
   "Frontend Development": Code,
@@ -39,7 +162,8 @@ const categoryIcons: Record<string, React.ComponentType<any>> = {
   "Performance & Optimization": Zap,
   "E-commerce": Smartphone,
   "Productivity Tools": Settings,
-}
+}
+
 interface ExpandedSkills {
   [certificateId: string]: boolean
 }
@@ -51,8 +175,10 @@ const ModernCertificates: React.FC = memo(() => {
     rootMargin: "50px",
   })
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSummaryExpanded, setIsSummaryExpanded] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [isSummaryExpanded, setIsSummaryExpanded] = useState(false)
+
   const [expandedSkills, setExpandedSkills] = useState<ExpandedSkills>({})
 
   const { categories, certsByCategory, validCertificates } = useMemo(() => {
@@ -73,7 +199,8 @@ const ModernCertificates: React.FC = memo(() => {
         return acc
       },
       {}
-    )
+    )
+
     const sortedCategories = Object.keys(grouped).sort()
 
     return {
@@ -81,10 +208,12 @@ const ModernCertificates: React.FC = memo(() => {
       certsByCategory: grouped,
       validCertificates: validCerts,
     }
-  }, [])
+  }, [])
+
   const [selectedCategory, setSelectedCategory] = useState<string>(() => {
     return categories.length > 0 ? categories[0] : "All"
-  })
+  })
+
   React.useEffect(() => {
     if (categories.length > 0 && !categories.includes(selectedCategory)) {
       setSelectedCategory(categories[0])
@@ -93,12 +222,15 @@ const ModernCertificates: React.FC = memo(() => {
 
   const handleCategoryChange = useCallback((category: string) => {
     setIsLoading(true)
-    setSelectedCategory(category)
+    setSelectedCategory(category)
+
     setTimeout(() => setIsLoading(false), 150)
-  }, [])
+  }, [])
+
   const toggleSummaryExpansion = useCallback(() => {
     setIsSummaryExpanded((prev) => !prev)
-  }, [])
+  }, [])
+
   const toggleSkillsExpansion = useCallback((certificateId: string) => {
     setExpandedSkills((prev) => ({
       ...prev,
@@ -116,13 +248,15 @@ const ModernCertificates: React.FC = memo(() => {
   const getCategoryIcon = (category: string) => {
     const IconComponent = categoryIcons[category] || Award
     return IconComponent
-  }
+  }
+
   const INITIAL_CATEGORIES_DISPLAY = 5
   const hasMoreCategories = categories.length > INITIAL_CATEGORIES_DISPLAY
   const visibleCategories = isSummaryExpanded
     ? categories
     : categories.slice(0, INITIAL_CATEGORIES_DISPLAY)
-  const hiddenCategoriesCount = categories.length - INITIAL_CATEGORIES_DISPLAY
+  const hiddenCategoriesCount = categories.length - INITIAL_CATEGORIES_DISPLAY
+
   const INITIAL_SKILLS_DISPLAY = 3
 
   if (validCertificates.length === 0) {
@@ -149,13 +283,22 @@ const ModernCertificates: React.FC = memo(() => {
   }
 
   return (
-    <section
-      ref={targetRef}
-      className={`py-20 transition-all duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
-      id="certificates"
-    >
+    <>
+      {/* SEO Schema for Certificates */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateCertificatesSchema(validCertificates), null, 2)
+        }}
+      />
+      
+      <section
+        ref={targetRef}
+        className={`py-20 transition-all duration-1000 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+        id="certificates"
+      >
       <div className="container">
         
         <div className="text-center mb-16">
@@ -281,7 +424,8 @@ const ModernCertificates: React.FC = memo(() => {
               {displayedCertificates.map((certificate, index) => {
                 const IconComponent = getCategoryIcon(
                   certificate.category || "Uncategorized"
-                )
+                )
+
                 const isSkillsExpanded = expandedSkills[certificate.id] || false
                 const hasMoreSkills =
                   certificate.skills &&
@@ -294,15 +438,16 @@ const ModernCertificates: React.FC = memo(() => {
                   : 0
 
                 return (
-                  <div
-                    key={certificate.id}
-                    className={`group relative overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] hover:rotate-1 ${
-                      isDark
-                        ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-purple-500/50"
-                        : "bg-white/50 backdrop-blur-sm border border-slate-200 hover:border-purple-500/50"
-                    }`}
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
+                  <React.Fragment key={certificate.id}>
+                    <CertificateSchema certificate={certificate} />
+                    <div
+                      className={`group relative overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] hover:rotate-1 ${
+                        isDark
+                          ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-purple-500/50"
+                          : "bg-white/50 backdrop-blur-sm border border-slate-200 hover:border-purple-500/50"
+                      }`}
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
                     
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -441,6 +586,7 @@ const ModernCertificates: React.FC = memo(() => {
                       </div>
                     </div>
                   </div>
+                  </React.Fragment>
                 )
               })}
             </div>
@@ -522,8 +668,9 @@ const ModernCertificates: React.FC = memo(() => {
             </div>
           </>
         )}
-      </div>
+        </div>
     </section>
+    </>
   )
 })
 
