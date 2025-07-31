@@ -3,6 +3,7 @@ import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import usePerformanceMonitor from "../hooks/usePerformanceMonitor"
 import { useExperienceData } from "../hooks/useExperienceData"
+import type { TechExperience } from "../hooks/useExperienceData"
 import { ExperienceStatsComponent } from "./experience/ExperienceStats"
 import { ExperienceCallToAction } from "./experience/ExperienceCallToAction"
 import { ExperienceSidebar } from "./experience/ExperienceSidebar"
@@ -15,13 +16,121 @@ import {
   ChevronUp,
 } from "lucide-react"
 
+// Schema.org structured data for experience
+const generateExperienceSchema = (experiences: TechExperience[]) => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": "https://theodorosmentis.com/#experience",
+    name: "Professional Work Experience",
+    description: "Career history and professional experience of Theodoros Mentis",
+    numberOfItems: experiences.length,
+    itemListElement: experiences.map((experience, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Role",
+        "@id": `https://theodorosmentis.com/#experience-${experience.id}`,
+        roleName: experience.title,
+        startDate: formatDateForSchema(experience.periodInfo.from),
+        endDate: experience.periodInfo.isCurrent ? undefined : formatDateForSchema(experience.periodInfo.to),
+        description: experience.description,
+        skills: experience.techStack,
+        creator: {
+          "@type": "Person",
+          "@id": "https://theodorosmentis.com/#person",
+          name: "Theodoros Mentis"
+        },
+        worksFor: {
+          "@type": "Organization",
+          name: experience.company,
+          ...(experience.location && { address: experience.location })
+        },
+        responsibilities: experience.keyResponsibilities || [],
+        achievements: experience.achievements || [],
+        ...(experience.metrics.projects && { 
+          about: {
+            "@type": "QuantitativeValue",
+            name: "Projects Completed",
+            value: experience.metrics.projects
+          }
+        })
+      }
+    }))
+  }
+}
+
+// Individual experience schema component
+const ExperienceSchema: React.FC<{ experience: TechExperience }> = ({ experience }) => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WorkHistory",
+    "@id": `https://theodorosmentis.com/#work-${experience.id}`,
+    position: experience.title,
+    startDate: formatDateForSchema(experience.periodInfo.from),
+    endDate: experience.periodInfo.isCurrent ? undefined : formatDateForSchema(experience.periodInfo.to),
+    description: experience.description,
+    skills: experience.techStack,
+    workLocation: experience.location,
+    employee: {
+      "@type": "Person",
+      "@id": "https://theodorosmentis.com/#person",
+      name: "Theodoros Mentis",
+      jobTitle: "Senior Full Stack Developer"
+    },
+    employer: {
+      "@type": "Organization",
+      name: experience.company,
+      ...(experience.location && { address: experience.location })
+    },
+    responsibilities: experience.keyResponsibilities || [],
+    ...(experience.achievements && experience.achievements.length > 0 && {
+      award: experience.achievements.map((achievement, index) => ({
+        "@type": "Achievement",
+        "@id": `https://theodorosmentis.com/#achievement-${experience.id}-${index}`,
+        name: achievement,
+        achiever: {
+          "@type": "Person",
+          "@id": "https://theodorosmentis.com/#person",
+          name: "Theodoros Mentis"
+        }
+      }))
+    }),
+    ...(experience.metrics.projects && {
+      result: {
+        "@type": "QuantitativeValue",
+        name: "Projects Completed",
+        value: experience.metrics.projects
+      }
+    })
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(schema, null, 2)
+      }}
+    />
+  )
+}
+
+// Helper function to format dates for schema
+const formatDateForSchema = (dateString: string): string => {
+  // Convert "MM-YYYY" format to "YYYY-MM-DD"
+  const [month, year] = dateString.split('-')
+  return `${year}-${month.padStart(2, '0')}-01`
+}
+
 const ModernExperience: React.FC = () => {
   const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
     threshold: 0.1,
     rootMargin: "50px",
-  })
-  const performanceMetrics = usePerformanceMonitor("ModernExperience")
+  })
+
+  const performanceMetrics = usePerformanceMonitor("ModernExperience")
+
   const {
     experiences,
     stats,
@@ -29,13 +138,15 @@ const ModernExperience: React.FC = () => {
     pastExperiences,
     freelanceExperiences,
     employmentExperiences,
-  } = useExperienceData()
+  } = useExperienceData()
+
   const [filter, setFilter] = useState<
     "all" | "current" | "past" | "freelance" | "employment"
   >("all")
   const [selectedExperienceId, setSelectedExperienceId] = useState<
     string | null
-  >(null) // Start with null - nothing expanded by default
+  >(null) // Start with null - nothing expanded by default
+
   const filteredExperiences =
     filter === "current"
       ? currentExperiences
@@ -45,23 +156,28 @@ const ModernExperience: React.FC = () => {
       ? freelanceExperiences
       : filter === "employment"
       ? employmentExperiences
-      : experiences
+      : experiences
+
   useEffect(() => {
     if (
       filteredExperiences.length > 0 &&
       (!selectedExperienceId ||
         !filteredExperiences.some((exp) => exp.id === selectedExperienceId))
-    ) {
+    ) {
+
       const isMobile = window.innerWidth < 768
       if (!isMobile) {
         setSelectedExperienceId(filteredExperiences[0].id)
-      } else {
+      } else {
+
         setSelectedExperienceId(null)
       }
     }
-  }, [filteredExperiences, selectedExperienceId])
+  }, [filteredExperiences, selectedExperienceId])
+
   const selectedExperience =
-    filteredExperiences.find((exp) => exp.id === selectedExperienceId) || null
+    filteredExperiences.find((exp) => exp.id === selectedExperienceId) || null
+
   const renderCount = React.useRef(0)
   useEffect(() => {
     renderCount.current += 1
@@ -73,13 +189,22 @@ const ModernExperience: React.FC = () => {
   })
 
   return (
-    <section
-      ref={targetRef}
-      id="experience"
-      className={`py-20 transition-all duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      } ${isDark ? "bg-slate-900" : "bg-slate-50"}`}
-    >
+    <>
+      {/* SEO Schema for Experience */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateExperienceSchema(experiences), null, 2)
+        }}
+      />
+      
+      <section
+        ref={targetRef}
+        id="experience"
+        className={`py-20 transition-all duration-1000 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        } ${isDark ? "bg-slate-900" : "bg-slate-50"}`}
+      >
       <div className="container">
         
         <div className="text-center mb-16">
@@ -206,6 +331,8 @@ const ModernExperience: React.FC = () => {
                     : "bg-white/30 border-slate-200/50"
                 } backdrop-blur-sm`}
               >
+                {/* Individual Experience Schema */}
+                <ExperienceSchema experience={experience} />
                 
                 <div className="p-4">
                   <div className="flex justify-between items-start">
@@ -337,6 +464,7 @@ const ModernExperience: React.FC = () => {
         <ExperienceCallToAction isDark={isDark} />
       </div>
     </section>
+    </>
   )
 }
 
