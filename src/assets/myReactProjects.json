@@ -1,5 +1,24 @@
 [
   {
+    "id": "jepeteo",
+    "title": "Jepeteo - Personal Tech Blog",
+    "description": "A personal blog covering technology trends, movie reviews, and space exploration news. Built with modern web technologies featuring clean design, article management, and engaging content presentation.",
+    "image": "/src/assets/images/jepeteo-preview.jpg",
+    "technologies": [
+      "WordPress",
+      "PHP",
+      "MySQL",
+      "Custom Theme",
+      "Responsive Design"
+    ],
+    "githubUrl": "",
+    "liveUrl": "https://jepeteo.com",
+    "date": "2024",
+    "status": "completed",
+    "featured": true,
+    "performance": "90+"
+  },
+  {
     "id": "url-shortener",
     "title": "URL Shortener - Mikrouli.link",
     "description": "A modern URL shortener application built with Next.js and Tailwind CSS. Features custom short URLs, analytics tracking, QR code generation, and a clean, responsive interface for managing links efficiently.",
