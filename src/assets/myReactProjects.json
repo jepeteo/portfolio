@@ -1,22 +1,43 @@
 [
   {
+    "id": "gotscammed",
+    "title": "GotScammed.org - Scam Awareness Platform",
+    "description": "Professional resource hub for scam awareness, prevention, and recovery. Features comprehensive scam type database, real-time alerts, protection guides, and reporting channels. Helping people stay safe online with educational resources and official support.",
+    "image": "/src/assets/images/gotscammed-preview.jpg",
+    "technologies": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Database",
+      "Alert System"
+    ],
+    "githubUrl": "",
+    "liveUrl": "https://gotscammed.org",
+    "date": "2025",
+    "status": "completed",
+    "featured": true,
+    "performance": "94+"
+  },
+  {
     "id": "jepeteo",
-    "title": "Jepeteo - Personal Tech Blog",
-    "description": "A personal blog covering technology trends, movie reviews, and space exploration news. Built with modern web technologies featuring clean design, article management, and engaging content presentation.",
+    "title": "Jepeteo - Remote IT Support & Tech Services",
+    "description": "Professional remote IT support business providing technical assistance, web development, and digital consulting across Greece. Features 24/7 availability, secure encrypted connections, subscription packages, and multilingual support. 20+ years experience serving 1000+ satisfied clients.",
     "image": "/src/assets/images/jepeteo-preview.jpg",
     "technologies": [
-      "WordPress",
-      "PHP",
-      "MySQL",
-      "Custom Theme",
-      "Responsive Design"
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Business Platform",
+      "Multi-language",
+      "SEO Optimized"
     ],
     "githubUrl": "",
     "liveUrl": "https://jepeteo.com",
-    "date": "2024",
+    "date": "2025",
     "status": "completed",
     "featured": true,
-    "performance": "90+"
+    "performance": "95+"
   },
   {
     "id": "url-shortener",
