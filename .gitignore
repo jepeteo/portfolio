@@ -43,3 +43,4 @@ updateDescriptions.js
 # Personal tools (not for deployment)
 instagram-card-generator.html
 og-image-generator.html
+.vercel
