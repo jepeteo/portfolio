@@ -19,16 +19,6 @@
     "prFeatured": false
   },
   {
-    "prName": "Jepeteo",
-    "prUrl": "https://jepeteo.com",
-    "prImageSlug": "jepeteo",
-    "prDescription": "A personal blog covering topics in technology, movies, and space news.",
-    "prType": "Dynamic Site",
-    "prTags": "From scratch",
-    "prEmployer": "fl",
-    "prFeatured": true
-  },
-  {
     "prName": "Prionotainies",
     "prUrl": "https://prionotainies.gr",
     "prImageSlug": "prionotainies",

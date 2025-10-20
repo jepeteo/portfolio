@@ -55,18 +55,39 @@
         "id": "dionysia-menti",
         "title": "Dionysia Menti",
         "url": "https://www.dionysiamenti.com",
-        "description": "Elegant artisan portfolio showcasing traditional hat-making craftsmanship, featuring detailed work galleries and custom sewing techniques with beautiful visual presentation.",
+        "description": "Elegant artisan portfolio showcasing traditional hat-making craftsmanship with stunning image galleries. Features detailed work samples from sweatbands to ribbons, showcasing professional seamstress expertise in both machine and hand-stitching techniques.",
         "tech": [
             "React",
             "Next.js",
+            "Image Optimization",
             "Portfolio Design",
-            "Image Galleries",
+            "Contact Forms",
             "Professional Photography"
         ],
         "category": "Portfolio",
         "type": "client",
-        "featured": false,
-        "status": "In Development",
-        "year": "2024"
+        "featured": true,
+        "status": "Live",
+        "year": "2025"
+    },
+    {
+        "id": "director-value",
+        "title": "Director Value",
+        "url": "https://www.directorvalue.com",
+        "description": "Comprehensive global business directory platform connecting customers with trusted businesses worldwide. Features advanced search, business listings, VIP memberships, categories, and review systems. Supports multi-language capabilities (EN, FR, DE).",
+        "tech": [
+            "React",
+            "Next.js",
+            "Database Integration",
+            "Search & Filters",
+            "Multi-language",
+            "Business Dashboard",
+            "Review System"
+        ],
+        "category": "Business",
+        "type": "client",
+        "featured": true,
+        "status": "Live",
+        "year": "2025"
     }
 ]
