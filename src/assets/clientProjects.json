@@ -89,5 +89,24 @@
         "featured": true,
         "status": "Live",
         "year": "2025"
+    },
+    {
+        "id": "christos-mentis",
+        "title": "Christos Mentis",
+        "url": "https://www.christosmentis.com",
+        "description": "Greek author's professional website showcasing psychological crime fiction series 'Killer Mind'. Features book catalog, newsletter subscription, author bio, and exclusive content for readers. Dark, atmospheric design reflecting the psychological thriller genre.",
+        "tech": [
+            "React",
+            "Next.js",
+            "Newsletter Integration",
+            "Book Catalog",
+            "Content Management",
+            "Dark Theme Design"
+        ],
+        "category": "Author Portfolio",
+        "type": "client",
+        "featured": true,
+        "status": "Live",
+        "year": "2025"
     }
 ]
