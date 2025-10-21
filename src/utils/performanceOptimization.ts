@@ -1,24 +1,28 @@
 
-import React, { ComponentType, LazyExoticComponent } from "react"
+import React, { ComponentType, LazyExoticComponent } from "react"
+
 export function createLazyComponent<T extends ComponentType<any>>(
   importFunc: () => Promise<{ default: T }>,
   options: {
     preload?: boolean
     fallback?: React.ComponentType
-    chunkName?: string
   } = {}
 ): LazyExoticComponent<T> {
-  const { preload = false, chunkName } = options
-  const LazyComponent = React.lazy(importFunc)
-  if (preload) {
+  const { preload = false } = options
+
+  const LazyComponent = React.lazy(importFunc)
+
+  if (preload) {
+    // Preload the component after a short delay
     setTimeout(() => {
-      importFunc().catch((error) => {
+      importFunc().catch(() => {
+        // Silently fail - component will load when actually needed
       })
     }, 100)
   }
 
   return LazyComponent
-}
+}
 export class ComponentPreloader {
   private static preloadedComponents = new Set<string>()
   private static preloadPromises = new Map<string, Promise<any>>()
@@ -80,45 +84,43 @@ export class ComponentPreloader {
       return () => observer.disconnect()
     }
   }
-}
+}
+
 export const createRouteComponent = (
-  importFunc: () => Promise<{ default: ComponentType<any> }>,
-  routeName: string
+  importFunc: () => Promise<{ default: ComponentType<any> }>
 ) => {
   return createLazyComponent(importFunc, {
-    chunkName: `route-${routeName}`,
     preload: false, // Routes shouldn't preload by default
   })
-}
+}
+
 export const createFeatureComponent = (
   importFunc: () => Promise<{ default: ComponentType<any> }>,
-  featureName: string,
   shouldPreload = false
 ) => {
   return createLazyComponent(importFunc, {
-    chunkName: `feature-${featureName}`,
     preload: shouldPreload,
   })
-}
+}
+
 export const loadCriticalComponent = (
-  importFunc: () => Promise<{ default: ComponentType<any> }>,
-  componentName: string
-) => {
+  importFunc: () => Promise<{ default: ComponentType<any> }>
+) => {
+
   return createLazyComponent(importFunc, {
-    chunkName: `critical-${componentName}`,
     preload: true,
   })
 }
 
 export const loadNonCriticalComponent = (
-  importFunc: () => Promise<{ default: ComponentType<any> }>,
-  componentName: string
-) => {
+  importFunc: () => Promise<{ default: ComponentType<any> }>
+) => {
+
   return createLazyComponent(importFunc, {
-    chunkName: `non-critical-${componentName}`,
     preload: false,
   })
-}
+}
+
 export const withPerformanceMonitoring = <P extends object>(
   WrappedComponent: ComponentType<P>,
   componentName: string
@@ -139,7 +141,8 @@ export const withPerformanceMonitoring = <P extends object>(
 
       try {
         observer.observe({ entryTypes: ["measure", "navigation"] })
-      } catch (error) {
+      } catch (error) {
+
       }
 
       return () => {
@@ -157,7 +160,8 @@ export const withPerformanceMonitoring = <P extends object>(
 
   MonitoredComponent.displayName = `WithPerformanceMonitoring(${componentName})`
   return MonitoredComponent
-}
+}
+
 export const getBundleInfo = () => {
   if (typeof window !== "undefined" && "performance" in window) {
     const navigation = performance.getEntriesByType(
