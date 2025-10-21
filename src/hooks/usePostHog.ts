@@ -10,15 +10,18 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
   const { enableInDevelopment = true, autoPageTracking = true } = options
   const initializationAttempted = useRef(false)
 
-  useEffect(() => {
+  useEffect(() => {
+
     if (initializationAttempted.current) {
       return
     }
-    initializationAttempted.current = true
+    initializationAttempted.current = true
+
     const apiKey = import.meta.env.VITE_POSTHOG_API_KEY
     const host = import.meta.env.VITE_POSTHOG_HOST || "https://app.posthog.com"
     const enabled = import.meta.env.VITE_ENABLE_POSTHOG === "true"
-    const isDevelopment = import.meta.env.DEV
+    const isDevelopment = import.meta.env.DEV
+
     const shouldInitialize =
       apiKey && enabled && (enableInDevelopment || !isDevelopment)
 
@@ -30,19 +33,25 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
         )
       }
       return
-    }
+    }
+
     try {
       postHogAnalytics.initialize({
         apiKey,
         host,
-        options: {
+        options: {
+
           capture_pageview: autoPageTracking,
           disable_session_recording: isDevelopment ? true : false,
-          disable_surveys: isDevelopment,
+          disable_surveys: isDevelopment,
+
           respect_dnt: true,
-          opt_out_capturing_by_default: false,
-          disable_compression: isDevelopment,
-          loaded: (posthog: any) => {
+          opt_out_capturing_by_default: false,
+
+          disable_compression: isDevelopment,
+
+          loaded: (posthog: any) => {
+
             posthog.register({
               portfolio_version: "2.0",
               site_type: "portfolio",
@@ -51,32 +60,37 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
               deployment: "vercel",
             })
 
-            if (isDevelopment) {
+            if (isDevelopment) {
+
             }
           },
         },
-      })
+      })
+
       if (autoPageTracking) {
         postHogAnalytics.trackPageView(window.location.pathname, {
           initial_load: true,
           referrer: document.referrer || "direct",
           timestamp: new Date().toISOString(),
         })
-      }
+      }
+
       const handleContactInteraction = () => {
         const contactForm = document.querySelector('form[id*="contact"]')
         if (contactForm) {
           const emailInput = contactForm.querySelector(
             'input[type="email"]'
           ) as HTMLInputElement
-          if (emailInput && emailInput.value) {
-            postHogAnalytics.identifyUser(emailInput.value, {
+          if (emailInput && emailInput.value) {
+
+            postHogAnalytics.identify(emailInput.value, {
               interaction_type: "contact_form",
               page: window.location.pathname,
             })
           }
         }
-      }
+      }
+
       document.addEventListener("input", (e) => {
         if ((e.target as HTMLElement).closest('form[id*="contact"]')) {
           handleContactInteraction()
@@ -84,25 +98,21 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
       })
     } catch (error) {
       console.error("Failed to initialize PostHog:", error)
-    }
-    return () => {
+    }
+
+    return () => {
+
       postHogAnalytics.trackEvent("session_ended", {
         session_duration: Date.now() - performance.timeOrigin,
         page: window.location.pathname,
       })
     }
-  }, []) // Empty dependency array to run only once
+  }, []) // Empty dependency array to run only once
+
   return {
     trackEvent: postHogAnalytics.trackEvent.bind(postHogAnalytics),
     trackPageView: postHogAnalytics.trackPageView.bind(postHogAnalytics),
-    trackProjectView: postHogAnalytics.trackProjectView.bind(postHogAnalytics),
-    trackSkillsInteraction:
-      postHogAnalytics.trackSkillsInteraction.bind(postHogAnalytics),
-    trackContactFormSubmission:
-      postHogAnalytics.trackContactFormSubmission.bind(postHogAnalytics),
-    trackCVDownload: postHogAnalytics.trackCVDownload.bind(postHogAnalytics),
-    trackThemeChange: postHogAnalytics.trackThemeChange.bind(postHogAnalytics),
-    identifyUser: postHogAnalytics.identifyUser.bind(postHogAnalytics),
+    identify: postHogAnalytics.identify.bind(postHogAnalytics),
     isFeatureEnabled: postHogAnalytics.isFeatureEnabled.bind(postHogAnalytics),
     getSessionInfo: postHogAnalytics.getSessionInfo.bind(postHogAnalytics),
   }
