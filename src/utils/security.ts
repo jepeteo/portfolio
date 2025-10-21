@@ -256,7 +256,7 @@ export const secureStorage = {
 
       localStorage.setItem(key, serialized)
     } catch (error) {
-      console.error('Failed to set item in localStorage:', error)
+      console.error("Failed to set item in localStorage:", error)
     }
   },
 
@@ -265,7 +265,7 @@ export const secureStorage = {
       const item = localStorage.getItem(key)
       return item ? JSON.parse(item) : null
     } catch (error) {
-      console.error('Failed to get item from localStorage:', error)
+      console.error("Failed to get item from localStorage:", error)
       return null
     }
   },
@@ -274,7 +274,7 @@ export const secureStorage = {
     try {
       localStorage.removeItem(key)
     } catch (error) {
-      console.error('Failed to remove item from localStorage:', error)
+      console.error("Failed to remove item from localStorage:", error)
     }
   },
 
@@ -282,7 +282,7 @@ export const secureStorage = {
     try {
       localStorage.clear()
     } catch (error) {
-      console.error('Failed to clear localStorage:', error)
+      console.error("Failed to clear localStorage:", error)
     }
   },
 }

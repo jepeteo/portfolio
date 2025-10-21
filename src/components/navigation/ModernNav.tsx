@@ -66,7 +66,6 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
   // Navigation is handled by anchor tags, no need for handleNavigation function
   // Keeping closeMenu for click handlers
 
-
   const handleNavClick = useCallback(
     (e: React.MouseEvent, sectionId: string) => {
       e.preventDefault()

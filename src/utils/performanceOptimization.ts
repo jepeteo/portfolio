@@ -1,4 +1,3 @@
-
 import React, { ComponentType, LazyExoticComponent } from "react"
 
 export function createLazyComponent<T extends ComponentType<any>>(
@@ -106,7 +105,6 @@ export const createFeatureComponent = (
 export const loadCriticalComponent = (
   importFunc: () => Promise<{ default: ComponentType<any> }>
 ) => {
-
   return createLazyComponent(importFunc, {
     preload: true,
   })
@@ -115,7 +113,6 @@ export const loadCriticalComponent = (
 export const loadNonCriticalComponent = (
   importFunc: () => Promise<{ default: ComponentType<any> }>
 ) => {
-
   return createLazyComponent(importFunc, {
     preload: false,
   })
@@ -141,9 +138,7 @@ export const withPerformanceMonitoring = <P extends object>(
 
       try {
         observer.observe({ entryTypes: ["measure", "navigation"] })
-      } catch (error) {
-
-      }
+      } catch (error) {}
 
       return () => {
         if (startTime.current) {

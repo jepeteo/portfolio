@@ -11,7 +11,6 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
   const initializationAttempted = useRef(false)
 
   useEffect(() => {
-
     if (initializationAttempted.current) {
       return
     }
@@ -40,7 +39,6 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
         apiKey,
         host,
         options: {
-
           capture_pageview: autoPageTracking,
           disable_session_recording: isDevelopment ? true : false,
           disable_surveys: isDevelopment,
@@ -51,7 +49,6 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
           disable_compression: isDevelopment,
 
           loaded: (posthog: any) => {
-
             posthog.register({
               portfolio_version: "2.0",
               site_type: "portfolio",
@@ -61,7 +58,6 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
             })
 
             if (isDevelopment) {
-
             }
           },
         },
@@ -82,7 +78,6 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
             'input[type="email"]'
           ) as HTMLInputElement
           if (emailInput && emailInput.value) {
-
             postHogAnalytics.identify(emailInput.value, {
               interaction_type: "contact_form",
               page: window.location.pathname,
@@ -101,7 +96,6 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
     }
 
     return () => {
-
       postHogAnalytics.trackEvent("session_ended", {
         session_duration: Date.now() - performance.timeOrigin,
         page: window.location.pathname,

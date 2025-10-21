@@ -265,7 +265,7 @@ class ProductionMonitor {
           }
         }).observe({ entryTypes: ["layout-shift"] })
       } catch (error) {
-        console.warn('Failed to observe layout shifts:', error)
+        console.warn("Failed to observe layout shifts:", error)
       }
     }
   }
@@ -333,7 +333,6 @@ class ProductionMonitor {
 
   private async sendToAnalytics(data: any): Promise<void> {
     try {
-
       if (data.errors && data.errors.length > 0) {
         data.errors.forEach((error: ErrorReport) => {
           postHogAnalytics.trackError({
@@ -352,7 +351,6 @@ class ProductionMonitor {
 
       if (data.performance && data.performance.length > 0) {
         data.performance.forEach((perf: PerformanceReport) => {
-
           if (perf.metrics.lcp) {
             postHogAnalytics.trackPerformanceMetric(
               "LCP",
@@ -429,7 +427,6 @@ class ProductionMonitor {
         batch_timestamp: data.timestamp,
       })
     } catch (error) {
-
       console.error("Failed to send analytics to PostHog:", error)
       throw new Error("PostHog analytics failed")
     }
@@ -438,7 +435,6 @@ class ProductionMonitor {
   private getErrorSeverity(
     error: ErrorReport
   ): "low" | "medium" | "high" | "critical" {
-
     if (error.type === "javascript" && error.message.includes("Script error")) {
       return "low" // Often cross-origin script errors
     }
@@ -469,7 +465,6 @@ class ProductionMonitor {
   }
 
   public trackEvent(event: string, properties?: Record<string, any>): void {
-
     postHogAnalytics.trackEvent(event, {
       source: "production_monitor",
       session_id: this.sessionId,
@@ -479,7 +474,6 @@ class ProductionMonitor {
   }
 
   public trackPageView(path?: string): void {
-
     postHogAnalytics.trackPageView(path, {
       source: "production_monitor",
       referrer: document.referrer,

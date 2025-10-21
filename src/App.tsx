@@ -48,7 +48,7 @@ const UnifiedProjects = createLazyComponent(
 
 const ModernCertificates = createLazyComponent(
   () => import("./components/ModernCertificates"),
-  { }
+  {}
 )
 
 const SectionLoader: React.FC = () => (

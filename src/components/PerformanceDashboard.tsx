@@ -120,7 +120,7 @@ const PerformanceDashboard: React.FC = () => {
         fidObserver.observe({ entryTypes: ["first-input"] })
         observers.push(fidObserver)
       } catch (error) {
-        console.warn('Failed to observe FID metric:', error)
+        console.warn("Failed to observe FID metric:", error)
       }
     }
 

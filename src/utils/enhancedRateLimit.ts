@@ -58,7 +58,7 @@ export class EnhancedRateLimiter {
     try {
       localStorage.setItem(key, JSON.stringify(state))
     } catch (error) {
-      console.warn('Failed to save rate limit state:', error)
+      console.warn("Failed to save rate limit state:", error)
     }
   }
 
@@ -165,7 +165,7 @@ export class EnhancedRateLimiter {
     try {
       localStorage.removeItem(key)
     } catch (error) {
-      console.warn('Failed to clear rate limit:', error)
+      console.warn("Failed to clear rate limit:", error)
     }
   }
 
@@ -184,28 +184,24 @@ export class EnhancedRateLimiter {
 export const checkContactFormLimit = (
   _identifier = "default"
 ): RateLimitResult => {
-
   return {
     allowed: true,
     remaining: 999,
     resetTime: Date.now() + 60000,
     blocked: false,
   }
-
 }
 
 export const recordContactFormAttempt = (
   _identifier = "default",
   _success = false
 ): RateLimitResult => {
-
   return {
     allowed: true,
     remaining: 999,
     resetTime: Date.now() + 60000,
     blocked: false,
   }
-
 }
 
 export const checkEmailLimit = (identifier = "default"): RateLimitResult => {
