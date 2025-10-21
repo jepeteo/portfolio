@@ -39,7 +39,6 @@ import {
   Zap,
   Shield,
   Award,
-  BookOpen,
   Briefcase,
   GraduationCap,
   Home,
@@ -52,79 +51,36 @@ import {
   Tag,
   Folder,
   File,
-  Image,
-  Video,
-  Music,
-  Play,
-  Pause,
-  SkipForward,
-  SkipBack,
-  Volume2,
-  VolumeX,
   Sun,
   Moon,
   CloudSun,
   Loader2,
   RefreshCw,
-  MoreHorizontal,
-  MoreVertical,
-  Bell,
-  BellOff,
-  Lock,
-  Unlock,
-  Key,
-  UserCheck,
-  UserX,
   Users,
   TrendingUp,
-  TrendingDown,
   BarChart,
-  PieChart,
   Activity,
   Wifi,
-  WifiOff,
-  Battery,
-  BatteryLow,
-  Bluetooth,
-  Camera,
-  Headphones,
-  Mic,
-  MicOff,
-  MousePointer,
-  Keyboard,
   HardDrive,
   Cpu,
-  MemoryStick,
   CloudDownload,
-  CloudUpload,
   Link,
-  Unlink,
-  Paperclip,
-  Scissors,
-  Edit,
   Edit2,
-  Edit3,
-  Trash,
   Trash2,
   Save,
   Plus,
   Minus,
   Maximize,
   Minimize,
-  RotateCcw,
-  RotateCw,
   ZoomIn,
   ZoomOut,
-  Move,
-  Crosshair,
-  Navigation,
-  Compass,
   AlertTriangle,
   Info,
   type LucideIcon,
 } from "lucide-react"
 import React from "react"
-import { cn } from "../../utils/styles"
+import { cn } from "../../utils/styles"
+
 export const iconSizes = {
   xs: "w-3 h-3",
   sm: "w-4 h-4",
@@ -133,7 +89,8 @@ export const iconSizes = {
   xl: "w-8 h-8",
   "2xl": "w-10 h-10",
   "3xl": "w-12 h-12",
-} as const
+} as const
+
 interface IconProps {
   icon: LucideIcon
   size?: keyof typeof iconSizes
@@ -161,8 +118,10 @@ export const Icon: React.FC<IconProps> = ({
       {...props}
     />
   )
-}
-export const icons = {
+}
+
+export const icons = {
+
   navigation: {
     menu: Menu,
     close: X,
@@ -175,7 +134,8 @@ export const icons = {
     home: Home,
     back: ArrowDown,
     forward: ArrowUp,
-  },
+  },
+
   social: {
     github: Github,
     linkedin: Linkedin,
@@ -184,7 +144,8 @@ export const icons = {
     send: Send,
     share: Share,
     message: MessageCircle,
-  },
+  },
+
   actions: {
     download: Download,
     copy: Copy,
@@ -199,7 +160,8 @@ export const icons = {
     filter: Filter,
     refresh: RefreshCw,
     settings: Settings,
-  },
+  },
+
   status: {
     loading: Loader2,
     spinner: Loader2,
@@ -210,7 +172,8 @@ export const icons = {
     star: Star,
     heart: Heart,
     thumbsUp: ThumbsUp,
-  },
+  },
+
   layout: {
     grid: Grid,
     list: List,
@@ -220,7 +183,8 @@ export const icons = {
     zoomOut: ZoomOut,
     eye: Eye,
     bookmark: Bookmark,
-  },
+  },
+
   tech: {
     code: Code,
     database: Database,
@@ -235,7 +199,8 @@ export const icons = {
     hardDrive: HardDrive,
     wifi: Wifi,
     cloud: CloudDownload,
-  },
+  },
+
   professional: {
     briefcase: Briefcase,
     award: Award,
@@ -248,7 +213,8 @@ export const icons = {
     trending: TrendingUp,
     activity: Activity,
     chart: BarChart,
-  },
+  },
+
   theme: {
     sun: Sun,
     moon: Moon,
@@ -259,7 +225,8 @@ export const icons = {
     folder: Folder,
     tag: Tag,
   },
-} as const
+} as const
+
 export const AnimatedIcon: React.FC<
   IconProps & {
     animation?: "spin" | "pulse" | "bounce" | "ping"
@@ -268,7 +235,8 @@ export const AnimatedIcon: React.FC<
   const animationClass = animation ? `animate-${animation}` : ""
 
   return <Icon className={cn(animationClass, className)} {...props} />
-}
+}
+
 interface IconButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: LucideIcon
@@ -306,7 +274,8 @@ export const IconButton: React.FC<IconButtonProps> = ({
       <Icon icon={icon} size={size} aria-hidden />
     </button>
   )
-}
+}
+
 export {
   ArrowRight,
   ArrowUpRight,
