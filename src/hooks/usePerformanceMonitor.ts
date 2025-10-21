@@ -92,7 +92,9 @@ const usePerformanceMonitor = (componentName: string) => {
       })
       clsObserver.observe({ entryTypes: ["layout-shift"] })
       observers.push(clsObserver)
-    } catch (error) {}
+    } catch (error) {
+      console.warn("Failed to observe CLS metrics:", error)
+    }
 
     if (performance.getEntriesByType) {
       const navEntries = performance.getEntriesByType(
@@ -109,7 +111,9 @@ const usePerformanceMonitor = (componentName: string) => {
       observers.forEach((observer) => {
         try {
           observer.disconnect()
-        } catch (error) {}
+        } catch (error) {
+          // Silently ignore disconnect errors - observers may already be disconnected
+        }
       })
     }
   }, []) // Empty dependency array - only run once
