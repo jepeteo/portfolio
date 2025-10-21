@@ -119,7 +119,9 @@ const PerformanceDashboard: React.FC = () => {
         })
         fidObserver.observe({ entryTypes: ["first-input"] })
         observers.push(fidObserver)
-      } catch (error) {}
+      } catch (error) {
+        console.warn('Failed to observe FID metric:', error)
+      }
     }
 
     const handleOnline = () => setIsOnline(true)
@@ -135,7 +137,9 @@ const PerformanceDashboard: React.FC = () => {
       observers.forEach((observer) => {
         try {
           observer.disconnect()
-        } catch (error) {}
+        } catch (error) {
+          // Observer already disconnected - safe to ignore
+        }
       })
 
       window.removeEventListener("online", handleOnline)

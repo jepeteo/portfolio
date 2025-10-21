@@ -228,7 +228,9 @@ export class AccessibilityTester {
               )}:1) for text element`
             )
           }
-        } catch (error) {}
+        } catch (error) {
+          // Silently skip elements where color cannot be determined (e.g., hidden elements)
+        }
       }
     }
   }

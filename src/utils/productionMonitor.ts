@@ -264,7 +264,9 @@ class ProductionMonitor {
             }
           }
         }).observe({ entryTypes: ["layout-shift"] })
-      } catch (error) {}
+      } catch (error) {
+        console.warn('Failed to observe layout shifts:', error)
+      }
     }
   }
 
@@ -330,20 +332,27 @@ class ProductionMonitor {
   }
 
   private async sendToAnalytics(data: any): Promise<void> {
-    try {
+    try {
+
       if (data.errors && data.errors.length > 0) {
         data.errors.forEach((error: ErrorReport) => {
           postHogAnalytics.trackError({
-            name: error.type,
-            message: error.message,
+            message: `${error.type}: ${error.message}`,
             stack: error.stack,
+            url: error.url,
             component: "production_monitor",
             severity: this.getErrorSeverity(error),
+            props: {
+              errorType: error.type,
+              ...error.metadata,
+            },
           })
         })
-      }
+      }
+
       if (data.performance && data.performance.length > 0) {
-        data.performance.forEach((perf: PerformanceReport) => {
+        data.performance.forEach((perf: PerformanceReport) => {
+
           if (perf.metrics.lcp) {
             postHogAnalytics.trackPerformanceMetric(
               "LCP",
@@ -378,14 +387,16 @@ class ProductionMonitor {
               perf.metrics.ttfb,
               "core_web_vitals"
             )
-          }
+          }
+
           postHogAnalytics.trackEvent("navigation_performance", {
             navigation_type: perf.navigation.type,
             redirect_count: perf.navigation.redirectCount,
             dom_content_loaded: perf.navigation.domContentLoaded,
             load_complete: perf.navigation.loadComplete,
             session_id: data.sessionId,
-          })
+          })
+
           const largeResources = perf.resources.filter(
             (r) => r.duration > 1000 || r.size > 100000
           )
@@ -394,7 +405,8 @@ class ProductionMonitor {
               resources: largeResources,
               session_id: data.sessionId,
             })
-          }
+          }
+
           if (perf.memory) {
             const memoryUsagePercent =
               (perf.memory.used / perf.memory.total) * 100
@@ -408,14 +420,16 @@ class ProductionMonitor {
             }
           }
         })
-      }
+      }
+
       postHogAnalytics.trackEvent("monitoring_data_batch", {
         session_id: data.sessionId,
         error_count: data.errors?.length || 0,
         performance_reports: data.performance?.length || 0,
         batch_timestamp: data.timestamp,
       })
-    } catch (error) {
+    } catch (error) {
+
       console.error("Failed to send analytics to PostHog:", error)
       throw new Error("PostHog analytics failed")
     }
@@ -423,7 +437,8 @@ class ProductionMonitor {
 
   private getErrorSeverity(
     error: ErrorReport
-  ): "low" | "medium" | "high" | "critical" {
+  ): "low" | "medium" | "high" | "critical" {
+
     if (error.type === "javascript" && error.message.includes("Script error")) {
       return "low" // Often cross-origin script errors
     }
@@ -453,7 +468,8 @@ class ProductionMonitor {
     return "medium" // Default severity
   }
 
-  public trackEvent(event: string, properties?: Record<string, any>): void {
+  public trackEvent(event: string, properties?: Record<string, any>): void {
+
     postHogAnalytics.trackEvent(event, {
       source: "production_monitor",
       session_id: this.sessionId,
@@ -462,7 +478,8 @@ class ProductionMonitor {
     })
   }
 
-  public trackPageView(path?: string): void {
+  public trackPageView(path?: string): void {
+
     postHogAnalytics.trackPageView(path, {
       source: "production_monitor",
       referrer: document.referrer,

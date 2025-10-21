@@ -57,7 +57,9 @@ export class EnhancedRateLimiter {
     const key = this.getStorageKey(identifier, type)
     try {
       localStorage.setItem(key, JSON.stringify(state))
-    } catch (error) {}
+    } catch (error) {
+      console.warn('Failed to save rate limit state:', error)
+    }
   }
 
   private static isWindowExpired(
@@ -162,7 +164,9 @@ export class EnhancedRateLimiter {
     const key = this.getStorageKey(identifier, type)
     try {
       localStorage.removeItem(key)
-    } catch (error) {}
+    } catch (error) {
+      console.warn('Failed to clear rate limit:', error)
+    }
   }
 
   public static getRemainingTime(
@@ -179,25 +183,29 @@ export class EnhancedRateLimiter {
 
 export const checkContactFormLimit = (
   _identifier = "default"
-): RateLimitResult => {
+): RateLimitResult => {
+
   return {
     allowed: true,
     remaining: 999,
     resetTime: Date.now() + 60000,
     blocked: false,
-  }
+  }
+
 }
 
 export const recordContactFormAttempt = (
   _identifier = "default",
   _success = false
-): RateLimitResult => {
+): RateLimitResult => {
+
   return {
     allowed: true,
     remaining: 999,
     resetTime: Date.now() + 60000,
     blocked: false,
-  }
+  }
+
 }
 
 export const checkEmailLimit = (identifier = "default"): RateLimitResult => {
