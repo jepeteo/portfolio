@@ -1,4 +1,3 @@
-
 import {
   ArrowRight,
   ArrowUpRight,
@@ -121,7 +120,6 @@ export const Icon: React.FC<IconProps> = ({
 }
 
 export const icons = {
-
   navigation: {
     menu: Menu,
     close: X,

@@ -137,7 +137,8 @@ const ModernExperience: React.FC = () => {
     rootMargin: "50px",
   })
 
-  const performanceMetrics = usePerformanceMonitor("ModernExperience")
+  // Monitor component performance
+  usePerformanceMonitor("ModernExperience")
 
   const {
     experiences,

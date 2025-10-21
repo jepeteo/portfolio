@@ -4,7 +4,6 @@ import { useTheme } from "../../context/ThemeContext"
 import { Icon, icons } from "../icons/ModernIcons"
 import { Button } from "../ui/Button"
 import { cn, typography } from "../../utils/styles"
-import { useViewTransition } from "../../hooks/useViewTransition"
 import { NavigationLink } from "../../types"
 
 interface ModernNavProps {
@@ -15,7 +14,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
   const { toggleTheme, isDark } = useTheme()
   const [isOpen, setIsOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("")
-  const { startTransition } = useViewTransition()
+  // View transitions are handled automatically by the browser for anchor links
 
   const links: NavigationLink[] = [
     { href: "#top", text: "Home", ariaLabel: "Navigate to home section" },
@@ -64,20 +63,9 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
     setIsOpen(false)
   }, [])
 
-  const handleNavigation = useCallback(
-    (href: string) => {
-      if (startTransition) {
-        startTransition(() => {
-          window.location.hash = href
-          closeMenu()
-        })
-      } else {
-        window.location.hash = href
-        closeMenu()
-      }
-    },
-    [startTransition, closeMenu]
-  )
+  // Navigation is handled by anchor tags, no need for handleNavigation function
+  // Keeping closeMenu for click handlers
+
 
   const handleNavClick = useCallback(
     (e: React.MouseEvent, sectionId: string) => {

@@ -9,22 +9,26 @@
 ## Quick Start
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/jepeteo/portfolio.git
    cd portfolio
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
+
    ```bash
    cp .env.example .env.local
    ```
 
 4. **Start development server**
+
    ```bash
    npm run dev
    ```
@@ -38,6 +42,7 @@
 To enable the contact form, you need EmailJS credentials:
 
 1. **Create EmailJS Account**
+
    - Go to [EmailJS](https://www.emailjs.com/)
    - Sign up for free account
    - Create an email service
@@ -53,6 +58,7 @@ To enable the contact form, you need EmailJS credentials:
 ### Optional: Analytics
 
 #### PostHog (Development/Production Analytics)
+
 ```bash
 VITE_ENABLE_POSTHOG=true
 VITE_PUBLIC_POSTHOG_KEY=your_posthog_key
@@ -73,28 +79,30 @@ VITE_ENABLE_OFFLINE_MODE=true
 
 ## Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Fix ESLint issues |
-| `npm run type-check` | Check TypeScript types |
-| `npm run clean` | Clean build artifacts |
-| `npm run check-urls` | Validate project URLs |
-| `npm run performance:analyze` | Analyze bundle size |
+| Command                       | Description                      |
+| ----------------------------- | -------------------------------- |
+| `npm run dev`                 | Start development server         |
+| `npm run build`               | Build for production             |
+| `npm run preview`             | Preview production build locally |
+| `npm run lint`                | Run ESLint                       |
+| `npm run lint:fix`            | Fix ESLint issues                |
+| `npm run type-check`          | Check TypeScript types           |
+| `npm run clean`               | Clean build artifacts            |
+| `npm run check-urls`          | Validate project URLs            |
+| `npm run performance:analyze` | Analyze bundle size              |
 
 ## Deployment
 
 ### Vercel (Recommended)
 
 1. **Push to GitHub**
+
    ```bash
    git push origin main
    ```
 
 2. **Deploy to Vercel**
+
    - Import project in [Vercel Dashboard](https://vercel.com/new)
    - Set environment variables in Vercel Dashboard
    - Deploy automatically on push
@@ -114,6 +122,7 @@ npm run build
 ## Troubleshooting
 
 ### Node Version Issues
+
 ```bash
 # Check your Node version
 node --version
@@ -123,6 +132,7 @@ nvm use 22
 ```
 
 ### Port Already in Use
+
 ```bash
 # Kill process on port 5173
 npx kill-port 5173
@@ -131,6 +141,7 @@ npx kill-port 5173
 ```
 
 ### Build Errors
+
 ```bash
 # Clean install
 npm run clean
@@ -139,6 +150,7 @@ npm install
 ```
 
 ### TypeScript Errors
+
 ```bash
 # Check for type errors
 npm run type-check

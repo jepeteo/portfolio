@@ -98,63 +98,6 @@ const generateSkillsSchema = (skillCategories: SkillCategoryData[]) => {
   }
 }
 
-// Individual skill schema component
-const SkillSchema: React.FC<{ skill: SkillData & { category: string } }> = ({
-  skill,
-}) => {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Skill",
-    "@id": `https://theodorosmentis.com/#skill-${skill.name
-      .toLowerCase()
-      .replace(/\s+/g, "-")}`,
-    name: skill.name,
-    description: skill.description,
-    skillType: skill.category,
-    proficiencyLevel: `${skill.level}%`,
-    experienceLevel: skill.mastery,
-    yearsOfExperience: skill.experienceYears,
-    skillOwner: {
-      "@type": "Person",
-      "@id": "https://theodorosmentis.com/#person",
-      name: "Theodoros Mentis",
-      jobTitle: "Senior Full Stack Developer",
-    },
-    applicationArea: getApplicationArea(skill.category),
-    skillAssessment: {
-      "@type": "Assessment",
-      assessmentOutput: {
-        "@type": "QuantitativeValue",
-        value: skill.level,
-        unitText: "percent",
-        maxValue: 100,
-      },
-    },
-  }
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(schema, null, 2),
-      }}
-    />
-  )
-}
-
-// Helper function to map skill categories to application areas
-const getApplicationArea = (category: string): string => {
-  const mapping: Record<string, string> = {
-    "Programming Languages": "Software Development",
-    "Backend & Databases": "Backend Development",
-    "Frontend Technologies": "Frontend Development",
-    "DevOps & Infrastructure": "Infrastructure Management",
-    "Tools & Workflow": "Development Tools",
-    "CMS & Frameworks": "Content Management",
-  }
-  return mapping[category] || "Web Development"
-}
-
 const ModernSkills: React.FC = () => {
   const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({

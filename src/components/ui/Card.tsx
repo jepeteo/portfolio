@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext } from "react"
 import { cn } from "../../utils/styles"
-import { designTokens } from "../design-system/tokens"
+
 interface CardContextValue {
   variant: "default" | "outlined" | "elevated" | "ghost"
   size: "sm" | "md" | "lg"
@@ -10,7 +10,8 @@ interface CardContextValue {
 const CardContext = createContext<CardContextValue>({
   variant: "default",
   size: "md",
-})
+})
+
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: CardContextValue["variant"]
   size?: CardContextValue["size"]
@@ -56,7 +57,8 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       </CardContext.Provider>
     )
   }
-)
+)
+
 const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -66,7 +68,8 @@ const CardHeader = React.forwardRef<
     className={cn("flex flex-col space-y-1.5", className)}
     {...props}
   />
-))
+))
+
 const CardTitle = React.forwardRef<
   HTMLHeadingElement,
   React.HTMLAttributes<HTMLHeadingElement>
@@ -86,7 +89,8 @@ const CardTitle = React.forwardRef<
       {...props}
     />
   )
-})
+})
+
 const CardDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
@@ -96,7 +100,8 @@ const CardDescription = React.forwardRef<
     className={cn("text-sm text-muted-foreground", className)}
     {...props}
   />
-))
+))
+
 const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -112,7 +117,8 @@ const CardContent = React.forwardRef<
   return (
     <div ref={ref} className={cn(contentSpacing[size], className)} {...props} />
   )
-})
+})
+
 const CardFooter = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -132,7 +138,8 @@ const CardFooter = React.forwardRef<
       {...props}
     />
   )
-})
+})
+
 Card.displayName = "Card"
 CardHeader.displayName = "CardHeader"
 CardTitle.displayName = "CardTitle"
