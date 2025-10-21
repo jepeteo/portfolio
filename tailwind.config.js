@@ -6,7 +6,6 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
     "./public/assets/**/*.{js,ts,jsx,tsx}",
-    "node_modules/flowbite-react/lib/esm/**/*.js",
   ],
 
   theme: {
@@ -242,7 +241,6 @@ export default {
     },
   },
   plugins: [
-    require("flowbite/plugin"),
     require("@tailwindcss/container-queries"),
     plugin(function ({ addBase, addComponents, addUtilities, matchUtilities, theme }) {
       addBase({

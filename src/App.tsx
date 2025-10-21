@@ -31,9 +31,6 @@ if (process.env.NODE_ENV === "development") {
   import("./utils/schemaTesting")
 }
 
-import "flowbite"
-import "flowbite/dist/flowbite.css"
-
 const ModernProjects = createLazyComponent(
   () => import("./components/ModernProjects"),
   { chunkName: "modern-projects", preload: true }
