@@ -15,24 +15,6 @@ if (process.env.NODE_ENV === "development") {
       console.warn("Could not load accessibility tester")
     })
 
-  import("./enhancedSEO")
-    .then(({ seoManager }) => {
-      seoManager.validatePageSEO()
-    })
-    .catch(() => {
-      console.warn("Could not load SEO manager")
-    })
-
-  import("./advancedAnimations")
-    .then(({ supportsAnimations, transitionManager }) => {
-      if (supportsAnimations()) {
-        transitionManager.init()
-      }
-    })
-    .catch(() => {
-      console.warn("Could not load animation manager")
-    })
-
   setTimeout(() => {
     if ("webVitals" in window) {
       console.log("Web Vitals available")
