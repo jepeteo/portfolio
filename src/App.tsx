@@ -33,22 +33,22 @@ if (process.env.NODE_ENV === "development") {
 
 const ModernProjects = createLazyComponent(
   () => import("./components/ModernProjects"),
-  { chunkName: "modern-projects", preload: true }
+  { preload: true }
 )
 
 const ModernExperience = createLazyComponent(
   () => import("./components/ModernExperience"),
-  { chunkName: "experience", preload: true }
+  { preload: true }
 )
 
 const UnifiedProjects = createLazyComponent(
   () => import("./components/UnifiedProjects"),
-  { chunkName: "unified-projects", preload: true }
+  { preload: true }
 )
 
 const ModernCertificates = createLazyComponent(
   () => import("./components/ModernCertificates"),
-  { chunkName: "certificates" }
+  { }
 )
 
 const SectionLoader: React.FC = () => (
