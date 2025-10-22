@@ -141,9 +141,10 @@ const ModernProjects = memo(() => {
   const allTechnologies = useMemo(() => {
     const techSet = new Set<string>()
     validatedProjects.forEach((project) => {
-      if (Array.isArray(project.prTags)) {
-        project.prTags.forEach((tag) => techSet.add(tag))
-      }
+      // Use tech field if available, fallback to prTags for backward compatibility
+      const techArray = Array.isArray(project.tech) ? project.tech : 
+                       (Array.isArray(project.prTags) ? project.prTags : [])
+      techArray.forEach((tech) => techSet.add(tech))
     })
     return Array.from(techSet).sort()
   }, [validatedProjects])
@@ -158,23 +159,28 @@ const ModernProjects = memo(() => {
 
     // Filter by technology/tag
     if (selectedTech !== null) {
-      filtered = filtered.filter((project) =>
-        Array.isArray(project.prTags)
-          ? project.prTags.includes(selectedTech)
-          : false
-      )
+      filtered = filtered.filter((project) => {
+        // Check tech field first, fallback to prTags
+        const techArray = Array.isArray(project.tech) ? project.tech : 
+                         (Array.isArray(project.prTags) ? project.prTags : [])
+        return techArray.includes(selectedTech)
+      })
     }
 
     // Filter by search query
     if (searchQuery.trim() !== "") {
       const query = searchQuery.toLowerCase().trim()
       filtered = filtered.filter(
-        (project) =>
-          project.prName.toLowerCase().includes(query) ||
-          project.prDescription.toLowerCase().includes(query) ||
-          (Array.isArray(project.prTags) &&
-            project.prTags.some((tag) => tag.toLowerCase().includes(query))) ||
-          project.prType.toLowerCase().includes(query)
+        (project) => {
+          const techArray = Array.isArray(project.tech) ? project.tech : 
+                           (Array.isArray(project.prTags) ? project.prTags : [])
+          return (
+            project.prName.toLowerCase().includes(query) ||
+            project.prDescription.toLowerCase().includes(query) ||
+            techArray.some((tech: string) => tech.toLowerCase().includes(query)) ||
+            project.prType.toLowerCase().includes(query)
+          )
+        }
       )
     }
 
@@ -505,6 +511,33 @@ const ModernProjects = memo(() => {
               >
                 {project.prDescription}
               </p>
+
+              {/* Tech Stack Badges */}
+              {Array.isArray(project.tech) && project.tech.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {project.tech.slice(0, 5).map((tech, idx) => (
+                    <span
+                      key={idx}
+                      className={`px-2 py-1 rounded-md text-xs font-medium transition-colors ${
+                        isDark
+                          ? "bg-slate-700/50 text-slate-300 border border-slate-600"
+                          : "bg-slate-100 text-slate-600 border border-slate-200"
+                      }`}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                  {project.tech.length > 5 && (
+                    <span
+                      className={`px-2 py-1 rounded-md text-xs ${
+                        isDark ? "text-slate-500" : "text-slate-400"
+                      }`}
+                    >
+                      +{project.tech.length - 5}
+                    </span>
+                  )}
+                </div>
+              )}
 
               {(hasGlobalImageError || hasError) && (
                 <div className="flex items-center justify-center mt-4">

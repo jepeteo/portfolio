@@ -17,7 +17,8 @@ export interface Project {
   prImageSlug?: string
   prDescription: string
   prType: string
-  prTags?: string[]
+  prTags?: string | string[]
+  tech?: string[]
   prEmployer?: string
   prFeatured?: boolean
 }
@@ -62,7 +63,8 @@ export interface Skill {
   name: string
   level: number
   category: string
-}
+}
+
 
 export interface FormData {
   name: string
@@ -80,12 +82,15 @@ export interface NavLink {
 export interface FilterType {
   type: string | null
   label: string
-}
-export type Theme = "light" | "dark"
+}
+
+export type Theme = "light" | "dark"
+
 export interface EmailResponse {
   status: number
   text: string
-}
+}
+
 export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 export type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>
 

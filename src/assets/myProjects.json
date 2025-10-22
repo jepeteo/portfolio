@@ -7,7 +7,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "fl",
-    "prFeatured": true
+    "prFeatured": true,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Antoninas",
@@ -16,7 +23,13 @@
     "prDescription": "An online boutique offering a curated selection of women's clothing and accessories.",
     "prType": "E-Shop",
     "prEmployer": "fl",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Prionotainies",
@@ -26,7 +39,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "glbt",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Greekonline",
@@ -36,7 +56,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Linari",
@@ -46,7 +73,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Idea & Fos",
@@ -56,7 +90,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Tech Nik",
@@ -66,7 +107,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Laoulakos Flowers",
@@ -76,7 +124,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Perla Boutique",
@@ -86,7 +141,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": true
+    "prFeatured": true,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Saratsopoulou Optics",
@@ -96,7 +158,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Agricultural Machines Tampakakis",
@@ -106,7 +175,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Ohrofeo",
@@ -116,7 +192,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "DK Photos",
@@ -126,7 +209,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Transport Ballalas",
@@ -136,7 +226,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Aggelikas",
@@ -146,7 +243,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Mitsidis Group",
@@ -156,7 +260,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "SMS Metal",
@@ -166,7 +277,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Athens Italian Interpreters",
@@ -176,7 +294,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "My Kos Driver",
@@ -186,7 +311,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "MG Speed Experts",
@@ -196,7 +328,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Kalivas Service",
@@ -206,7 +345,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "POETEK",
@@ -216,7 +362,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Nautilos Nave",
@@ -226,7 +379,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Marvim",
@@ -236,7 +396,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Ariston",
@@ -246,7 +413,13 @@
     "prType": "Dynamic Site",
     "prTags": "Redesign",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Shipboiler",
@@ -256,7 +429,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Piccard Hellas Divers CO",
@@ -266,7 +446,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Ploutis Antonis",
@@ -276,7 +463,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "O Nasos",
@@ -286,7 +480,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Rodi & Meli",
@@ -296,7 +497,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Xafis",
@@ -306,7 +514,13 @@
     "prType": "Dynamic Site",
     "prTags": "Redesign",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Stimex",
@@ -316,7 +530,13 @@
     "prType": "Dynamic Site",
     "prTags": "Redesign",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Kokkolios Fruits",
@@ -326,7 +546,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Amigdala",
@@ -336,7 +563,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Eleni",
@@ -346,7 +580,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Funeral Home",
@@ -356,7 +597,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "G. Katsantoni",
@@ -366,7 +614,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "H.N.P. Law Office",
@@ -376,7 +631,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Mpompolakis - Ladias",
@@ -386,7 +648,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "VIP Fitness",
@@ -394,9 +663,15 @@
     "prImageSlug": "vipfitness",
     "prDescription": "A gym offering personalized fitness programs and state-of-the-art equipment.",
     "prType": "Dynamic Site",
-    "prTags": "Redisgn",
+    "prTags": "Redesign",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Konstantinos Taoulas",
@@ -406,7 +681,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Cylinder Master",
@@ -416,7 +698,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Manos Power Coffee",
@@ -426,7 +715,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Papalias Andreas ",
@@ -436,7 +732,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Limobus",
@@ -446,7 +749,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Kaptan Giorgis",
@@ -456,7 +766,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "GVF",
@@ -466,7 +783,13 @@
     "prType": "Dynamic Site",
     "prTags": "Redesign",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Compass Technology Solutions",
@@ -476,7 +799,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Kyriakakis",
@@ -486,7 +815,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Nikolopoulou Vanessa",
@@ -496,7 +831,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Xatzivasileiadis Iordanis",
@@ -506,7 +847,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Aitheria Elaia",
@@ -516,7 +863,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Taxi & Van ",
@@ -526,7 +879,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Ira Metaforiki",
@@ -536,7 +895,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Metaxas",
@@ -546,7 +911,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Metaxas",
@@ -556,7 +927,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Tzilitoudis Service",
@@ -566,7 +943,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Terzidis - Dreliozi",
@@ -576,7 +959,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Christos Petkos",
@@ -586,7 +975,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Chef Katramis",
@@ -596,7 +991,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Psixos Renovations",
@@ -606,7 +1007,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Ergongas",
@@ -616,7 +1023,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Kyklotherm",
@@ -626,7 +1039,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Star Tech",
@@ -636,7 +1055,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Hipro.Mac PC",
@@ -646,7 +1071,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Skargas",
@@ -656,7 +1087,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Metalogy Construction",
@@ -666,7 +1103,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Me-Nou Ad Creations",
@@ -676,7 +1119,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Printing Office Kordatzakis",
@@ -686,7 +1135,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Fire Protection ALFA",
@@ -696,7 +1151,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Plant Nursery",
@@ -706,7 +1167,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Troxeio Karamanis",
@@ -716,7 +1183,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Lux Vip Apartments",
@@ -726,7 +1199,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": true
+    "prFeatured": true,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Studios Lydia",
@@ -736,7 +1215,13 @@
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Almotek",
@@ -746,7 +1231,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Angelplus",
@@ -756,7 +1248,13 @@
     "prType": "E-Shop",
     "prTags": "Redesign",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Artandwork",
@@ -766,7 +1264,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Bamboo-store",
@@ -776,7 +1281,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Beautifulpeoplepr",
@@ -786,7 +1298,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Bymkyriakidou",
@@ -796,7 +1315,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Chaloulakos-home",
@@ -806,7 +1332,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Citycars",
@@ -816,7 +1349,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Coffeetrade",
@@ -826,7 +1366,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": true
+    "prFeatured": true,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Cosmoshotel",
@@ -836,7 +1383,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Crystalseayachting",
@@ -846,7 +1400,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Cycladescollection",
@@ -856,7 +1417,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": true
+    "prFeatured": true,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Dancohome",
@@ -866,7 +1434,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Dandyvillas",
@@ -876,7 +1451,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Dermapro",
@@ -886,7 +1468,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Dktelecomeshop",
@@ -896,7 +1485,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Dm-realestate",
@@ -906,7 +1502,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Elaialuxurysuites",
@@ -916,7 +1519,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Elena Maidoni",
@@ -926,7 +1536,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Energonservice",
@@ -936,7 +1553,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Epidosis",
@@ -946,7 +1570,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Eshop-art",
@@ -956,7 +1587,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Fcopy",
@@ -966,7 +1604,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Flora-santorini",
@@ -976,7 +1621,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Goforpharmacy",
@@ -986,7 +1638,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Harmonyathens",
@@ -996,7 +1655,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Iasiskozani",
@@ -1006,7 +1672,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Ioniananthology",
@@ -1016,7 +1689,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Ioraikali",
@@ -1026,7 +1706,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Iosbakery",
@@ -1036,7 +1723,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Izaboutique",
@@ -1046,7 +1740,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Kinesisathensphysio",
@@ -1056,7 +1757,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Lexelparisgreece",
@@ -1066,7 +1774,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Megishoptic",
@@ -1076,7 +1791,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Mizodunamiki",
@@ -1086,7 +1808,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Musicalparadise",
@@ -1096,7 +1825,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "New Earth Retreats",
@@ -1106,7 +1842,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Oikanos",
@@ -1116,7 +1859,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Planetbikes",
@@ -1126,7 +1876,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Rockvillas",
@@ -1136,7 +1893,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Sail4fun",
@@ -1146,7 +1910,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Santorini Photoshoot",
@@ -1156,7 +1927,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Seaside Santorini",
@@ -1166,7 +1944,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Specilook",
@@ -1176,7 +1961,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Thepinnacleathens",
@@ -1186,7 +1978,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Thessgreeneshop",
@@ -1196,7 +1995,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Toxasapiko",
@@ -1206,7 +2012,14 @@
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Tsokoglou-katharotexniki",
@@ -1216,7 +2029,14 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   },
   {
     "prName": "Villavaneliamare",
@@ -1226,6 +2046,13 @@
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
-    "prFeatured": false
+    "prFeatured": false,
+    "tech": [
+      "WordPress",
+      "Elementor",
+      "Custom Theme",
+      "PHP",
+      "MySQL"
+    ]
   }
 ]
