@@ -2,6 +2,7 @@ import React from "react"
 import { motion } from "framer-motion"
 import { ExternalLink, Globe, Code, Star, Github, Calendar } from "lucide-react"
 import { useState } from "react"
+import { useTheme } from "../context/ThemeContext"
 import clientProjectsData from "../assets/clientProjects.json"
 import personalProjectsData from "../assets/personalProjects.json"
 
@@ -188,6 +189,7 @@ const typeColors = {
 }
 
 export default function UnifiedProjects() {
+  const { isDark } = useTheme()
   const [activeFilter, setActiveFilter] = useState("all")
 
   const filteredProjects = allProjects.filter(
@@ -205,7 +207,12 @@ export default function UnifiedProjects() {
         }}
       />
 
-      <section id="web-projects" className="py-24 bg-white dark:bg-slate-900">
+      <section
+        id="web-projects"
+        className={`py-24 transition-colors duration-300 ${
+          isDark ? "bg-slate-900" : "bg-white"
+        }`}
+      >
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

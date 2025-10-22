@@ -184,7 +184,7 @@ const ModernProjects = memo(() => {
       .sort((a, b) => a.prName.localeCompare(b.prName))
 
     return [...featured, ...nonFeatured]
-  }, [projectType, validatedProjects])
+  }, [projectType, selectedTech, searchQuery, validatedProjects])
 
   // Reset to page 1 when filters change
   useEffect(() => {
