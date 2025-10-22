@@ -111,7 +111,7 @@ export const securityConfig = {
     name: {
       minLength: 2,
       maxLength: 50,
-      pattern: /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s\-\'\.]+$/,
+      pattern: /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s'-]+$/,
       blockedPatterns: [
         /script/gi,
         /javascript/gi,
@@ -244,9 +244,9 @@ export const validateCSRFToken = (
 export const validationPatterns = {
   email:
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-  name: /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s\-\'\.]{2,50}$/,
-  phone: /^[\+]?[\d\s\-\(\)\.]{10,15}$/,
-  url: /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/,
+  name: /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s'.-]{2,50}$/,
+  phone: /^[+]?[\ds().'-]{10,15}$/,
+  url: /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$/,
 }
 
 export const secureStorage = {

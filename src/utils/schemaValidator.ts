@@ -1,5 +1,3 @@
-
-
 export interface SchemaValidationResult {
   isValid: boolean
   errors: string[]
@@ -177,7 +175,6 @@ export class SchemaValidator {
       case "FAQPage":
       case "Question":
       case "Answer":
-
         result = {
           isValid: true,
           errors: [],

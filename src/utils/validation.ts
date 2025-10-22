@@ -4,7 +4,8 @@ import {
   ModernCertificate,
   Skill,
   ModernReactProject,
-} from "../types"
+} from "../types"
+
 export const isValidJob = (obj: any): obj is Job => {
   return (
     typeof obj === "object" &&
@@ -42,7 +43,8 @@ export const isValidReactProject = (obj: any): obj is ModernReactProject => {
     typeof obj.prDescription === "string" &&
     typeof obj.prImageSlug === "string"
   )
-}
+}
+
 export const validateReactProject = (obj: any): boolean => {
   return (
     typeof obj === "object" &&
@@ -59,7 +61,8 @@ export const validateReactProject = (obj: any): boolean => {
     (obj.featured === undefined || typeof obj.featured === "boolean") &&
     (obj.performance === undefined || typeof obj.performance === "string")
   )
-}
+}
+
 export const validateCertificate = (obj: any): obj is ModernCertificate => {
   return (
     typeof obj === "object" &&
@@ -77,8 +80,10 @@ export const validateCertificate = (obj: any): obj is ModernCertificate => {
     (obj.description === undefined || typeof obj.description === "string") &&
     (obj.skills === undefined || Array.isArray(obj.skills))
   )
-}
-export const isValidCertificate = (obj: any): boolean => {
+}
+
+export const isValidCertificate = (obj: any): boolean => {
+
   if (obj && typeof obj === "object" && obj.certName && obj.certUrl) {
     return (
       typeof obj.certName === "string" &&
@@ -87,7 +92,8 @@ export const isValidCertificate = (obj: any): boolean => {
       typeof obj.certVisible === "boolean" &&
       typeof obj.certCat === "string"
     )
-  }
+  }
+
   return validateCertificate(obj)
 }
 
@@ -100,24 +106,29 @@ export const isValidSkill = (obj: any): obj is Skill => {
     typeof obj.description === "string" &&
     typeof obj.visible === "boolean"
   )
-}
+}
+
 export const validateImageSrc = (
   src: string,
   fallback: string = "/placeholder-image.png"
 ): string => {
   if (!src || typeof src !== "string" || src.trim() === "") {
     return fallback
-  }
-  try {
+  }
+
+  try {
+
     if (src.startsWith("http")) {
       new URL(src)
       return src
-    }
+    }
+
     return src
   } catch {
     return fallback
   }
-}
+}
+
 export const validateEmail = (email: string): boolean => {
   if (!email || typeof email !== "string") return false
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -155,7 +166,7 @@ export const validateName = (name: string): boolean => {
   return (
     trimmed.length >= 2 &&
     trimmed.length <= 50 &&
-    /^[a-zA-Z\s\-\'\.]+$/.test(trimmed)
+    /^[a-zA-Z\s'.-]+$/.test(trimmed)
   )
 }
 
@@ -167,8 +178,8 @@ export const validateMessage = (message: string): boolean => {
 
 export const validatePhone = (phone: string): boolean => {
   if (!phone || typeof phone !== "string") return false
-  const cleaned = phone.replace(/[\s\-\(\)\.]/g, "")
-  const phoneRegex = /^[\+]?[\d]{10,15}$/
+  const cleaned = phone.replace(/[\s().'-]/g, "")
+  const phoneRegex = /^[+]?[\d]{10,15}$/
   return phoneRegex.test(cleaned)
 }
 
@@ -176,7 +187,8 @@ export const validateSubject = (subject: string): boolean => {
   if (!subject || typeof subject !== "string") return false
   const trimmed = subject.trim()
   return trimmed.length >= 3 && trimmed.length <= 100
-}
+}
+
 export interface ContactFormData {
   name: string
   email: string
@@ -218,7 +230,8 @@ export const validateContactForm = (
     isValid: Object.keys(errors).length === 0,
     errors,
   }
-}
+}
+
 export const sanitizeContactForm = (data: ContactFormData): ContactFormData => {
   return {
     name: sanitizeInput(data.name),
