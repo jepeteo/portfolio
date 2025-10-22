@@ -7,6 +7,7 @@ A high-performance, accessible portfolio website built with modern web technolog
 ## ✨ Features
 
 ### Core Features
+
 - **Modern Design**: Clean, professional interface with smooth animations
 - **Interactive UI**: Responsive design with Framer Motion animations
 - **Project Showcase**: Comprehensive display of React projects, web projects, and client work
@@ -17,6 +18,7 @@ A high-performance, accessible portfolio website built with modern web technolog
 - **Dark/Light Mode**: Seamless theme switching with system preference detection
 
 ### Performance & Optimization
+
 - **Code Splitting**: Optimized lazy loading for all major components
 - **Bundle Optimization**: 391KB main bundle (117KB gzipped)
 - **CSS Optimization**: 105KB CSS (15.66KB gzipped)
@@ -25,6 +27,7 @@ A high-performance, accessible portfolio website built with modern web technolog
 - **Preloading**: Intelligent component preloading on hover/intersection
 
 ### Developer Experience
+
 - **TypeScript**: Fully typed codebase (0 errors)
 - **ESLint**: Configured with React best practices
 - **Modern Build**: Vite 5 for fast development and builds
@@ -32,6 +35,7 @@ A high-performance, accessible portfolio website built with modern web technolog
 - **Performance Monitoring**: Built-in metrics tracking
 
 ### Analytics & Monitoring
+
 - **PostHog**: Advanced analytics and feature flags
 - **Vercel Analytics**: Performance tracking
 - **Speed Insights**: Core Web Vitals monitoring
@@ -41,24 +45,28 @@ A high-performance, accessible portfolio website built with modern web technolog
 ## 🛠️ Technologies
 
 ### Core Stack
+
 - **React 18.2** - UI library with latest features
 - **TypeScript 5.6** - Type-safe development
 - **Vite 5.4** - Next-generation build tool
 - **Tailwind CSS 3.4** - Utility-first CSS framework
 
 ### UI & Animations
+
 - **Framer Motion 12** - Production-ready animations
 - **Lucide React** - Beautiful icon set
 - **React Typed** - Typing animations
 - **Container Queries** - Modern responsive design
 
 ### Integration & Analytics
+
 - **EmailJS** - Contact form integration
 - **PostHog** - Product analytics
 - **Vercel Analytics** - Performance tracking
 - **Service Workers** - Offline functionality
 
 ### Development Tools
+
 - **ESLint** - Code quality enforcement
 - **PostCSS** - CSS processing
 - **Autoprefixer** - Browser compatibility
@@ -66,6 +74,7 @@ A high-performance, accessible portfolio website built with modern web technolog
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js >= 22.0.0
 - npm >= 10.0.0
 
@@ -153,6 +162,7 @@ portfolio/
 ## 🎨 Design System
 
 The project uses a modern design system with:
+
 - **Design Tokens**: Semantic color system with CSS variables
 - **Typography Scale**: Fluid typography with proper hierarchy
 - **Spacing System**: Consistent spacing using Tailwind
@@ -231,6 +241,7 @@ This is a personal portfolio project, but suggestions and feedback are welcome! 
 ## 📧 Contact
 
 **Theodoros Mentis**
+
 - Email: [th.mentis@gmail.com](mailto:th.mentis@gmail.com)
 - Website: [theodorosmentis.com](https://theodorosmentis.com)
 - GitHub: [@jepeteo](https://github.com/jepeteo)

@@ -83,7 +83,6 @@ export const validateCertificate = (obj: any): obj is ModernCertificate => {
 }
 
 export const isValidCertificate = (obj: any): boolean => {
-
   if (obj && typeof obj === "object" && obj.certName && obj.certUrl) {
     return (
       typeof obj.certName === "string" &&
@@ -117,7 +116,6 @@ export const validateImageSrc = (
   }
 
   try {
-
     if (src.startsWith("http")) {
       new URL(src)
       return src

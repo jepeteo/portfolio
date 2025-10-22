@@ -9,13 +9,13 @@ interface ModernHeaderProps {
 
 const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = useState(false)
-  
+
   // Use framer-motion's useScroll for better performance
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   })
 
   useEffect(() => {
@@ -77,7 +77,6 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
           }}
           aria-label="Go to homepage"
         >
-
           <motion.div
             className="block" // Show title on all screen sizes
             initial={{ opacity: 0, x: -20 }}

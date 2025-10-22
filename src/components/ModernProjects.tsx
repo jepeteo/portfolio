@@ -173,9 +173,7 @@ const ModernProjects = memo(() => {
           project.prName.toLowerCase().includes(query) ||
           project.prDescription.toLowerCase().includes(query) ||
           (Array.isArray(project.prTags) &&
-            project.prTags.some((tag) =>
-              tag.toLowerCase().includes(query)
-            )) ||
+            project.prTags.some((tag) => tag.toLowerCase().includes(query))) ||
           project.prType.toLowerCase().includes(query)
       )
     }
@@ -598,7 +596,11 @@ const ModernProjects = memo(() => {
           <div className="max-w-4xl mx-auto mb-8 space-y-4">
             {/* Search Bar */}
             <div className="relative">
-              <Search className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
+              <Search
+                className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${
+                  isDark ? "text-slate-400" : "text-slate-500"
+                }`}
+              />
               <input
                 type="text"
                 placeholder="Search projects by name, description, or technology..."
@@ -606,15 +608,17 @@ const ModernProjects = memo(() => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className={`w-full pl-12 pr-12 py-4 rounded-2xl text-base transition-all ${
                   isDark
-                    ? 'bg-slate-800/50 border border-slate-700 text-white placeholder-slate-400 focus:bg-slate-800 focus:border-blue-500'
-                    : 'bg-white border border-slate-200 text-slate-900 placeholder-slate-500 focus:border-blue-500'
+                    ? "bg-slate-800/50 border border-slate-700 text-white placeholder-slate-400 focus:bg-slate-800 focus:border-blue-500"
+                    : "bg-white border border-slate-200 text-slate-900 placeholder-slate-500 focus:border-blue-500"
                 } focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
               />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery('')}
+                  onClick={() => setSearchQuery("")}
                   className={`absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-full transition-colors ${
-                    isDark ? 'hover:bg-slate-700 text-slate-400' : 'hover:bg-slate-100 text-slate-500'
+                    isDark
+                      ? "hover:bg-slate-700 text-slate-400"
+                      : "hover:bg-slate-100 text-slate-500"
                   }`}
                   aria-label="Clear search"
                 >
@@ -626,8 +630,16 @@ const ModernProjects = memo(() => {
             {/* Technology Filter */}
             <div className="flex flex-wrap gap-2 items-center">
               <div className="flex items-center gap-2">
-                <Filter className={`w-4 h-4 ${isDark ? 'text-slate-400' : 'text-slate-600'}`} />
-                <span className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                <Filter
+                  className={`w-4 h-4 ${
+                    isDark ? "text-slate-400" : "text-slate-600"
+                  }`}
+                />
+                <span
+                  className={`text-sm font-medium ${
+                    isDark ? "text-slate-300" : "text-slate-700"
+                  }`}
+                >
                   Filter by Tech:
                 </span>
               </div>
@@ -635,22 +647,28 @@ const ModernProjects = memo(() => {
                 {allTechnologies.slice(0, 12).map((tech) => (
                   <button
                     key={tech}
-                    onClick={() => setSelectedTech(selectedTech === tech ? null : tech)}
+                    onClick={() =>
+                      setSelectedTech(selectedTech === tech ? null : tech)
+                    }
                     className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                       selectedTech === tech
                         ? isDark
-                          ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
-                          : 'bg-blue-500 text-white shadow-lg shadow-blue-500/25'
+                          ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25"
+                          : "bg-blue-500 text-white shadow-lg shadow-blue-500/25"
                         : isDark
-                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
+                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                     }`}
                   >
                     {tech}
                   </button>
                 ))}
                 {allTechnologies.length > 12 && (
-                  <span className={`px-3 py-1.5 text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                  <span
+                    className={`px-3 py-1.5 text-xs ${
+                      isDark ? "text-slate-400" : "text-slate-500"
+                    }`}
+                  >
                     +{allTechnologies.length - 12} more
                   </span>
                 )}
@@ -659,12 +677,12 @@ const ModernProjects = memo(() => {
                 <button
                   onClick={() => {
                     setSelectedTech(null)
-                    setSearchQuery('')
+                    setSearchQuery("")
                   }}
                   className={`ml-auto px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
                     isDark
-                      ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
                 >
                   Clear Filters
@@ -749,8 +767,10 @@ const ModernProjects = memo(() => {
                   {[
                     projectType && `Type: ${projectType}`,
                     selectedTech && `Tech: ${selectedTech}`,
-                    searchQuery && `Search: "${searchQuery}"`
-                  ].filter(Boolean).join(", ")}
+                    searchQuery && `Search: "${searchQuery}"`,
+                  ]
+                    .filter(Boolean)
+                    .join(", ")}
                 </span>
               )}
               {totalPages > 1 && ` • Page ${currentPage} of ${totalPages}`}

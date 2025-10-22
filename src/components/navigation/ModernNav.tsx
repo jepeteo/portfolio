@@ -57,7 +57,7 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
 
   // Haptic feedback for mobile devices
   const triggerHaptic = useCallback(() => {
-    if ('vibrate' in navigator) {
+    if ("vibrate" in navigator) {
       navigator.vibrate(10) // Subtle 10ms vibration
     }
   }, [])
@@ -178,8 +178,8 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
         "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
         isDark ? "focus:ring-offset-gray-900" : "focus:ring-offset-white",
         // Enhanced mobile touch targets (min 44px height for accessibility)
-        isMobile 
-          ? "w-full text-left justify-start px-5 py-4 min-h-[44px]" 
+        isMobile
+          ? "w-full text-left justify-start px-5 py-4 min-h-[44px]"
           : "px-4 py-2",
         isActive && "text-primary font-medium",
         // Add subtle background for active mobile items
@@ -289,9 +289,9 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
           aria-controls="mobile-menu"
         >
           <motion.div
-            animate={{ 
+            animate={{
               rotate: isOpen ? 180 : 0,
-              scale: isOpen ? 1.1 : 1
+              scale: isOpen ? 1.1 : 1,
             }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
@@ -341,10 +341,12 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
             >
               {/* Swipe indicator */}
               <div className="flex justify-center pt-3 pb-2">
-                <div className={cn(
-                  "w-12 h-1 rounded-full transition-colors",
-                  isDark ? "bg-slate-700" : "bg-slate-300"
-                )} />
+                <div
+                  className={cn(
+                    "w-12 h-1 rounded-full transition-colors",
+                    isDark ? "bg-slate-700" : "bg-slate-300"
+                  )}
+                />
               </div>
 
               {/* Menu items with larger touch targets */}
@@ -367,13 +369,15 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
               </div>
 
               {/* Bottom gradient fade for long lists */}
-              <div className={cn(
-                "absolute bottom-0 left-0 right-0 h-8 pointer-events-none",
-                "bg-gradient-to-t",
-                isDark
-                  ? "from-slate-900/98 to-transparent"
-                  : "from-white/98 to-transparent"
-              )} />
+              <div
+                className={cn(
+                  "absolute bottom-0 left-0 right-0 h-8 pointer-events-none",
+                  "bg-gradient-to-t",
+                  isDark
+                    ? "from-slate-900/98 to-transparent"
+                    : "from-white/98 to-transparent"
+                )}
+              />
             </motion.div>
           </>
         )}
