@@ -177,8 +177,21 @@ body {
     }
 }
 
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
 .animate-fade-in-up {
     animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-shimmer {
+    animation: shimmer 2s infinite;
 }
 
 /* Staggered animation delays */

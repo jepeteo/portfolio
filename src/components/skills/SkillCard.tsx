@@ -1,6 +1,6 @@
 import React from "react"
 import { useTheme } from "../../context/ThemeContext"
-import { TrendingUp, Target, Coffee, Heart, Star } from "lucide-react"
+import { TrendingUp, Target, Coffee, Heart, Star, Sparkles } from "lucide-react"
 
 interface SkillCardProps {
   skill: {
@@ -32,9 +32,25 @@ const SkillCard: React.FC<SkillCardProps> = ({
   const isHovered = hoveredSkill === skill.name
 
   const getMasteryIcon = (level: number) => {
-    if (level >= 90) return <Heart className="w-4 h-4 text-red-500" />
-    if (level >= 80) return <Star className="w-4 h-4 text-yellow-500" />
-    return <Coffee className="w-4 h-4 text-blue-500" />
+    if (level >= 90)
+      return (
+        <div className="relative">
+          <div className="absolute inset-0 bg-red-500/20 rounded-full animate-pulse" />
+          <Heart className="w-4 h-4 text-red-500 relative z-10" />
+        </div>
+      )
+    if (level >= 80)
+      return (
+        <div className="relative">
+          <div className="absolute inset-0 bg-yellow-500/20 rounded-full" />
+          <Star className="w-4 h-4 text-yellow-500 relative z-10" />
+        </div>
+      )
+    return (
+      <div className="relative">
+        <Coffee className="w-4 h-4 text-blue-500" />
+      </div>
+    )
   }
 
   const getTrendIcon = (trend: string) => {
@@ -74,7 +90,8 @@ const SkillCard: React.FC<SkillCardProps> = ({
         }}
         onClick={() => mobile && onHover(isHovered ? null : skill.name)}
       >
-        {mobile ? (
+        {mobile ? (
+
           <>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
@@ -115,12 +132,12 @@ const SkillCard: React.FC<SkillCardProps> = ({
             </div>
 
             <div
-              className={`w-full h-2 rounded-full overflow-hidden ${
+              className={`w-full h-2 rounded-full overflow-hidden relative ${
                 isDark ? "bg-slate-700/50" : "bg-slate-200/50"
               }`}
             >
               <div
-                className={`h-full rounded-full transition-all duration-1000 ease-out ${
+                className={`h-full rounded-full transition-all duration-1000 ease-out relative ${
                   skill.level >= 90
                     ? "bg-gradient-to-r from-red-400 to-red-500"
                     : skill.level >= 80
@@ -131,7 +148,15 @@ const SkillCard: React.FC<SkillCardProps> = ({
                   width: isVisible ? `${skill.level}%` : "0%",
                   transitionDelay: `${index * 100}ms`,
                 }}
-              />
+              >
+                {/* Animated shine effect */}
+                <div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"
+                  style={{
+                    animation: "shimmer 2s infinite",
+                  }}
+                />
+              </div>
             </div>
 
             <div
@@ -171,7 +196,8 @@ const SkillCard: React.FC<SkillCardProps> = ({
               </div>
             )}
           </>
-        ) : (
+        ) : (
+
           <>
             
             <div className="flex items-start justify-between mb-6">
@@ -220,12 +246,12 @@ const SkillCard: React.FC<SkillCardProps> = ({
               </div>
 
               <div
-                className={`w-full h-3 rounded-full overflow-hidden ${
+                className={`w-full h-3 rounded-full overflow-hidden relative ${
                   isDark ? "bg-slate-700/50" : "bg-slate-200/50"
                 }`}
               >
                 <div
-                  className={`h-full rounded-full transition-all duration-1500 ease-out ${
+                  className={`h-full rounded-full transition-all duration-1500 ease-out relative overflow-hidden ${
                     skill.level >= 90
                       ? "bg-gradient-to-r from-red-400 via-pink-400 to-red-500"
                       : skill.level >= 80
@@ -236,7 +262,22 @@ const SkillCard: React.FC<SkillCardProps> = ({
                     width: isVisible ? `${skill.level}%` : "0%",
                     transitionDelay: `${index * 150}ms`,
                   }}
-                />
+                >
+                  {/* Animated shine effect */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                    style={{
+                      animation: "shimmer 2.5s infinite",
+                    }}
+                  />
+                  
+                  {/* Percentage label inside progress bar */}
+                  {isVisible && skill.level > 20 && (
+                    <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-bold text-white drop-shadow-md">
+                      {skill.level}%
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
 
