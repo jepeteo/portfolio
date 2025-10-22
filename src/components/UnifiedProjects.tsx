@@ -228,12 +228,20 @@ export default function UnifiedProjects() {
               </span>
             </div>
 
-            <h2 className="text-5xl md:text-7xl font-bold mb-8 text-slate-900 dark:text-white">
+            <h2
+              className={`text-5xl md:text-7xl font-bold mb-8 ${
+                isDark ? "text-white" : "text-slate-900"
+              }`}
+            >
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-600">
                 Web Projects
               </span>
             </h2>
-            <p className="text-xl max-w-3xl mx-auto leading-relaxed text-slate-700 dark:text-slate-300 mb-8">
+            <p
+              className={`text-xl max-w-3xl mx-auto leading-relaxed mb-8 ${
+                isDark ? "text-slate-300" : "text-slate-700"
+              }`}
+            >
               A showcase of professional client work and personal development
               projects, demonstrating expertise across different technologies
               and domains
@@ -241,15 +249,23 @@ export default function UnifiedProjects() {
 
             {/* Filter Tabs */}
             <div className="flex justify-center mb-8">
-              <div className="inline-flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+              <div
+                className={`inline-flex rounded-lg p-1 ${
+                  isDark ? "bg-gray-800" : "bg-gray-100"
+                }`}
+              >
                 {filterOptions.map((option) => (
                   <button
                     key={option.key}
                     onClick={() => setActiveFilter(option.key)}
                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                       activeFilter === option.key
-                        ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm"
-                        : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                        ? isDark
+                          ? "bg-gray-700 text-blue-400 shadow-sm"
+                          : "bg-white text-blue-600 shadow-sm"
+                        : isDark
+                        ? "text-gray-400 hover:text-gray-200"
+                        : "text-gray-600 hover:text-gray-900"
                     }`}
                   >
                     {option.label}
@@ -267,9 +283,13 @@ export default function UnifiedProjects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className={`bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group relative ${
+                className={`rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group relative ${
+                  isDark ? "bg-gray-800" : "bg-white"
+                } ${
                   project.featured
-                    ? "ring-2 ring-blue-500/20 dark:ring-blue-400/20"
+                    ? isDark
+                      ? "ring-2 ring-blue-400/20"
+                      : "ring-2 ring-blue-500/20"
                     : ""
                 } ${typeColors[project.type as keyof typeof typeColors]}`}
               >
@@ -287,8 +307,12 @@ export default function UnifiedProjects() {
                   <span
                     className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                       project.type === "client"
-                        ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
-                        : "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+                        ? isDark
+                          ? "bg-green-900/30 text-green-300"
+                          : "bg-green-100 text-green-800"
+                        : isDark
+                        ? "bg-blue-900/30 text-blue-300"
+                        : "bg-blue-100 text-blue-800"
                     }`}
                   >
                     {project.type === "client" ? (
@@ -317,7 +341,11 @@ export default function UnifiedProjects() {
                       >
                         {project.category}
                       </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                      <span
+                        className={`text-xs flex items-center ${
+                          isDark ? "text-gray-400" : "text-gray-500"
+                        }`}
+                      >
                         <Calendar className="w-3 h-3 mr-1" />
                         {project.year}
                       </span>
@@ -336,11 +364,21 @@ export default function UnifiedProjects() {
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  <h3
+                    className={`text-xl font-semibold mb-3 transition-colors ${
+                      isDark
+                        ? "text-white group-hover:text-blue-400"
+                        : "text-gray-900 group-hover:text-blue-600"
+                    }`}
+                  >
                     {project.title}
                   </h3>
 
-                  <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">
+                  <p
+                    className={`mb-4 text-sm leading-relaxed ${
+                      isDark ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
                     {project.description}
                   </p>
 
@@ -348,7 +386,11 @@ export default function UnifiedProjects() {
                     {project.tech.map((tech: string) => (
                       <span
                         key={tech}
-                        className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded-full"
+                        className={`px-2 py-1 text-xs rounded-full ${
+                          isDark
+                            ? "bg-gray-700 text-gray-300"
+                            : "bg-gray-100 text-gray-600"
+                        }`}
                       >
                         {tech}
                       </span>
@@ -361,7 +403,11 @@ export default function UnifiedProjects() {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center space-x-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm transition-colors"
+                        className={`inline-flex items-center space-x-2 font-medium text-sm transition-colors ${
+                          isDark
+                            ? "text-blue-400 hover:text-blue-300"
+                            : "text-blue-600 hover:text-blue-700"
+                        }`}
                       >
                         <span>Visit</span>
                         <ExternalLink className="w-3 h-3" />
@@ -372,7 +418,11 @@ export default function UnifiedProjects() {
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 font-medium text-sm transition-colors"
+                          className={`inline-flex items-center space-x-2 font-medium text-sm transition-colors ${
+                            isDark
+                              ? "text-gray-400 hover:text-gray-200"
+                              : "text-gray-600 hover:text-gray-900"
+                          }`}
                         >
                           <Github className="w-3 h-3" />
                           <span>Code</span>
@@ -381,7 +431,11 @@ export default function UnifiedProjects() {
                     </div>
 
                     {project.status === "Live" && (
-                      <div className="flex items-center space-x-1 text-emerald-600 dark:text-emerald-400">
+                      <div
+                        className={`flex items-center space-x-1 ${
+                          isDark ? "text-emerald-400" : "text-emerald-600"
+                        }`}
+                      >
                         <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
                         <span className="text-xs font-medium">Online</span>
                       </div>
