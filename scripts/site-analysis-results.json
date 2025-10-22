@@ -1,0 +1,1254 @@
+[
+  {
+    "name": "Kariera in Sports",
+    "url": "https://karierainsports.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "WPBakery"
+    ]
+  },
+  {
+    "name": "Antoninas",
+    "url": "https://antoninas.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Prionotainies",
+    "url": "https://prionotainies.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress"
+    ],
+    "error": "Timeout"
+  },
+  {
+    "name": "Greekonline",
+    "url": "https://greekonline.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Linari",
+    "url": "https://e-linari.gr/",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Idea & Fos",
+    "url": "https://idea-fos.gr/",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Tech Nik",
+    "url": "https://tech-nik.gr/",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Laoulakos Flowers",
+    "url": "https://www.e-laoulakosflowers.gr/",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Perla Boutique",
+    "url": "https://perlaboutique.gr/",
+    "type": "E-Shop",
+    "detectedTech": [
+      "OpenCart",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Saratsopoulou Optics",
+    "url": "https://saratsopoulou.gr/",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Agricultural Machines Tampakakis",
+    "url": "https://tampakakis.com/",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Ohrofeo",
+    "url": "https://www.ohrofeo.gr/",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "DK Photos",
+    "url": "https://www.dkphotos.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "Custom Theme"
+    ]
+  },
+  {
+    "name": "Transport Ballalas",
+    "url": "https://www.metaforiki-skopelou.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Aggelikas",
+    "url": "https://aggelikas.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Mitsidis Group",
+    "url": "https://aggelikas.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "SMS Metal",
+    "url": "https://sms-metal.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Athens Italian Interpreters",
+    "url": "https://aii.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "My Kos Driver",
+    "url": "https://www.mykosdriver.com/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "MG Speed Experts",
+    "url": "https://www.rentmotokos.com/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Kalivas Service",
+    "url": "https://www.kalivasservice.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "POETEK",
+    "url": "https://www.poetek.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Nautilos Nave",
+    "url": "https://www.episkeves-ploion.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Marvim",
+    "url": "https://www.marvim-villiotis.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Ariston",
+    "url": "https://www.paintyachts.com/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Shipboiler",
+    "url": "https://www.shipboiler.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Piccard Hellas Divers CO",
+    "url": "https://piccardhellasdiversco.com/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Ploutis Antonis",
+    "url": "https://ploutis-yachts.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "O Nasos",
+    "url": "https://onasos.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Rodi & Meli",
+    "url": "https://rodimeli.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Xafis",
+    "url": "https://www.xafis.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Stimex",
+    "url": "https://www.stimex.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Kokkolios Fruits",
+    "url": "https://kokoliosfruits.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Amigdala",
+    "url": "https://amigdala.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Eleni",
+    "url": "https://www.zaxaroplasteio-eleni.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Funeral Home",
+    "url": "https://www.apotefrosis.com/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "G. Katsantoni",
+    "url": "https://www.gkatsantoni.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "H.N.P. Law Office",
+    "url": "https://www.hnplaw.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Mpompolakis - Ladias",
+    "url": "https://lbmetal.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "VIP Fitness",
+    "url": "https://www.vip-fitness-mihabodytec.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress"
+    ],
+    "error": "Timeout"
+  },
+  {
+    "name": "Konstantinos Taoulas",
+    "url": "https://ctlaw.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Cylinder Master",
+    "url": "https://cylindermaster.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Manos Power Coffee",
+    "url": "https://manospowercoffee.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Papalias Andreas ",
+    "url": "https://teletes-papaliasandreas.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Limobus",
+    "url": "https://limobus.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WPBakery"
+    ]
+  },
+  {
+    "name": "Kaptan Giorgis",
+    "url": "https://kaptangiorgis.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "GVF",
+    "url": "https://www.gvf.gr/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Compass Technology Solutions",
+    "url": "https://www.compasstechnologysolutions.eu/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress"
+    ],
+    "error": "Timeout"
+  },
+  {
+    "name": "Kyriakakis",
+    "url": "https://www.epiplomena-diamerismata-kyriakakis.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Nikolopoulou Vanessa",
+    "url": "https://www.odontiatros-pallini.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Xatzivasileiadis Iordanis",
+    "url": "https://www.ofthalmiatros-edessa.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Aitheria Elaia",
+    "url": "https://www.aitheria-elaia.com/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress"
+    ],
+    "error": "Timeout"
+  },
+  {
+    "name": "Taxi & Van ",
+    "url": "https://www.taxigalaxidi.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Ira Metaforiki",
+    "url": "https://www.irametaforiki.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Metaxas",
+    "url": "https://www.odiki-metaxas.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Metaxas",
+    "url": "https://www.odiki-metaxas.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Tzilitoudis Service",
+    "url": "https://www.tzilitoudis-service.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Terzidis - Dreliozi",
+    "url": "https://tdlaw.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Christos Petkos",
+    "url": "https://www.dikigoros-athena.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Chef Katramis",
+    "url": "https://www.chefzakynthos.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Psixos Renovations",
+    "url": "https://www.anakainiseis-ktirion.com/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Ergongas",
+    "url": "https://ergongas.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Kyklotherm",
+    "url": "https://kyklotherm.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Star Tech",
+    "url": "https://www.star-tech.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Hipro.Mac PC",
+    "url": "https://www.episkevespc.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Skargas",
+    "url": "https://www.skargas.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Metalogy Construction",
+    "url": "https://www.metalogy-construction.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Me-Nou Ad Creations",
+    "url": "https://www.me-nou.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Printing Office Kordatzakis",
+    "url": "https://typografeio-kordatzakis.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Fire Protection ALFA",
+    "url": "https://www.alfa-texnikografeio-kos.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Plant Nursery",
+    "url": "https://www.fytorioveroia.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Troxeio Karamanis",
+    "url": "https://www.troxeio.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Lux Vip Apartments",
+    "url": "https://www.luxvipapartments.com/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Studios Lydia",
+    "url": "https://www.studioslydia.gr/",
+    "type": "Static",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Almotek",
+    "url": "https://www.almotek.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Angelplus",
+    "url": "https://www.angelplus.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress"
+    ],
+    "error": "Timeout"
+  },
+  {
+    "name": "Artandwork",
+    "url": "https://www.artandwork.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Bamboo-store",
+    "url": "https://www.bamboo-store.com",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor"
+    ]
+  },
+  {
+    "name": "Beautifulpeoplepr",
+    "url": "https://www.beautifulpeoplepr.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Bymkyriakidou",
+    "url": "https://www.bymkyriakidou.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress"
+    ],
+    "error": "Timeout"
+  },
+  {
+    "name": "Chaloulakos-home",
+    "url": "https://www.chaloulakos-home.com",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Citycars",
+    "url": "https://www.citycars.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Coffeetrade",
+    "url": "https://www.coffeetrade.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Cosmoshotel",
+    "url": "https://www.cosmoshotel.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Crystalseayachting",
+    "url": "https://www.crystalseayachting.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Cycladescollection",
+    "url": "https://www.cycladescollection.com",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor"
+    ]
+  },
+  {
+    "name": "Dancohome",
+    "url": "https://www.dancohome.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor"
+    ]
+  },
+  {
+    "name": "Dandyvillas",
+    "url": "https://www.dandyvillas.com",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Dermapro",
+    "url": "https://www.dermapro.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Dktelecomeshop",
+    "url": "https://www.dktelecomeshop.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress"
+    ],
+    "error": "Timeout"
+  },
+  {
+    "name": "Dm-realestate",
+    "url": "https://www.dm-realestate.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Elaialuxurysuites",
+    "url": "https://www.elaialuxurysuites.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Elena Maidoni",
+    "url": "https://www.elenamaidoni.com",
+    "type": "E-Shop",
+    "detectedTech": [
+      "OpenCart",
+      "WooCommerce",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Energonservice",
+    "url": "https://www.energonservice.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi",
+      "WPBakery"
+    ]
+  },
+  {
+    "name": "Epidosis",
+    "url": "https://www.epidosis.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi",
+      "WPBakery"
+    ]
+  },
+  {
+    "name": "Eshop-art",
+    "url": "https://www.eshop-art.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Fcopy",
+    "url": "https://www.fcopy.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Flora-santorini",
+    "url": "https://www.flora-santorini.com",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Goforpharmacy",
+    "url": "https://www.goforpharmacy.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor"
+    ]
+  },
+  {
+    "name": "Harmonyathens",
+    "url": "https://harmonyathens.com/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Iasiskozani",
+    "url": "https://iasiskozani.com/",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Ioniananthology",
+    "url": "https://www.ioniananthology.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress"
+    ],
+    "error": "Timeout"
+  },
+  {
+    "name": "Ioraikali",
+    "url": "https://ioraikali.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Iosbakery",
+    "url": "https://iosbakery.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Izaboutique",
+    "url": "https://www.izaboutique.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Kinesisathensphysio",
+    "url": "https://www.kinesisathensphysio.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Lexelparisgreece",
+    "url": "https://www.lexelparisgreece.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress"
+    ],
+    "error": "Timeout"
+  },
+  {
+    "name": "Megishoptic",
+    "url": "https://www.megishoptic.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor"
+    ]
+  },
+  {
+    "name": "Mizodunamiki",
+    "url": "https://www.mizodunamiki.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "Custom Theme"
+    ]
+  },
+  {
+    "name": "Musicalparadise",
+    "url": "https://www.musicalparadise.com",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi",
+      "WPBakery"
+    ]
+  },
+  {
+    "name": "New Earth Retreats",
+    "url": "https://www.newearthretreats.eu",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi",
+      "WPBakery"
+    ]
+  },
+  {
+    "name": "Oikanos",
+    "url": "https://www.oikanos.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor"
+    ]
+  },
+  {
+    "name": "Planetbikes",
+    "url": "https://planetbikes.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "Custom Theme"
+    ]
+  },
+  {
+    "name": "Rockvillas",
+    "url": "https://www.rockvillas.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Sail4fun",
+    "url": "https://www.sail4fun.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress"
+    ],
+    "error": "Timeout"
+  },
+  {
+    "name": "Santorini Photoshoot",
+    "url": "https://www.santoriniphotoshoot.com",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Seaside Santorini",
+    "url": "https://www.seasidesantorini.com",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor"
+    ]
+  },
+  {
+    "name": "Specilook",
+    "url": "https://www.specilook.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Thepinnacleathens",
+    "url": "https://www.thepinnacleathens.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress"
+    ],
+    "error": "Timeout"
+  },
+  {
+    "name": "Thessgreeneshop",
+    "url": "https://www.thessgreeneshop.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Toxasapiko",
+    "url": "https://www.toxasapiko.gr",
+    "type": "E-Shop",
+    "detectedTech": [
+      "WordPress"
+    ],
+    "error": "Timeout"
+  },
+  {
+    "name": "Tsokoglou-katharotexniki",
+    "url": "https://www.tsokoglou-katharotexniki.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Divi"
+    ]
+  },
+  {
+    "name": "Villavaneliamare",
+    "url": "https://www.villavaneliamare.gr",
+    "type": "Dynamic Site",
+    "detectedTech": [
+      "WordPress",
+      "Elementor"
+    ]
+  }
+]
