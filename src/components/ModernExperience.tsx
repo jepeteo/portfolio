@@ -188,11 +188,7 @@ const ModernExperience: React.FC = () => {
   const renderCount = React.useRef(0)
   useEffect(() => {
     renderCount.current += 1
-    if (
-      process.env.NODE_ENV === "development" &&
-      renderCount.current % 10 === 0 // Only log every 10th render
-    ) {
-    }
+    // Render counting removed - performance monitoring handled by usePerformanceMonitor
   })
 
   return (

@@ -137,7 +137,7 @@ const PerformanceDashboard: React.FC = () => {
       observers.forEach((observer) => {
         try {
           observer.disconnect()
-        } catch (error) {
+        } catch {
           // Observer already disconnected - safe to ignore
         }
       })

@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
-import usePerformanceMonitor from "../hooks/usePerformanceMonitor"
 import { useCertificatesData } from "../hooks/useCertificatesData"
 import { CertificateStatsComponent } from "./certificates/CertificateStats"
 import { CertificateCard } from "./certificates/CertificateCard"
@@ -13,12 +12,14 @@ const ModernCertificates: React.FC = () => {
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
     threshold: 0.1,
     rootMargin: "50px",
-  })
-  const performanceMetrics = usePerformanceMonitor("ModernCertificates")
-  const { certificates, stats, categories } = useCertificatesData()
+  })
+
+  const { certificates, stats, categories } = useCertificatesData()
+
   const [selectedCategory, setSelectedCategory] = useState<string>("all")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
-  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set())
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set())
+
   const filteredCertificates =
     selectedCategory === "all"
       ? certificates
@@ -34,14 +35,9 @@ const ModernCertificates: React.FC = () => {
       }
       return newSet
     })
-  }, [])
-  useEffect(() => {
-    if (
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
-    ) {
-    }
-  }, [performanceMetrics])
+  }, [])
+
+  // Performance monitoring removed - usePerformanceMonitor hook handles it
 
   return (
     <section

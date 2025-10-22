@@ -8,23 +8,27 @@ export interface SchemaValidationResult {
 }
 
 export class SchemaValidator {
-  static validateSchemaInConsole(_schema: any, _label: string) {
+  static validateSchemaInConsole() {
+    // Validation disabled - schema validation happens at build time
     return
   }
 
   static validatePersonSchema(schema: any): SchemaValidationResult {
     const errors: string[] = []
     const warnings: string[] = []
-    const suggestions: string[] = []
+    const suggestions: string[] = []
+
     if (!schema.name) errors.push("Person schema missing required 'name' field")
     if (!schema["@type"] || schema["@type"] !== "Person") {
       errors.push("Schema must have @type: 'Person'")
-    }
+    }
+
     if (!schema.jobTitle)
       warnings.push("Consider adding 'jobTitle' for better SEO")
     if (!schema.image)
       warnings.push("Consider adding 'image' for rich snippets")
-    if (!schema.url) warnings.push("Consider adding 'url' field")
+    if (!schema.url) warnings.push("Consider adding 'url' field")
+
     if (
       !schema.sameAs ||
       !Array.isArray(schema.sameAs) ||
@@ -50,10 +54,12 @@ export class SchemaValidator {
   static validatePortfolioSchema(schema: any): SchemaValidationResult {
     const errors: string[] = []
     const warnings: string[] = []
-    const suggestions: string[] = []
+    const suggestions: string[] = []
+
     if (!schema["@context"]) errors.push("Missing @context")
     if (!schema["@type"]) errors.push("Missing @type")
-    if (!schema.name) errors.push("Missing name field")
+    if (!schema.name) errors.push("Missing name field")
+
     if (!schema.hasPart || !Array.isArray(schema.hasPart)) {
       errors.push("Portfolio schema should have 'hasPart' array with projects")
     } else {
@@ -68,7 +74,8 @@ export class SchemaValidator {
           warnings.push(`Project ${index} missing URL or ID`)
         }
       })
-    }
+    }
+
     if (!schema.creator) {
       suggestions.push("Add creator field to link portfolio to person")
     }
@@ -169,7 +176,8 @@ export class SchemaValidator {
       case "BreadcrumbList":
       case "FAQPage":
       case "Question":
-      case "Answer":
+      case "Answer":
+
         result = {
           isValid: true,
           errors: [],
@@ -215,18 +223,22 @@ export class SchemaValidator {
   }
 
   static optimizeSchema(schema: any): any {
-    const optimized = { ...schema }
+    const optimized = { ...schema }
+
     if (!optimized["@context"]) {
       optimized["@context"] = "https://schema.org"
-    }
+    }
+
     if (!optimized["@id"] && optimized.url) {
       optimized["@id"] = `${optimized.url}#${optimized["@type"].toLowerCase()}`
-    }
+    }
+
     Object.keys(optimized).forEach((key) => {
       if (Array.isArray(optimized[key])) {
         optimized[key] = optimized[key].filter(
           (item: any) => item !== null && item !== undefined && item !== ""
-        )
+        )
+
         if (optimized[key].length === 0) {
           delete optimized[key]
         }
@@ -242,7 +254,8 @@ export class SchemaValidator {
     issues: string[]
   }> {
     const issues: string[] = []
-    const richResultTypes: string[] = []
+    const richResultTypes: string[] = []
+
     if (schema["@type"] === "Person") {
       if (schema.name && schema.jobTitle) {
         richResultTypes.push("Person Rich Card")
@@ -267,11 +280,10 @@ export class SchemaValidator {
       issues,
     }
   }
-}
-export const validateSchemaInDev = (
-  _schema: any,
-  _label: string = "Schema"
-) => {
+}
+
+export const validateSchemaInDev = () => {
+  // Schema validation disabled - happens at build time
   return
 }
 
