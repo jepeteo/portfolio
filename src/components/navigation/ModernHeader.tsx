@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, useScroll, useSpring } from "framer-motion"
 import { cn, typography } from "../../utils/styles"
 import ModernNav from "../navigation/ModernNav"
 
@@ -8,7 +8,15 @@ interface ModernHeaderProps {
 }
 
 const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+  
+  // Use framer-motion's useScroll for better performance
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  })
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,7 +88,8 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
               className={cn(
                 typography.heading.h4,
                 "font-bold text-text-primary leading-tight",
-                "group-hover:text-primary transition-colors duration-200",
+                "group-hover:text-primary transition-colors duration-200",
+
                 "text-base sm:text-lg lg:text-xl xl:text-2xl"
               )}
             >
@@ -90,7 +99,8 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
             <p
               className={cn(
                 typography.body.small,
-                "text-text-muted opacity-80 hidden lg:block",
+                "text-text-muted opacity-80 hidden lg:block",
+
                 "text-xs lg:text-sm"
               )}
             >
@@ -113,20 +123,10 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
         animate={{ opacity: 1, scaleX: 1 }}
         transition={{ delay: 0.5, duration: 0.8 }}
       />
+      {/* Smooth scroll progress indicator */}
       <motion.div
-        className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary to-accent origin-left"
-        style={{
-          scaleX:
-            typeof window !== "undefined"
-              ? Math.min(
-                  window.scrollY /
-                    (document.documentElement.scrollHeight -
-                      window.innerHeight),
-                  1
-                )
-              : 0,
-        }}
-        transition={{ duration: 0.1 }}
+        className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 origin-left"
+        style={{ scaleX }}
       />
     </motion.header>
   )
