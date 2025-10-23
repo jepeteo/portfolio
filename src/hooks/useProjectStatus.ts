@@ -42,6 +42,8 @@ const isCacheValid = (timestamp: number): boolean => {
 
 // Check if a URL is accessible
 const checkUrlStatus = async (url: string): Promise<ProjectStatus> => {
+  console.log(`[Status Check] Starting check for: ${url}`);
+  
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), CHECK_TIMEOUT);
@@ -55,45 +57,53 @@ const checkUrlStatus = async (url: string): Promise<ProjectStatus> => {
 
     clearTimeout(timeoutId);
 
+    console.log(`[Status Check] ${url} - Response status: ${response.status}, type: ${response.type}`);
+
     // If we get here, the request succeeded
     if (response.ok || response.status < 500) {
+      console.log(`[Status Check] ${url} - ONLINE (status ${response.status})`);
       return 'online';
     }
     
+    console.log(`[Status Check] ${url} - OFFLINE (status ${response.status})`);
     return 'offline';
   } catch (error) {
+    console.log(`[Status Check] ${url} - Error:`, error);
+    
     if (error instanceof Error) {
       // Timeout = offline
       if (error.name === 'AbortError') {
+        console.log(`[Status Check] ${url} - OFFLINE (timeout)`);
         return 'offline';
       }
       
-      // CORS error or network error
-      // If it's a CORS error, the site is actually online (just blocking us)
-      // Network errors (DNS, connection refused) mean offline
-      if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
-        // Try with no-cors mode as fallback
-        try {
-          const controller2 = new AbortController();
-          const timeoutId2 = setTimeout(() => controller2.abort(), CHECK_TIMEOUT);
-          
-          await fetch(url, {
-            method: 'HEAD',
-            mode: 'no-cors',
-            signal: controller2.signal,
-            cache: 'no-cache',
-          });
-          
-          clearTimeout(timeoutId2);
-          
-          // If no-cors succeeds, site is online
-          return 'online';
-        } catch (noCorsError) {
-          // Even no-cors failed - truly offline
-          return 'offline';
-        }
+      console.log(`[Status Check] ${url} - Trying no-cors fallback...`);
+      
+      // Try with no-cors mode as fallback
+      try {
+        const controller2 = new AbortController();
+        const timeoutId2 = setTimeout(() => controller2.abort(), CHECK_TIMEOUT);
+        
+        await fetch(url, {
+          method: 'HEAD',
+          mode: 'no-cors',
+          signal: controller2.signal,
+          cache: 'no-cache',
+        });
+        
+        clearTimeout(timeoutId2);
+        
+        // If no-cors succeeds, site is online
+        console.log(`[Status Check] ${url} - ONLINE (no-cors succeeded)`);
+        return 'online';
+      } catch (noCorsError) {
+        // Even no-cors failed - truly offline
+        console.log(`[Status Check] ${url} - OFFLINE (no-cors also failed)`, noCorsError);
+        return 'offline';
       }
     }
+    
+    console.log(`[Status Check] ${url} - OFFLINE (unknown error)`);
     return 'offline';
   }
 };
