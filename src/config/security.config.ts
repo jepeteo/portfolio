@@ -125,7 +125,6 @@ export const SECURITY_CONFIG: SecurityConfig = {
       ],
       connectSrc: [
         "'self'",
-        "https:", // Allow all HTTPS connections (needed for project status checks)
         "https://api.emailjs.com",
         "https://formspree.io",
         "https://api.github.com",

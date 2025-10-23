@@ -1,3 +1,5 @@
+
+
 export interface Job {
   title: string
   company: string
@@ -62,6 +64,7 @@ export interface Skill {
   level: number
   category: string
 }
+
 
 export interface FormData {
   name: string

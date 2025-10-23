@@ -2,7 +2,6 @@ import React, { useState, useMemo, memo, useCallback, useEffect } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import { useProjectImage } from "../hooks/useProjectImage"
-import { useProjectStatus } from "../hooks/useProjectStatus"
 import myProjects from "../assets/myProjects.json"
 import { Project } from "../types"
 import { isValidProject } from "../utils/validation"
@@ -16,7 +15,6 @@ import {
   Search,
   X,
   Filter,
-  RefreshCw,
 } from "lucide-react"
 
 // SEO Schema generation for Projects
@@ -133,22 +131,6 @@ const ModernProjects = memo(() => {
       })) as Project[]
   }, [])
 
-  // Project status monitoring
-  const projectUrls = useMemo(
-    () => validatedProjects.map((p) => p.prUrl).filter(Boolean) as string[],
-    [validatedProjects]
-  )
-
-  const {
-    statuses,
-    isLoading: isCheckingStatus,
-    refreshStatus,
-    clearCache,
-  } = useProjectStatus(
-    projectUrls,
-    true // enabled
-  )
-
   const projectTypes = useMemo(() => {
     return Array.from(
       new Set(validatedProjects.map((project) => project.prType))
@@ -160,11 +142,8 @@ const ModernProjects = memo(() => {
     const techSet = new Set<string>()
     validatedProjects.forEach((project) => {
       // Use tech field if available, fallback to prTags for backward compatibility
-      const techArray = Array.isArray(project.tech)
-        ? project.tech
-        : Array.isArray(project.prTags)
-        ? project.prTags
-        : []
+      const techArray = Array.isArray(project.tech) ? project.tech : 
+                       (Array.isArray(project.prTags) ? project.prTags : [])
       techArray.forEach((tech) => techSet.add(tech))
     })
     return Array.from(techSet).sort()
@@ -182,11 +161,8 @@ const ModernProjects = memo(() => {
     if (selectedTech !== null) {
       filtered = filtered.filter((project) => {
         // Check tech field first, fallback to prTags
-        const techArray = Array.isArray(project.tech)
-          ? project.tech
-          : Array.isArray(project.prTags)
-          ? project.prTags
-          : []
+        const techArray = Array.isArray(project.tech) ? project.tech : 
+                         (Array.isArray(project.prTags) ? project.prTags : [])
         return techArray.includes(selectedTech)
       })
     }
@@ -194,47 +170,27 @@ const ModernProjects = memo(() => {
     // Filter by search query
     if (searchQuery.trim() !== "") {
       const query = searchQuery.toLowerCase().trim()
-      filtered = filtered.filter((project) => {
-        const techArray = Array.isArray(project.tech)
-          ? project.tech
-          : Array.isArray(project.prTags)
-          ? project.prTags
-          : []
-        return (
-          project.prName.toLowerCase().includes(query) ||
-          project.prDescription.toLowerCase().includes(query) ||
-          techArray.some((tech: string) =>
-            tech.toLowerCase().includes(query)
-          ) ||
-          project.prType.toLowerCase().includes(query)
-        )
-      })
+      filtered = filtered.filter(
+        (project) => {
+          const techArray = Array.isArray(project.tech) ? project.tech : 
+                           (Array.isArray(project.prTags) ? project.prTags : [])
+          return (
+            project.prName.toLowerCase().includes(query) ||
+            project.prDescription.toLowerCase().includes(query) ||
+            techArray.some((tech: string) => tech.toLowerCase().includes(query)) ||
+            project.prType.toLowerCase().includes(query)
+          )
+        }
+      )
     }
 
-    // Sort by featured status first, then by online status, then alphabetically
     const featured = filtered.filter((project) => project.prFeatured)
-    const nonFeatured = filtered.filter((project) => !project.prFeatured)
+    const nonFeatured = filtered
+      .filter((project) => !project.prFeatured)
+      .sort((a, b) => a.prName.localeCompare(b.prName))
 
-    // Sort non-featured: online first, then offline, then unknown/checking
-    const sortedNonFeatured = nonFeatured.sort((a, b) => {
-      const statusA = a.prUrl ? statuses[a.prUrl] || "unknown" : "unknown"
-      const statusB = b.prUrl ? statuses[b.prUrl] || "unknown" : "unknown"
-
-      // Priority: online > checking > unknown > offline
-      const priority = { online: 0, checking: 1, unknown: 2, offline: 3 }
-      const priorityA = priority[statusA] ?? 2
-      const priorityB = priority[statusB] ?? 2
-
-      if (priorityA !== priorityB) {
-        return priorityA - priorityB
-      }
-
-      // If same status, sort alphabetically
-      return a.prName.localeCompare(b.prName)
-    })
-
-    return [...featured, ...sortedNonFeatured]
-  }, [projectType, selectedTech, searchQuery, validatedProjects, statuses])
+    return [...featured, ...nonFeatured]
+  }, [projectType, selectedTech, searchQuery, validatedProjects])
 
   // Reset to page 1 when filters change
   useEffect(() => {
@@ -392,12 +348,6 @@ const ModernProjects = memo(() => {
 
       const IconComponent = getProjectIcon(project.prType)
 
-      // Get project status
-      const projectStatus = project.prUrl
-        ? statuses[project.prUrl] || "unknown"
-        : "unknown"
-      const isOffline = projectStatus === "offline"
-
       const imageSlug =
         (project as any).prImageSlug ||
         project.prName.toLowerCase().replace(/\s+/g, "-")
@@ -417,7 +367,7 @@ const ModernProjects = memo(() => {
           ref={cardRef}
           className={`relative group transition-all duration-500 transform hover:scale-[1.02] ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          } ${isOffline ? "grayscale opacity-70" : ""}`}
+          }`}
           style={{ animationDelay: `${index * 100}ms` }}
         >
           {project.prFeatured && (
@@ -430,39 +380,6 @@ const ModernProjects = memo(() => {
             >
               <Star className="w-4 h-4" />
               Featured
-            </div>
-          )}
-
-          {/* Status Badge */}
-          {projectStatus !== "unknown" && (
-            <div
-              className={`absolute top-4 ${
-                project.prFeatured ? "right-32" : "right-4"
-              } z-10 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold ${
-                projectStatus === "online"
-                  ? isDark
-                    ? "bg-green-500/20 text-green-300 border border-green-500/30"
-                    : "bg-green-100 text-green-700 border border-green-200"
-                  : projectStatus === "checking"
-                  ? isDark
-                    ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                    : "bg-blue-100 text-blue-600 border border-blue-200"
-                  : isDark
-                  ? "bg-red-500/20 text-red-300 border border-red-500/30"
-                  : "bg-red-100 text-red-700 border border-red-200"
-              }`}
-              title={`Project is ${projectStatus}`}
-            >
-              <span
-                className={`w-2 h-2 rounded-full ${
-                  projectStatus === "online"
-                    ? "bg-green-500"
-                    : projectStatus === "checking"
-                    ? "bg-blue-500 animate-pulse"
-                    : "bg-red-500"
-                }`}
-              ></span>
-              <span className="capitalize">{projectStatus}</span>
             </div>
           )}
 
@@ -804,25 +721,6 @@ const ModernProjects = memo(() => {
                   Clear Filters
                 </button>
               )}
-
-              {/* Status Check Button */}
-              <button
-                onClick={clearCache}
-                disabled={isCheckingStatus}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                  isDark
-                    ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 disabled:opacity-50"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200 disabled:opacity-50"
-                }`}
-                title="Refresh project status"
-              >
-                <RefreshCw
-                  className={`w-3 h-3 ${
-                    isCheckingStatus ? "animate-spin" : ""
-                  }`}
-                />
-                {isCheckingStatus ? "Checking..." : "Check Status"}
-              </button>
             </div>
           </div>
 
