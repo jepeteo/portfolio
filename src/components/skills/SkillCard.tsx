@@ -91,7 +91,6 @@ const SkillCard: React.FC<SkillCardProps> = ({
         onClick={() => mobile && onHover(isHovered ? null : skill.name)}
       >
         {mobile ? (
-
           <>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
@@ -197,9 +196,7 @@ const SkillCard: React.FC<SkillCardProps> = ({
             )}
           </>
         ) : (
-
           <>
-            
             <div className="flex items-start justify-between mb-6">
               <div className="flex items-center gap-4">
                 <div className="relative">
@@ -270,7 +267,7 @@ const SkillCard: React.FC<SkillCardProps> = ({
                       animation: "shimmer 2.5s infinite",
                     }}
                   />
-                  
+
                   {/* Percentage label inside progress bar */}
                   {isVisible && skill.level > 20 && (
                     <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-bold text-white drop-shadow-md">

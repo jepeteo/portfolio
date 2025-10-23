@@ -7,27 +7,27 @@ const projects = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
 // Simple categorization based on project type
 function categorizeTech(project) {
-  const tech = [];
-  
-  // All are WordPress by default (you can manually change specific OpenCart ones)
-  tech.push('WordPress');
-  
-  // E-Shop gets WooCommerce
-  if (project.prType === 'E-Shop') {
-    tech.push('WooCommerce');
-  }
-  
-  // No page builder assigned by default - will be "Custom Theme"
-  // You can manually add 'Divi', 'Elementor', or 'WPBakery' for specific sites
-  tech.push('Custom Theme');
-  
-  return tech;
+    const tech = [];
+
+    // All are WordPress by default (you can manually change specific OpenCart ones)
+    tech.push('WordPress');
+
+    // E-Shop gets WooCommerce
+    if (project.prType === 'E-Shop') {
+        tech.push('WooCommerce');
+    }
+
+    // No page builder assigned by default - will be "Custom Theme"
+    // You can manually add 'Divi', 'Elementor', or 'WPBakery' for specific sites
+    tech.push('Custom Theme');
+
+    return tech;
 }
 
 // Update all projects
 const updatedProjects = projects.map(project => ({
-  ...project,
-  tech: categorizeTech(project)
+    ...project,
+    tech: categorizeTech(project)
 }));
 
 // Write back to file
