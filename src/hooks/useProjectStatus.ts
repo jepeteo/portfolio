@@ -46,23 +46,52 @@ const checkUrlStatus = async (url: string): Promise<ProjectStatus> => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), CHECK_TIMEOUT);
 
-    await fetch(url, {
+    // First, try without no-cors to get real response
+    const response = await fetch(url, {
       method: 'HEAD',
-      mode: 'no-cors', // To avoid CORS issues
       signal: controller.signal,
       cache: 'no-cache',
     });
 
     clearTimeout(timeoutId);
 
-    // With no-cors, we can't read the status, but if fetch succeeds, site is likely online
-    // If it fails, it will throw an error
-    return 'online';
+    // If we get here, the request succeeded
+    if (response.ok || response.status < 500) {
+      return 'online';
+    }
+    
+    return 'offline';
   } catch (error) {
-    // Network error, timeout, or CORS issue - assume offline
     if (error instanceof Error) {
+      // Timeout = offline
       if (error.name === 'AbortError') {
-        console.log(`Timeout checking ${url}`);
+        return 'offline';
+      }
+      
+      // CORS error or network error
+      // If it's a CORS error, the site is actually online (just blocking us)
+      // Network errors (DNS, connection refused) mean offline
+      if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
+        // Try with no-cors mode as fallback
+        try {
+          const controller2 = new AbortController();
+          const timeoutId2 = setTimeout(() => controller2.abort(), CHECK_TIMEOUT);
+          
+          await fetch(url, {
+            method: 'HEAD',
+            mode: 'no-cors',
+            signal: controller2.signal,
+            cache: 'no-cache',
+          });
+          
+          clearTimeout(timeoutId2);
+          
+          // If no-cors succeeds, site is online
+          return 'online';
+        } catch (noCorsError) {
+          // Even no-cors failed - truly offline
+          return 'offline';
+        }
       }
     }
     return 'offline';
