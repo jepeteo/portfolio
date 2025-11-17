@@ -523,9 +523,9 @@ export class SEOUtils {
 export const seoManager = SEOManager.getInstance()
 
 export const defaultSEOConfig: EnhancedSEOConfig = {
-  title: "Theodoros Mentis - Senior Full Stack Developer Portfolio",
+  title: "Theodoros Mentis - Senior Full-Stack Developer Portfolio",
   description:
-    "Senior Full Stack Developer with 15+ years of experience in WordPress, React, and modern web technologies. Specializing in scalable web solutions and server administration.",
+    "Senior Full-Stack Developer with 18+ years of experience in WordPress, React, and modern web technologies. Based in Berlin, Germany. Specializing in scalable web solutions and server administration.",
   keywords: [
     "full stack developer",
     "wordpress expert",
@@ -537,10 +537,11 @@ export const defaultSEOConfig: EnhancedSEOConfig = {
     "mysql",
     "theodoros mentis",
     "portfolio",
+    "berlin developer",
   ],
-  ogTitle: "Theodoros Mentis - Senior Full Stack Developer",
+  ogTitle: "Theodoros Mentis - Senior Full-Stack Developer",
   ogDescription:
-    "Experienced developer creating seamless web experiences with WordPress, React, and modern web technologies.",
+    "Experienced developer creating seamless web experiences with WordPress, React, and modern web technologies. Based in Berlin, Germany.",
   ogImage: "/src/assets/images/teo.png",
   ogType: "profile",
   ogSiteName: "Theodore Mentis Portfolio",

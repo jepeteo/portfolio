@@ -149,13 +149,13 @@ const AppContent: React.FC = () => {
         "E-commerce Development",
         "Custom Web Applications",
       ],
-      location: "Greece",
+      location: "Berlin, Germany",
       description:
-        "Senior Full Stack Developer with 15+ years of experience in WordPress, React, and modern web technologies. Specializing in scalable web solutions and server administration.",
+        "Senior Full-Stack Developer with 18+ years of experience in WordPress, React, and modern web technologies. Based in Berlin, Germany. Specializing in scalable web solutions and server administration.",
       hasCredential: [
         {
           "@type": "EducationalOccupationalCredential",
-          name: "15+ Years Professional Web Development Experience",
+          name: "18+ Years Professional Web Development Experience",
         },
         {
           "@type": "EducationalOccupationalCredential",

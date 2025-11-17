@@ -123,7 +123,7 @@ const Hero: React.FC = memo(() => {
                   : "bg-blue-100 text-blue-700 border border-blue-200"
               }`}
             >
-              👋 Hello, I'm Theodore
+              👋 Hello, I'm Theodoros
             </span>
           </div>
 
@@ -258,7 +258,7 @@ const Hero: React.FC = memo(() => {
               <img
                 ref={imageRef}
                 src="/images/opti/teo-hero.jpg"
-                alt="Theodore Mentis - Professional headshot of a Senior Full Stack Developer working at a modern computer setup"
+                alt="Theodoros Mentis - Professional headshot of a Senior Full-Stack Developer with 18+ years of experience, based in Berlin, Germany"
                 className={`w-full h-auto rounded-3xl transform transition-transform duration-500 hover:scale-105 ${
                   prefersReducedMotion ? "!transform-none !transition-none" : ""
                 }`}

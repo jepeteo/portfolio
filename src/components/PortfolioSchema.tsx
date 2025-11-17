@@ -74,7 +74,7 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
         knowsAbout: portfolioStats.uniqueTechnologies,
         hasCredential: {
           "@type": "EducationalOccupationalCredential",
-          name: "15+ Years Web Development Experience",
+          name: "18+ Years Web Development Experience",
         },
         worksFor: {
           "@type": "Organization",
@@ -86,8 +86,8 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
         },
         address: {
           "@type": "Place",
-          addressCountry: "GR",
-          addressLocality: "Greece",
+          addressCountry: "DE",
+          addressLocality: "Berlin, Germany",
         },
       }
     : null

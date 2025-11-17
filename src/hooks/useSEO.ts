@@ -14,9 +14,9 @@ interface SEOProps {
 }
 
 const useSEO = ({
-  title = "Theodoros Mentis - Senior Full Stack Developer",
-  description = "Senior Full Stack Developer specializing in WordPress, React, and modern web technologies. Building scalable web solutions with 15+ years of experience.",
-  keywords = "full stack developer, wordpress expert, react developer, web development, javascript, typescript, php, mysql",
+  title = "Theodoros Mentis - Senior Full-Stack Developer",
+  description = "Senior Full-Stack Developer with 18+ years of experience specializing in WordPress, React, and modern web technologies. Based in Berlin, Germany. Building scalable web solutions.",
+  keywords = "full stack developer, wordpress expert, react developer, web development, javascript, typescript, php, mysql, berlin developer",
   canonical,
   ogTitle,
   ogDescription,
@@ -25,8 +25,9 @@ const useSEO = ({
   twitterCard = "summary_large_image",
   schema,
 }: SEOProps = {}) => {
-  useEffect(() => {
-    document.title = title
+  useEffect(() => {
+    document.title = title
+
     const updateMetaTag = (
       name: string,
       content: string,
@@ -42,7 +43,8 @@ const useSEO = ({
       }
 
       meta.setAttribute("content", content)
-    }
+    }
+
     updateMetaTag("description", description)
     updateMetaTag("keywords", keywords)
 
@@ -54,7 +56,8 @@ const useSEO = ({
         document.head.appendChild(link)
       }
       link.setAttribute("href", canonical)
-    }
+    }
+
     updateMetaTag("og:title", ogTitle || title, true)
     updateMetaTag("og:description", ogDescription || description, true)
     updateMetaTag("og:image", ogImage, true)
@@ -62,11 +65,13 @@ const useSEO = ({
 
     if (ogUrl) {
       updateMetaTag("og:url", ogUrl, true)
-    }
+    }
+
     updateMetaTag("twitter:card", twitterCard)
     updateMetaTag("twitter:title", ogTitle || title)
     updateMetaTag("twitter:description", ogDescription || description)
-    updateMetaTag("twitter:image", ogImage)
+    updateMetaTag("twitter:image", ogImage)
+
     if (schema) {
       let script = document.querySelector('script[type="application/ld+json"]')
       if (!script) {
@@ -75,9 +80,10 @@ const useSEO = ({
         document.head.appendChild(script)
       }
       script.textContent = JSON.stringify(schema)
-    }
-    return () => {
-      document.title = "Theodoros Mentis - Senior Full Stack Developer"
+    }
+
+    return () => {
+      document.title = "Theodoros Mentis - Senior Full-Stack Developer"
     }
   }, [
     title,

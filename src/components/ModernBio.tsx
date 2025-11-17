@@ -134,9 +134,11 @@ const ModernBio: React.FC = () => {
   >("about")
 
   const bioContent = {
-    intro: `I am a Senior Full Stack Developer with over 18 years of experience in creating 
-    scalable web solutions and managing complex server environments. My expertise spans from 
-    front-end development with modern frameworks to back-end architecture and database optimization.`,
+    intro: `I am a Senior Full-Stack Developer with 18+ years of experience in creating 
+    scalable web solutions and managing complex server environments. Originally from Greece, 
+    I'm now based in Berlin, Germany, where I continue to craft exceptional digital experiences. 
+    My expertise spans from front-end development with modern frameworks to back-end architecture 
+    and database optimization.`,
 
     passion: `What drives me is the opportunity to transform creative visions into digital reality 
     through collaborative development. I specialize in WordPress development, React applications, 
@@ -383,7 +385,7 @@ const ModernBio: React.FC = () => {
                 >
                   <img
                     src={profileImage}
-                    alt="Theodoros Mentis"
+                    alt="Theodoros Mentis - Senior Full-Stack Developer based in Berlin, Germany"
                     className="w-full h-full object-cover rounded-3xl"
                     loading="lazy"
                   />
@@ -425,7 +427,7 @@ const ModernBio: React.FC = () => {
                     isDark ? "text-blue-300" : "text-blue-600"
                   }`}
                 >
-                  Senior Full Stack Developer
+                  Senior Full-Stack Developer • React | WordPress | Berlin-based
                 </p>
 
                 <div
@@ -434,7 +436,7 @@ const ModernBio: React.FC = () => {
                   }`}
                 >
                   <MapPin className="w-4 h-4" />
-                  Piraeus, Attica, Greece
+                  Berlin, Germany
                 </div>
               </div>
 

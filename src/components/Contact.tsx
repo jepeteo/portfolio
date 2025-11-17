@@ -36,13 +36,13 @@ const generateContactSchema = () => {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Theodoros Mentis",
-    jobTitle: "Frontend Developer & Web Designer",
+    jobTitle: "Senior Full-Stack Developer",
     email: "th.mentis@gmail.com",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Piraeus",
-      addressRegion: "Attica",
-      addressCountry: "Greece",
+      addressLocality: "Berlin",
+      addressRegion: "Berlin",
+      addressCountry: "Germany",
     },
     contactPoint: [
       {
@@ -76,9 +76,9 @@ const ContactMethodSchema: React.FC<{
     ...(method.label === "Location" && {
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Piraeus",
-        addressRegion: "Attica",
-        addressCountry: "Greece",
+        addressLocality: "Berlin",
+        addressRegion: "Berlin",
+        addressCountry: "Germany",
       },
     }),
   }
@@ -321,7 +321,7 @@ const Contact: React.FC = memo(() => {
     {
       icon: MapPin,
       label: "Location",
-      value: "Piraeus, Attica, Greece",
+      value: "Berlin, Germany",
       href: "https://www.linkedin.com/in/thmentis/",
     },
   ]

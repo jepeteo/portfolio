@@ -65,12 +65,12 @@ const Nav: React.FC = memo(() => {
         <a
           href="#top"
           className="flex items-center gap-3 group"
-          aria-label="Theodore Mentis - Home"
+          aria-label="Theodoros Mentis - Home"
         >
           <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-blue-500/30 group-hover:border-blue-500 transition-all duration-300">
             <img
               src="/images/opti/teo-portrait.jpg"
-              alt="Theodore Mentis"
+              alt="Theodoros Mentis - Senior Full-Stack Developer"
               className="w-full h-full object-cover"
             />
           </div>
@@ -79,7 +79,7 @@ const Nav: React.FC = memo(() => {
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
-            Theodore Mentis
+            Theodoros Mentis
           </span>
         </a>
 
