@@ -454,11 +454,25 @@ export default function UnifiedProjects() {
             viewport={{ once: true }}
             className="text-center mt-16"
           >
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            <div
+              className={`rounded-2xl p-8 shadow-lg border ${
+                isDark
+                  ? "bg-slate-800/50 backdrop-blur-sm border-slate-700"
+                  : "bg-gray-50 border-gray-200"
+              }`}
+            >
+              <h3
+                className={`text-2xl font-bold mb-4 ${
+                  isDark ? "text-white" : "text-gray-900"
+                }`}
+              >
                 Ready to Work Together?
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
+              <p
+                className={`mb-6 max-w-2xl mx-auto ${
+                  isDark ? "text-slate-300" : "text-gray-600"
+                }`}
+              >
                 Whether you need a professional website, custom application, or
                 want to collaborate on an open-source project, I'm always
                 excited to take on new challenges.
@@ -466,7 +480,11 @@ export default function UnifiedProjects() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a
                   href="#contact"
-                  className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                  className={`inline-flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-colors ${
+                    isDark
+                      ? "bg-blue-600 hover:bg-blue-500 text-white"
+                      : "bg-blue-600 hover:bg-blue-700 text-white"
+                  }`}
                 >
                   <span>Start a Project</span>
                   <ExternalLink className="w-4 h-4" />
@@ -475,7 +493,11 @@ export default function UnifiedProjects() {
                   href="https://github.com/jepeteo"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors border border-gray-300 dark:border-gray-600 px-6 py-3 rounded-lg hover:border-blue-600 dark:hover:border-blue-400"
+                  className={`inline-flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-colors border ${
+                    isDark
+                      ? "border-slate-600 text-slate-300 hover:border-blue-400 hover:text-blue-400 hover:bg-blue-400/10"
+                      : "border-gray-300 text-gray-600 hover:text-blue-600 hover:border-blue-600"
+                  }`}
                 >
                   <Github className="w-4 h-4" />
                   <span>View GitHub</span>
