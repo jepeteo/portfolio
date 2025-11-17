@@ -1,7 +1,7 @@
 import React from "react"
 import { usePortfolioSchema } from "../hooks/usePortfolioSchema"
 import { seoManager } from "../utils/enhancedSEO"
-import { validateSchemaInDev, SchemaValidator } from "../utils/schemaValidator"
+import { SchemaValidator } from "../utils/schemaValidator"
 
 interface PortfolioSchemaProps {
   includePersonSchema?: boolean
@@ -13,10 +13,13 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
   includeOrganizationSchema = false,
 }) => {
   const { portfolioProjects, reactProjects, portfolioStats } =
-    usePortfolioSchema()
-  const portfolioSchema = seoManager.generatePortfolioSchema(portfolioProjects)
+    usePortfolioSchema()
+
+  const portfolioSchema = seoManager.generatePortfolioSchema(portfolioProjects)
+
   const reactProjectsSchema =
-    seoManager.generateReactProjectSchema(reactProjects)
+    seoManager.generateReactProjectSchema(reactProjects)
+
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -47,7 +50,8 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
       "@type": "Person",
       "@id": "https://theodorosmentis.com/#person",
     },
-  }
+  }
+
   const personSchema = includePersonSchema
     ? {
         "@context": "https://schema.org",
@@ -59,7 +63,10 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
         description: `Experienced developer with ${portfolioStats.totalProjects} completed projects specializing in WordPress, React, and modern web development`,
         url: "https://theodorosmentis.com",
         email: "th.mentis@gmail.com",
-        image: "https://theodorosmentis.com/src/assets/images/teo.png",
+        image: [
+          "https://theodorosmentis.com/images/opti/teo-portrait.jpg",
+          "https://theodorosmentis.com/images/opti/teo-hero.jpg",
+        ],
         sameAs: [
           "https://github.com/jepeteo",
           "https://linkedin.com/in/theodorosmentis",
@@ -83,7 +90,8 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
           addressLocality: "Greece",
         },
       }
-    : null
+    : null
+
   const organizationSchema = includeOrganizationSchema
     ? {
         "@context": "https://schema.org",
@@ -92,7 +100,7 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
         name: "Theodoros Mentis Web Development Services",
         alternateName: "Theodore Mentis Development",
         url: "https://theodorosmentis.com",
-        logo: "https://theodorosmentis.com/src/assets/images/teo.png",
+        logo: "https://theodorosmentis.com/images/opti/teo-portrait.jpg",
         email: "th.mentis@gmail.com",
         foundingDate: "2010",
         founder: {
@@ -141,7 +149,8 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
           ],
         },
       }
-    : null
+    : null
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -165,7 +174,8 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
         item: "https://theodorosmentis.com/#react-projects",
       },
     ],
-  }
+  }
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -214,21 +224,7 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
       ...(personSchema ? [personSchema] : []),
       ...(organizationSchema ? [organizationSchema] : []),
     ],
-  }
-  React.useEffect(() => {
-    validateSchemaInDev(portfolioSchema, "Portfolio Schema")
-    validateSchemaInDev(reactProjectsSchema, "React Projects Schema")
-    validateSchemaInDev(websiteSchema, "Website Schema")
-    if (personSchema) validateSchemaInDev(personSchema, "Person Schema")
-    if (organizationSchema)
-      validateSchemaInDev(organizationSchema, "Organization Schema")
-  }, [
-    portfolioSchema,
-    reactProjectsSchema,
-    websiteSchema,
-    personSchema,
-    organizationSchema,
-  ])
+  }
 
   return (
     <script

@@ -1,7 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from "react"
 import { useTheme } from "../context/ThemeContext"
 import TypedText from "./TypedText"
-import programmer from "/src/assets/images/new_programmer.webp"
 import {
   useReducedMotion,
   useSkipLinks,
@@ -258,7 +257,7 @@ const Hero: React.FC = memo(() => {
             >
               <img
                 ref={imageRef}
-                src={programmer}
+                src="/images/opti/teo-hero.jpg"
                 alt="Theodore Mentis - Professional headshot of a Senior Full Stack Developer working at a modern computer setup"
                 className={`w-full h-auto rounded-3xl transform transition-transform duration-500 hover:scale-105 ${
                   prefersReducedMotion ? "!transform-none !transition-none" : ""
@@ -311,7 +310,6 @@ const Hero: React.FC = memo(() => {
         aria-labelledby="approach-title"
       >
         <div className="relative flex items-center justify-center mb-6">
-          
           <div className="flex-1 h-px relative mr-6">
             <div
               className={`absolute inset-0 bg-gradient-to-r ${
@@ -443,7 +441,6 @@ const Hero: React.FC = memo(() => {
         aria-labelledby="expertise-title"
       >
         <div className="relative flex items-center justify-center mb-6">
-          
           <div className="flex-1 h-px relative mr-6">
             <div
               className={`absolute inset-0 bg-gradient-to-r ${

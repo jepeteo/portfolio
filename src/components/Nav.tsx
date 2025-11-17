@@ -61,6 +61,28 @@ const Nav: React.FC = memo(() => {
   return (
     <nav role="navigation" aria-label="Main navigation">
       <div className="flex justify-between items-center p-4">
+        {/* Logo */}
+        <a
+          href="#top"
+          className="flex items-center gap-3 group"
+          aria-label="Theodore Mentis - Home"
+        >
+          <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-blue-500/30 group-hover:border-blue-500 transition-all duration-300">
+            <img
+              src="/images/opti/teo-portrait.jpg"
+              alt="Theodore Mentis"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <span
+            className={`font-semibold text-lg hidden sm:block ${
+              isDark ? "text-white" : "text-slate-900"
+            }`}
+          >
+            Theodore Mentis
+          </span>
+        </a>
+
         {isOpen && (
           <div
             className="fixed inset-0 z-40 md:hidden"
