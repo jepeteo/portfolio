@@ -298,25 +298,49 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
             "lg:hidden p-3 rounded-xl transition-all duration-200",
             "hover:bg-surface-elevated active:scale-95",
             // Larger touch target for mobile (min 44px)
-            "min-w-[44px] min-h-[44px]"
+            "min-w-[44px] min-h-[44px]",
+            "relative overflow-hidden"
           )}
           aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={isOpen}
           aria-controls="mobile-menu"
         >
-          <motion.div
-            animate={{
-              rotate: isOpen ? 180 : 0,
-              scale: isOpen ? 1.1 : 1,
-            }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
-            <Icon
-              icon={isOpen ? icons.navigation.close : icons.navigation.menu}
-              size="md"
-              className="transition-colors"
+          {/* Animated hamburger to X */}
+          <div className="relative w-5 h-5 flex flex-col justify-center items-center">
+            <motion.span
+              className={cn(
+                "absolute w-5 h-0.5 rounded-full transition-colors",
+                isDark ? "bg-white" : "bg-slate-900"
+              )}
+              animate={{
+                rotate: isOpen ? 45 : 0,
+                y: isOpen ? 0 : -6,
+              }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
             />
-          </motion.div>
+            <motion.span
+              className={cn(
+                "absolute w-5 h-0.5 rounded-full transition-colors",
+                isDark ? "bg-white" : "bg-slate-900"
+              )}
+              animate={{
+                opacity: isOpen ? 0 : 1,
+                scaleX: isOpen ? 0 : 1,
+              }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+            />
+            <motion.span
+              className={cn(
+                "absolute w-5 h-0.5 rounded-full transition-colors",
+                isDark ? "bg-white" : "bg-slate-900"
+              )}
+              animate={{
+                rotate: isOpen ? -45 : 0,
+                y: isOpen ? 0 : 6,
+              }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            />
+          </div>
         </Button>
       </div>
 
