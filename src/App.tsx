@@ -1,16 +1,11 @@
-import React, { Suspense } from "react"
+import React, { Suspense, lazy } from "react"
 // Critical path components - loaded eagerly
 import Hero from "./components/Hero"
 import Footer from "./components/Footer"
-import ModernHeader from "./components/navigation/ModernHeader"
 import ErrorBoundary from "./components/ErrorBoundary"
 import PortfolioSchema from "./components/PortfolioSchema"
 import { LoadingSpinner, ProjectGridSkeleton, ExperienceCardSkeleton, SkillsSkeleton } from "./components/loading/ModernLoadingStates"
-import { BackToTopButton } from "./components/ui/BackToTopButton"
-import { ToastProvider } from "./components/ui/Toast"
 import { SkipLink } from "./components/accessibility/SkipLink"
-import { ScrollProgress } from "./components/ui/ScrollProgress"
-import { OfflineIndicator } from "./components/ui/OfflineIndicator"
 import { ThemeProvider, useTheme } from "./context/ThemeContext"
 import {
   createLazyComponent,
@@ -24,6 +19,13 @@ import {
 import useServiceWorker from "./hooks/useServiceWorker"
 import { usePostHog } from "posthog-js/react"
 import { postHogAnalytics } from "./utils/postHogAnalytics"
+
+// Lazy-load components that use framer-motion to reduce initial bundle
+const ModernHeader = lazy(() => import("./components/navigation/ModernHeader"))
+const ToastProvider = lazy(() => import("./components/ui/Toast").then(m => ({ default: m.ToastProvider })))
+const BackToTopButton = lazy(() => import("./components/ui/BackToTopButton").then(m => ({ default: m.BackToTopButton })))
+const ScrollProgress = lazy(() => import("./components/ui/ScrollProgress").then(m => ({ default: m.ScrollProgress })))
+const OfflineIndicator = lazy(() => import("./components/ui/OfflineIndicator").then(m => ({ default: m.OfflineIndicator })))
 
 // Lazy-loaded components (below the fold)
 const VercelIntegrations = createLazyComponent(
@@ -247,12 +249,16 @@ const AppContent: React.FC = () => {
       }`}
     >
       <SkipLink href="#main-content" />
-      <ScrollProgress position="top" height={3} colorScheme="gradient" hideAtTop={true} />
+      <Suspense fallback={null}>
+        <ScrollProgress position="top" height={3} colorScheme="gradient" hideAtTop={true} />
+      </Suspense>
       <PortfolioSchema
         includePersonSchema={false}
         includeOrganizationSchema={true}
       />
-      <ModernHeader />
+      <Suspense fallback={<div className="h-16" />}>
+        <ModernHeader />
+      </Suspense>
       <main id="main-content" tabIndex={-1}>
         <Hero />
 
@@ -297,11 +303,15 @@ const AppContent: React.FC = () => {
             <Contact />
           </Suspense>
         </ErrorBoundary>
-        <BackToTopButton />
+        <Suspense fallback={null}>
+          <BackToTopButton />
+        </Suspense>
       </main>
       <Footer />
 
-      <OfflineIndicator position="bottom" />
+      <Suspense fallback={null}>
+        <OfflineIndicator position="bottom" />
+      </Suspense>
       <Suspense fallback={null}>
         <PerformanceDashboard />
       </Suspense>
@@ -313,12 +323,14 @@ const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <ThemeProvider>
-        <ToastProvider position="top-right">
-          <AppContent />
-          <Suspense fallback={null}>
-            <VercelIntegrations />
-          </Suspense>
-        </ToastProvider>
+        <Suspense fallback={null}>
+          <ToastProvider position="top-right">
+            <AppContent />
+            <Suspense fallback={null}>
+              <VercelIntegrations />
+            </Suspense>
+          </ToastProvider>
+        </Suspense>
       </ThemeProvider>
     </ErrorBoundary>
   )

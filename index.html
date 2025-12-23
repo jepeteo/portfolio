@@ -4,6 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Critical CSS for above-the-fold content -->
+    <style>
+      /* Prevent FOUC and set initial theme */
+      :root{--bg-primary:#0f172a;--text-primary:#f8fafc}
+      @media(prefers-color-scheme:light){:root{--bg-primary:#f8fafc;--text-primary:#0f172a}}
+      html,body{margin:0;padding:0;background-color:var(--bg-primary);color:var(--text-primary)}
+      #root{min-height:100vh;display:flex;flex-direction:column}
+      /* Loading placeholder */
+      .loading-placeholder{display:flex;align-items:center;justify-content:center;min-height:100vh}
+    </style>
+
     <!-- Content Security Policy for Development (temporarily disabled for testing) -->
     <!--
     <meta
@@ -109,8 +120,23 @@
       rel="preload"
       as="image"
       href="/images/opti/teo-hero.jpg"
+      type="image/jpeg"
       fetchpriority="high"
     />
+
+    <!-- Preload critical font -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
 
     <!-- Theme color for mobile browsers -->
     <meta name="theme-color" content="#1f2937" />
@@ -118,6 +144,7 @@
 
     <!-- Performance hints -->
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="//eu.i.posthog.com" />
 
     <title>Theodoros Mentis - Senior Full Stack Developer Portfolio</title>
 
