@@ -8,7 +8,7 @@ import ModernBio from "./components/ModernBio"
 import ErrorBoundary from "./components/ErrorBoundary"
 import PerformanceDashboard from "./components/PerformanceDashboard"
 import PortfolioSchema from "./components/PortfolioSchema"
-import { LoadingSpinner } from "./components/loading/ModernLoadingStates"
+import { LoadingSpinner, ProjectGridSkeleton, ExperienceCardSkeleton } from "./components/loading/ModernLoadingStates"
 import { BackToTopButton } from "./components/ui/BackToTopButton"
 import { VercelIntegrations } from "./components/VercelIntegrations"
 import { ThemeProvider, useTheme } from "./context/ThemeContext"
@@ -54,6 +54,30 @@ const ModernCertificates = createLazyComponent(
 const SectionLoader: React.FC = () => (
   <div className="flex justify-center items-center min-h-[200px] py-16">
     <LoadingSpinner size="lg" className="text-primary" />
+  </div>
+)
+
+const ProjectsLoader: React.FC = () => (
+  <div className="container py-20">
+    <div className="text-center mb-12">
+      <div className="h-10 w-64 bg-slate-200 dark:bg-slate-700 rounded-lg mx-auto mb-4 animate-pulse" />
+      <div className="h-4 w-96 max-w-full bg-slate-200 dark:bg-slate-700 rounded mx-auto animate-pulse" />
+    </div>
+    <ProjectGridSkeleton count={6} />
+  </div>
+)
+
+const ExperienceLoader: React.FC = () => (
+  <div className="container py-20">
+    <div className="text-center mb-12">
+      <div className="h-10 w-48 bg-slate-200 dark:bg-slate-700 rounded-lg mx-auto mb-4 animate-pulse" />
+      <div className="h-4 w-80 max-w-full bg-slate-200 dark:bg-slate-700 rounded mx-auto animate-pulse" />
+    </div>
+    <div className="space-y-6 max-w-4xl mx-auto">
+      <ExperienceCardSkeleton />
+      <ExperienceCardSkeleton />
+      <ExperienceCardSkeleton />
+    </div>
   </div>
 )
 
@@ -200,7 +224,7 @@ const AppContent: React.FC = () => {
         <Hero />
 
         <ErrorBoundary>
-          <Suspense fallback={<SectionLoader />}>
+          <Suspense fallback={<ExperienceLoader />}>
             <ModernExperience />
           </Suspense>
         </ErrorBoundary>
@@ -208,13 +232,13 @@ const AppContent: React.FC = () => {
         <ModernSkills />
 
         <ErrorBoundary>
-          <Suspense fallback={<SectionLoader />}>
+          <Suspense fallback={<ProjectsLoader />}>
             <ModernProjects />
           </Suspense>
         </ErrorBoundary>
 
         <ErrorBoundary>
-          <Suspense fallback={<SectionLoader />}>
+          <Suspense fallback={<ProjectsLoader />}>
             <UnifiedProjects />
           </Suspense>
         </ErrorBoundary>

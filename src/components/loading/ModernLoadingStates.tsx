@@ -1,7 +1,8 @@
 
 import React from "react"
 import { motion } from "framer-motion"
-import { useTheme } from "../../context/ThemeContext"
+import { useTheme } from "../../context/ThemeContext"
+
 const cn = (...classes: (string | undefined | null | false)[]): string => {
   return classes.filter(Boolean).join(" ")
 }
@@ -140,28 +141,165 @@ export const ProjectCardSkeleton: React.FC<{ className?: string }> = ({
   const { isDark } = useTheme()
 
   return (
-    <div
+    <motion.div
       className={cn(
-        "border rounded-lg p-6 space-y-4 shadow-sm",
+        "border rounded-xl p-0 overflow-hidden shadow-sm",
         isDark
           ? "border-slate-700 bg-slate-800/50"
           : "border-slate-200 bg-white/50",
         className
       )}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
     >
-      <Skeleton variant="rect" height="12rem" className="w-full" />
-      <Skeleton variant="text" width="80%" height="1.5rem" />
-      <Skeleton variant="text" lines={3} />
-      <div className="flex gap-2">
-        <Skeleton variant="rect" width="4rem" height="1.5rem" />
-        <Skeleton variant="rect" width="3rem" height="1.5rem" />
-        <Skeleton variant="rect" width="5rem" height="1.5rem" />
+      {/* Image skeleton with shimmer effect */}
+      <div className="relative h-48 overflow-hidden">
+        <div
+          className={cn(
+            "absolute inset-0",
+            isDark ? "bg-slate-700" : "bg-slate-200"
+          )}
+        />
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          animate={{ x: ["-100%", "100%"] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+        />
       </div>
-      <div className="flex justify-between items-center pt-4">
-        <Skeleton variant="rect" width="3rem" height="1.5rem" />
-        <Skeleton variant="rect" width="6rem" height="2rem" />
+      
+      {/* Content skeleton */}
+      <div className="p-5 space-y-4">
+        {/* Title */}
+        <div className="space-y-2">
+          <Skeleton variant="text" width="70%" height="1.25rem" />
+          <Skeleton variant="text" width="90%" height="0.875rem" />
+          <Skeleton variant="text" width="60%" height="0.875rem" />
+        </div>
+        
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2">
+          <Skeleton variant="rect" width="3.5rem" height="1.5rem" className="rounded-full" />
+          <Skeleton variant="rect" width="4rem" height="1.5rem" className="rounded-full" />
+          <Skeleton variant="rect" width="3rem" height="1.5rem" className="rounded-full" />
+        </div>
+        
+        {/* Footer */}
+        <div className="flex justify-between items-center pt-2">
+          <Skeleton variant="rect" width="4rem" height="1rem" />
+          <Skeleton variant="rect" width="2rem" height="2rem" className="rounded-full" />
+        </div>
       </div>
+    </motion.div>
+  )
+}
+
+export const ProjectGridSkeleton: React.FC<{ 
+  count?: number 
+  className?: string 
+}> = ({ count = 6, className }) => {
+  return (
+    <div className={cn(
+      "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+      className
+    )}>
+      {Array.from({ length: count }, (_, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.1 }}
+        >
+          <ProjectCardSkeleton />
+        </motion.div>
+      ))}
     </div>
+  )
+}
+
+export const CertificateCardSkeleton: React.FC<{ className?: string }> = ({
+  className,
+}) => {
+  const { isDark } = useTheme()
+
+  return (
+    <motion.div
+      className={cn(
+        "border rounded-xl p-5 space-y-4",
+        isDark
+          ? "border-slate-700 bg-slate-800/50"
+          : "border-slate-200 bg-white/50",
+        className
+      )}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
+      {/* Header with icon */}
+      <div className="flex items-start gap-4">
+        <Skeleton variant="rect" width="3rem" height="3rem" className="rounded-lg flex-shrink-0" />
+        <div className="flex-1 space-y-2">
+          <Skeleton variant="text" width="80%" height="1.125rem" />
+          <Skeleton variant="text" width="60%" height="0.875rem" />
+        </div>
+      </div>
+      
+      {/* Date and issuer */}
+      <div className="flex items-center gap-4">
+        <Skeleton variant="text" width="5rem" height="0.75rem" />
+        <Skeleton variant="text" width="6rem" height="0.75rem" />
+      </div>
+      
+      {/* Skills tags */}
+      <div className="flex flex-wrap gap-2">
+        <Skeleton variant="rect" width="4rem" height="1.25rem" className="rounded-full" />
+        <Skeleton variant="rect" width="3rem" height="1.25rem" className="rounded-full" />
+      </div>
+    </motion.div>
+  )
+}
+
+export const ExperienceCardSkeleton: React.FC<{ className?: string }> = ({
+  className,
+}) => {
+  const { isDark } = useTheme()
+
+  return (
+    <motion.div
+      className={cn(
+        "border rounded-xl p-6 space-y-4",
+        isDark
+          ? "border-slate-700 bg-slate-800/50"
+          : "border-slate-200 bg-white/50",
+        className
+      )}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
+      {/* Company and position */}
+      <div className="flex items-start gap-4">
+        <Skeleton variant="rect" width="3.5rem" height="3.5rem" className="rounded-xl flex-shrink-0" />
+        <div className="flex-1 space-y-2">
+          <Skeleton variant="text" width="60%" height="1.25rem" />
+          <Skeleton variant="text" width="40%" height="1rem" />
+          <Skeleton variant="text" width="30%" height="0.75rem" />
+        </div>
+      </div>
+      
+      {/* Description */}
+      <div className="space-y-2 pt-2">
+        <Skeleton variant="text" width="100%" height="0.875rem" />
+        <Skeleton variant="text" width="90%" height="0.875rem" />
+        <Skeleton variant="text" width="70%" height="0.875rem" />
+      </div>
+      
+      {/* Technologies */}
+      <div className="flex flex-wrap gap-2 pt-2">
+        <Skeleton variant="rect" width="4.5rem" height="1.5rem" className="rounded-full" />
+        <Skeleton variant="rect" width="3.5rem" height="1.5rem" className="rounded-full" />
+        <Skeleton variant="rect" width="5rem" height="1.5rem" className="rounded-full" />
+        <Skeleton variant="rect" width="4rem" height="1.5rem" className="rounded-full" />
+      </div>
+    </motion.div>
   )
 }
 
@@ -321,4 +459,14 @@ export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
       />
     </div>
   )
-}
+}
+
+
+
+
+
+
+
+
+
+
