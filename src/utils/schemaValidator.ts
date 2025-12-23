@@ -1,11 +1,9 @@
 import type {
   SchemaOrgType,
-  SchemaOrgPerson,
   SchemaOrgCreativeWork,
   SchemaOrgWebSite,
   SchemaOrgItemList,
   SchemaOrgOrganization,
-  SchemaOrgGraph,
   UnknownObject,
 } from "../types"
 

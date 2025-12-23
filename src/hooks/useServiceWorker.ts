@@ -2,16 +2,20 @@ import { useEffect } from "react"
 
 const useServiceWorker = () => {
   useEffect(() => {
-    if ("serviceWorker" in navigator) {
+    if ("serviceWorker" in navigator) {
+
       if (import.meta.env.MODE === "production") {
-        window.addEventListener("load", () => {
+        window.addEventListener("load", () => {
+
           const swPath = "/sw.js"
 
           navigator.serviceWorker
             .register(swPath)
-            .then((_registration) => {
+            .then(() => {
+              // Service worker registered successfully
             })
-            .catch((_registrationError) => {
+            .catch(() => {
+
               navigator.serviceWorker
                 .getRegistrations()
                 .then((registrations) => {
@@ -19,7 +23,8 @@ const useServiceWorker = () => {
                 })
             })
         })
-      } else {
+      } else {
+
         navigator.serviceWorker.getRegistrations().then((registrations) => {
           registrations.forEach((registration) => {
             registration.unregister()

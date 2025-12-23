@@ -57,7 +57,8 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       size = "md", 
       hover = "none",
       interactive = false,
-      asChild = false, 
+      // asChild reserved for future Radix slot pattern
+      asChild: _asChild = false, 
       children,
       ...props 
     },

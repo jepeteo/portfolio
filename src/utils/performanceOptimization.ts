@@ -138,7 +138,9 @@ export const withPerformanceMonitoring = <P extends object>(
 
       try {
         observer.observe({ entryTypes: ["measure", "navigation"] })
-      } catch (error) {}
+      } catch {
+        // Observer not supported
+      }
 
       return () => {
         if (startTime.current) {

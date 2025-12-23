@@ -1,6 +1,5 @@
 import type {
   SchemaOrgBase,
-  SchemaOrgGraph,
   SchemaOrgPerson,
   SchemaOrgCreativeWork,
 } from "../types"

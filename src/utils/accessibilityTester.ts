@@ -228,7 +228,7 @@ export class AccessibilityTester {
               )}:1) for text element`
             )
           }
-        } catch (error) {
+        } catch {
           // Silently skip elements where color cannot be determined (e.g., hidden elements)
         }
       }
@@ -365,7 +365,7 @@ export class AccessibilityTester {
     try {
       const report = await this.runAudit()
       return report.score
-    } catch (error) {
+    } catch {
       return 0
     }
   }

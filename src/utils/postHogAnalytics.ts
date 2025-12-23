@@ -1,4 +1,6 @@
-
+
+
+
 
 let posthogInstance: any = null
 
@@ -16,12 +18,14 @@ class PostHogAnalytics {
       PostHogAnalytics.instance = new PostHogAnalytics()
     }
     return PostHogAnalytics.instance
-  }
+  }
+
   setPostHogInstance(instance: any) {
     posthogInstance = instance
   }
 
-  initialize(_config: PostHogConfig) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  initialize(config: PostHogConfig) {
     console.warn(
       "PostHogAnalytics.initialize() is deprecated. Use PostHogProvider instead."
     )

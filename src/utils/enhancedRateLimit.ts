@@ -36,7 +36,7 @@ export class EnhancedRateLimiter {
     if (stored) {
       try {
         state = JSON.parse(stored)
-      } catch (error) {
+      } catch {
         state = {
           attempts: 0,
           lastAttempt: now,
@@ -182,7 +182,8 @@ export class EnhancedRateLimiter {
 }
 
 export const checkContactFormLimit = (
-  _identifier = "default"
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  identifier = "default"
 ): RateLimitResult => {
   return {
     allowed: true,
@@ -193,8 +194,10 @@ export const checkContactFormLimit = (
 }
 
 export const recordContactFormAttempt = (
-  _identifier = "default",
-  _success = false
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  identifier = "default",
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  success = false
 ): RateLimitResult => {
   return {
     allowed: true,

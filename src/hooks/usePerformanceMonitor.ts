@@ -111,7 +111,7 @@ const usePerformanceMonitor = (componentName: string) => {
       observers.forEach((observer) => {
         try {
           observer.disconnect()
-        } catch (error) {
+        } catch {
           // Silently ignore disconnect errors - observers may already be disconnected
         }
       })

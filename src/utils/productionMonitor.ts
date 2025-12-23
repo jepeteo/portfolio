@@ -330,7 +330,7 @@ class ProductionMonitor {
 
         this.errorQueue = []
         this.performanceQueue = []
-      } catch (error) {
+      } catch {
         if (this.errorQueue.length > this.maxQueueSize * 2) {
           this.errorQueue = this.errorQueue.slice(-this.maxQueueSize)
         }

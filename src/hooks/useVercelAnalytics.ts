@@ -1,4 +1,5 @@
-import { useEffect } from "react"
+import { useEffect } from "react"
+
 let analyticsLoaded = false
 let speedInsightsLoaded = false
 
@@ -8,12 +9,14 @@ interface VercelConfig {
   debug: boolean
 }
 
-const getVercelConfig = (): VercelConfig => {
+const getVercelConfig = (): VercelConfig => {
+
   const isVercel =
     typeof window !== "undefined" &&
     (window.location.hostname.includes("vercel.app") ||
       window.location.hostname === "theodorosmentis.com" ||
-      process.env.VERCEL === "1")
+      process.env.VERCEL === "1")
+
   const analyticsEnabled = process.env.VITE_VERCEL_ANALYTICS_ENABLED === "true"
   const speedInsightsEnabled =
     process.env.VITE_VERCEL_SPEED_INSIGHTS_ENABLED === "true"
@@ -28,25 +31,29 @@ const getVercelConfig = (): VercelConfig => {
 
 export const useVercelAnalytics = () => {
   useEffect(() => {
-    const config = getVercelConfig()
+    const config = getVercelConfig()
+
     if (config.analyticsEnabled && !analyticsLoaded) {
       import("@vercel/analytics")
-        .then((_analytics) => {
+        .then(() => {
           if (typeof window !== "undefined") {
             analyticsLoaded = true
           }
         })
-        .catch(() => {
+        .catch(() => {
+          // Analytics failed to load
         })
-    }
+    }
+
     if (config.speedInsightsEnabled && !speedInsightsLoaded) {
       import("@vercel/speed-insights")
-        .then((_speedInsights) => {
+        .then(() => {
           if (typeof window !== "undefined") {
             speedInsightsLoaded = true
           }
         })
-        .catch(() => {
+        .catch(() => {
+          // Speed insights failed to load
         })
     }
   }, [])
@@ -55,18 +62,21 @@ export const useVercelAnalytics = () => {
     analyticsEnabled: getVercelConfig().analyticsEnabled,
     speedInsightsEnabled: getVercelConfig().speedInsightsEnabled,
   }
-}
+}
+
 export const injectVercelAnalytics = () => {
   const config = getVercelConfig()
 
-  if (config.analyticsEnabled && typeof window !== "undefined") {
+  if (config.analyticsEnabled && typeof window !== "undefined") {
+
     const script = document.createElement("script")
     script.src = "https://va.vercel-scripts.com/v1/script.js"
     script.defer = true
     document.head.appendChild(script)
   }
 
-  if (config.speedInsightsEnabled && typeof window !== "undefined") {
+  if (config.speedInsightsEnabled && typeof window !== "undefined") {
+
     const script = document.createElement("script")
     script.src = "https://va.vercel-scripts.com/v1/speed-insights/script.js"
     script.defer = true
