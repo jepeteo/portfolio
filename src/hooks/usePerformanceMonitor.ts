@@ -71,9 +71,10 @@ const usePerformanceMonitor = (componentName: string) => {
 
       const fidObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries()
-        entries.forEach((entry: any) => {
-          if (entry.processingStart) {
-            webVitalsRef.current.FID = entry.processingStart - entry.startTime
+        entries.forEach((entry) => {
+          const firstInputEntry = entry as PerformanceEventTiming
+          if (firstInputEntry.processingStart) {
+            webVitalsRef.current.FID = firstInputEntry.processingStart - firstInputEntry.startTime
           }
         })
       })
@@ -83,9 +84,11 @@ const usePerformanceMonitor = (componentName: string) => {
       const clsObserver = new PerformanceObserver((list) => {
         let clsValue = 0
         const entries = list.getEntries()
-        entries.forEach((entry: any) => {
-          if (!entry.hadRecentInput) {
-            clsValue += entry.value
+        entries.forEach((entry) => {
+          // Layout shift entries have value and hadRecentInput properties
+          const layoutShiftEntry = entry as PerformanceEntry & { value: number; hadRecentInput: boolean }
+          if (!layoutShiftEntry.hadRecentInput) {
+            clsValue += layoutShiftEntry.value
           }
         })
         webVitalsRef.current.CLS = clsValue

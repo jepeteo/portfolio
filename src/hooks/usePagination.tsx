@@ -1,21 +1,21 @@
 import { useState, useMemo } from "react"
 
-interface PaginationProps {
-  items: any[]
+interface PaginationProps<T> {
+  items: T[]
   itemsPerPage: number
 }
 
-interface PaginationHook {
-  displayItems: any[]
+interface PaginationHook<T> {
+  displayItems: T[]
   currentPage: number
   totalPages: number
   goToPage: (pageNumber: number) => void
 }
 
-const usePagination = (
-  items: PaginationProps["items"],
-  itemsPerPage: PaginationProps["itemsPerPage"]
-): PaginationHook => {
+const usePagination = <T,>(
+  items: T[],
+  itemsPerPage: number
+): PaginationHook<T> => {
   const [currentPage, setCurrentPage] = useState(1)
 
   const totalPages = Math.ceil(items.length / itemsPerPage)

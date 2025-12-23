@@ -1,6 +1,7 @@
 import { useCallback } from "react"
 
-const useDebounce = <T extends (...args: any[]) => any>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const useDebounce = <T extends (...args: unknown[]) => unknown>(
   func: T,
   delay: number
 ): T => {

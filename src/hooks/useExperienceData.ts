@@ -45,7 +45,8 @@ export interface ExperienceStats {
   totalClients: number
   currentRoles: number
   topTechnologies: string[]
-}
+}
+
 const transformToTechExperience = (): TechExperience[] => {
   return jobExperienceData.map((job, index) => {
     const isCurrent = job.to === "Present"
@@ -56,7 +57,8 @@ const transformToTechExperience = (): TechExperience[] => {
 
     const totalMonths = (toYear - fromYear) * 12 + (toMonth - fromMonth)
     const years = Math.floor(totalMonths / 12)
-    const months = totalMonths % 12
+    const months = totalMonths % 12
+
     const formatMonthYear = (month: number, year: number) => {
       const monthNames = [
         "Jan",
@@ -76,13 +78,14 @@ const transformToTechExperience = (): TechExperience[] => {
     }
 
     const extractMetrics = (job: Experience, years: number) => {
-      const metrics: any = {}
+      const metrics: Record<string, string | number> = {}
       job.achievements?.forEach((achievement) => {
         if (achievement.includes("100+")) metrics.projects = 100
         if (achievement.includes("50+")) metrics.clients = 50
         if (achievement.includes("99%")) metrics.uptime = "99.9%"
         if (achievement.includes("65%")) metrics.impact = "+65% performance"
-      })
+      })
+
       if (!metrics.projects) {
         metrics.projects = Math.max(years * 15, 5)
       }
@@ -120,13 +123,18 @@ const transformToTechExperience = (): TechExperience[] => {
       periodInfo,
     }
   })
-}
+}
+
 const calculateExperienceStats = (
   experiences: TechExperience[]
-): ExperienceStats => {
+): ExperienceStats => {
+
   const freelanceExperiences = experiences.filter((exp) => exp.isFreelance)
-  const employmentExperiences = experiences.filter((exp) => !exp.isFreelance)
-  const calculateEmploymentYears = () => {
+  const employmentExperiences = experiences.filter((exp) => !exp.isFreelance)
+
+
+  const calculateEmploymentYears = () => {
+
     let earliestEmploymentStart: Date | null = null
     let latestEmploymentEnd: Date | null = null
 
@@ -148,7 +156,8 @@ const calculateExperienceStats = (
       if (!latestEmploymentEnd || endDate > latestEmploymentEnd) {
         latestEmploymentEnd = endDate
       }
-    })
+    })
+
     let employmentYears = 0
     if (earliestEmploymentStart && latestEmploymentEnd) {
       const diffTime = Math.abs(
@@ -159,13 +168,16 @@ const calculateExperienceStats = (
     }
 
     return Math.ceil(employmentYears) // Round up to nearest whole year
-  }
+  }
+
   const calculateFreelanceYears = () => {
-    if (freelanceExperiences.length === 0) return 0
+    if (freelanceExperiences.length === 0) return 0
+
     const [fromMonth, fromYear] = freelanceExperiences[0].from
       .split("-")
       .map((n) => parseInt(n))
-    const startDate = new Date(fromYear, fromMonth - 1)
+    const startDate = new Date(fromYear, fromMonth - 1)
+
     const lastExp = freelanceExperiences[0] // We only have one freelance experience in this case
     let endDate: Date
     if (lastExp.to === "Present") {
@@ -182,7 +194,9 @@ const calculateExperienceStats = (
   }
 
   const employmentYears = calculateEmploymentYears()
-  const freelanceYears = calculateFreelanceYears()
+  const freelanceYears = calculateFreelanceYears()
+
+
   const totalYears = Math.max(employmentYears, freelanceYears)
 
   const totalProjects = experiences.reduce(
@@ -195,7 +209,8 @@ const calculateExperienceStats = (
   )
   const currentRoles = experiences.filter(
     (exp) => exp.status === "current"
-  ).length
+  ).length
+
   const techCount: Record<string, number> = {}
   experiences.forEach((exp) => {
     exp.techStack.forEach((tech) => {
