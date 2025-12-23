@@ -1,5 +1,350 @@
 [
   {
+    "id": "pm-getting-started",
+    "name": "Getting Started as a Project Manager",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2025-12-01",
+    "category": "Project Management",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/414b6a78f69a03909edf5b534147610356f8251f9fa058e50888a21f78f2cb5f",
+    "description": "Introduction to project management fundamentals and the role of a project manager.",
+    "skills": [
+      "Project Management",
+      "Project Communications",
+      "Leadership"
+    ]
+  },
+  {
+    "id": "pm-foundations",
+    "name": "Project Management Foundations",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2025-12-01",
+    "category": "Project Management",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/765b01af394880df1498d38d217bdc70fc2baac99d03a1c317230cf026bc7b31",
+    "description": "Core project management concepts, methodologies, and best practices.",
+    "skills": [
+      "Project Management",
+      "Planning",
+      "Execution"
+    ]
+  },
+  {
+    "id": "pm-budgets",
+    "name": "Project Management Foundations: Budgets",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2025-12-01",
+    "category": "Project Management",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/00a2cc1f9ea22909cbc7159b151392760424d8aeecda99ee8b6be88d6b6f712f",
+    "description": "Budget planning, cost estimation, and financial management for projects.",
+    "skills": [
+      "Budget Development",
+      "Cost Management",
+      "Financial Planning"
+    ]
+  },
+  {
+    "id": "pm-communication",
+    "name": "Project Management Foundations: Communication",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2025-12-01",
+    "category": "Project Management",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/5cd20311324d697503f93c0db183570adac730c6d72fb086b45bdcaa6ed999a3",
+    "description": "Effective communication strategies for project managers and stakeholders.",
+    "skills": [
+      "Project Communications",
+      "Stakeholder Management",
+      "Project Management"
+    ]
+  },
+  {
+    "id": "pm-ethics",
+    "name": "Project Management Foundations: Ethics",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2025-12-01",
+    "category": "Project Management",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/0851e1de82330bf95f569414dea50395f95c71842fcd531cedc240a20935e618",
+    "description": "Ethical considerations and professional conduct in project management.",
+    "skills": [
+      "Business Ethics",
+      "Project Management",
+      "Professional Conduct"
+    ]
+  },
+  {
+    "id": "pm-requirements",
+    "name": "Project Management Foundations: Requirements",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2025-12-01",
+    "category": "Project Management",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/698981926bb9683927e7924386247f8cd859bac9b1875cd1ee5d73ef39e9d17d",
+    "description": "Requirements gathering, documentation, and management techniques.",
+    "skills": [
+      "Requirements Management",
+      "Documentation",
+      "Analysis"
+    ]
+  },
+  {
+    "id": "pm-schedules",
+    "name": "Project Management Foundations: Schedules",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2025-12-01",
+    "category": "Project Management",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/effe8985b300d5d7fba593f7f74d858b0b5c8c467a995d454e31c9b0c93e8bcd",
+    "description": "Project scheduling, timeline management, and deadline planning.",
+    "skills": [
+      "Project Scheduling",
+      "Timeline Management",
+      "Planning"
+    ]
+  },
+  {
+    "id": "pm-teams",
+    "name": "Project Management Foundations: Teams",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2025-12-01",
+    "category": "Project Management",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/019813cd4433e8792a8f1da875d8ec6626c911b634fd111ef18b41e42f72f633",
+    "description": "Team building, leadership, and collaboration in project environments.",
+    "skills": [
+      "Project Team Management",
+      "Project Management",
+      "Leadership"
+    ]
+  },
+  {
+    "id": "ai-customer-insights-dashboard",
+    "name": "Build an AI-Powered Customer Insights Dashboard (No Code Required)",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2025-08-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/dd4fe90e3bc5d8afafd364a72bc7265c06655a8a4a8fbc97c95bf833a33ddee1",
+    "description": "Create AI-powered dashboards using ChatGPT and Power BI without coding.",
+    "skills": [
+      "ChatGPT",
+      "Microsoft Power BI",
+      "Artificial Intelligence for Business",
+      "Data Visualization"
+    ]
+  },
+  {
+    "id": "ai-smart-budget-tracker",
+    "name": "Build an AI-Powered Smart Budget Tracker (No Code Required)",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2025-08-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/e602b7407297a47b3d3429719bf69a3ab1a9e5e0f7a316a50f03ef1cca620f26",
+    "description": "Build intelligent budget tracking solutions using AI tools without programming.",
+    "skills": [
+      "Artificial Intelligence for Business",
+      "Budget Tracking",
+      "No-Code Tools"
+    ]
+  },
+  {
+    "id": "unity-game-dev-fundamentals",
+    "name": "Cert Prep: Unity Certified Associate Game Developer Fundamentals",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2025-07-01",
+    "category": "Game Development",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/94515304e6ad3b927eea3bc154da6eea127cddf8a1a9e5b54b3656de9e322b01",
+    "description": "Preparation for Unity certification covering game development fundamentals.",
+    "skills": [
+      "Game Development",
+      "Unity",
+      "C#",
+      "3D Development"
+    ]
+  },
+  {
+    "id": "unity-game-dev-ui-2d",
+    "name": "Cert Prep: Unity Certified Associate Game Developer UI and 2D Games",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2025-07-01",
+    "category": "Game Development",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/0d99d98cbb644f9751703abb3e3264f16cac974af145b48870fec567ef791446",
+    "description": "Unity certification prep focusing on UI development and 2D game creation.",
+    "skills": [
+      "Game Development",
+      "Unity",
+      "UI Design",
+      "2D Games"
+    ]
+  },
+  {
+    "id": "csharp-types-control-flow",
+    "name": "C# Essential Training 1: Types and Control Flow",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-12-01",
+    "category": "Programming Fundamentals",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/9a57a719923b6c49031d1fb8589fed28e921a26777e5616c2993c3b6fb5e280f",
+    "description": "C# fundamentals covering data types, variables, and control flow structures.",
+    "skills": [
+      "C#",
+      "Control Flow",
+      ".NET",
+      "Programming"
+    ]
+  },
+  {
+    "id": "learning-csharp",
+    "name": "Learning C#",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-12-01",
+    "category": "Programming Fundamentals",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/717cf82a92f0333d85228267c525cb83429aa137fc45509b241291d936f39585",
+    "description": "Introduction to C# programming language and .NET development.",
+    "skills": [
+      "C#",
+      ".NET",
+      "Object-Oriented Programming"
+    ]
+  },
+  {
+    "id": "ai-programming-javascript",
+    "name": "AI Programming for JavaScript Developers",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-11-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/f7f156c54726dcc80a84fcf2e1ac08684e5c3c35ef90b8981f6679542e6fe67f",
+    "description": "Integrating AI capabilities into JavaScript applications.",
+    "skills": [
+      "Artificial Intelligence",
+      "JavaScript",
+      "Machine Learning",
+      "Web Development"
+    ]
+  },
+  {
+    "id": "javascript-ai-react-openai",
+    "name": "Build a JavaScript AI App with React and the OpenAI API",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-11-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/125f967bb7a11402c218b5bf5cfa465121615ecadc38f5e7a93bd651b99e7abb",
+    "description": "Building AI-powered React applications using OpenAI API integration.",
+    "skills": [
+      "OpenAI API",
+      "React",
+      "JavaScript",
+      "AI Integration"
+    ]
+  },
+  {
+    "id": "generative-ai-web-developers",
+    "name": "Building Generative AI Skills for Web Developers",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-11-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/9f66abafd6f147a7954433127e04b4c17757ad78e5bc2507621798534d9e4875",
+    "description": "Developing generative AI skills tailored for web development contexts.",
+    "skills": [
+      "Web Development",
+      "Generative AI",
+      "AI Integration"
+    ]
+  },
+  {
+    "id": "pair-programming-ai",
+    "name": "Pair Programming with AI",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-11-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/7427db3166168ffeacd85c122e93513d29f8a1417a67fb0fb05260306f98be26",
+    "description": "Leveraging AI assistants for collaborative coding and pair programming.",
+    "skills": [
+      "Pair Programming",
+      "AI Assistants",
+      "Code Collaboration"
+    ]
+  },
+  {
+    "id": "learning-webflow",
+    "name": "Learning Webflow",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-10-01",
+    "category": "Frontend Development",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/2ef8121b8dbc1b318f5b90644012c27dcfb69b29670b6e48ee3de6b3deef0cde",
+    "description": "Visual web design and development using Webflow platform.",
+    "skills": [
+      "Webflow",
+      "Web Design",
+      "No-Code Development"
+    ]
+  },
+  {
+    "id": "learning-webflow-2023",
+    "name": "Learning Webflow (2023)",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-10-01",
+    "category": "Frontend Development",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/5e7f56d1689e57c54436e73ab86f65fa620fcdc02633249c6da59654c675de9b",
+    "description": "Updated Webflow course covering latest features and workflows.",
+    "skills": [
+      "Webflow",
+      "Web Design",
+      "Responsive Design"
+    ]
+  },
+  {
+    "id": "what-is-generative-ai",
+    "name": "What Is Generative AI?",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-09-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/243cb6118e858b1510a882a9b072c4e1f515e51398d20d25bd3d98991385d703",
+    "description": "Understanding generative AI concepts, tools, and applications.",
+    "skills": [
+      "Artificial Intelligence",
+      "Generative AI Tools",
+      "Generative AI"
+    ]
+  },
+  {
+    "id": "react-authentication",
+    "name": "React: Authentication",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-08-01",
+    "category": "Frontend Development",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/89d71e9a61cc5f468c90a062ae4089f2672d323a3d66b462eb359d1d17d3ed26",
+    "description": "Implementing authentication systems in React applications.",
+    "skills": [
+      "React",
+      "Authentication",
+      "Security",
+      "JWT"
+    ]
+  },
+  {
+    "id": "tailwind-css-essential",
+    "name": "Tailwind CSS Essential Training",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-07-01",
+    "category": "Frontend Development",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/b1ad5b42b7f0504828d9d3f3b3845810ab2c744679a8d0048b51a16cb531129f",
+    "description": "Utility-first CSS framework for rapid UI development.",
+    "skills": [
+      "Tailwind CSS",
+      "CSS",
+      "Responsive Design",
+      "UI Development"
+    ]
+  },
+  {
+    "id": "typescript-essential",
+    "name": "TypeScript Essential Training",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-07-01",
+    "category": "Frontend Development",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/4d6946287ff87436c491db93c1c53af844b5725ace9c663fead0d042c2ac9a99",
+    "description": "TypeScript fundamentals for type-safe JavaScript development.",
+    "skills": [
+      "TypeScript",
+      "JavaScript",
+      "Type Safety",
+      "Web Development"
+    ]
+  },
+  {
     "id": "ai-react-aws-sagemaker",
     "name": "Build an AI Application with React and AWS SageMaker",
     "issuer": "LinkedIn Learning",
