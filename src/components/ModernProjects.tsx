@@ -5,6 +5,7 @@ import { useProjectImage } from "../hooks/useProjectImage"
 import myProjects from "../assets/myProjects.json"
 import { Project } from "../types"
 import { isValidProject } from "../utils/validation"
+import { BlurImage } from "./loading/ModernLoadingStates"
 import {
   ExternalLink,
   Star,
@@ -363,7 +364,7 @@ const ModernProjects = memo(() => {
 
       const hasGlobalImageError = imageErrors.has(project.prName)
 
-      const { imageRef, isLoading, hasError } = useProjectImage({
+      const { hasError } = useProjectImage({
         src: imageSrc,
         shouldLoad: shouldLoadImage && !hasGlobalImageError,
         onError: handleImageError,
@@ -401,20 +402,15 @@ const ModernProjects = memo(() => {
             <div className="relative w-full h-64 overflow-hidden">
               {shouldLoadImage && !hasGlobalImageError && !hasError ? (
                 <>
-                  <img
-                    ref={imageRef}
+                  <BlurImage
                     src={imageSrc}
                     alt={`${project.prName} project preview`}
-                    className={`w-full h-full object-cover object-top transition-all duration-[3000ms] ease-in-out group-hover:object-bottom ${
-                      isLoading ? "opacity-50" : "opacity-100"
-                    }`}
-                    loading="lazy"
+                    containerClassName="w-full h-full"
+                    className="transition-all duration-[3000ms] ease-in-out group-hover:object-bottom"
+                    objectPosition="top"
+                    aspectRatio="auto"
+                    placeholderColor={isDark ? "rgb(71 85 105)" : "rgb(203 213 225)"}
                   />
-                  {isLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-slate-200/50 dark:bg-slate-800/50">
-                      <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                    </div>
-                  )}
                   <div
                     className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
                       isDark

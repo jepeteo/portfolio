@@ -461,6 +461,189 @@ export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
   )
 }
 
+/**
+ * Enhanced blur-up image component with smooth transition
+ * Creates a beautiful loading experience with:
+ * - Dominant color placeholder or gradient
+ * - Blur effect that smoothly resolves
+ * - Scale animation for added depth
+ */
+interface BlurImageProps {
+  src: string
+  alt: string
+  className?: string
+  containerClassName?: string
+  placeholderColor?: string
+  aspectRatio?: "video" | "square" | "portrait" | "auto"
+  objectFit?: "cover" | "contain" | "fill"
+  objectPosition?: string
+  loading?: "eager" | "lazy"
+  onLoad?: () => void
+  onError?: () => void
+}
+
+export const BlurImage: React.FC<BlurImageProps> = ({
+  src,
+  alt,
+  className,
+  containerClassName,
+  placeholderColor = "rgb(148 163 184)", // slate-400
+  aspectRatio = "video",
+  objectFit = "cover",
+  objectPosition = "center",
+  loading = "lazy",
+  onLoad,
+  onError,
+}) => {
+  const { isDark } = useTheme()
+  const [loadState, setLoadState] = React.useState<"loading" | "loaded" | "error">("loading")
+  const imgRef = React.useRef<HTMLImageElement>(null)
+
+  // Check if image is already cached (instant load)
+  React.useEffect(() => {
+    if (imgRef.current?.complete && imgRef.current?.naturalHeight > 0) {
+      setLoadState("loaded")
+      onLoad?.()
+    }
+  }, [onLoad])
+
+  const aspectRatioClass = {
+    video: "aspect-video",
+    square: "aspect-square",
+    portrait: "aspect-[3/4]",
+    auto: "",
+  }
+
+  const handleLoad = () => {
+    setLoadState("loaded")
+    onLoad?.()
+  }
+
+  const handleError = () => {
+    setLoadState("error")
+    onError?.()
+  }
+
+  return (
+    <div
+      className={cn(
+        "relative overflow-hidden",
+        aspectRatioClass[aspectRatio],
+        containerClassName
+      )}
+    >
+      {/* Placeholder layer with gradient and shimmer */}
+      <motion.div
+        className="absolute inset-0"
+        initial={{ opacity: 1 }}
+        animate={{ opacity: loadState === "loaded" ? 0 : 1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        style={{
+          background: `linear-gradient(135deg, ${placeholderColor} 0%, ${
+            isDark ? "rgb(51 65 85)" : "rgb(226 232 240)"
+          } 100%)`,
+        }}
+      >
+        {/* Shimmer effect */}
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div
+            className="absolute inset-0 -translate-x-full"
+            style={{
+              background: `linear-gradient(90deg, transparent 0%, ${
+                isDark ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.3)"
+              } 50%, transparent 100%)`,
+            }}
+            animate={{ x: ["-100%", "200%"] }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              repeatDelay: 0.5,
+            }}
+          />
+        </div>
+
+        {/* Centered loading indicator */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.div
+            className={cn(
+              "w-8 h-8 rounded-full border-2",
+              isDark
+                ? "border-slate-600 border-t-blue-400"
+                : "border-slate-300 border-t-blue-500"
+            )}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          />
+        </div>
+      </motion.div>
+
+      {/* Error state */}
+      {loadState === "error" && (
+        <div
+          className={cn(
+            "absolute inset-0 flex flex-col items-center justify-center gap-2",
+            isDark ? "bg-slate-800" : "bg-slate-100"
+          )}
+        >
+          <svg
+            className={cn(
+              "w-10 h-10",
+              isDark ? "text-slate-600" : "text-slate-400"
+            )}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+          <span
+            className={cn(
+              "text-xs font-medium",
+              isDark ? "text-slate-500" : "text-slate-400"
+            )}
+          >
+            Failed to load
+          </span>
+        </div>
+      )}
+
+      {/* Main image with blur-up animation */}
+      <motion.img
+        ref={imgRef}
+        src={src}
+        alt={alt}
+        loading={loading}
+        onLoad={handleLoad}
+        onError={handleError}
+        className={cn(
+          "w-full h-full",
+          className
+        )}
+        style={{
+          objectFit,
+          objectPosition,
+        }}
+        initial={{ opacity: 0, scale: 1.1, filter: "blur(20px)" }}
+        animate={{
+          opacity: loadState === "loaded" ? 1 : 0,
+          scale: loadState === "loaded" ? 1 : 1.1,
+          filter: loadState === "loaded" ? "blur(0px)" : "blur(20px)",
+        }}
+        transition={{
+          duration: 0.5,
+          ease: [0.4, 0, 0.2, 1],
+        }}
+      />
+    </div>
+  )
+}
+
 
 
 

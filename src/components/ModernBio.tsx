@@ -1,6 +1,7 @@
 import React, { memo, useState, useEffect, useRef } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
+import { BlurImage } from "./loading/ModernLoadingStates"
 import {
   User,
   MapPin,
@@ -383,11 +384,14 @@ const ModernBio: React.FC = () => {
                       : "bg-gradient-to-br from-blue-100 to-purple-100"
                   }`}
                 >
-                  <img
+                  <BlurImage
                     src={profileImage}
                     alt="Theodoros Mentis - Senior Full-Stack Developer based in Berlin, Germany"
-                    className="w-full h-full object-cover rounded-3xl"
-                    loading="lazy"
+                    containerClassName="w-full h-full rounded-3xl"
+                    className="rounded-3xl"
+                    aspectRatio="square"
+                    placeholderColor={isDark ? "rgb(59 130 246 / 0.2)" : "rgb(219 234 254)"}
+                    loading="eager"
                   />
 
                   <div
