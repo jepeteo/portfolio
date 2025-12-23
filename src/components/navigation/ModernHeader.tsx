@@ -75,7 +75,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
               window.scrollTo({ top: 0, behavior: "smooth" })
             }
           }}
-          aria-label="Go to homepage"
+          aria-label="Theodoros Mentis - Go to homepage"
         >
           <motion.div
             className="block" // Show title on all screen sizes

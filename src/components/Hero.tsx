@@ -171,7 +171,7 @@ const Hero: React.FC = memo(() => {
                 prefersReducedMotion ? "!transform-none !transition-none" : ""
               }`}
               role="button"
-              aria-label="View my portfolio projects"
+              aria-label="View My Work - portfolio projects"
             >
               <span className="relative z-10">View My Work</span>
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -187,7 +187,7 @@ const Hero: React.FC = memo(() => {
                 prefersReducedMotion ? "!transform-none !transition-none" : ""
               }`}
               role="button"
-              aria-label="Contact Theodore Mentis"
+              aria-label="Get In Touch - contact form"
             >
               Get In Touch
             </a>
@@ -206,7 +206,10 @@ const Hero: React.FC = memo(() => {
             >
               Technologies I work with:
             </span>
-            <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+            <div
+              className="flex flex-wrap gap-2 justify-center lg:justify-start"
+              role="list"
+            >
               {[
                 "React",
                 "TypeScript",
@@ -504,7 +507,11 @@ const Hero: React.FC = memo(() => {
             />
           </div>
         </div>
-        <div className="flex flex-wrap gap-4 justify-center items-center">
+        <div
+          className="flex flex-wrap gap-4 justify-center items-center"
+          role="list"
+          aria-label="Areas of expertise"
+        >
           {[
             "Senior Full Stack Developer",
             "WordPress & WooCommerce Expert",

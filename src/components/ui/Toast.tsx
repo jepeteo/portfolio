@@ -223,7 +223,9 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
           "fixed z-[10000] flex flex-col gap-2",
           positionClasses[position]
         )}
+        role="region"
         aria-label="Notifications"
+        aria-live="polite"
       >
         <AnimatePresence mode="popLayout">
           {toasts.map((toast) => (
