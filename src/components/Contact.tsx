@@ -1,6 +1,7 @@
-import React, { memo, useState, useCallback } from "react"
+import React, { memo, useState, useCallback, useMemo } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
+import { motion, AnimatePresence } from "framer-motion"
 import emailjs from "@emailjs/browser"
 import {
   Mail,
@@ -10,6 +11,8 @@ import {
   AlertCircle,
   Github,
   Linkedin,
+  Check,
+  X,
 } from "lucide-react"
 import {
   ContactFormData,
@@ -66,7 +69,7 @@ const generateContactSchema = () => {
 
 // Individual Contact Method Schema Component
 const ContactMethodSchema: React.FC<{
-  method: { icon: any; label: string; value: string; href: string }
+  method: { icon: React.ComponentType<{ className?: string }>; label: string; value: string; href: string }
 }> = ({ method }) => {
   const schema = {
     "@context": "https://schema.org",
@@ -90,6 +93,167 @@ const ContactMethodSchema: React.FC<{
         __html: JSON.stringify(schema, null, 2),
       }}
     />
+  )
+}
+
+// Enhanced Form Field Component with inline validation
+interface FormFieldProps {
+  id: string
+  label: string
+  type?: "text" | "email" | "textarea"
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onBlur?: () => void
+  error?: string
+  placeholder: string
+  maxLength: number
+  disabled?: boolean
+  isDark: boolean
+  rows?: number
+  isValid?: boolean
+  showCharCount?: boolean
+}
+
+const FormField: React.FC<FormFieldProps> = ({
+  id,
+  label,
+  type = "text",
+  value,
+  onChange,
+  onBlur,
+  error,
+  placeholder,
+  maxLength,
+  disabled,
+  isDark,
+  rows = 6,
+  isValid,
+  showCharCount = true,
+}) => {
+  const [isFocused, setIsFocused] = useState(false)
+  const charCount = value.length
+  const charPercentage = (charCount / maxLength) * 100
+  
+  const getCharCountColor = () => {
+    if (charPercentage >= 90) return "text-red-500"
+    if (charPercentage >= 75) return "text-yellow-500"
+    return isDark ? "text-slate-500" : "text-slate-400"
+  }
+
+  const getBorderColor = () => {
+    if (error) return "border-red-500 focus:ring-red-500"
+    if (isValid && value.length > 0) return isDark 
+      ? "border-green-500/50 focus:ring-green-500" 
+      : "border-green-500 focus:ring-green-500"
+    return isDark
+      ? "border-slate-600 focus:ring-green-500"
+      : "border-slate-300 focus:ring-green-500"
+  }
+
+  const inputClasses = `w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:border-transparent ${getBorderColor()} ${
+    isDark
+      ? "bg-slate-700 text-white placeholder-slate-400"
+      : "bg-white text-slate-900 placeholder-slate-500"
+  }`
+
+  return (
+    <div className="relative">
+      <div className="flex justify-between items-center mb-2">
+        <label
+          htmlFor={id}
+          className={`block text-sm font-medium ${
+            isDark ? "text-slate-300" : "text-slate-700"
+          }`}
+        >
+          {label} *
+        </label>
+        {showCharCount && (
+          <motion.span 
+            className={`text-xs transition-colors ${getCharCountColor()}`}
+            initial={false}
+            animate={{ 
+              scale: charPercentage >= 90 ? [1, 1.1, 1] : 1 
+            }}
+            transition={{ duration: 0.2 }}
+          >
+            {charCount}/{maxLength}
+          </motion.span>
+        )}
+      </div>
+      
+      <div className="relative">
+        {type === "textarea" ? (
+          <textarea
+            id={id}
+            name={id}
+            value={value}
+            onChange={onChange}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => {
+              setIsFocused(false)
+              onBlur?.()
+            }}
+            rows={rows}
+            className={`${inputClasses} resize-none`}
+            placeholder={placeholder}
+            disabled={disabled}
+            maxLength={maxLength}
+          />
+        ) : (
+          <input
+            type={type}
+            id={id}
+            name={id}
+            value={value}
+            onChange={onChange}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => {
+              setIsFocused(false)
+              onBlur?.()
+            }}
+            className={inputClasses}
+            placeholder={placeholder}
+            disabled={disabled}
+            maxLength={maxLength}
+          />
+        )}
+        
+        {/* Validation indicator */}
+        <AnimatePresence>
+          {value.length > 0 && !isFocused && (
+            <motion.div 
+              className="absolute right-3 top-1/2 -translate-y-1/2"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              transition={{ duration: 0.2 }}
+            >
+              {error ? (
+                <X className="w-5 h-5 text-red-500" />
+              ) : isValid ? (
+                <Check className="w-5 h-5 text-green-500" />
+              ) : null}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+      
+      {/* Error message with animation */}
+      <AnimatePresence>
+        {error && (
+          <motion.p 
+            className="mt-2 text-sm text-red-500 flex items-center gap-1"
+            initial={{ opacity: 0, y: -10, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: "auto" }}
+            exit={{ opacity: 0, y: -10, height: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            {error}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }
 
@@ -118,6 +282,21 @@ const Contact: React.FC = memo(() => {
   )
   const [honeypot, setHoneypot] = useState("")
   const [startTime] = useState(() => Date.now())
+  const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set())
+
+  // Field validation states
+  const fieldValidation = useMemo(() => {
+    return {
+      name: formData.name.length >= 2 && formData.name.length <= 50,
+      email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email),
+      subject: formData.subject.length >= 3 && formData.subject.length <= 100,
+      message: formData.message.length >= 10 && formData.message.length <= 2000,
+    }
+  }, [formData])
+
+  const isFormValid = useMemo(() => {
+    return Object.values(fieldValidation).every(Boolean)
+  }, [fieldValidation])
 
   const emailjsConfig = {
     serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID || "",
@@ -147,6 +326,7 @@ const Contact: React.FC = memo(() => {
   )
 
   const handleEmailBlur = useCallback(() => {
+    setTouchedFields(prev => new Set(prev).add("email"))
     const emailError = validateFieldEmail(formData.email)
     if (emailError) {
       setErrors((prev) => ({ ...prev, email: emailError }))
@@ -154,6 +334,10 @@ const Contact: React.FC = memo(() => {
       setErrors((prev) => ({ ...prev, email: undefined }))
     }
   }, [formData.email])
+
+  const handleFieldBlur = useCallback((fieldName: string) => {
+    setTouchedFields(prev => new Set(prev).add(fieldName))
+  }, [])
 
   const validateForm = useCallback((): boolean => {
     const rateLimitResult = checkContactFormLimit("default")
@@ -519,134 +703,84 @@ const Contact: React.FC = memo(() => {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className={`block text-sm font-medium mb-2 ${
-                      isDark ? "text-slate-300" : "text-slate-700"
-                    }`}
-                  >
-                    Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                      errors.name
-                        ? "border-red-500"
-                        : isDark
-                        ? "bg-slate-700 border-slate-600 text-white placeholder-slate-400"
-                        : "bg-white border-slate-300 text-slate-900 placeholder-slate-500"
-                    }`}
-                    placeholder="Your full name"
-                    disabled={isSubmitting}
-                    maxLength={50}
-                  />
-                  {errors.name && (
-                    <p className="mt-2 text-sm text-red-500">{errors.name}</p>
-                  )}
+                {/* Form progress indicator */}
+                <div className="mb-6">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className={`text-sm font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                      Form Progress
+                    </span>
+                    <span className={`text-sm font-medium ${isFormValid ? "text-green-500" : isDark ? "text-slate-400" : "text-slate-600"}`}>
+                      {Object.values(fieldValidation).filter(Boolean).length}/4 fields complete
+                    </span>
+                  </div>
+                  <div className={`h-2 rounded-full overflow-hidden ${isDark ? "bg-slate-700" : "bg-slate-200"}`}>
+                    <motion.div 
+                      className="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${(Object.values(fieldValidation).filter(Boolean).length / 4) * 100}%` }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label
-                    htmlFor="email"
-                    className={`block text-sm font-medium mb-2 ${
-                      isDark ? "text-slate-300" : "text-slate-700"
-                    }`}
-                  >
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    onBlur={handleEmailBlur}
-                    className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                      errors.email
-                        ? "border-red-500"
-                        : isDark
-                        ? "bg-slate-700 border-slate-600 text-white placeholder-slate-400"
-                        : "bg-white border-slate-300 text-slate-900 placeholder-slate-500"
-                    }`}
-                    placeholder="your.email@example.com"
-                    disabled={isSubmitting}
-                    maxLength={254}
-                  />
-                  {errors.email && (
-                    <p className="mt-2 text-sm text-red-500">{errors.email}</p>
-                  )}
-                </div>
+                <FormField
+                  id="name"
+                  label="Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  onBlur={() => handleFieldBlur("name")}
+                  error={touchedFields.has("name") && !fieldValidation.name && formData.name.length > 0 ? "Name must be 2-50 characters" : errors.name}
+                  placeholder="Your full name"
+                  maxLength={50}
+                  disabled={isSubmitting}
+                  isDark={isDark}
+                  isValid={fieldValidation.name}
+                />
 
-                <div>
-                  <label
-                    htmlFor="subject"
-                    className={`block text-sm font-medium mb-2 ${
-                      isDark ? "text-slate-300" : "text-slate-700"
-                    }`}
-                  >
-                    Subject *
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                      errors.subject
-                        ? "border-red-500"
-                        : isDark
-                        ? "bg-slate-700 border-slate-600 text-white placeholder-slate-400"
-                        : "bg-white border-slate-300 text-slate-900 placeholder-slate-500"
-                    }`}
-                    placeholder="Project inquiry, collaboration, etc."
-                    disabled={isSubmitting}
-                    maxLength={100}
-                  />
-                  {errors.subject && (
-                    <p className="mt-2 text-sm text-red-500">
-                      {errors.subject}
-                    </p>
-                  )}
-                </div>
+                <FormField
+                  id="email"
+                  label="Email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  onBlur={handleEmailBlur}
+                  error={errors.email}
+                  placeholder="your.email@example.com"
+                  maxLength={254}
+                  disabled={isSubmitting}
+                  isDark={isDark}
+                  isValid={fieldValidation.email}
+                />
 
-                <div>
-                  <label
-                    htmlFor="message"
-                    className={`block text-sm font-medium mb-2 ${
-                      isDark ? "text-slate-300" : "text-slate-700"
-                    }`}
-                  >
-                    Message *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={6}
-                    className={`w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none ${
-                      errors.message
-                        ? "border-red-500"
-                        : isDark
-                        ? "bg-slate-700 border-slate-600 text-white placeholder-slate-400"
-                        : "bg-white border-slate-300 text-slate-900 placeholder-slate-500"
-                    }`}
-                    placeholder="Tell me about your project, requirements, timeline, etc."
-                    disabled={isSubmitting}
-                    maxLength={2000}
-                  />
-                  {errors.message && (
-                    <p className="mt-2 text-sm text-red-500">
-                      {errors.message}
-                    </p>
-                  )}
-                </div>
+                <FormField
+                  id="subject"
+                  label="Subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  onBlur={() => handleFieldBlur("subject")}
+                  error={touchedFields.has("subject") && !fieldValidation.subject && formData.subject.length > 0 ? "Subject must be 3-100 characters" : errors.subject}
+                  placeholder="Project inquiry, collaboration, etc."
+                  maxLength={100}
+                  disabled={isSubmitting}
+                  isDark={isDark}
+                  isValid={fieldValidation.subject}
+                />
+
+                <FormField
+                  id="message"
+                  label="Message"
+                  type="textarea"
+                  value={formData.message}
+                  onChange={handleChange}
+                  onBlur={() => handleFieldBlur("message")}
+                  error={touchedFields.has("message") && !fieldValidation.message && formData.message.length > 0 ? "Message must be 10-2000 characters" : errors.message}
+                  placeholder="Tell me about your project, requirements, timeline, etc."
+                  maxLength={2000}
+                  disabled={isSubmitting}
+                  isDark={isDark}
+                  isValid={fieldValidation.message}
+                  rows={6}
+                />
 
                 <div style={{ display: "none" }}>
                   <label htmlFor="website">Website</label>
