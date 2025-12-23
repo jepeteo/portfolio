@@ -88,7 +88,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
                 typography.heading.h4,
                 "font-bold leading-tight",
                 "text-slate-900 dark:text-white",
-                "group-hover:text-primary transition-colors duration-200",
+                "group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200",
                 "text-base sm:text-lg lg:text-xl xl:text-2xl"
               )}
             >
