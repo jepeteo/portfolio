@@ -1,5 +1,8 @@
 # Modern Portfolio Website
 
+[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/jepeteo/portfolio)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 A high-performance, accessible portfolio website built with modern web technologies and best practices.
 
 🌐 **Live Site**: [theodorosmentis.com](https://theodorosmentis.com)
@@ -14,8 +17,16 @@ A high-performance, accessible portfolio website built with modern web technolog
 - **Experience Timeline**: Interactive work history with detailed descriptions
 - **Skills Matrix**: Categorized technical skills with proficiency indicators
 - **Certificates Gallery**: Professional certifications with filtering and stats
-- **Contact Form**: Email integration via EmailJS with rate limiting
+- **Contact Form**: Email integration via EmailJS with real-time validation and rate limiting
 - **Dark/Light Mode**: Seamless theme switching with system preference detection
+
+### UX Enhancements (v0.1.0)
+
+- **Scroll-Spy Navigation**: Active section indicator with spring animations
+- **Skeleton Loading States**: Beautiful shimmer placeholders for perceived performance
+- **Form Validation UX**: Real-time feedback, character counters, and progress indicator
+- **Mobile Nav Animation**: Animated hamburger-to-X morphing button
+- **Image Blur-up Loading**: Smooth blur-to-sharp transitions with gradient placeholders
 
 ### Performance & Optimization
 

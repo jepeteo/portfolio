@@ -3,8 +3,8 @@
 ## 📋 Project Overview
 
 **Product Name:** Theodoros Mentis - Senior Full Stack Developer Portfolio  
-**Version:** 2.1  
-**Last Updated:** October 22, 2025  
+**Version:** 2.2  
+**Last Updated:** December 23, 2025  
 **Website:** [theodorosmentis.com](https://theodorosmentis.com)
 
 ### Purpose Statement
@@ -108,11 +108,20 @@ A comprehensive portfolio website designed to showcase expertise, experience, an
 
 - [x] **Smooth Animations** - Framer Motion animations
 - [x] **Intersection Observers** - Performance-optimized visibility detection
-- [x] **Loading States** - Custom loading components
+- [x] **Loading States** - Custom loading components with shimmer effects
 - [x] **Form Validation** - Real-time validation with accessibility
 - [x] **Navigation** - Smooth scrolling, skip links
 - [x] **Image Optimization** - WebP format, lazy loading
 - [x] **Collaborative Language** - Partnership-focused content that emphasizes collaboration over problem-solving
+
+### 🆕 UX Enhancements (v0.1.0 - December 2025)
+
+- [x] **Scroll-Spy Navigation** - Active section indicator with spring animations and gradient underline
+- [x] **Skeleton Loading States** - ProjectCardSkeleton, ExperienceCardSkeleton, CertificateCardSkeleton with shimmer effects
+- [x] **Enhanced Form Validation** - FormField component with character counters, progress indicator, and animated error messages
+- [x] **Mobile Nav Animation** - Animated hamburger-to-X morphing button with smooth transitions
+- [x] **Image Blur-up Placeholders** - BlurImage component with blur-to-sharp transition, gradient placeholders, and error states
+- [x] **TypeScript Strictness** - Replaced all `any` types with proper type definitions
 
 ### 📊 Data Management
 
