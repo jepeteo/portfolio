@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { motion, useScroll, useSpring } from "framer-motion"
 import { cn, typography } from "../../utils/styles"
 import ModernNav from "../navigation/ModernNav"
+import { useTheme } from "../../context/ThemeContext"
 
 interface ModernHeaderProps {
   className?: string
@@ -9,6 +10,7 @@ interface ModernHeaderProps {
 
 const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = useState(false)
+  const { isDark } = useTheme()
 
   // Use framer-motion's useScroll for better performance
   const { scrollYProgress } = useScroll()
@@ -84,7 +86,11 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
             transition={{ delay: 0.2 }}
           >
             <div
-              className="font-bold leading-tight tracking-tight text-base sm:text-lg lg:text-xl xl:text-2xl text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200"
+              className={`font-bold leading-tight tracking-tight text-base sm:text-lg lg:text-xl xl:text-2xl transition-colors duration-200 ${
+                isDark 
+                  ? "text-white group-hover:text-blue-400" 
+                  : "text-slate-900 group-hover:text-blue-600"
+              }`}
             >
               <span>Theodoros</span> <span>Mentis</span>
             </div>
