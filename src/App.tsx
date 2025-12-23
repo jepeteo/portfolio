@@ -13,6 +13,7 @@ import { BackToTopButton } from "./components/ui/BackToTopButton"
 import { VercelIntegrations } from "./components/VercelIntegrations"
 import { ToastProvider } from "./components/ui/Toast"
 import { SkipLink } from "./components/accessibility/SkipLink"
+import { ScrollProgress } from "./components/ui/ScrollProgress"
 import { ThemeProvider, useTheme } from "./context/ThemeContext"
 import {
   createLazyComponent,
@@ -218,6 +219,7 @@ const AppContent: React.FC = () => {
       }`}
     >
       <SkipLink href="#main-content" />
+      <ScrollProgress position="top" height={3} colorScheme="gradient" hideAtTop={true} />
       <PortfolioSchema
         includePersonSchema={false}
         includeOrganizationSchema={true}
