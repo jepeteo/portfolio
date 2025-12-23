@@ -1,13 +1,14 @@
-
 import { motion, type MotionProps } from "framer-motion"
-import React from "react"
-export const animationVariants = {
+import React from "react"
+
+export const animationVariants = {
   pageEnter: {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -20 },
     transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
+  },
+
   staggerContainer: {
     initial: {},
     animate: {
@@ -30,7 +31,8 @@ export const animationVariants = {
         damping: 15,
       },
     },
-  },
+  },
+
   hoverScale: {
     initial: { scale: 1 },
     whileHover: {
@@ -38,14 +40,16 @@ export const animationVariants = {
       transition: { type: "spring", stiffness: 300, damping: 20 },
     },
     whileTap: { scale: 0.98 },
-  },
+  },
+
   cardFloat: {
     initial: { y: 0 },
     whileHover: {
       y: -8,
       transition: { type: "spring", stiffness: 200, damping: 15 },
     },
-  },
+  },
+
   reveal: {
     initial: { opacity: 0, y: 50 },
     whileInView: {
@@ -54,7 +58,8 @@ export const animationVariants = {
       transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
     },
     viewport: { once: true, margin: "-100px" },
-  },
+  },
+
   textReveal: {
     initial: { opacity: 0, y: 20 },
     animate: (i: number) => ({
@@ -65,7 +70,8 @@ export const animationVariants = {
         duration: 0.6,
       },
     }),
-  },
+  },
+
   magnetic: {
     initial: { scale: 1 },
     whileHover: {
@@ -74,12 +80,16 @@ export const animationVariants = {
     },
     whileTap: { scale: 0.95 },
   },
-} as const
+} as const
+
 interface AnimatedContainerProps extends MotionProps {
   children: React.ReactNode
   variant?: keyof typeof animationVariants
   className?: string
 }
+
+type AnimationVariant =
+  (typeof animationVariants)[keyof typeof animationVariants]
 
 export const AnimatedContainer: React.FC<AnimatedContainerProps> = ({
   children,
@@ -87,8 +97,11 @@ export const AnimatedContainer: React.FC<AnimatedContainerProps> = ({
   className,
   ...props
 }) => {
-  const variants = animationVariants[variant] as any
-  const viewport = variants.viewport || { once: true, margin: "-50px" }
+  const variants = animationVariants[variant] as AnimationVariant
+
+  const viewport = (
+    variants as { viewport?: { once: boolean; margin: string } }
+  ).viewport || { once: true, margin: "-50px" }
 
   return (
     <motion.div
@@ -105,7 +118,8 @@ export const AnimatedContainer: React.FC<AnimatedContainerProps> = ({
       {children}
     </motion.div>
   )
-}
+}
+
 export const StaggerContainer: React.FC<{
   children: React.ReactNode
   className?: string
@@ -128,7 +142,8 @@ export const StaggerItem: React.FC<{
   <motion.div className={className} variants={animationVariants.staggerItem}>
     {children}
   </motion.div>
-)
+)
+
 export const FloatingCard: React.FC<{
   children: React.ReactNode
   className?: string
@@ -144,7 +159,8 @@ export const FloatingCard: React.FC<{
   >
     {children}
   </motion.div>
-)
+)
+
 export const AnimatedText: React.FC<{
   text: string
   className?: string
@@ -168,7 +184,8 @@ export const AnimatedText: React.FC<{
       ))}
     </motion.div>
   )
-}
+}
+
 export const MagneticButton: React.FC<{
   children: React.ReactNode
   className?: string
@@ -215,10 +232,11 @@ export const MagneticButton: React.FC<{
       {children}
     </motion.div>
   )
-}
+}
+
 export const useViewTransition = () => {
   const startTransition = React.useCallback((callback: () => void) => {
-    if ("startViewTransition" in document) {
+    if ("startViewTransition" in document) {
       document.startViewTransition(callback)
     } else {
       callback()
@@ -226,7 +244,8 @@ export const useViewTransition = () => {
   }, [])
 
   return { startTransition }
-}
+}
+
 export const useReducedMotion = () => {
   const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false)
 
@@ -241,7 +260,8 @@ export const useReducedMotion = () => {
   }, [])
 
   return prefersReducedMotion
-}
+}
+
 export const PageTransition: React.FC<{
   children: React.ReactNode
   className?: string
@@ -255,7 +275,8 @@ export const PageTransition: React.FC<{
   >
     {children}
   </motion.div>
-)
+)
+
 export const ScrollReveal: React.FC<{
   children: React.ReactNode
   className?: string

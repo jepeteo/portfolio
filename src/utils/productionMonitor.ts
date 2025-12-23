@@ -251,8 +251,12 @@ class ProductionMonitor {
         let clsValue = 0
         new PerformanceObserver((list) => {
           for (const entry of list.getEntries()) {
-            if (!(entry as any).hadRecentInput) {
-              clsValue += (entry as any).value
+            const layoutShift = entry as PerformanceEntry & {
+              hadRecentInput: boolean
+              value: number
+            }
+            if (!layoutShift.hadRecentInput) {
+              clsValue += layoutShift.value
               if (clsValue > 0.1) {
                 this.captureError({
                   type: "performance",
@@ -270,15 +274,19 @@ class ProductionMonitor {
     }
   }
 
-  private getWebVitalsMetrics(): any {
+  private getWebVitalsMetrics(): Record<string, unknown> {
     return {}
   }
 
-  private getConnectionInfo(): any {
+  private getConnectionInfo(): {
+    effectiveType?: string
+    downlink?: number
+    rtt?: number
+  } | null {
     const connection =
-      (navigator as any).connection ||
-      (navigator as any).mozConnection ||
-      (navigator as any).webkitConnection
+      navigator.connection ||
+      navigator.mozConnection ||
+      navigator.webkitConnection
     return connection
       ? {
           effectiveType: connection.effectiveType,
@@ -288,8 +296,12 @@ class ProductionMonitor {
       : null
   }
 
-  private getMemoryUsage(): any {
-    const memory = (performance as any).memory
+  private getMemoryUsage(): {
+    used: number
+    total: number
+    limit: number
+  } | null {
+    const memory = performance.memory
     return memory
       ? {
           used: memory.usedJSHeapSize,

@@ -30,7 +30,7 @@ const usePerformanceMonitor = (componentName: string) => {
       const endTime = performance.now()
       const renderTime = endTime - startTimeRef.current
 
-      const memoryUsage = (performance as any).memory?.usedJSHeapSize
+      const memoryUsage = performance.memory?.usedJSHeapSize
 
       const metrics: PerformanceMetrics = {
         componentName,

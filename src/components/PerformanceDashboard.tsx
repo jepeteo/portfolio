@@ -100,8 +100,12 @@ const PerformanceDashboard: React.FC = () => {
         let clsValue = 0
         const clsObserver = new PerformanceObserver((list) => {
           for (const entry of list.getEntries()) {
-            if (!(entry as any).hadRecentInput) {
-              clsValue += (entry as any).value
+            const layoutShift = entry as PerformanceEntry & {
+              hadRecentInput: boolean
+              value: number
+            }
+            if (!layoutShift.hadRecentInput) {
+              clsValue += layoutShift.value
               setWebVitals((prev) => ({ ...prev, CLS: clsValue }))
             }
           }
@@ -111,9 +115,12 @@ const PerformanceDashboard: React.FC = () => {
 
         const fidObserver = new PerformanceObserver((list) => {
           for (const entry of list.getEntries()) {
+            const firstInput = entry as PerformanceEntry & {
+              processingStart: number
+            }
             setWebVitals((prev) => ({
               ...prev,
-              FID: (entry as any).processingStart - entry.startTime,
+              FID: firstInput.processingStart - entry.startTime,
             }))
           }
         })

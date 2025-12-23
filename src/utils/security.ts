@@ -249,8 +249,10 @@ export const validationPatterns = {
   url: /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$/,
 }
 
+type StorageValue = string | number | boolean | object | null
+
 export const secureStorage = {
-  setItem: (key: string, value: any): void => {
+  setItem: (key: string, value: StorageValue): void => {
     try {
       const serialized = JSON.stringify(value)
 
@@ -260,10 +262,10 @@ export const secureStorage = {
     }
   },
 
-  getItem: (key: string): any => {
+  getItem: <T = StorageValue>(key: string): T | null => {
     try {
       const item = localStorage.getItem(key)
-      return item ? JSON.parse(item) : null
+      return item ? (JSON.parse(item) as T) : null
     } catch (error) {
       console.error("Failed to get item from localStorage:", error)
       return null

@@ -142,8 +142,11 @@ const ModernProjects = memo(() => {
     const techSet = new Set<string>()
     validatedProjects.forEach((project) => {
       // Use tech field if available, fallback to prTags for backward compatibility
-      const techArray = Array.isArray(project.tech) ? project.tech : 
-                       (Array.isArray(project.prTags) ? project.prTags : [])
+      const techArray = Array.isArray(project.tech)
+        ? project.tech
+        : Array.isArray(project.prTags)
+        ? project.prTags
+        : []
       techArray.forEach((tech) => techSet.add(tech))
     })
     return Array.from(techSet).sort()
@@ -161,8 +164,11 @@ const ModernProjects = memo(() => {
     if (selectedTech !== null) {
       filtered = filtered.filter((project) => {
         // Check tech field first, fallback to prTags
-        const techArray = Array.isArray(project.tech) ? project.tech : 
-                         (Array.isArray(project.prTags) ? project.prTags : [])
+        const techArray = Array.isArray(project.tech)
+          ? project.tech
+          : Array.isArray(project.prTags)
+          ? project.prTags
+          : []
         return techArray.includes(selectedTech)
       })
     }
@@ -170,18 +176,21 @@ const ModernProjects = memo(() => {
     // Filter by search query
     if (searchQuery.trim() !== "") {
       const query = searchQuery.toLowerCase().trim()
-      filtered = filtered.filter(
-        (project) => {
-          const techArray = Array.isArray(project.tech) ? project.tech : 
-                           (Array.isArray(project.prTags) ? project.prTags : [])
-          return (
-            project.prName.toLowerCase().includes(query) ||
-            project.prDescription.toLowerCase().includes(query) ||
-            techArray.some((tech: string) => tech.toLowerCase().includes(query)) ||
-            project.prType.toLowerCase().includes(query)
-          )
-        }
-      )
+      filtered = filtered.filter((project) => {
+        const techArray = Array.isArray(project.tech)
+          ? project.tech
+          : Array.isArray(project.prTags)
+          ? project.prTags
+          : []
+        return (
+          project.prName.toLowerCase().includes(query) ||
+          project.prDescription.toLowerCase().includes(query) ||
+          techArray.some((tech: string) =>
+            tech.toLowerCase().includes(query)
+          ) ||
+          project.prType.toLowerCase().includes(query)
+        )
+      })
     }
 
     const featured = filtered.filter((project) => project.prFeatured)
@@ -349,8 +358,7 @@ const ModernProjects = memo(() => {
       const IconComponent = getProjectIcon(project.prType)
 
       const imageSlug =
-        (project as any).prImageSlug ||
-        project.prName.toLowerCase().replace(/\s+/g, "-")
+        project.prImageSlug || project.prName.toLowerCase().replace(/\s+/g, "-")
       const imageSrc = `./images/projects/${imageSlug}.webp`
 
       const hasGlobalImageError = imageErrors.has(project.prName)

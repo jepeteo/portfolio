@@ -1,6 +1,14 @@
 import { useMemo } from "react"
 import mySkills from "../assets/mySkills.json"
-import { Code2, Database, Server, Globe, Settings, Layers } from "lucide-react"
+import {
+  Code2,
+  Database,
+  Server,
+  Globe,
+  Settings,
+  Layers,
+  type LucideIcon,
+} from "lucide-react"
 
 interface Skill {
   skillName: string
@@ -27,7 +35,7 @@ interface ProcessedSkill {
 interface SkillCategory {
   title: string
   subtitle: string
-  icon: any
+  icon: LucideIcon
   gradient: string
   description: string
   skills: ProcessedSkill[]
@@ -47,10 +55,11 @@ const useSkillsData = () => {
     return "Learning"
   }
 
-  const processedData = useMemo(() => {
-    const visibleSkills: Skill[] = (mySkills as any[]).filter(
-      (skill: any) => skill.visible
-    ) as Skill[]
+  const processedData = useMemo(() => {
+    const visibleSkills: Skill[] = (mySkills as Skill[]).filter(
+      (skill) => skill.visible
+    )
+
     const skillCategories: Record<string, SkillCategory> = {
       languages: {
         title: "My Programming Languages",
@@ -192,7 +201,8 @@ const useSkillsData = () => {
           }))
           .sort((a, b) => b.level - a.level),
       },
-    }
+    }
+
     const totalSkills = visibleSkills.length
     const masteredSkills = visibleSkills.filter(
       (skill) => skill.level >= 90

@@ -6,104 +6,113 @@ import {
   ModernReactProject,
 } from "../types"
 
-export const isValidJob = (obj: any): obj is Job => {
+export const isValidJob = (obj: unknown): obj is Job => {
+  if (typeof obj !== "object" || obj === null) return false
+  const job = obj as Record<string, unknown>
   return (
-    typeof obj === "object" &&
-    obj !== null &&
-    typeof obj.title === "string" &&
-    typeof obj.company === "string" &&
-    typeof obj.from === "string" &&
-    typeof obj.description === "string" &&
-    (obj.to === null || typeof obj.to === "string") &&
-    (obj.location === undefined || typeof obj.location === "string") &&
-    (obj.technologies === undefined || Array.isArray(obj.technologies))
+    typeof job.title === "string" &&
+    typeof job.company === "string" &&
+    typeof job.from === "string" &&
+    typeof job.description === "string" &&
+    (job.to === null || typeof job.to === "string") &&
+    (job.location === undefined || typeof job.location === "string") &&
+    (job.technologies === undefined || Array.isArray(job.technologies))
   )
 }
 
-export const isValidProject = (obj: any): obj is Project => {
+export const isValidProject = (obj: unknown): obj is Project => {
+  if (typeof obj !== "object" || obj === null) return false
+  const project = obj as Record<string, unknown>
   return (
-    typeof obj === "object" &&
-    obj !== null &&
-    typeof obj.prName === "string" &&
-    typeof obj.prType === "string" &&
-    typeof obj.prFeatured === "boolean" &&
-    typeof obj.prUrl === "string" &&
-    typeof obj.prDescription === "string" &&
-    typeof obj.prImageSlug === "string"
+    typeof project.prName === "string" &&
+    typeof project.prType === "string" &&
+    typeof project.prFeatured === "boolean" &&
+    typeof project.prUrl === "string" &&
+    typeof project.prDescription === "string" &&
+    typeof project.prImageSlug === "string"
   )
 }
 
-export const isValidReactProject = (obj: any): obj is ModernReactProject => {
+export const isValidReactProject = (
+  obj: unknown
+): obj is ModernReactProject => {
+  if (typeof obj !== "object" || obj === null) return false
+  const project = obj as Record<string, unknown>
   return (
-    typeof obj === "object" &&
-    obj !== null &&
-    typeof obj.prName === "string" &&
-    typeof obj.prType === "string" &&
-    typeof obj.prUrl === "string" &&
-    typeof obj.prDescription === "string" &&
-    typeof obj.prImageSlug === "string"
+    typeof project.prName === "string" &&
+    typeof project.prType === "string" &&
+    typeof project.prUrl === "string" &&
+    typeof project.prDescription === "string" &&
+    typeof project.prImageSlug === "string"
   )
 }
 
-export const validateReactProject = (obj: any): boolean => {
+export const validateReactProject = (obj: unknown): boolean => {
+  if (typeof obj !== "object" || obj === null) return false
+  const project = obj as Record<string, unknown>
   return (
-    typeof obj === "object" &&
-    obj !== null &&
-    typeof obj.id === "string" &&
-    typeof obj.title === "string" &&
-    typeof obj.description === "string" &&
-    (obj.technologies === undefined || Array.isArray(obj.technologies)) &&
-    (obj.githubUrl === undefined || typeof obj.githubUrl === "string") &&
-    (obj.liveUrl === undefined || typeof obj.liveUrl === "string") &&
-    (obj.image === undefined || typeof obj.image === "string") &&
-    (obj.date === undefined || typeof obj.date === "string") &&
-    (obj.status === undefined || typeof obj.status === "string") &&
-    (obj.featured === undefined || typeof obj.featured === "boolean") &&
-    (obj.performance === undefined || typeof obj.performance === "string")
+    typeof project.id === "string" &&
+    typeof project.title === "string" &&
+    typeof project.description === "string" &&
+    (project.technologies === undefined ||
+      Array.isArray(project.technologies)) &&
+    (project.githubUrl === undefined ||
+      typeof project.githubUrl === "string") &&
+    (project.liveUrl === undefined || typeof project.liveUrl === "string") &&
+    (project.image === undefined || typeof project.image === "string") &&
+    (project.date === undefined || typeof project.date === "string") &&
+    (project.status === undefined || typeof project.status === "string") &&
+    (project.featured === undefined || typeof project.featured === "boolean") &&
+    (project.performance === undefined ||
+      typeof project.performance === "string")
   )
 }
 
-export const validateCertificate = (obj: any): obj is ModernCertificate => {
+export const validateCertificate = (obj: unknown): obj is ModernCertificate => {
+  if (typeof obj !== "object" || obj === null) return false
+  const cert = obj as Record<string, unknown>
   return (
-    typeof obj === "object" &&
-    obj !== null &&
-    typeof obj.id === "string" &&
-    typeof obj.name === "string" &&
-    typeof obj.issuer === "string" &&
-    typeof obj.issueDate === "string" &&
-    (obj.category === undefined || typeof obj.category === "string") &&
-    (obj.expirationDate === undefined ||
-      typeof obj.expirationDate === "string") &&
-    (obj.credentialId === undefined || typeof obj.credentialId === "string") &&
-    (obj.credentialUrl === undefined ||
-      typeof obj.credentialUrl === "string") &&
-    (obj.description === undefined || typeof obj.description === "string") &&
-    (obj.skills === undefined || Array.isArray(obj.skills))
+    typeof cert.id === "string" &&
+    typeof cert.name === "string" &&
+    typeof cert.issuer === "string" &&
+    typeof cert.issueDate === "string" &&
+    (cert.category === undefined || typeof cert.category === "string") &&
+    (cert.expirationDate === undefined ||
+      typeof cert.expirationDate === "string") &&
+    (cert.credentialId === undefined ||
+      typeof cert.credentialId === "string") &&
+    (cert.credentialUrl === undefined ||
+      typeof cert.credentialUrl === "string") &&
+    (cert.description === undefined || typeof cert.description === "string") &&
+    (cert.skills === undefined || Array.isArray(cert.skills))
   )
 }
 
-export const isValidCertificate = (obj: any): boolean => {
-  if (obj && typeof obj === "object" && obj.certName && obj.certUrl) {
+export const isValidCertificate = (obj: unknown): boolean => {
+  if (typeof obj !== "object" || obj === null) return false
+  const cert = obj as Record<string, unknown>
+
+  if (cert.certName && cert.certUrl) {
     return (
-      typeof obj.certName === "string" &&
-      typeof obj.certUrl === "string" &&
-      typeof obj.certImg === "string" &&
-      typeof obj.certVisible === "boolean" &&
-      typeof obj.certCat === "string"
+      typeof cert.certName === "string" &&
+      typeof cert.certUrl === "string" &&
+      typeof cert.certImg === "string" &&
+      typeof cert.certVisible === "boolean" &&
+      typeof cert.certCat === "string"
     )
   }
 
   return validateCertificate(obj)
 }
 
-export const isValidSkill = (obj: any): obj is Skill => {
+export const isValidSkill = (obj: unknown): obj is Skill => {
+  if (typeof obj !== "object" || obj === null) return false
+  const skill = obj as Record<string, unknown>
   return (
-    typeof obj === "object" &&
-    obj !== null &&
-    typeof obj.skillName === "string" &&
-    typeof obj.category === "string" &&
-    typeof obj.description === "string" &&
-    typeof obj.visible === "boolean"
+    typeof skill.skillName === "string" &&
+    typeof skill.category === "string" &&
+    typeof skill.description === "string" &&
+    typeof skill.visible === "boolean"
   )
 }
 

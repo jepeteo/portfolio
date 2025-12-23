@@ -4,6 +4,7 @@ import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import usePerformanceMonitor from "../hooks/usePerformanceMonitor"
 import { useExperienceData } from "../hooks/useExperienceData"
 import type { TechExperience } from "../hooks/useExperienceData"
+import type { ExperienceFilterType } from "../types"
 import { ExperienceStatsComponent } from "./experience/ExperienceStats"
 import { ExperienceCallToAction } from "./experience/ExperienceCallToAction"
 import { ExperienceSidebar } from "./experience/ExperienceSidebar"
@@ -292,7 +293,7 @@ const ModernExperience: React.FC = () => {
               ].map(({ key, label, count }) => (
                 <button
                   key={key}
-                  onClick={() => setFilter(key as any)}
+                  onClick={() => setFilter(key as ExperienceFilterType)}
                   className={`px-3 py-1.5 rounded-lg font-medium text-xs transition-all ${
                     filter === key
                       ? isDark

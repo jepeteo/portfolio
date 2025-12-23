@@ -1,4 +1,19 @@
+import type {
+  SchemaOrgBase,
+  SchemaOrgGraph,
+  SchemaOrgPerson,
+  SchemaOrgCreativeWork,
+} from "../types"
 
+type SchemaItem = SchemaOrgBase | SchemaOrgPerson | SchemaOrgCreativeWork
+
+interface ParsedSchema extends SchemaOrgBase {
+  "@graph"?: SchemaItem[]
+  hasPart?: SchemaOrgCreativeWork[]
+  sameAs?: string[]
+  knowsAbout?: string[]
+  image?: string
+}
 
 declare global {
   interface Window {
@@ -6,7 +21,8 @@ declare global {
     validateAllSchemas: () => void
     exportSchemaForTesting: () => string
   }
-}
+}
+
 window.testPortfolioSchema = () => {
   console.group("🧪 Portfolio Schema Testing")
 
@@ -23,7 +39,8 @@ window.testPortfolioSchema = () => {
         "Type:",
         schema["@type"] || schema["@graph"]?.[0]?.["@type"] || "Unknown"
       )
-      console.log("Content:", schema)
+      console.log("Content:", schema)
+
       if (!schema["@context"]) {
         console.warn("⚠️ Missing @context")
       }
@@ -38,7 +55,8 @@ window.testPortfolioSchema = () => {
   })
 
   console.groupEnd()
-}
+}
+
 window.validateAllSchemas = () => {
   console.group("✅ Schema Validation Report")
 
@@ -48,51 +66,60 @@ window.validateAllSchemas = () => {
 
   schemas.forEach((script, index) => {
     try {
-      const schema = JSON.parse(script.textContent || "")
+      const schema = JSON.parse(script.textContent || "") as ParsedSchema
 
-      console.group(`Schema ${index + 1} - ${schema["@type"] || "Graph"}`)
+      console.group(`Schema ${index + 1} - ${schema["@type"] || "Graph"}`)
+
       const issues: string[] = []
       const suggestions: string[] = []
 
       if (schema["@graph"]) {
-        schema["@graph"].forEach((item: any, i: number) => {
+        schema["@graph"].forEach((item: SchemaItem, i: number) => {
           console.log(
             `Graph item ${i + 1}:`,
             item["@type"],
             item.name || item["@id"]
           )
         })
-      }
+      }
+
       if (
         schema["@type"] === "Person" ||
-        schema["@graph"]?.some((item: any) => item["@type"] === "Person")
+        schema["@graph"]?.some((item: SchemaItem) => item["@type"] === "Person")
       ) {
-        const person =
+        const person = (
           schema["@type"] === "Person"
             ? schema
-            : schema["@graph"].find((item: any) => item["@type"] === "Person")
+            : schema["@graph"]?.find(
+                (item: SchemaItem) => item["@type"] === "Person"
+              )
+        ) as ParsedSchema | undefined
 
-        if (!person.image) suggestions.push("Add image for rich snippets")
-        if (!person.sameAs?.length) suggestions.push("Add social media links")
-        if (!person.knowsAbout?.length)
+        if (!person?.image) suggestions.push("Add image for rich snippets")
+        if (!person?.sameAs?.length) suggestions.push("Add social media links")
+        if (!person?.knowsAbout?.length)
           suggestions.push("Add skills/knowledge areas")
-      }
+      }
+
       if (
         schema["@type"] === "CreativeWork" ||
-        schema["@graph"]?.some((item: any) => item["@type"] === "CreativeWork")
+        schema["@graph"]?.some(
+          (item: SchemaItem) => item["@type"] === "CreativeWork"
+        )
       ) {
-        const portfolio =
+        const portfolio = (
           schema["@type"] === "CreativeWork"
             ? schema
-            : schema["@graph"].find(
-                (item: any) => item["@type"] === "CreativeWork"
+            : schema["@graph"]?.find(
+                (item: SchemaItem) => item["@type"] === "CreativeWork"
               )
+        ) as ParsedSchema | undefined
 
-        if (!portfolio.hasPart?.length)
+        if (!portfolio?.hasPart?.length)
           issues.push("Portfolio missing projects (hasPart)")
         if (
-          portfolio.hasPart?.some(
-            (project: any) => !project.url && !project["@id"]
+          portfolio?.hasPart?.some(
+            (project: SchemaOrgCreativeWork) => !project.url && !project["@id"]
           )
         ) {
           suggestions.push("Some projects missing URLs")
@@ -116,23 +143,25 @@ window.validateAllSchemas = () => {
   })
 
   console.groupEnd()
-}
+}
+
 window.exportSchemaForTesting = () => {
   const schemas = document.querySelectorAll(
     'script[type="application/ld+json"]'
   )
-  const allSchemas: any[] = []
+  const allSchemas: ParsedSchema[] = []
 
   schemas.forEach((script) => {
     try {
-      const schema = JSON.parse(script.textContent || "")
+      const schema = JSON.parse(script.textContent || "") as ParsedSchema
       allSchemas.push(schema)
     } catch (error) {
       console.error("Error parsing schema:", error)
     }
   })
 
-  const exportData = JSON.stringify(allSchemas, null, 2)
+  const exportData = JSON.stringify(allSchemas, null, 2)
+
   if (navigator.clipboard) {
     navigator.clipboard.writeText(exportData).then(() => {
       console.log("📋 Schema data copied to clipboard!")
@@ -148,11 +177,11 @@ window.exportSchemaForTesting = () => {
   console.log(exportData)
 
   return exportData
-}
-if (process.env.NODE_ENV === "development") {
+}
+
+if (process.env.NODE_ENV === "development") {
   window.addEventListener("load", () => {
-    setTimeout(() => {
-    }, 1000)
+    setTimeout(() => {}, 1000)
   })
 }
 

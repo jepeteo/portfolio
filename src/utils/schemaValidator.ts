@@ -1,3 +1,14 @@
+import type {
+  SchemaOrgType,
+  SchemaOrgPerson,
+  SchemaOrgCreativeWork,
+  SchemaOrgWebSite,
+  SchemaOrgItemList,
+  SchemaOrgOrganization,
+  SchemaOrgGraph,
+  UnknownObject,
+} from "../types"
+
 export interface SchemaValidationResult {
   isValid: boolean
   errors: string[]
@@ -5,13 +16,15 @@ export interface SchemaValidationResult {
   suggestions: string[]
 }
 
+type SchemaInput = SchemaOrgType | UnknownObject
+
 export class SchemaValidator {
   static validateSchemaInConsole() {
     // Validation disabled - schema validation happens at build time
     return
   }
 
-  static validatePersonSchema(schema: any): SchemaValidationResult {
+  static validatePersonSchema(schema: SchemaInput): SchemaValidationResult {
     const errors: string[] = []
     const warnings: string[] = []
     const suggestions: string[] = []
@@ -49,19 +62,21 @@ export class SchemaValidator {
     }
   }
 
-  static validatePortfolioSchema(schema: any): SchemaValidationResult {
+  static validatePortfolioSchema(schema: SchemaInput): SchemaValidationResult {
     const errors: string[] = []
     const warnings: string[] = []
     const suggestions: string[] = []
 
-    if (!schema["@context"]) errors.push("Missing @context")
-    if (!schema["@type"]) errors.push("Missing @type")
-    if (!schema.name) errors.push("Missing name field")
+    const schemaObj = schema as UnknownObject
+    if (!schemaObj["@context"]) errors.push("Missing @context")
+    if (!schemaObj["@type"]) errors.push("Missing @type")
+    if (!schemaObj.name) errors.push("Missing name field")
 
-    if (!schema.hasPart || !Array.isArray(schema.hasPart)) {
+    const hasPart = schemaObj.hasPart as SchemaOrgCreativeWork[] | undefined
+    if (!hasPart || !Array.isArray(hasPart)) {
       errors.push("Portfolio schema should have 'hasPart' array with projects")
     } else {
-      schema.hasPart.forEach((project: any, index: number) => {
+      hasPart.forEach((project: SchemaOrgCreativeWork, index: number) => {
         if (!project.name) {
           errors.push(`Project ${index} missing name`)
         }
@@ -86,19 +101,20 @@ export class SchemaValidator {
     }
   }
 
-  static validateWebsiteSchema(schema: any): SchemaValidationResult {
+  static validateWebsiteSchema(schema: SchemaInput): SchemaValidationResult {
     const errors: string[] = []
     const warnings: string[] = []
     const suggestions: string[] = []
 
-    if (!schema.url) errors.push("Website schema missing URL")
-    if (!schema.name) errors.push("Website schema missing name")
+    const schemaObj = schema as SchemaOrgWebSite
+    if (!schemaObj.url) errors.push("Website schema missing URL")
+    if (!schemaObj.name) errors.push("Website schema missing name")
 
-    if (!schema.potentialAction) {
+    if (!schemaObj.potentialAction) {
       suggestions.push("Add potentialAction for search functionality")
     }
 
-    if (!schema.mainEntity) {
+    if (!schemaObj.mainEntity) {
       suggestions.push("Add mainEntity to link to primary content")
     }
 
@@ -110,17 +126,21 @@ export class SchemaValidator {
     }
   }
 
-  static validateItemListSchema(schema: any): SchemaValidationResult {
+  static validateItemListSchema(schema: SchemaInput): SchemaValidationResult {
     const errors: string[] = []
     const warnings: string[] = []
     const suggestions: string[] = []
 
-    if (!schema.itemListElement || !Array.isArray(schema.itemListElement)) {
+    const schemaObj = schema as SchemaOrgItemList
+    if (
+      !schemaObj.itemListElement ||
+      !Array.isArray(schemaObj.itemListElement)
+    ) {
       errors.push("ItemList schema missing 'itemListElement' array")
     }
 
-    if (!schema.name) warnings.push("Consider adding 'name' for better SEO")
-    if (!schema.description) warnings.push("Consider adding 'description'")
+    if (!schemaObj.name) warnings.push("Consider adding 'name' for better SEO")
+    if (!schemaObj.description) warnings.push("Consider adding 'description'")
 
     return {
       isValid: errors.length === 0,
@@ -130,15 +150,18 @@ export class SchemaValidator {
     }
   }
 
-  static validateOrganizationSchema(schema: any): SchemaValidationResult {
+  static validateOrganizationSchema(
+    schema: SchemaInput
+  ): SchemaValidationResult {
     const errors: string[] = []
     const warnings: string[] = []
     const suggestions: string[] = []
 
-    if (!schema.name) errors.push("Organization schema missing 'name'")
+    const schemaObj = schema as SchemaOrgOrganization
+    if (!schemaObj.name) errors.push("Organization schema missing 'name'")
 
-    if (!schema.url) warnings.push("Consider adding 'url' field")
-    if (!schema.description) warnings.push("Consider adding 'description'")
+    if (!schemaObj.url) warnings.push("Consider adding 'url' field")
+    if (!schemaObj.description) warnings.push("Consider adding 'description'")
 
     return {
       isValid: errors.length === 0,
@@ -148,7 +171,7 @@ export class SchemaValidator {
     }
   }
 
-  static generateSchemaReport(schema: any): string {
+  static generateSchemaReport(schema: SchemaInput): string {
     let report = "Schema Validation Report\n"
     report += "========================\n\n"
 
@@ -219,33 +242,35 @@ export class SchemaValidator {
     return report
   }
 
-  static optimizeSchema(schema: any): any {
-    const optimized = { ...schema }
+  static optimizeSchema<T extends SchemaInput>(schema: T): T {
+    const optimized = { ...schema } as T & UnknownObject
 
     if (!optimized["@context"]) {
       optimized["@context"] = "https://schema.org"
     }
 
-    if (!optimized["@id"] && optimized.url) {
-      optimized["@id"] = `${optimized.url}#${optimized["@type"].toLowerCase()}`
+    const schemaType = optimized["@type"] as string | undefined
+    if (!optimized["@id"] && optimized.url && schemaType) {
+      optimized["@id"] = `${optimized.url}#${schemaType.toLowerCase()}`
     }
 
     Object.keys(optimized).forEach((key) => {
-      if (Array.isArray(optimized[key])) {
-        optimized[key] = optimized[key].filter(
-          (item: any) => item !== null && item !== undefined && item !== ""
+      const value = optimized[key]
+      if (Array.isArray(value)) {
+        optimized[key] = value.filter(
+          (item: unknown) => item !== null && item !== undefined && item !== ""
         )
 
-        if (optimized[key].length === 0) {
+        if ((optimized[key] as unknown[]).length === 0) {
           delete optimized[key]
         }
       }
     })
 
-    return optimized
+    return optimized as T
   }
 
-  static async testGoogleRichResults(schema: any): Promise<{
+  static async testGoogleRichResults(schema: SchemaInput): Promise<{
     eligible: boolean
     richResultTypes: string[]
     issues: string[]
