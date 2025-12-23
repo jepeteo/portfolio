@@ -83,7 +83,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <h1
+            <div
               className={cn(
                 typography.heading.h4,
                 "font-bold leading-tight",
@@ -93,7 +93,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
               )}
             >
               <span>Theodoros</span> <span>Mentis</span>
-            </h1>
+            </div>
             <p
               className={cn(
                 typography.body.small,
