@@ -1,28 +1,69 @@
 import React, { createContext, useContext } from "react"
+import { motion, HTMLMotionProps } from "framer-motion"
 import { cn } from "../../utils/styles"
 
 interface CardContextValue {
   variant: "default" | "outlined" | "elevated" | "ghost"
   size: "sm" | "md" | "lg"
+  interactive: boolean
 }
 
 const CardContext = createContext<CardContextValue>({
   variant: "default",
   size: "md",
+  interactive: false,
 })
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+// Micro-interaction hover effects
+const hoverEffects = {
+  lift: {
+    rest: { y: 0, boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" },
+    hover: { y: -6, boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" },
+    tap: { y: -2, scale: 0.98 },
+  },
+  glow: {
+    rest: { boxShadow: "0 0 0 0 rgba(59, 130, 246, 0)" },
+    hover: { boxShadow: "0 0 25px 0 rgba(59, 130, 246, 0.25)" },
+    tap: { boxShadow: "0 0 15px 0 rgba(59, 130, 246, 0.15)" },
+  },
+  scale: {
+    rest: { scale: 1 },
+    hover: { scale: 1.02 },
+    tap: { scale: 0.98 },
+  },
+  subtle: {
+    rest: { y: 0 },
+    hover: { y: -2 },
+    tap: { y: 0, scale: 0.99 },
+  },
+}
+
+type HoverEffect = keyof typeof hoverEffects | "none"
+
+interface CardProps extends Omit<HTMLMotionProps<"div">, "children"> {
+  children: React.ReactNode
   variant?: CardContextValue["variant"]
   size?: CardContextValue["size"]
+  hover?: HoverEffect
+  interactive?: boolean
   asChild?: boolean
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (
-    { className, variant = "default", size = "md", asChild = false, ...props },
+    { 
+      className, 
+      variant = "default", 
+      size = "md", 
+      hover = "none",
+      interactive = false,
+      asChild = false, 
+      children,
+      ...props 
+    },
     ref
   ) => {
-    const contextValue = { variant, size }
+    const contextValue = { variant, size, interactive }
 
     const cardVariants = {
       default:
@@ -39,20 +80,48 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       lg: "p-8 rounded-2xl",
     }
 
-    const Comp = asChild ? React.Fragment : "div"
+    const baseClasses = cn(
+      "transition-colors duration-200 ease-out",
+      cardVariants[variant],
+      cardSizes[size],
+      interactive && "cursor-pointer",
+      className
+    )
 
+    // Non-interactive card
+    if (!interactive || hover === "none") {
+      return (
+        <CardContext.Provider value={contextValue}>
+          <motion.div
+            ref={ref}
+            className={baseClasses}
+            {...props}
+          >
+            {children}
+          </motion.div>
+        </CardContext.Provider>
+      )
+    }
+
+    // Interactive card with micro-interactions
     return (
       <CardContext.Provider value={contextValue}>
-        <Comp
+        <motion.div
           ref={ref}
-          className={cn(
-            "transition-all duration-200 ease-out",
-            cardVariants[variant],
-            cardSizes[size],
-            className
-          )}
+          className={baseClasses}
+          initial="rest"
+          whileHover="hover"
+          whileTap="tap"
+          variants={hoverEffects[hover]}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 25,
+          }}
           {...props}
-        />
+        >
+          {children}
+        </motion.div>
       </CardContext.Provider>
     )
   }
