@@ -9,7 +9,7 @@ interface SkipLinkProps {
 
 /**
  * SkipLink - Accessibility component for keyboard users
- * 
+ *
  * Allows keyboard users to skip directly to main content,
  * bypassing repetitive navigation elements.
  */

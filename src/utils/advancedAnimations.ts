@@ -1,5 +1,3 @@
-
-
 import { useEffect, useRef, useState, useCallback } from "react"
 import { useReducedMotion } from "./accessibilityOptimization"
 
@@ -345,7 +343,6 @@ export function useSkeletonMorph(isLoading: boolean, morphDuration = 300) {
 }
 
 export const animationStyles = {
-
   magneticButton: `
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;

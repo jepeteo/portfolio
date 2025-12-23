@@ -88,12 +88,11 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
                 typography.heading.h4,
                 "font-bold leading-tight",
                 "text-slate-900 dark:text-white",
-                "group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200",
+                "group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-200",
                 "text-base sm:text-lg lg:text-xl xl:text-2xl"
               )}
             >
-              <span>Theodoros</span>{" "}
-              <span>Mentis</span>
+              <span>Theodoros</span> <span>Mentis</span>
             </h1>
             <p
               className={cn(

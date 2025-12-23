@@ -135,13 +135,16 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
           const element = document.getElementById(id)
           return element ? { id, element } : null
         })
-        .filter((section): section is { id: string; element: HTMLElement } => section !== null)
+        .filter(
+          (section): section is { id: string; element: HTMLElement } =>
+            section !== null
+        )
 
       // Find the section that's currently in view (from bottom to top for accuracy)
       for (let i = sections.length - 1; i >= 0; i--) {
         const { id, element } = sections[i]
         const { offsetTop } = element
-        
+
         if (scrollPosition >= offsetTop) {
           setActiveSection(`#${id}`)
           return

@@ -7,12 +7,35 @@
     <!-- Critical CSS for above-the-fold content -->
     <style>
       /* Prevent FOUC and set initial theme */
-      :root{--bg-primary:#0f172a;--text-primary:#f8fafc}
-      @media(prefers-color-scheme:light){:root{--bg-primary:#f8fafc;--text-primary:#0f172a}}
-      html,body{margin:0;padding:0;background-color:var(--bg-primary);color:var(--text-primary)}
-      #root{min-height:100vh;display:flex;flex-direction:column}
+      :root {
+        --bg-primary: #0f172a;
+        --text-primary: #f8fafc;
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg-primary: #f8fafc;
+          --text-primary: #0f172a;
+        }
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+      }
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
       /* Loading placeholder */
-      .loading-placeholder{display:flex;align-items:center;justify-content:center;min-height:100vh}
+      .loading-placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
     </style>
 
     <!-- Content Security Policy for Development (temporarily disabled for testing) -->

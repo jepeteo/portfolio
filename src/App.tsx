@@ -4,7 +4,12 @@ import Hero from "./components/Hero"
 import Footer from "./components/Footer"
 import ErrorBoundary from "./components/ErrorBoundary"
 import PortfolioSchema from "./components/PortfolioSchema"
-import { LoadingSpinner, ProjectGridSkeleton, ExperienceCardSkeleton, SkillsSkeleton } from "./components/loading/ModernLoadingStates"
+import {
+  LoadingSpinner,
+  ProjectGridSkeleton,
+  ExperienceCardSkeleton,
+  SkillsSkeleton,
+} from "./components/loading/ModernLoadingStates"
 import { SkipLink } from "./components/accessibility/SkipLink"
 import { ThemeProvider, useTheme } from "./context/ThemeContext"
 import {
@@ -20,14 +25,31 @@ import useServiceWorker from "./hooks/useServiceWorker"
 
 // Lazy-load components that use framer-motion to reduce initial bundle
 const ModernHeader = lazy(() => import("./components/navigation/ModernHeader"))
-const ToastProvider = lazy(() => import("./components/ui/Toast").then(m => ({ default: m.ToastProvider })))
-const BackToTopButton = lazy(() => import("./components/ui/BackToTopButton").then(m => ({ default: m.BackToTopButton })))
-const ScrollProgress = lazy(() => import("./components/ui/ScrollProgress").then(m => ({ default: m.ScrollProgress })))
-const OfflineIndicator = lazy(() => import("./components/ui/OfflineIndicator").then(m => ({ default: m.OfflineIndicator })))
+const ToastProvider = lazy(() =>
+  import("./components/ui/Toast").then((m) => ({ default: m.ToastProvider }))
+)
+const BackToTopButton = lazy(() =>
+  import("./components/ui/BackToTopButton").then((m) => ({
+    default: m.BackToTopButton,
+  }))
+)
+const ScrollProgress = lazy(() =>
+  import("./components/ui/ScrollProgress").then((m) => ({
+    default: m.ScrollProgress,
+  }))
+)
+const OfflineIndicator = lazy(() =>
+  import("./components/ui/OfflineIndicator").then((m) => ({
+    default: m.OfflineIndicator,
+  }))
+)
 
 // Lazy-loaded components (below the fold)
 const VercelIntegrations = createLazyComponent(
-  () => import("./components/VercelIntegrations").then(m => ({ default: m.VercelIntegrations })),
+  () =>
+    import("./components/VercelIntegrations").then((m) => ({
+      default: m.VercelIntegrations,
+    })),
   {}
 )
 
@@ -51,10 +73,7 @@ const ModernBio = createLazyComponent(
   {}
 )
 
-const Contact = createLazyComponent(
-  () => import("./components/Contact"),
-  {}
-)
+const Contact = createLazyComponent(() => import("./components/Contact"), {})
 
 const ModernProjects = createLazyComponent(
   () => import("./components/ModernProjects"),
@@ -113,18 +132,22 @@ const AppContent: React.FC = () => {
 
   // Lazy-load production monitor and track page view
   React.useEffect(() => {
-    import("./utils/productionMonitor").then(({ default: productionMonitor }) => {
-      productionMonitor.trackPageView()
-    })
+    import("./utils/productionMonitor").then(
+      ({ default: productionMonitor }) => {
+        productionMonitor.trackPageView()
+      }
+    )
   }, [])
 
   // Track theme changes (lazy load production monitor)
   React.useEffect(() => {
-    import("./utils/productionMonitor").then(({ default: productionMonitor }) => {
-      productionMonitor.trackEvent("theme_change", {
-        theme: isDark ? "dark" : "light",
-      })
-    })
+    import("./utils/productionMonitor").then(
+      ({ default: productionMonitor }) => {
+        productionMonitor.trackEvent("theme_change", {
+          theme: isDark ? "dark" : "light",
+        })
+      }
+    )
   }, [isDark])
 
   React.useEffect(() => {
@@ -236,7 +259,12 @@ const AppContent: React.FC = () => {
     >
       <SkipLink href="#main-content" />
       <Suspense fallback={null}>
-        <ScrollProgress position="top" height={3} colorScheme="gradient" hideAtTop={true} />
+        <ScrollProgress
+          position="top"
+          height={3}
+          colorScheme="gradient"
+          hideAtTop={true}
+        />
       </Suspense>
       <PortfolioSchema
         includePersonSchema={false}

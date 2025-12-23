@@ -10,7 +10,6 @@ interface VercelConfig {
 }
 
 const getVercelConfig = (): VercelConfig => {
-
   const isVercel =
     typeof window !== "undefined" &&
     (window.location.hostname.includes("vercel.app") ||
@@ -68,7 +67,6 @@ export const injectVercelAnalytics = () => {
   const config = getVercelConfig()
 
   if (config.analyticsEnabled && typeof window !== "undefined") {
-
     const script = document.createElement("script")
     script.src = "https://va.vercel-scripts.com/v1/script.js"
     script.defer = true
@@ -76,7 +74,6 @@ export const injectVercelAnalytics = () => {
   }
 
   if (config.speedInsightsEnabled && typeof window !== "undefined") {
-
     const script = document.createElement("script")
     script.src = "https://va.vercel-scripts.com/v1/speed-insights/script.js"
     script.defer = true

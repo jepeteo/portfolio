@@ -159,7 +159,10 @@ const getIssuerUrl = (issuer: string): string => {
   )
 }
 
-const categoryIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+const categoryIcons: Record<
+  string,
+  React.ComponentType<{ className?: string }>
+> = {
   "AI & Machine Learning": Zap,
   "Frontend Development": Code,
   "Backend Development": Server,

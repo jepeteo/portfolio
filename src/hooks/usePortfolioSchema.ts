@@ -28,42 +28,45 @@ interface ReactSchemaProject {
 }
 
 export const usePortfolioSchema = () => {
-
   const portfolioProjects = useMemo((): PortfolioSchemaProject[] => {
-    return myProjects
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .filter((project: any) => project.prName && project.prDescription)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map((project: any) => ({
-        name: project.prName,
-        description: project.prDescription,
-        url: project.prUrl,
-        technologies: extractTechnologiesFromProject(project),
-        dateCreated: estimateProjectDate(project),
-        type: project.prType,
-        featured: project.prFeatured || false,
-        imageUrl: generateImageUrl(project.prImageSlug),
-      }))
+    return (
+      myProjects
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .filter((project: any) => project.prName && project.prDescription)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .map((project: any) => ({
+          name: project.prName,
+          description: project.prDescription,
+          url: project.prUrl,
+          technologies: extractTechnologiesFromProject(project),
+          dateCreated: estimateProjectDate(project),
+          type: project.prType,
+          featured: project.prFeatured || false,
+          imageUrl: generateImageUrl(project.prImageSlug),
+        }))
+    )
   }, [])
 
   const reactProjects = useMemo((): ReactSchemaProject[] => {
-    return myReactProjects
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .filter((project: any) => project.title && project.description)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map((project: any) => ({
-        id: project.id,
-        title: project.title,
-        description: project.description,
-        technologies: project.technologies || [],
-        githubUrl: project.githubUrl,
-        liveUrl: project.liveUrl,
-        date: project.date,
-        status: project.status,
-        featured: project.featured || false,
-        performance: project.performance,
-        image: project.image,
-      }))
+    return (
+      myReactProjects
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .filter((project: any) => project.title && project.description)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .map((project: any) => ({
+          id: project.id,
+          title: project.title,
+          description: project.description,
+          technologies: project.technologies || [],
+          githubUrl: project.githubUrl,
+          liveUrl: project.liveUrl,
+          date: project.date,
+          status: project.status,
+          featured: project.featured || false,
+          performance: project.performance,
+          image: project.image,
+        }))
+    )
   }, [])
 
   const portfolioStats = useMemo(() => {
@@ -156,7 +159,6 @@ function extractTechnologiesFromProject(project: any): string[] {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function estimateProjectDate(project: any): string {
-
   if (project.dateCreated) return project.dateCreated
 
   const currentYear = new Date().getFullYear()
@@ -177,7 +179,6 @@ function estimateProjectDate(project: any): string {
 
 function generateImageUrl(imageSlug?: string): string | undefined {
   if (!imageSlug) return undefined
-
 
   return `/src/assets/images/projects/${imageSlug}.jpg`
 }

@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "../../context/ThemeContext"
@@ -99,7 +98,6 @@ const ModernProjectGrid: React.FC<ModernProjectGridProps> = ({
           )}
           style={{ viewTransitionName: `project-${project.id}` }}
         >
-          
           <div
             className={cn(
               "relative overflow-hidden",
@@ -199,7 +197,6 @@ const ModernProjectGrid: React.FC<ModernProjectGridProps> = ({
           </CardHeader>
 
           <CardContent className="flex-1">
-            
             <div className="flex flex-wrap gap-2">
               {project.technologies
                 .slice(0, featured ? 6 : 4)
@@ -269,7 +266,6 @@ const ModernProjectGrid: React.FC<ModernProjectGridProps> = ({
         transition={{ duration: 0.6 }}
         className="space-y-12"
       >
-        
         <div className="text-center space-y-4">
           <motion.h2
             className={cn(typography.heading.h2, "mb-4")}
@@ -302,7 +298,6 @@ const ModernProjectGrid: React.FC<ModernProjectGridProps> = ({
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <Button
@@ -356,7 +351,6 @@ const ModernProjectGrid: React.FC<ModernProjectGridProps> = ({
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              
               {featured.length > 0 && (
                 <div className="mb-12">
                   <h3

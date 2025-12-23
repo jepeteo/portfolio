@@ -1,7 +1,3 @@
-
-
-
-
 // PostHog instance type is dynamic from the posthog-js library
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let posthogInstance: any = null

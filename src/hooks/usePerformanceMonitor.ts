@@ -76,7 +76,8 @@ const usePerformanceMonitor = (componentName: string) => {
         entries.forEach((entry) => {
           const firstInputEntry = entry as PerformanceEventTiming
           if (firstInputEntry.processingStart) {
-            webVitalsRef.current.FID = firstInputEntry.processingStart - firstInputEntry.startTime
+            webVitalsRef.current.FID =
+              firstInputEntry.processingStart - firstInputEntry.startTime
           }
         })
       })
@@ -88,7 +89,10 @@ const usePerformanceMonitor = (componentName: string) => {
         const entries = list.getEntries()
         entries.forEach((entry) => {
           // Layout shift entries have value and hadRecentInput properties
-          const layoutShiftEntry = entry as PerformanceEntry & { value: number; hadRecentInput: boolean }
+          const layoutShiftEntry = entry as PerformanceEntry & {
+            value: number
+            hadRecentInput: boolean
+          }
           if (!layoutShiftEntry.hadRecentInput) {
             clsValue += layoutShiftEntry.value
           }

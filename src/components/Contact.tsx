@@ -70,7 +70,12 @@ const generateContactSchema = () => {
 
 // Individual Contact Method Schema Component
 const ContactMethodSchema: React.FC<{
-  method: { icon: React.ComponentType<{ className?: string }>; label: string; value: string; href: string }
+  method: {
+    icon: React.ComponentType<{ className?: string }>
+    label: string
+    value: string
+    href: string
+  }
 }> = ({ method }) => {
   const schema = {
     "@context": "https://schema.org",
@@ -103,7 +108,9 @@ interface FormFieldProps {
   label: string
   type?: "text" | "email" | "textarea"
   value: string
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void
   onBlur?: () => void
   error?: string
   placeholder: string
@@ -134,7 +141,7 @@ const FormField: React.FC<FormFieldProps> = ({
   const [isFocused, setIsFocused] = useState(false)
   const charCount = value.length
   const charPercentage = (charCount / maxLength) * 100
-  
+
   const getCharCountColor = () => {
     if (charPercentage >= 90) return "text-red-500"
     if (charPercentage >= 75) return "text-yellow-500"
@@ -143,9 +150,10 @@ const FormField: React.FC<FormFieldProps> = ({
 
   const getBorderColor = () => {
     if (error) return "border-red-500 focus:ring-red-500"
-    if (isValid && value.length > 0) return isDark 
-      ? "border-green-500/50 focus:ring-green-500" 
-      : "border-green-500 focus:ring-green-500"
+    if (isValid && value.length > 0)
+      return isDark
+        ? "border-green-500/50 focus:ring-green-500"
+        : "border-green-500 focus:ring-green-500"
     return isDark
       ? "border-slate-600 focus:ring-green-500"
       : "border-slate-300 focus:ring-green-500"
@@ -169,11 +177,11 @@ const FormField: React.FC<FormFieldProps> = ({
           {label} *
         </label>
         {showCharCount && (
-          <motion.span 
+          <motion.span
             className={`text-xs transition-colors ${getCharCountColor()}`}
             initial={false}
-            animate={{ 
-              scale: charPercentage >= 90 ? [1, 1.1, 1] : 1 
+            animate={{
+              scale: charPercentage >= 90 ? [1, 1.1, 1] : 1,
             }}
             transition={{ duration: 0.2 }}
           >
@@ -181,7 +189,7 @@ const FormField: React.FC<FormFieldProps> = ({
           </motion.span>
         )}
       </div>
-      
+
       <div className="relative">
         {type === "textarea" ? (
           <textarea
@@ -218,11 +226,11 @@ const FormField: React.FC<FormFieldProps> = ({
             maxLength={maxLength}
           />
         )}
-        
+
         {/* Validation indicator */}
         <AnimatePresence>
           {value.length > 0 && !isFocused && (
-            <motion.div 
+            <motion.div
               className="absolute right-3 top-1/2 -translate-y-1/2"
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -238,11 +246,11 @@ const FormField: React.FC<FormFieldProps> = ({
           )}
         </AnimatePresence>
       </div>
-      
+
       {/* Error message with animation */}
       <AnimatePresence>
         {error && (
-          <motion.p 
+          <motion.p
             className="mt-2 text-sm text-red-500 flex items-center gap-1"
             initial={{ opacity: 0, y: -10, height: 0 }}
             animate={{ opacity: 1, y: 0, height: "auto" }}
@@ -328,7 +336,7 @@ const Contact: React.FC = memo(() => {
   )
 
   const handleEmailBlur = useCallback(() => {
-    setTouchedFields(prev => new Set(prev).add("email"))
+    setTouchedFields((prev) => new Set(prev).add("email"))
     const emailError = validateFieldEmail(formData.email)
     if (emailError) {
       setErrors((prev) => ({ ...prev, email: emailError }))
@@ -338,7 +346,7 @@ const Contact: React.FC = memo(() => {
   }, [formData.email])
 
   const handleFieldBlur = useCallback((fieldName: string) => {
-    setTouchedFields(prev => new Set(prev).add(fieldName))
+    setTouchedFields((prev) => new Set(prev).add(fieldName))
   }, [])
 
   const validateForm = useCallback((): boolean => {
@@ -510,7 +518,8 @@ const Contact: React.FC = memo(() => {
         addToast({
           type: "error",
           title: "Failed to Send",
-          message: "Something went wrong. Please try again or email me directly.",
+          message:
+            "Something went wrong. Please try again or email me directly.",
           duration: 6000,
         })
         setTimeout(() => setSubmitStatus("idle"), 5000)
@@ -518,7 +527,15 @@ const Contact: React.FC = memo(() => {
         setIsSubmitting(false)
       }
     },
-    [formData, validateForm, emailjsConfig, csrfToken, startTime, setCsrfToken, addToast]
+    [
+      formData,
+      validateForm,
+      emailjsConfig,
+      csrfToken,
+      startTime,
+      setCsrfToken,
+      addToast,
+    ]
   )
 
   const contactInfo = [
@@ -732,18 +749,42 @@ const Contact: React.FC = memo(() => {
                 {/* Form progress indicator */}
                 <div className="mb-6">
                   <div className="flex justify-between items-center mb-2">
-                    <span className={`text-sm font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                    <span
+                      className={`text-sm font-medium ${
+                        isDark ? "text-slate-400" : "text-slate-600"
+                      }`}
+                    >
                       Form Progress
                     </span>
-                    <span className={`text-sm font-medium ${isFormValid ? "text-green-500" : isDark ? "text-slate-400" : "text-slate-600"}`}>
-                      {Object.values(fieldValidation).filter(Boolean).length}/4 fields complete
+                    <span
+                      className={`text-sm font-medium ${
+                        isFormValid
+                          ? "text-green-500"
+                          : isDark
+                          ? "text-slate-400"
+                          : "text-slate-600"
+                      }`}
+                    >
+                      {Object.values(fieldValidation).filter(Boolean).length}/4
+                      fields complete
                     </span>
                   </div>
-                  <div className={`h-2 rounded-full overflow-hidden ${isDark ? "bg-slate-700" : "bg-slate-200"}`}>
-                    <motion.div 
+                  <div
+                    className={`h-2 rounded-full overflow-hidden ${
+                      isDark ? "bg-slate-700" : "bg-slate-200"
+                    }`}
+                  >
+                    <motion.div
                       className="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"
                       initial={{ width: 0 }}
-                      animate={{ width: `${(Object.values(fieldValidation).filter(Boolean).length / 4) * 100}%` }}
+                      animate={{
+                        width: `${
+                          (Object.values(fieldValidation).filter(Boolean)
+                            .length /
+                            4) *
+                          100
+                        }%`,
+                      }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
                     />
                   </div>
@@ -755,7 +796,13 @@ const Contact: React.FC = memo(() => {
                   value={formData.name}
                   onChange={handleChange}
                   onBlur={() => handleFieldBlur("name")}
-                  error={touchedFields.has("name") && !fieldValidation.name && formData.name.length > 0 ? "Name must be 2-50 characters" : errors.name}
+                  error={
+                    touchedFields.has("name") &&
+                    !fieldValidation.name &&
+                    formData.name.length > 0
+                      ? "Name must be 2-50 characters"
+                      : errors.name
+                  }
                   placeholder="Your full name"
                   maxLength={50}
                   disabled={isSubmitting}
@@ -784,7 +831,13 @@ const Contact: React.FC = memo(() => {
                   value={formData.subject}
                   onChange={handleChange}
                   onBlur={() => handleFieldBlur("subject")}
-                  error={touchedFields.has("subject") && !fieldValidation.subject && formData.subject.length > 0 ? "Subject must be 3-100 characters" : errors.subject}
+                  error={
+                    touchedFields.has("subject") &&
+                    !fieldValidation.subject &&
+                    formData.subject.length > 0
+                      ? "Subject must be 3-100 characters"
+                      : errors.subject
+                  }
                   placeholder="Project inquiry, collaboration, etc."
                   maxLength={100}
                   disabled={isSubmitting}
@@ -799,7 +852,13 @@ const Contact: React.FC = memo(() => {
                   value={formData.message}
                   onChange={handleChange}
                   onBlur={() => handleFieldBlur("message")}
-                  error={touchedFields.has("message") && !fieldValidation.message && formData.message.length > 0 ? "Message must be 10-2000 characters" : errors.message}
+                  error={
+                    touchedFields.has("message") &&
+                    !fieldValidation.message &&
+                    formData.message.length > 0
+                      ? "Message must be 10-2000 characters"
+                      : errors.message
+                  }
                   placeholder="Tell me about your project, requirements, timeline, etc."
                   maxLength={2000}
                   disabled={isSubmitting}

@@ -18,7 +18,11 @@ const CardContext = createContext<CardContextValue>({
 const hoverEffects = {
   lift: {
     rest: { y: 0, boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" },
-    hover: { y: -6, boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" },
+    hover: {
+      y: -6,
+      boxShadow:
+        "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+    },
     tap: { y: -2, scale: 0.98 },
   },
   glow: {
@@ -51,17 +55,17 @@ interface CardProps extends Omit<HTMLMotionProps<"div">, "children"> {
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (
-    { 
-      className, 
-      variant = "default", 
-      size = "md", 
+    {
+      className,
+      variant = "default",
+      size = "md",
       hover = "none",
       interactive = false,
       // asChild reserved for future Radix slot pattern (unused)
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       asChild: _asChild,
       children,
-      ...props 
+      ...props
     },
     ref
   ) => {
@@ -94,11 +98,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     if (!interactive || hover === "none") {
       return (
         <CardContext.Provider value={contextValue}>
-          <motion.div
-            ref={ref}
-            className={baseClasses}
-            {...props}
-          >
+          <motion.div ref={ref} className={baseClasses} {...props}>
             {children}
           </motion.div>
         </CardContext.Provider>

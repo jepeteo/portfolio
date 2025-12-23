@@ -10,17 +10,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Performance
 
 #### Mobile Performance Optimization
+
 - **Self-hosted fonts** - Eliminated external Google Fonts requests
+
   - Migrated to fontsource packages (Inter, Space Grotesk, JetBrains Mono)
   - Fonts now bundled with app for faster loading
   - Removed Google Font preconnect/preload hints
 
 - **LCP Image Fix** - Hero image now visible immediately
+
   - Removed `opacity-0` from Hero section that blocked LCP
   - Image loads eagerly with `fetchPriority="high"`
   - Expected improvement: 13.6s → <2.5s LCP
 
 - **Deferred PostHog Analytics** - Analytics load after page interactive
+
   - Lazy load PostHog with `React.lazy()` and `requestIdleCallback`
   - Removed static imports from critical path
   - Expected improvement: 5.7s JS execution moved off main thread
@@ -34,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Simplified body backgrounds for mobile devices
 
 ### Changed
+
 - Hero animations only run on desktop for better mobile performance
 - Background decorations disabled on mobile for faster Style & Layout
 
@@ -42,19 +47,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 #### Low Priority UX Improvements
+
 - **Reduced Motion Support** - Accessibility-first animations
+
   - `useReducedMotion` hook for detecting user motion preferences
   - `getReducedMotionProps()` helper for Framer Motion variants
   - `reducedMotionVariants` preset with safe, subtle animations
   - Respects `prefers-reduced-motion` system setting
 
 - **Offline Indicator** - Network connectivity awareness
+
   - `OfflineIndicator` component with reconnection feedback
   - `useOnlineStatus` hook for online/offline detection
   - Toast-style notification with reconnection confirmation
   - Non-intrusive bottom-left positioning
 
 - **Enhanced Error Boundaries** - Improved error recovery UX
+
   - Redesigned `ErrorFallback` component with modern styling
   - Dark/light theme support for error screens
   - "Try Again" retry functionality
@@ -71,6 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 #### Technical Debt - ESLint Warnings
+
 - Reduced lint warnings from 112 to 16 (react-refresh architectural warnings only)
 - Fixed TypeScript `any` types across components, hooks, and utilities
 - Added proper interfaces for component props (StatsCard, ColorClasses, etc.)
@@ -89,12 +99,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 #### Medium Priority UX Improvements
+
 - **Micro-interactions** - Enhanced hover effects for interactive elements
+
   - Card component with lift, glow, scale, and subtle hover variants
   - Spring physics animations for natural feel
   - Configurable per-card interaction styles
 
 - **Toast Notification System** - User feedback for form submissions
+
   - `Toast` component with success, error, warning, info types
   - `ToastProvider` with configurable position
   - `useToast` hook for easy integration
@@ -102,12 +115,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Accessible ARIA attributes
 
 - **Keyboard Navigation Indicators** - Enhanced accessibility
+
   - `SkipLink` component for skip-to-main-content
   - `useFocusTrap` hook for modal/menu focus management
   - Enhanced global focus-visible styles
   - High contrast and reduced motion support
 
 - **Empty State Components** - Better UI for empty data
+
   - `EmptyState` component with animated entrance
   - `NoSearchResults`, `NoProjectsFound`, `NoDataAvailable` presets
   - Action buttons for user recovery paths
@@ -124,18 +139,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 #### UX Improvements
+
 - **Active Section Indicator (Scroll-Spy)** - Enhanced navigation with scroll-aware active section highlighting
+
   - Improved scroll detection algorithm with passive event listeners
   - Spring-animated gradient underline indicator
   - Visual feedback for current section
 
 - **Skeleton Loading States** - Beautiful loading placeholders for better perceived performance
+
   - `ProjectCardSkeleton` with shimmer animation effects
   - `ProjectGridSkeleton` for grid layouts
   - `ExperienceCardSkeleton` for experience timeline
   - `CertificateCardSkeleton` for certificates section
 
 - **Enhanced Form Validation UX** - Real-time feedback in contact form
+
   - `FormField` component with inline validation
   - Character counters for text inputs
   - Animated error messages with Framer Motion
@@ -143,6 +162,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Touch-aware validation (validates on blur)
 
 - **Mobile Navigation Animation** - Polished mobile menu interactions
+
   - Animated hamburger-to-X morphing button
   - Smooth rotation transitions between states
   - Improved touch target accessibility
@@ -165,6 +185,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **Mobile Menu Transparency** - Fixed semi-transparent background in mobile navigation menu
+
   - Changed from `bg-slate-900/98` to fully opaque `bg-slate-900`
   - Removed conflicting `backdrop-blur-xl` property
 
@@ -177,6 +198,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.0.2] - Previous Release
 
 ### Features
+
 - Initial portfolio implementation
 - React 18 with TypeScript
 - Vite build system

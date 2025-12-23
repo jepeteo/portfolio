@@ -2,24 +2,24 @@ import { useEffect, useState } from "react"
 
 /**
  * useReducedMotion - Hook to detect user's motion preference
- * 
+ *
  * Respects the user's system preference for reduced motion.
  * Use this to disable or simplify animations for users who prefer reduced motion.
- * 
+ *
  * @returns boolean - true if user prefers reduced motion
  */
 export function useReducedMotion(): boolean {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
     // Check if we're in a browser environment
     if (typeof window === "undefined") return false
-    
+
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
     return mediaQuery.matches
   })
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
-    
+
     const handleChange = (event: MediaQueryListEvent) => {
       setPrefersReducedMotion(event.matches)
     }
@@ -37,7 +37,7 @@ export function useReducedMotion(): boolean {
 
 /**
  * Get animation props based on reduced motion preference
- * 
+ *
  * @param prefersReducedMotion - Whether user prefers reduced motion
  * @returns Animation configuration object
  */
@@ -55,13 +55,13 @@ export function getReducedMotionProps(prefersReducedMotion: boolean) {
       layout: false,
     }
   }
-  
+
   return {}
 }
 
 /**
  * Reduced motion variants for Framer Motion
- * 
+ *
  * Use with AnimatePresence and motion components
  */
 export const reducedMotionVariants = {
@@ -78,7 +78,7 @@ export const reducedMotionVariants = {
       exit: { opacity: 0 },
     },
   },
-  
+
   // For slide animations
   slideUp: {
     reduced: {
@@ -92,7 +92,7 @@ export const reducedMotionVariants = {
       exit: { opacity: 0, y: -20 },
     },
   },
-  
+
   // For scale animations
   scale: {
     reduced: {

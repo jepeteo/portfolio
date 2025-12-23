@@ -49,7 +49,6 @@ const ReactProjects: React.FC = memo(() => {
       id="react-projects"
     >
       <div className="container">
-        
         <div className="text-center mb-16">
           <div
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
@@ -99,12 +98,10 @@ const ReactProjects: React.FC = memo(() => {
               }
               onMouseLeave={() => setHoveredProject(null)}
             >
-              
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
               <div className="relative p-6 pb-4">
                 <div className="flex items-start justify-between mb-4">
-                  
                   <div
                     className={`w-16 h-16 rounded-2xl flex items-center justify-center ${
                       isDark
@@ -116,7 +113,6 @@ const ReactProjects: React.FC = memo(() => {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    
                     <div
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
                         project.status === "completed"

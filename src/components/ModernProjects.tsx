@@ -409,7 +409,9 @@ const ModernProjects = memo(() => {
                     className="transition-all duration-[3000ms] ease-in-out group-hover:object-bottom"
                     objectPosition="top"
                     aspectRatio="auto"
-                    placeholderColor={isDark ? "rgb(71 85 105)" : "rgb(203 213 225)"}
+                    placeholderColor={
+                      isDark ? "rgb(71 85 105)" : "rgb(203 213 225)"
+                    }
                   />
                   <div
                     className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${

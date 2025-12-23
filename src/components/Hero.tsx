@@ -53,7 +53,10 @@ const Hero: React.FC = memo(() => {
       aria-label="Hero section - Theodore Mentis, Senior Full Stack Developer"
     >
       {/* Simplified background - use CSS containment for performance */}
-      <div className="absolute inset-0 overflow-hidden" style={{ contain: 'strict' }}>
+      <div
+        className="absolute inset-0 overflow-hidden"
+        style={{ contain: "strict" }}
+      >
         <div
           className={`absolute inset-0 ${
             isDark
@@ -86,7 +89,10 @@ const Hero: React.FC = memo(() => {
 
           {/* Reduced animated dots - only on desktop, hidden on mobile */}
           {!prefersReducedMotion && (
-            <div className="hidden lg:block absolute inset-0" aria-hidden="true">
+            <div
+              className="hidden lg:block absolute inset-0"
+              aria-hidden="true"
+            >
               {[0, 1, 2, 3].map((i) => (
                 <div
                   key={i}
@@ -94,11 +100,11 @@ const Hero: React.FC = memo(() => {
                     isDark ? "bg-blue-400/20" : "bg-blue-600/20"
                   } rounded-full animate-pulse`}
                   style={{
-                    left: `${(i * 25) + 12}%`,
+                    left: `${i * 25 + 12}%`,
                     top: `${(i % 2) * 30 + 20}%`,
                     animationDelay: `${i * 0.5}s`,
                     animationDuration: "3s",
-                    willChange: 'opacity',
+                    willChange: "opacity",
                   }}
                 />
               ))}
@@ -127,9 +133,7 @@ const Hero: React.FC = memo(() => {
             </span>
           </div>
 
-          <h1
-            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-          >
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             <span
               className={`block ${isDark ? "text-white" : "text-slate-900"}`}
             >
@@ -235,9 +239,7 @@ const Hero: React.FC = memo(() => {
           </div>
         </div>
 
-        <div
-          className="flex-1 lg:flex-none lg:w-1/2 mt-12 lg:mt-0"
-        >
+        <div className="flex-1 lg:flex-none lg:w-1/2 mt-12 lg:mt-0">
           <div className="relative max-w-lg mx-auto">
             <div
               className={`absolute -inset-4 rounded-3xl ${
@@ -263,7 +265,9 @@ const Hero: React.FC = memo(() => {
                   height={800}
                   alt="Theodoros Mentis - Professional headshot of a Senior Full-Stack Developer with 18+ years of experience, based in Berlin, Germany"
                   className={`w-full h-auto rounded-3xl transform transition-transform duration-500 hover:scale-105 ${
-                    prefersReducedMotion ? "!transform-none !transition-none" : ""
+                    prefersReducedMotion
+                      ? "!transform-none !transition-none"
+                      : ""
                   }`}
                   style={{ animation: "fadeIn 0.6s ease-out" }}
                   loading="eager"
@@ -313,7 +317,9 @@ const Hero: React.FC = memo(() => {
       </div>
 
       <div
-        className={`container mx-auto px-6 py-12 ${prefersReducedMotion ? "" : ""}`}
+        className={`container mx-auto px-6 py-12 ${
+          prefersReducedMotion ? "" : ""
+        }`}
         role="region"
         aria-labelledby="approach-title"
       >
@@ -346,7 +352,11 @@ const Hero: React.FC = memo(() => {
                   ? "from-transparent via-purple-500/40 to-blue-500/40"
                   : "from-transparent via-purple-400/40 to-blue-400/40"
               } ${prefersReducedMotion ? "" : "md:animate-pulse"}`}
-              style={{ animationDuration: "3s", animationDelay: "1.5s", willChange: "opacity" }}
+              style={{
+                animationDuration: "3s",
+                animationDelay: "1.5s",
+                willChange: "opacity",
+              }}
             />
           </div>
         </div>

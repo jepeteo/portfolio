@@ -43,7 +43,7 @@ export function useOnlineStatus() {
 
 /**
  * OfflineIndicator - Shows a banner when user loses network connectivity
- * 
+ *
  * Automatically appears when offline and optionally shows a
  * "back online" message when connectivity is restored.
  */
@@ -123,9 +123,7 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
         >
           <div className="container flex items-center justify-center gap-3">
             <Wifi className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
-            <span className="font-medium text-sm">
-              You're back online!
-            </span>
+            <span className="font-medium text-sm">You're back online!</span>
           </div>
         </motion.div>
       )}

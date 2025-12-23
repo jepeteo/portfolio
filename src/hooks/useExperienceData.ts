@@ -128,13 +128,10 @@ const transformToTechExperience = (): TechExperience[] => {
 const calculateExperienceStats = (
   experiences: TechExperience[]
 ): ExperienceStats => {
-
   const freelanceExperiences = experiences.filter((exp) => exp.isFreelance)
   const employmentExperiences = experiences.filter((exp) => !exp.isFreelance)
 
-
   const calculateEmploymentYears = () => {
-
     let earliestEmploymentStart: Date | null = null
     let latestEmploymentEnd: Date | null = null
 
@@ -195,7 +192,6 @@ const calculateExperienceStats = (
 
   const employmentYears = calculateEmploymentYears()
   const freelanceYears = calculateFreelanceYears()
-
 
   const totalYears = Math.max(employmentYears, freelanceYears)
 

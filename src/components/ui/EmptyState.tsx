@@ -1,13 +1,13 @@
 import React from "react"
 import { motion } from "framer-motion"
 import { cn } from "../../utils/styles"
-import { 
-  Search, 
-  FolderOpen, 
-  FileX, 
+import {
+  Search,
+  FolderOpen,
+  FileX,
   AlertCircle,
   RefreshCw,
-  Plus
+  Plus,
 } from "lucide-react"
 import { Button } from "./Button"
 
@@ -53,7 +53,7 @@ interface EmptyStateProps {
 
 /**
  * EmptyState - A reusable component for displaying empty states
- * 
+ *
  * Use this when:
  * - A list or grid has no items to display
  * - Search/filter returns no results
@@ -71,9 +71,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   animated = true,
 }) => {
   // Resolve icon component
-  const IconComponent = typeof icon === "string" 
-    ? emptyStateIcons[icon] 
-    : icon
+  const IconComponent = typeof icon === "string" ? emptyStateIcons[icon] : icon
 
   // Size configurations
   const sizes = {

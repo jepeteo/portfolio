@@ -1,4 +1,3 @@
-
 import React from "react"
 import { motion } from "framer-motion"
 import { useTheme } from "../../context/ThemeContext"
@@ -167,7 +166,7 @@ export const ProjectCardSkeleton: React.FC<{ className?: string }> = ({
           transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
         />
       </div>
-      
+
       {/* Content skeleton */}
       <div className="p-5 space-y-4">
         {/* Title */}
@@ -176,33 +175,55 @@ export const ProjectCardSkeleton: React.FC<{ className?: string }> = ({
           <Skeleton variant="text" width="90%" height="0.875rem" />
           <Skeleton variant="text" width="60%" height="0.875rem" />
         </div>
-        
+
         {/* Tags */}
         <div className="flex flex-wrap gap-2">
-          <Skeleton variant="rect" width="3.5rem" height="1.5rem" className="rounded-full" />
-          <Skeleton variant="rect" width="4rem" height="1.5rem" className="rounded-full" />
-          <Skeleton variant="rect" width="3rem" height="1.5rem" className="rounded-full" />
+          <Skeleton
+            variant="rect"
+            width="3.5rem"
+            height="1.5rem"
+            className="rounded-full"
+          />
+          <Skeleton
+            variant="rect"
+            width="4rem"
+            height="1.5rem"
+            className="rounded-full"
+          />
+          <Skeleton
+            variant="rect"
+            width="3rem"
+            height="1.5rem"
+            className="rounded-full"
+          />
         </div>
-        
+
         {/* Footer */}
         <div className="flex justify-between items-center pt-2">
           <Skeleton variant="rect" width="4rem" height="1rem" />
-          <Skeleton variant="rect" width="2rem" height="2rem" className="rounded-full" />
+          <Skeleton
+            variant="rect"
+            width="2rem"
+            height="2rem"
+            className="rounded-full"
+          />
         </div>
       </div>
     </motion.div>
   )
 }
 
-export const ProjectGridSkeleton: React.FC<{ 
-  count?: number 
-  className?: string 
+export const ProjectGridSkeleton: React.FC<{
+  count?: number
+  className?: string
 }> = ({ count = 6, className }) => {
   return (
-    <div className={cn(
-      "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
-      className
-    )}>
+    <div
+      className={cn(
+        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+        className
+      )}
+    >
       {Array.from({ length: count }, (_, index) => (
         <motion.div
           key={index}
@@ -236,23 +257,38 @@ export const CertificateCardSkeleton: React.FC<{ className?: string }> = ({
     >
       {/* Header with icon */}
       <div className="flex items-start gap-4">
-        <Skeleton variant="rect" width="3rem" height="3rem" className="rounded-lg flex-shrink-0" />
+        <Skeleton
+          variant="rect"
+          width="3rem"
+          height="3rem"
+          className="rounded-lg flex-shrink-0"
+        />
         <div className="flex-1 space-y-2">
           <Skeleton variant="text" width="80%" height="1.125rem" />
           <Skeleton variant="text" width="60%" height="0.875rem" />
         </div>
       </div>
-      
+
       {/* Date and issuer */}
       <div className="flex items-center gap-4">
         <Skeleton variant="text" width="5rem" height="0.75rem" />
         <Skeleton variant="text" width="6rem" height="0.75rem" />
       </div>
-      
+
       {/* Skills tags */}
       <div className="flex flex-wrap gap-2">
-        <Skeleton variant="rect" width="4rem" height="1.25rem" className="rounded-full" />
-        <Skeleton variant="rect" width="3rem" height="1.25rem" className="rounded-full" />
+        <Skeleton
+          variant="rect"
+          width="4rem"
+          height="1.25rem"
+          className="rounded-full"
+        />
+        <Skeleton
+          variant="rect"
+          width="3rem"
+          height="1.25rem"
+          className="rounded-full"
+        />
       </div>
     </motion.div>
   )
@@ -277,27 +313,52 @@ export const ExperienceCardSkeleton: React.FC<{ className?: string }> = ({
     >
       {/* Company and position */}
       <div className="flex items-start gap-4">
-        <Skeleton variant="rect" width="3.5rem" height="3.5rem" className="rounded-xl flex-shrink-0" />
+        <Skeleton
+          variant="rect"
+          width="3.5rem"
+          height="3.5rem"
+          className="rounded-xl flex-shrink-0"
+        />
         <div className="flex-1 space-y-2">
           <Skeleton variant="text" width="60%" height="1.25rem" />
           <Skeleton variant="text" width="40%" height="1rem" />
           <Skeleton variant="text" width="30%" height="0.75rem" />
         </div>
       </div>
-      
+
       {/* Description */}
       <div className="space-y-2 pt-2">
         <Skeleton variant="text" width="100%" height="0.875rem" />
         <Skeleton variant="text" width="90%" height="0.875rem" />
         <Skeleton variant="text" width="70%" height="0.875rem" />
       </div>
-      
+
       {/* Technologies */}
       <div className="flex flex-wrap gap-2 pt-2">
-        <Skeleton variant="rect" width="4.5rem" height="1.5rem" className="rounded-full" />
-        <Skeleton variant="rect" width="3.5rem" height="1.5rem" className="rounded-full" />
-        <Skeleton variant="rect" width="5rem" height="1.5rem" className="rounded-full" />
-        <Skeleton variant="rect" width="4rem" height="1.5rem" className="rounded-full" />
+        <Skeleton
+          variant="rect"
+          width="4.5rem"
+          height="1.5rem"
+          className="rounded-full"
+        />
+        <Skeleton
+          variant="rect"
+          width="3.5rem"
+          height="1.5rem"
+          className="rounded-full"
+        />
+        <Skeleton
+          variant="rect"
+          width="5rem"
+          height="1.5rem"
+          className="rounded-full"
+        />
+        <Skeleton
+          variant="rect"
+          width="4rem"
+          height="1.5rem"
+          className="rounded-full"
+        />
       </div>
     </motion.div>
   )
@@ -496,7 +557,9 @@ export const BlurImage: React.FC<BlurImageProps> = ({
   onError,
 }) => {
   const { isDark } = useTheme()
-  const [loadState, setLoadState] = React.useState<"loading" | "loaded" | "error">("loading")
+  const [loadState, setLoadState] = React.useState<
+    "loading" | "loaded" | "error"
+  >("loading")
   const imgRef = React.useRef<HTMLImageElement>(null)
 
   // Check if image is already cached (instant load)
@@ -621,10 +684,7 @@ export const BlurImage: React.FC<BlurImageProps> = ({
         loading={loading}
         onLoad={handleLoad}
         onError={handleError}
-        className={cn(
-          "w-full h-full",
-          className
-        )}
+        className={cn("w-full h-full", className)}
         style={{
           objectFit,
           objectPosition,
@@ -647,18 +707,22 @@ export const BlurImage: React.FC<BlurImageProps> = ({
 // Skills section skeleton
 export const SkillsSkeleton: React.FC = () => {
   const { isDark } = useTheme()
-  
+
   return (
     <div className="container py-20">
       <div className="text-center mb-12">
-        <div className={cn(
-          "h-10 w-48 rounded-lg mx-auto mb-4 animate-pulse",
-          isDark ? "bg-slate-700" : "bg-slate-200"
-        )} />
-        <div className={cn(
-          "h-4 w-72 max-w-full rounded mx-auto animate-pulse",
-          isDark ? "bg-slate-700" : "bg-slate-200"
-        )} />
+        <div
+          className={cn(
+            "h-10 w-48 rounded-lg mx-auto mb-4 animate-pulse",
+            isDark ? "bg-slate-700" : "bg-slate-200"
+          )}
+        />
+        <div
+          className={cn(
+            "h-4 w-72 max-w-full rounded mx-auto animate-pulse",
+            isDark ? "bg-slate-700" : "bg-slate-200"
+          )}
+        />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -669,21 +733,27 @@ export const SkillsSkeleton: React.FC = () => {
               isDark ? "bg-slate-800" : "bg-slate-100"
             )}
           >
-            <div className={cn(
-              "h-6 w-32 rounded mb-4",
-              isDark ? "bg-slate-700" : "bg-slate-200"
-            )} />
+            <div
+              className={cn(
+                "h-6 w-32 rounded mb-4",
+                isDark ? "bg-slate-700" : "bg-slate-200"
+              )}
+            />
             <div className="space-y-3">
               {[1, 2, 3, 4].map((j) => (
                 <div key={j} className="flex items-center gap-3">
-                  <div className={cn(
-                    "w-8 h-8 rounded-full",
-                    isDark ? "bg-slate-700" : "bg-slate-200"
-                  )} />
-                  <div className={cn(
-                    "h-4 flex-1 rounded",
-                    isDark ? "bg-slate-700" : "bg-slate-200"
-                  )} />
+                  <div
+                    className={cn(
+                      "w-8 h-8 rounded-full",
+                      isDark ? "bg-slate-700" : "bg-slate-200"
+                    )}
+                  />
+                  <div
+                    className={cn(
+                      "h-4 flex-1 rounded",
+                      isDark ? "bg-slate-700" : "bg-slate-200"
+                    )}
+                  />
                 </div>
               ))}
             </div>
@@ -693,8 +763,3 @@ export const SkillsSkeleton: React.FC = () => {
     </div>
   )
 }
-
-
-
-
-

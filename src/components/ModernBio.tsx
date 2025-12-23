@@ -405,7 +405,9 @@ const ModernBio: React.FC = () => {
                     containerClassName="w-full h-full rounded-3xl"
                     className="rounded-3xl"
                     aspectRatio="square"
-                    placeholderColor={isDark ? "rgb(59 130 246 / 0.2)" : "rgb(219 234 254)"}
+                    placeholderColor={
+                      isDark ? "rgb(59 130 246 / 0.2)" : "rgb(219 234 254)"
+                    }
                     loading="eager"
                   />
 

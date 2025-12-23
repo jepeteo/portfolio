@@ -2,7 +2,7 @@ import { useEffect, useRef, useCallback } from "react"
 
 /**
  * useFocusTrap - Custom hook for trapping focus within a container
- * 
+ *
  * Essential for modal dialogs, dropdowns, and mobile menus
  * to ensure keyboard users can navigate properly.
  */
@@ -12,15 +12,15 @@ export function useFocusTrap(isActive: boolean = true) {
 
   const getFocusableElements = useCallback(() => {
     if (!containerRef.current) return []
-    
+
     const focusableSelectors = [
-      'a[href]',
-      'button:not([disabled])',
-      'textarea:not([disabled])',
-      'input:not([disabled])',
-      'select:not([disabled])',
+      "a[href]",
+      "button:not([disabled])",
+      "textarea:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
       '[tabindex]:not([tabindex="-1"])',
-    ].join(', ')
+    ].join(", ")
 
     return Array.from(
       containerRef.current.querySelectorAll<HTMLElement>(focusableSelectors)
@@ -42,7 +42,7 @@ export function useFocusTrap(isActive: boolean = true) {
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== 'Tab') return
+      if (event.key !== "Tab") return
 
       const focusableElements = getFocusableElements()
       if (focusableElements.length === 0) return
@@ -62,12 +62,15 @@ export function useFocusTrap(isActive: boolean = true) {
       }
     }
 
-    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener("keydown", handleKeyDown)
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener("keydown", handleKeyDown)
       // Restore focus to the previously focused element
-      if (previousActiveElement.current && previousActiveElement.current.focus) {
+      if (
+        previousActiveElement.current &&
+        previousActiveElement.current.focus
+      ) {
         previousActiveElement.current.focus()
       }
     }

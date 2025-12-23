@@ -45,15 +45,15 @@ export const useToast = () => {
 // Convenience hooks for different toast types
 export const useToastActions = () => {
   const { addToast } = useToast()
-  
+
   return {
-    success: (title: string, message?: string) => 
+    success: (title: string, message?: string) =>
       addToast({ type: "success", title, message, duration: 4000 }),
-    error: (title: string, message?: string) => 
+    error: (title: string, message?: string) =>
       addToast({ type: "error", title, message, duration: 6000 }),
-    warning: (title: string, message?: string) => 
+    warning: (title: string, message?: string) =>
       addToast({ type: "warning", title, message, duration: 5000 }),
-    info: (title: string, message?: string) => 
+    info: (title: string, message?: string) =>
       addToast({ type: "info", title, message, duration: 4000 }),
   }
 }
@@ -112,7 +112,7 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss }) => {
       const elapsed = Date.now() - startTime
       const remaining = Math.max(0, 100 - (elapsed / duration) * 100)
       setProgress(remaining)
-      
+
       if (remaining <= 0) {
         clearInterval(interval)
         onDismiss()
@@ -177,7 +177,13 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onDismiss }) => {
 
 interface ToastProviderProps {
   children: React.ReactNode
-  position?: "top-right" | "top-left" | "bottom-right" | "bottom-left" | "top-center" | "bottom-center"
+  position?:
+    | "top-right"
+    | "top-left"
+    | "bottom-right"
+    | "bottom-left"
+    | "top-center"
+    | "bottom-center"
   maxToasts?: number
 }
 
@@ -188,13 +194,18 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
 }) => {
   const [toasts, setToasts] = useState<Toast[]>([])
 
-  const addToast = useCallback((toast: Omit<Toast, "id">) => {
-    const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
-    setToasts((prev) => {
-      const newToasts = [{ ...toast, id }, ...prev]
-      return newToasts.slice(0, maxToasts)
-    })
-  }, [maxToasts])
+  const addToast = useCallback(
+    (toast: Omit<Toast, "id">) => {
+      const id = `toast-${Date.now()}-${Math.random()
+        .toString(36)
+        .substr(2, 9)}`
+      setToasts((prev) => {
+        const newToasts = [{ ...toast, id }, ...prev]
+        return newToasts.slice(0, maxToasts)
+      })
+    },
+    [maxToasts]
+  )
 
   const removeToast = useCallback((id: string) => {
     setToasts((prev) => prev.filter((t) => t.id !== id))
@@ -214,9 +225,11 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
   }
 
   return (
-    <ToastContext.Provider value={{ toasts, addToast, removeToast, clearToasts }}>
+    <ToastContext.Provider
+      value={{ toasts, addToast, removeToast, clearToasts }}
+    >
       {children}
-      
+
       {/* Toast container */}
       <div
         className={cn(

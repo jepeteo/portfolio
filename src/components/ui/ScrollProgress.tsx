@@ -19,7 +19,7 @@ interface ScrollProgressProps {
 
 /**
  * ScrollProgress - Visual indicator of page scroll progress
- * 
+ *
  * Shows a progress bar that fills as the user scrolls through the page.
  * Useful for long-form content to give users a sense of their position.
  */
@@ -33,7 +33,7 @@ export const ScrollProgress: React.FC<ScrollProgressProps> = ({
 }) => {
   const [scrollPercentage, setScrollPercentage] = useState(0)
   const { scrollYProgress } = useScroll()
-  
+
   // Smooth spring animation for the progress
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -78,7 +78,7 @@ export const ScrollProgress: React.FC<ScrollProgressProps> = ({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       />
-      
+
       {showPercentage && (
         <motion.div
           className={cn(
@@ -100,7 +100,7 @@ export const ScrollProgress: React.FC<ScrollProgressProps> = ({
 
 /**
  * ReadingProgress - Specialized progress bar for reading content
- * 
+ *
  * Shows reading progress with estimated time remaining.
  */
 interface ReadingProgressProps extends ScrollProgressProps {
@@ -117,7 +117,7 @@ export const ReadingProgress: React.FC<ReadingProgressProps> = ({
 }) => {
   const [scrollPercentage, setScrollPercentage] = useState(0)
   const { scrollYProgress } = useScroll()
-  
+
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
       setScrollPercentage(Math.round(latest * 100))
@@ -127,7 +127,9 @@ export const ReadingProgress: React.FC<ReadingProgressProps> = ({
 
   // Calculate remaining reading time
   const totalMinutes = wordCount / wordsPerMinute
-  const remainingMinutes = Math.ceil(totalMinutes * (1 - scrollPercentage / 100))
+  const remainingMinutes = Math.ceil(
+    totalMinutes * (1 - scrollPercentage / 100)
+  )
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50">

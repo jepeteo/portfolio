@@ -27,7 +27,7 @@ const ErrorFallback: React.FC<{
   onRetry?: () => void
 }> = ({ error, errorInfo, componentName, showDetails = false, onRetry }) => {
   const isDev = process.env.NODE_ENV === "development"
-  
+
   return (
     <div className="flex flex-col items-center justify-center py-12 px-6">
       {/* Error Icon */}
@@ -99,7 +99,7 @@ class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // Store error info for display
     this.setState({ errorInfo })
-    
+
     // Log error to console in development
     if (process.env.NODE_ENV === "development") {
       console.error("Error caught by ErrorBoundary:", error, errorInfo)

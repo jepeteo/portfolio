@@ -192,6 +192,7 @@ body {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -213,6 +214,7 @@ body {
     0% {
         transform: translateX(-100%);
     }
+
     100% {
         transform: translateX(100%);
     }
@@ -446,6 +448,7 @@ html {
 
 /* ===== PRINT STYLES ===== */
 @media print {
+
     /* Reset background colors for printing */
     body,
     .dark body {
@@ -502,7 +505,12 @@ html {
         page-break-after: auto;
     }
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         page-break-after: avoid;
     }
 
