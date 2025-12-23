@@ -129,8 +129,6 @@ const Hero: React.FC = memo(() => {
 
           <h1
             className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-            role="heading"
-            aria-level={1}
           >
             <span
               className={`block ${isDark ? "text-white" : "text-slate-900"}`}
@@ -200,14 +198,14 @@ const Hero: React.FC = memo(() => {
             role="group"
             aria-labelledby="tech-stack-title"
           >
-            <h3
+            <span
               id="tech-stack-title"
-              className={`text-xs font-medium mb-3 ${
+              className={`text-xs font-medium mb-3 block ${
                 isDark ? "text-slate-400" : "text-slate-500"
               }`}
             >
               Technologies I work with:
-            </h3>
+            </span>
             <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
               {[
                 "React",

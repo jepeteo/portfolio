@@ -27,31 +27,31 @@ const Nav: React.FC = memo(() => {
   )
 
   const links: NavigationLink[] = [
-    { href: "#top", text: "Home", ariaLabel: "Navigate to home section" },
+    { href: "#top", text: "Home", ariaLabel: "Home - navigate to top" },
     {
       href: "#skills",
       text: "Skills",
-      ariaLabel: "Navigate to skills section",
+      ariaLabel: "Skills section",
     },
     {
       href: "#experience",
       text: "Experience",
-      ariaLabel: "Navigate to experience section",
+      ariaLabel: "Experience section",
     },
     {
       href: "#certificates",
       text: "Certificates",
-      ariaLabel: "Navigate to certificates section",
+      ariaLabel: "Certificates section",
     },
     {
       href: "#projects",
       text: "Projects",
-      ariaLabel: "Navigate to projects section",
+      ariaLabel: "Projects section",
     },
     {
       href: "#contact",
       text: "Contact",
-      ariaLabel: "Navigate to contact section",
+      ariaLabel: "Contact section",
     },
   ]
 
@@ -59,7 +59,7 @@ const Nav: React.FC = memo(() => {
   const moonIcon = validateImageSrc(moon, "Dark mode")
 
   return (
-    <nav role="navigation" aria-label="Main navigation">
+    <nav aria-label="Main navigation">
       <div className="flex justify-between items-center p-4">
         {/* Logo */}
         <a
@@ -94,10 +94,10 @@ const Nav: React.FC = memo(() => {
               className={`absolute top-24 left-0 right-0 mx-4 rounded-lg shadow-lg p-4 transition-colors ${
                 isDark ? "bg-slate-800" : "bg-white"
               }`}
-              role="menu"
+              role="list"
             >
               {links.map((link) => (
-                <li key={link.href} role="none">
+                <li key={link.href}>
                   <a
                     href={link.href}
                     className={`block py-3 px-4 rounded-md transition-colors ${
@@ -106,7 +106,6 @@ const Nav: React.FC = memo(() => {
                         : "hover:bg-slate-100 text-slate-900"
                     }`}
                     onClick={closeMenu}
-                    role="menuitem"
                     aria-label={link.ariaLabel}
                   >
                     {link.text}
@@ -119,10 +118,10 @@ const Nav: React.FC = memo(() => {
 
         <ul
           className="hidden md:flex md:static gap-2 mr-4 xl:gap-4"
-          role="menubar"
+          role="list"
         >
           {links.map((link) => (
-            <li key={link.href} role="none">
+            <li key={link.href}>
               <a
                 className={`menu-item px-3 py-2 rounded-md transition-colors ${
                   isDark
@@ -130,7 +129,6 @@ const Nav: React.FC = memo(() => {
                     : "hover:bg-slate-100 text-slate-900"
                 }`}
                 href={link.href}
-                role="menuitem"
                 aria-label={link.ariaLabel}
               >
                 {link.text}
