@@ -220,11 +220,68 @@ body {
     will-change: opacity;
 }
 
-/* Button focus styles */
+/* Enhanced Keyboard Focus Styles */
+:focus {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 2px solid rgb(var(--color-primary));
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Enhanced button/link focus states */
 button:focus-visible,
 a:focus-visible {
     outline: 2px solid rgb(var(--color-primary));
     outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    border-radius: inherit;
+}
+
+/* Card focus indicator */
+.card-focus:focus-visible {
+    outline: 2px solid rgb(var(--color-primary));
+    outline-offset: 4px;
+    box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.15);
+}
+
+/* Navigation link focus indicator */
+.nav-link:focus-visible {
+    background-color: rgba(59, 130, 246, 0.1);
+    outline: 2px solid rgb(var(--color-primary));
+    outline-offset: 0;
+}
+
+/* Input field focus enhancement */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: none;
+    border-color: rgb(var(--color-primary));
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+/* Focus within for card containers */
+.focus-within-card:focus-within {
+    outline: 2px solid rgb(var(--color-primary));
+    outline-offset: 2px;
+}
+
+/* High contrast focus mode for accessibility */
+@media (prefers-contrast: high) {
+    :focus-visible {
+        outline: 3px solid rgb(var(--color-primary));
+        outline-offset: 3px;
+    }
+}
+
+/* Reduce motion - simpler focus indicators */
+@media (prefers-reduced-motion: reduce) {
+    :focus-visible {
+        transition: none;
+    }
 }
 
 /* Font utilities */

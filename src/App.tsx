@@ -12,6 +12,7 @@ import { LoadingSpinner, ProjectGridSkeleton, ExperienceCardSkeleton } from "./c
 import { BackToTopButton } from "./components/ui/BackToTopButton"
 import { VercelIntegrations } from "./components/VercelIntegrations"
 import { ToastProvider } from "./components/ui/Toast"
+import { SkipLink } from "./components/accessibility/SkipLink"
 import { ThemeProvider, useTheme } from "./context/ThemeContext"
 import {
   createLazyComponent,
@@ -216,12 +217,13 @@ const AppContent: React.FC = () => {
         isDark ? "bg-slate-900 text-white" : "bg-white text-slate-900"
       }`}
     >
+      <SkipLink href="#main-content" />
       <PortfolioSchema
         includePersonSchema={false}
         includeOrganizationSchema={true}
       />
       <ModernHeader />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Hero />
 
         <ErrorBoundary>
