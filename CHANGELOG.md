@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2025-12-23
+
+### Performance
+
+#### Mobile Performance Optimization
+- **Self-hosted fonts** - Eliminated external Google Fonts requests
+  - Migrated to fontsource packages (Inter, Space Grotesk, JetBrains Mono)
+  - Fonts now bundled with app for faster loading
+  - Removed Google Font preconnect/preload hints
+
+- **LCP Image Fix** - Hero image now visible immediately
+  - Removed `opacity-0` from Hero section that blocked LCP
+  - Image loads eagerly with `fetchPriority="high"`
+  - Expected improvement: 13.6s → <2.5s LCP
+
+- **Deferred PostHog Analytics** - Analytics load after page interactive
+  - Lazy load PostHog with `React.lazy()` and `requestIdleCallback`
+  - Removed static imports from critical path
+  - Expected improvement: 5.7s JS execution moved off main thread
+
+- **Style & Layout Optimization** - Reduced recalculation work
+  - Hide decorative grid patterns on mobile (<768px)
+  - Reduced animated dots from 8 to 4, desktop-only
+  - Simplified gradient animations (2 layers instead of 4)
+  - Removed `will-change: background-position` from body
+  - Added CSS containment to Hero background
+  - Simplified body backgrounds for mobile devices
+
+### Changed
+- Hero animations only run on desktop for better mobile performance
+- Background decorations disabled on mobile for faster Style & Layout
+
 ## [0.3.0] - 2025-01-13
 
 ### Added

@@ -19,7 +19,7 @@ const DeferredPostHogProvider = React.lazy(() =>
           api_host: posthogHost,
           capture_pageview: false,
           disable_session_recording: import.meta.env.DEV,
-          loaded: (posthog) => {
+          loaded: () => {
             // PostHog is now loaded and ready
             if (import.meta.env.DEV) {
               console.log("PostHog loaded (deferred)")
