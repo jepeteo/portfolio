@@ -84,13 +84,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
             transition={{ delay: 0.2 }}
           >
             <div
-              className={cn(
-                typography.heading.h4,
-                "font-bold leading-tight",
-                "text-slate-900 dark:text-white",
-                "group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-200",
-                "text-base sm:text-lg lg:text-xl xl:text-2xl"
-              )}
+              className="font-bold leading-tight tracking-tight text-base sm:text-lg lg:text-xl xl:text-2xl text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200"
             >
               <span>Theodoros</span> <span>Mentis</span>
             </div>
