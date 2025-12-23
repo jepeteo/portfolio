@@ -11,6 +11,7 @@ import PortfolioSchema from "./components/PortfolioSchema"
 import { LoadingSpinner, ProjectGridSkeleton, ExperienceCardSkeleton } from "./components/loading/ModernLoadingStates"
 import { BackToTopButton } from "./components/ui/BackToTopButton"
 import { VercelIntegrations } from "./components/VercelIntegrations"
+import { ToastProvider } from "./components/ui/Toast"
 import { ThemeProvider, useTheme } from "./context/ThemeContext"
 import {
   createLazyComponent,
@@ -265,8 +266,10 @@ const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <ThemeProvider>
-        <AppContent />
-        <VercelIntegrations />
+        <ToastProvider position="top-right">
+          <AppContent />
+          <VercelIntegrations />
+        </ToastProvider>
       </ThemeProvider>
     </ErrorBoundary>
   )

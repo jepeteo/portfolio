@@ -32,6 +32,7 @@ import {
   recordContactFormAttempt,
 } from "../utils/enhancedRateLimit"
 import { CSRFProtection } from "../utils/enhancedCSRF"
+import { useToast } from "./ui/Toast"
 
 // SEO Schema generation for Contact section
 const generateContactSchema = () => {
@@ -259,6 +260,7 @@ const FormField: React.FC<FormFieldProps> = ({
 
 const Contact: React.FC = memo(() => {
   const { isDark } = useTheme()
+  const { addToast } = useToast()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
     threshold: 0.1,
     rootMargin: "50px",
@@ -431,9 +433,21 @@ const Contact: React.FC = memo(() => {
 
           setFormData({ name: "", email: "", subject: "", message: "" })
           setSubmitStatus("success")
+          addToast({
+            type: "success",
+            title: "Message Sent!",
+            message: "Thank you for reaching out. I'll get back to you soon.",
+            duration: 5000,
+          })
           setTimeout(() => setSubmitStatus("idle"), 5000)
         } catch {
           setSubmitStatus("error")
+          addToast({
+            type: "error",
+            title: "Failed to Send",
+            message: "Something went wrong. Please try again.",
+            duration: 6000,
+          })
           setTimeout(() => setSubmitStatus("idle"), 5000)
         } finally {
           setIsSubmitting(false)
@@ -483,16 +497,28 @@ const Contact: React.FC = memo(() => {
         setFormData({ name: "", email: "", subject: "", message: "" })
         setErrors({})
         setSubmitStatus("success")
+        addToast({
+          type: "success",
+          title: "Message Sent!",
+          message: "Thank you for reaching out. I'll get back to you soon.",
+          duration: 5000,
+        })
 
         setTimeout(() => setSubmitStatus("idle"), 5000)
       } catch {
         setSubmitStatus("error")
+        addToast({
+          type: "error",
+          title: "Failed to Send",
+          message: "Something went wrong. Please try again or email me directly.",
+          duration: 6000,
+        })
         setTimeout(() => setSubmitStatus("idle"), 5000)
       } finally {
         setIsSubmitting(false)
       }
     },
-    [formData, validateForm, emailjsConfig, csrfToken, startTime, setCsrfToken]
+    [formData, validateForm, emailjsConfig, csrfToken, startTime, setCsrfToken, addToast]
   )
 
   const contactInfo = [
