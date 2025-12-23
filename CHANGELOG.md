@@ -5,6 +5,53 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-01-13
+
+### Added
+
+#### Low Priority UX Improvements
+- **Reduced Motion Support** - Accessibility-first animations
+  - `useReducedMotion` hook for detecting user motion preferences
+  - `getReducedMotionProps()` helper for Framer Motion variants
+  - `reducedMotionVariants` preset with safe, subtle animations
+  - Respects `prefers-reduced-motion` system setting
+
+- **Offline Indicator** - Network connectivity awareness
+  - `OfflineIndicator` component with reconnection feedback
+  - `useOnlineStatus` hook for online/offline detection
+  - Toast-style notification with reconnection confirmation
+  - Non-intrusive bottom-left positioning
+
+- **Enhanced Error Boundaries** - Improved error recovery UX
+  - Redesigned `ErrorFallback` component with modern styling
+  - Dark/light theme support for error screens
+  - "Try Again" retry functionality
+  - Error details expandable in development mode
+  - `componentName` prop for identifying error source
+
+- **Print Styles** - Optimized document printing
+  - Hide navigation, interactive elements, and animations
+  - Reset colors to black/white for readability
+  - Show full URLs after links for reference
+  - Page break controls for proper document flow
+  - Reduced margins and optimized typography
+
+### Fixed
+
+#### Technical Debt - ESLint Warnings
+- Reduced lint warnings from 112 to 16 (react-refresh architectural warnings only)
+- Fixed TypeScript `any` types across components, hooks, and utilities
+- Added proper interfaces for component props (StatsCard, ColorClasses, etc.)
+- Used `LucideIcon` type for icon props consistency
+- Fixed generic type constraints in hooks (useDebounce, usePagination)
+- Added `Record<string, unknown>` for analytics properties
+- Removed unused variables and imports
+- Fixed empty block statements with meaningful comments
+- Fixed useless escape characters in regex patterns
+- Added eslint-disable comments for intentionally any-typed framework APIs
+
+---
+
 ## [0.2.0] - 2025-12-23
 
 ### Added
