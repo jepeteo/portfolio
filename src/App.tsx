@@ -1,16 +1,12 @@
 import React, { Suspense } from "react"
+// Critical path components - loaded eagerly
 import Hero from "./components/Hero"
-import ModernSkills from "./components/ModernSkills"
-import Contact from "./components/Contact"
 import Footer from "./components/Footer"
 import ModernHeader from "./components/navigation/ModernHeader"
-import ModernBio from "./components/ModernBio"
 import ErrorBoundary from "./components/ErrorBoundary"
-import PerformanceDashboard from "./components/PerformanceDashboard"
 import PortfolioSchema from "./components/PortfolioSchema"
-import { LoadingSpinner, ProjectGridSkeleton, ExperienceCardSkeleton } from "./components/loading/ModernLoadingStates"
+import { LoadingSpinner, ProjectGridSkeleton, ExperienceCardSkeleton, SkillsSkeleton } from "./components/loading/ModernLoadingStates"
 import { BackToTopButton } from "./components/ui/BackToTopButton"
-import { VercelIntegrations } from "./components/VercelIntegrations"
 import { ToastProvider } from "./components/ui/Toast"
 import { SkipLink } from "./components/accessibility/SkipLink"
 import { ScrollProgress } from "./components/ui/ScrollProgress"
@@ -29,11 +25,36 @@ import useServiceWorker from "./hooks/useServiceWorker"
 import { usePostHog } from "posthog-js/react"
 import { postHogAnalytics } from "./utils/postHogAnalytics"
 
-import productionMonitor from "./utils/productionMonitor"
+// Lazy-loaded components (below the fold)
+const VercelIntegrations = createLazyComponent(
+  () => import("./components/VercelIntegrations").then(m => ({ default: m.VercelIntegrations })),
+  {}
+)
+
+const PerformanceDashboard = createLazyComponent(
+  () => import("./components/PerformanceDashboard"),
+  {}
+)
 
 if (process.env.NODE_ENV === "development") {
   import("./utils/schemaTesting")
 }
+
+// Lazy-load all below-fold sections
+const ModernSkills = createLazyComponent(
+  () => import("./components/ModernSkills"),
+  { preload: true }
+)
+
+const ModernBio = createLazyComponent(
+  () => import("./components/ModernBio"),
+  {}
+)
+
+const Contact = createLazyComponent(
+  () => import("./components/Contact"),
+  {}
+)
 
 const ModernProjects = createLazyComponent(
   () => import("./components/ModernProjects"),
@@ -98,13 +119,19 @@ const AppContent: React.FC = () => {
 
   useServiceWorker()
 
+  // Lazy-load production monitor and track page view
   React.useEffect(() => {
-    productionMonitor.trackPageView()
+    import("./utils/productionMonitor").then(({ default: productionMonitor }) => {
+      productionMonitor.trackPageView()
+    })
   }, [])
 
+  // Track theme changes (lazy load production monitor)
   React.useEffect(() => {
-    productionMonitor.trackEvent("theme_change", {
-      theme: isDark ? "dark" : "light",
+    import("./utils/productionMonitor").then(({ default: productionMonitor }) => {
+      productionMonitor.trackEvent("theme_change", {
+        theme: isDark ? "dark" : "light",
+      })
     })
 
     postHog?.capture("theme_changed", {
@@ -235,7 +262,11 @@ const AppContent: React.FC = () => {
           </Suspense>
         </ErrorBoundary>
 
-        <ModernSkills />
+        <ErrorBoundary componentName="Skills">
+          <Suspense fallback={<SkillsSkeleton />}>
+            <ModernSkills />
+          </Suspense>
+        </ErrorBoundary>
 
         <ErrorBoundary componentName="Projects">
           <Suspense fallback={<ProjectsLoader />}>
@@ -255,15 +286,25 @@ const AppContent: React.FC = () => {
           </Suspense>
         </ErrorBoundary>
 
-        <ModernBio />
+        <ErrorBoundary componentName="Bio">
+          <Suspense fallback={<SectionLoader />}>
+            <ModernBio />
+          </Suspense>
+        </ErrorBoundary>
 
-        <Contact />
+        <ErrorBoundary componentName="Contact">
+          <Suspense fallback={<SectionLoader />}>
+            <Contact />
+          </Suspense>
+        </ErrorBoundary>
         <BackToTopButton />
       </main>
       <Footer />
 
       <OfflineIndicator position="bottom" />
-      <PerformanceDashboard />
+      <Suspense fallback={null}>
+        <PerformanceDashboard />
+      </Suspense>
     </div>
   )
 }
@@ -274,7 +315,9 @@ const App: React.FC = () => {
       <ThemeProvider>
         <ToastProvider position="top-right">
           <AppContent />
-          <VercelIntegrations />
+          <Suspense fallback={null}>
+            <VercelIntegrations />
+          </Suspense>
         </ToastProvider>
       </ThemeProvider>
     </ErrorBoundary>

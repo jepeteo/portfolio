@@ -644,10 +644,55 @@ export const BlurImage: React.FC<BlurImageProps> = ({
   )
 }
 
-
-
-
-
+// Skills section skeleton
+export const SkillsSkeleton: React.FC = () => {
+  const { isDark } = useTheme()
+  
+  return (
+    <div className="container py-20">
+      <div className="text-center mb-12">
+        <div className={cn(
+          "h-10 w-48 rounded-lg mx-auto mb-4 animate-pulse",
+          isDark ? "bg-slate-700" : "bg-slate-200"
+        )} />
+        <div className={cn(
+          "h-4 w-72 max-w-full rounded mx-auto animate-pulse",
+          isDark ? "bg-slate-700" : "bg-slate-200"
+        )} />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {[1, 2, 3, 4, 5, 6].map((i) => (
+          <div
+            key={i}
+            className={cn(
+              "rounded-xl p-6 animate-pulse",
+              isDark ? "bg-slate-800" : "bg-slate-100"
+            )}
+          >
+            <div className={cn(
+              "h-6 w-32 rounded mb-4",
+              isDark ? "bg-slate-700" : "bg-slate-200"
+            )} />
+            <div className="space-y-3">
+              {[1, 2, 3, 4].map((j) => (
+                <div key={j} className="flex items-center gap-3">
+                  <div className={cn(
+                    "w-8 h-8 rounded-full",
+                    isDark ? "bg-slate-700" : "bg-slate-200"
+                  )} />
+                  <div className={cn(
+                    "h-4 flex-1 rounded",
+                    isDark ? "bg-slate-700" : "bg-slate-200"
+                  )} />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 
 
