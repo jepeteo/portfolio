@@ -317,7 +317,7 @@ const Hero: React.FC = memo(() => {
       </div>
 
       <div
-        className={`container mx-auto px-6 py-12 ${
+        className={`relative z-20 container mx-auto px-6 py-12 ${
           prefersReducedMotion ? "" : ""
         }`}
         role="region"
