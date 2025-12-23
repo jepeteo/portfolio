@@ -209,10 +209,10 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       {/* Desktop underline indicator */}
       {isActive && !isMobile && (
         <motion.div
-          className="absolute bottom-0 left-1/2 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+          className="absolute bottom-0 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
           layoutId="activeIndicator"
-          initial={{ width: 0, x: "-50%" }}
-          animate={{ width: "80%", x: "-50%" }}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
           transition={{ type: "spring", stiffness: 380, damping: 30 }}
         />
       )}
@@ -364,10 +364,9 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
               className={cn(
                 "fixed top-20 right-4 left-4 z-50 lg:hidden",
                 "border rounded-2xl shadow-2xl overflow-hidden",
-                "backdrop-blur-xl",
                 isDark
-                  ? "bg-slate-900/98 border-slate-700/50"
-                  : "bg-white/98 border-slate-200/50"
+                  ? "bg-slate-900 border-slate-700"
+                  : "bg-white border-slate-200"
               )}
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
