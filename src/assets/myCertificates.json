@@ -50,9 +50,9 @@
     "credentialUrl": "https://www.linkedin.com/learning/certificates/5cd20311324d697503f93c0db183570adac730c6d72fb086b45bdcaa6ed999a3",
     "description": "Effective communication strategies for project managers and stakeholders.",
     "skills": [
+      "Project Management",
       "Project Communications",
-      "Stakeholder Management",
-      "Project Management"
+      "Stakeholder Management"
     ]
   },
   {
@@ -61,7 +61,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2025-12-01",
     "category": "Project Management",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/0851e1de82330bf95f569414dea50395f95c71842fcd531cedc240a20935e618",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/7c2b0dbe8b011d6426df2146aea6a905c14f7dc610cd7c16346266641221037d",
     "description": "Ethical considerations and professional conduct in project management.",
     "skills": [
       "Business Ethics",
@@ -75,7 +75,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2025-12-01",
     "category": "Project Management",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/698981926bb9683927e7924386247f8cd859bac9b1875cd1ee5d73ef39e9d17d",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/0851e1de82330bf95f569414dea50395f95c71842fcd531cedc240a20935e618",
     "description": "Requirements gathering, documentation, and management techniques.",
     "skills": [
       "Requirements Management",
@@ -89,7 +89,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2025-12-01",
     "category": "Project Management",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/effe8985b300d5d7fba593f7f74d858b0b5c8c467a995d454e31c9b0c93e8bcd",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/698981926bb9683927e7924386247f8cd859bac9b1875cd1ee5d73ef39e9d17d",
     "description": "Project scheduling, timeline management, and deadline planning.",
     "skills": [
       "Project Scheduling",
@@ -103,7 +103,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2025-12-01",
     "category": "Project Management",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/019813cd4433e8792a8f1da875d8ec6626c911b634fd111ef18b41e42f72f633",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/e612a759c2e79352e4d2b5e614335bc2e7f4940e35b809f237bd78361201d9dc",
     "description": "Team building, leadership, and collaboration in project environments.",
     "skills": [
       "Project Team Management",
@@ -117,7 +117,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2025-08-01",
     "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/dd4fe90e3bc5d8afafd364a72bc7265c06655a8a4a8fbc97c95bf833a33ddee1",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/effe8985b300d5d7fba593f7f74d858b0b5c8c467a995d454e31c9b0c93e8bcd",
     "description": "Create AI-powered dashboards using ChatGPT and Power BI without coding.",
     "skills": [
       "ChatGPT",
@@ -132,7 +132,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2025-08-01",
     "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/e602b7407297a47b3d3429719bf69a3ab1a9e5e0f7a316a50f03ef1cca620f26",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/019813cd4433e8792a8f1da875d8ec6626c911b634fd111ef18b41e42f72f633",
     "description": "Build intelligent budget tracking solutions using AI tools without programming.",
     "skills": [
       "Artificial Intelligence for Business",
@@ -146,7 +146,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2025-07-01",
     "category": "Game Development",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/94515304e6ad3b927eea3bc154da6eea127cddf8a1a9e5b54b3656de9e322b01",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/dd4fe90e3bc5d8afafd364a72bc7265c06655a8a4a8fbc97c95bf833a33ddee1",
     "description": "Preparation for Unity certification covering game development fundamentals.",
     "skills": [
       "Game Development",
@@ -161,7 +161,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2025-07-01",
     "category": "Game Development",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/0d99d98cbb644f9751703abb3e3264f16cac974af145b48870fec567ef791446",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/e602b7407297a47b3d3429719bf69a3ab1a9e5e0f7a316a50f03ef1cca620f26",
     "description": "Unity certification prep focusing on UI development and 2D game creation.",
     "skills": [
       "Game Development",
@@ -176,7 +176,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2024-12-01",
     "category": "Programming Fundamentals",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/9a57a719923b6c49031d1fb8589fed28e921a26777e5616c2993c3b6fb5e280f",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/0d99d98cbb644f9751703abb3e3264f16cac974af145b48870fec567ef791446",
     "description": "C# fundamentals covering data types, variables, and control flow structures.",
     "skills": [
       "C#",
@@ -191,7 +191,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2024-12-01",
     "category": "Programming Fundamentals",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/717cf82a92f0333d85228267c525cb83429aa137fc45509b241291d936f39585",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/94515304e6ad3b927eea3bc154da6eea127cddf8a1a9e5b54b3656de9e322b01",
     "description": "Introduction to C# programming language and .NET development.",
     "skills": [
       "C#",
@@ -205,7 +205,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2024-11-01",
     "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/f7f156c54726dcc80a84fcf2e1ac08684e5c3c35ef90b8981f6679542e6fe67f",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/9a57a719923b6c49031d1fb8589fed28e921a26777e5616c2993c3b6fb5e280f",
     "description": "Integrating AI capabilities into JavaScript applications.",
     "skills": [
       "Artificial Intelligence",
@@ -220,7 +220,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2024-11-01",
     "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/125f967bb7a11402c218b5bf5cfa465121615ecadc38f5e7a93bd651b99e7abb",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/717cf82a92f0333d85228267c525cb83429aa137fc45509b241291d936f39585",
     "description": "Building AI-powered React applications using OpenAI API integration.",
     "skills": [
       "OpenAI API",
@@ -230,12 +230,28 @@
     ]
   },
   {
+    "id": "ai-react-aws-sagemaker",
+    "name": "Build an AI Application with React and AWS SageMaker",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-11-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/cd087692f316d4c0d4b3b667aaa0055bf429bc4f4747f793f5d114d5324fd863",
+    "description": "Learn to integrate AWS SageMaker with React applications for building AI-powered user interfaces.",
+    "skills": [
+      "React",
+      "AWS SageMaker",
+      "AI",
+      "Machine Learning",
+      "JavaScript"
+    ]
+  },
+  {
     "id": "generative-ai-web-developers",
     "name": "Building Generative AI Skills for Web Developers",
     "issuer": "LinkedIn Learning",
     "issueDate": "2024-11-01",
     "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/9f66abafd6f147a7954433127e04b4c17757ad78e5bc2507621798534d9e4875",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/8ee2141d0c334e7fbb7a4fc2a7a5b30ab9d082b746193072f4fd17176276e6fc",
     "description": "Developing generative AI skills tailored for web development contexts.",
     "skills": [
       "Web Development",
@@ -244,12 +260,27 @@
     ]
   },
   {
+    "id": "generative-ai-javascript",
+    "name": "Integrating Generative AI into JavaScript Web Projects",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-11-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/ce27d41f93c5094d784cb81de60980ae1c3c0e50c8e92e0d5d7719e069b297b5",
+    "description": "Comprehensive guide to incorporating generative AI capabilities into modern JavaScript applications.",
+    "skills": [
+      "JavaScript",
+      "Generative AI",
+      "Web Development",
+      "API Integration"
+    ]
+  },
+  {
     "id": "pair-programming-ai",
     "name": "Pair Programming with AI",
     "issuer": "LinkedIn Learning",
     "issueDate": "2024-11-01",
     "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/7427db3166168ffeacd85c122e93513d29f8a1417a67fb0fb05260306f98be26",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/f7f156c54726dcc80a84fcf2e1ac08684e5c3c35ef90b8981f6679542e6fe67f",
     "description": "Leveraging AI assistants for collaborative coding and pair programming.",
     "skills": [
       "Pair Programming",
@@ -263,7 +294,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2024-10-01",
     "category": "Frontend Development",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/2ef8121b8dbc1b318f5b90644012c27dcfb69b29670b6e48ee3de6b3deef0cde",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/125f967bb7a11402c218b5bf5cfa465121615ecadc38f5e7a93bd651b99e7abb",
     "description": "Visual web design and development using Webflow platform.",
     "skills": [
       "Webflow",
@@ -277,7 +308,7 @@
     "issuer": "LinkedIn Learning",
     "issueDate": "2024-10-01",
     "category": "Frontend Development",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/5e7f56d1689e57c54436e73ab86f65fa620fcdc02633249c6da59654c675de9b",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/9f66abafd6f147a7954433127e04b4c17757ad78e5bc2507621798534d9e4875",
     "description": "Updated Webflow course covering latest features and workflows.",
     "skills": [
       "Webflow",
@@ -286,174 +317,10 @@
     ]
   },
   {
-    "id": "what-is-generative-ai",
-    "name": "What Is Generative AI?",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2024-09-01",
-    "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/243cb6118e858b1510a882a9b072c4e1f515e51398d20d25bd3d98991385d703",
-    "description": "Understanding generative AI concepts, tools, and applications.",
-    "skills": [
-      "Artificial Intelligence",
-      "Generative AI Tools",
-      "Generative AI"
-    ]
-  },
-  {
-    "id": "react-authentication",
-    "name": "React: Authentication",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2024-08-01",
-    "category": "Frontend Development",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/89d71e9a61cc5f468c90a062ae4089f2672d323a3d66b462eb359d1d17d3ed26",
-    "description": "Implementing authentication systems in React applications.",
-    "skills": [
-      "React",
-      "Authentication",
-      "Security",
-      "JWT"
-    ]
-  },
-  {
-    "id": "tailwind-css-essential",
-    "name": "Tailwind CSS Essential Training",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2024-07-01",
-    "category": "Frontend Development",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/b1ad5b42b7f0504828d9d3f3b3845810ab2c744679a8d0048b51a16cb531129f",
-    "description": "Utility-first CSS framework for rapid UI development.",
-    "skills": [
-      "Tailwind CSS",
-      "CSS",
-      "Responsive Design",
-      "UI Development"
-    ]
-  },
-  {
-    "id": "typescript-essential",
-    "name": "TypeScript Essential Training",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2024-07-01",
-    "category": "Frontend Development",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/4d6946287ff87436c491db93c1c53af844b5725ace9c663fead0d042c2ac9a99",
-    "description": "TypeScript fundamentals for type-safe JavaScript development.",
-    "skills": [
-      "TypeScript",
-      "JavaScript",
-      "Type Safety",
-      "Web Development"
-    ]
-  },
-  {
-    "id": "ai-react-aws-sagemaker",
-    "name": "Build an AI Application with React and AWS SageMaker",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2024-11-15",
-    "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/cd087692f316d4c0d4b3b667aaa0055bf429bc4f4747f793f5d114d5324fd863",
-    "description": "Learn to integrate AWS SageMaker with React applications for building AI-powered user interfaces.",
-    "skills": [
-      "React",
-      "AWS SageMaker",
-      "AI",
-      "Machine Learning",
-      "JavaScript"
-    ]
-  },
-  {
-    "id": "generative-ai-javascript",
-    "name": "Integrating Generative AI into JavaScript Web Projects",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2024-10-20",
-    "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/ce27d41f93c5094d784cb81de60980ae1c3c0e50c8e92e0d5d7719e069b297b5",
-    "description": "Comprehensive guide to incorporating generative AI capabilities into modern JavaScript applications.",
-    "skills": [
-      "JavaScript",
-      "Generative AI",
-      "Web Development",
-      "API Integration"
-    ]
-  },
-  {
-    "id": "chatgpt-multimodal",
-    "name": "Prompting ChatGPT with Multimodal Techniques",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2024-09-08",
-    "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/7d783bcb018123ce2fb4c931c6ddf7d9fc5ec4a14e382b23c8586783e0f68af0",
-    "description": "Advanced techniques for working with ChatGPT using text, images, and other media formats.",
-    "skills": [
-      "AI",
-      "Prompt Engineering",
-      "ChatGPT",
-      "Multimodal AI"
-    ]
-  },
-  {
-    "id": "prompt-engineering",
-    "name": "Prompt Engineering: How to Talk to the AIs",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2024-08-12",
-    "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/520431c1b96217f31cdeb0d094b90b203a76d0a70aa56d8630804aa5168fde10",
-    "description": "Master the art of communicating effectively with AI systems through strategic prompt design.",
-    "skills": [
-      "Prompt Engineering",
-      "AI Communication",
-      "Natural Language Processing"
-    ]
-  },
-  {
-    "id": "generative-vs-traditional-ai",
-    "name": "Generative AI vs. Traditional AI",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2024-07-25",
-    "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/243cb6118e858b1510a882a9b072c4e1f515e51398d20d25bd3d98991385d703",
-    "description": "Understanding the differences and applications of generative AI compared to traditional AI approaches.",
-    "skills": [
-      "AI",
-      "Machine Learning",
-      "Generative AI",
-      "Technology Analysis"
-    ]
-  },
-  {
-    "id": "php-generative-ai",
-    "name": "Building PHP Applications with Generative AI",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2024-06-30",
-    "category": "AI & Machine Learning",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/6f61519fa7f99e8eb9e735eabf08a9e3e0625ae6a402cadcb57b4ef064933d94",
-    "description": "Learn to integrate generative AI capabilities into PHP-based web applications.",
-    "skills": [
-      "PHP",
-      "Generative AI",
-      "Web Development",
-      "Backend Development"
-    ]
-  },
-  {
-    "id": "typescript-javascript-developers",
-    "name": "TypeScript for JavaScript Developers",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2024-05-18",
-    "category": "Frontend Development",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/b1ad5b42b7f0504828d9d3f3b3845810ab2c744679a8d0048b51a16cb531129f",
-    "description": "Comprehensive TypeScript training for developers with JavaScript background.",
-    "skills": [
-      "TypeScript",
-      "JavaScript",
-      "Type Safety",
-      "Web Development"
-    ]
-  },
-  {
     "id": "drupal-skills",
     "name": "Build Your Drupal Skills",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2024-04-25",
+    "issueDate": "2024-09-01",
     "category": "CMS Development",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/3e87c8ac17b66f9457bd3316ca3615f354be87a2a5b4e9d46fd7e355572251cd",
     "description": "Advanced Drupal development skills including custom modules, themes, and site building.",
@@ -466,10 +333,40 @@
     ]
   },
   {
+    "id": "php-generative-ai",
+    "name": "Building PHP Applications with Generative AI",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-09-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/6f61519fa7f99e8eb9e735eabf08a9e3e0625ae6a402cadcb57b4ef064933d94",
+    "description": "Learn to integrate generative AI capabilities into PHP-based web applications.",
+    "skills": [
+      "PHP",
+      "Generative AI",
+      "Web Development",
+      "Backend Development"
+    ]
+  },
+  {
+    "id": "generative-vs-traditional-ai",
+    "name": "Generative AI vs. Traditional AI",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-09-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/243cb6118e858b1510a882a9b072c4e1f515e51398d20d25bd3d98991385d703",
+    "description": "Understanding the differences and applications of generative AI compared to traditional AI approaches.",
+    "skills": [
+      "AI",
+      "Machine Learning",
+      "Generative AI",
+      "Technology Analysis"
+    ]
+  },
+  {
     "id": "git-github",
     "name": "Learning Git and GitHub",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2024-04-20",
+    "issueDate": "2024-09-01",
     "category": "DevOps & Tools",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/58530a22a9d97621ec0fe889588f38307c5f9a95203609a4fb568b8f7ba19ef8",
     "description": "Version control mastery with Git and GitHub including branching, merging, and collaboration workflows.",
@@ -482,10 +379,69 @@
     ]
   },
   {
+    "id": "prompt-engineering",
+    "name": "Prompt Engineering: How to Talk to the AIs",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-09-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/520431c1b96217f31cdeb0d094b90b203a76d0a70aa56d8630804aa5168fde10",
+    "description": "Master the art of communicating effectively with AI systems through strategic prompt design.",
+    "skills": [
+      "Prompt Engineering",
+      "Large Language Models",
+      "Generative AI",
+      "AI Communication"
+    ]
+  },
+  {
+    "id": "chatgpt-multimodal",
+    "name": "Prompting ChatGPT with Multimodal Techniques",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-09-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/7d783bcb018123ce2fb4c931c6ddf7d9fc5ec4a14e382b23c8586783e0f68af0",
+    "description": "Advanced techniques for working with ChatGPT using text, images, and other media formats.",
+    "skills": [
+      "AI",
+      "Prompt Engineering",
+      "ChatGPT",
+      "AI Prompting"
+    ]
+  },
+  {
+    "id": "typescript-javascript-developers",
+    "name": "TypeScript for JavaScript Developers",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-09-01",
+    "category": "Frontend Development",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/b1ad5b42b7f0504828d9d3f3b3845810ab2c744679a8d0048b51a16cb531129f",
+    "description": "Comprehensive TypeScript training for developers with JavaScript background.",
+    "skills": [
+      "TypeScript",
+      "Front-End Development",
+      "JavaScript",
+      "Web Development"
+    ]
+  },
+  {
+    "id": "what-is-generative-ai",
+    "name": "What Is Generative AI?",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-09-01",
+    "category": "AI & Machine Learning",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/7427db3166168ffeacd85c122e93513d29f8a1417a67fb0fb05260306f98be26",
+    "description": "Understanding generative AI concepts, tools, and applications.",
+    "skills": [
+      "Artificial Intelligence",
+      "Generative AI Tools",
+      "Generative AI"
+    ]
+  },
+  {
     "id": "nextjs-2022",
     "name": "Learning Next.js (2022)",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2024-01-28",
+    "issueDate": "2024-08-01",
     "category": "Frontend Development",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/05ba6d373c657cfa8ac827ef5c298bb2a642a406a1a94c8ca030af4822424e7d",
     "description": "Build full-stack React applications with Next.js including SSR, SSG, and API routes.",
@@ -494,14 +450,15 @@
       "React",
       "SSR",
       "SSG",
-      "Full-stack Development"
+      "Full-stack Development",
+      "JavaScript Libraries"
     ]
   },
   {
     "id": "redux-toolkit",
     "name": "Learning Redux Toolkit",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2024-02-10",
+    "issueDate": "2024-08-01",
     "category": "Frontend Development",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/89d71e9a61cc5f468c90a062ae4089f2672d323a3d66b462eb359d1d17d3ed26",
     "description": "Modern state management with Redux Toolkit, including RTK Query and best practices.",
@@ -516,7 +473,7 @@
     "id": "nodejs-essential",
     "name": "Node.js Essential Training",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-12-20",
+    "issueDate": "2024-08-01",
     "category": "Backend Development",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/c1a6bd91d8498c38ce763674219c200a37c06a62ef0eadcdf2b4a6ea738d62e6",
     "description": "Comprehensive Node.js training covering modules, npm, asynchronous programming, and server development.",
@@ -532,23 +489,54 @@
     "id": "nodejs-web-servers",
     "name": "Node.js: Web Servers, Tests, and Deployment",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-11-15",
+    "issueDate": "2024-08-01",
     "category": "Backend Development",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/7c22b17042d69d379ce0b839692f1b144ff2028f48c80660cfb97fd812322dd4",
     "description": "Advanced Node.js concepts including web servers, testing strategies, and deployment techniques.",
     "skills": [
       "Node.js",
       "Web Servers",
-      "Testing",
-      "Deployment",
+      "Software Testing",
+      "Software Deployment",
       "DevOps"
+    ]
+  },
+  {
+    "id": "react-authentication",
+    "name": "React: Authentication",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-08-01",
+    "category": "Frontend Development",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/5e7f56d1689e57c54436e73ab86f65fa620fcdc02633249c6da59654c675de9b",
+    "description": "Implementing authentication systems in React applications.",
+    "skills": [
+      "React",
+      "Authentication",
+      "Security",
+      "JWT"
+    ]
+  },
+  {
+    "id": "react-server-side-rendering",
+    "name": "React: Server-Side Rendering",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-08-01",
+    "category": "Frontend Development",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/c56a46b3a41476f18bc1a1488bf61f9368daf6b2b1ba957cb4a585f748ea92fc",
+    "description": "Advanced React SSR techniques for improved performance and SEO.",
+    "skills": [
+      "React",
+      "SSR",
+      "Next.js",
+      "Performance",
+      "SEO"
     ]
   },
   {
     "id": "react-modern-projects",
     "name": "Building Modern Projects with React",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-10-15",
+    "issueDate": "2024-07-01",
     "category": "Frontend Development",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/6470bf53b83d7e6e1b61b2acddc19b6657422e8f10214c4c70ae6152d37e3bfc",
     "description": "Modern React development patterns and best practices for building scalable applications.",
@@ -560,26 +548,10 @@
     ]
   },
   {
-    "id": "react-server-side-rendering",
-    "name": "React: Server-Side Rendering",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2023-09-20",
-    "category": "Frontend Development",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/c56a46b3a41476f18bc1a1488bf61f9368daf6b2b1ba957cb4a585f748ea92fc",
-    "description": "Advanced React SSR techniques for improved performance and SEO.",
-    "skills": [
-      "React",
-      "SSR",
-      "Performance",
-      "SEO",
-      "Node.js"
-    ]
-  },
-  {
     "id": "react-hooks",
     "name": "React Hooks",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2024-03-15",
+    "issueDate": "2024-07-01",
     "category": "Frontend Development",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/871bc943e9eaf6fe87ebdad34e5d9b2dafe69dff59bb979ce11a0a4ba49a7980",
     "description": "Deep dive into React Hooks including useState, useEffect, custom hooks, and advanced patterns.",
@@ -594,7 +566,7 @@
     "id": "react-essential-training",
     "name": "React.js Essential Training",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2024-04-22",
+    "issueDate": "2024-07-01",
     "category": "Frontend Development",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/4d6946287ff87436c491db93c1c53af844b5725ace9c663fead0d042c2ac9a99",
     "description": "Master the fundamentals of React.js including components, state management, and modern patterns.",
@@ -609,28 +581,28 @@
     "id": "react-building-interface",
     "name": "React.js: Building an Interface",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-08-10",
+    "issueDate": "2024-07-01",
     "category": "Frontend Development",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/9f6500c8ad25ee8abac0df8ccecb8f175fdc4c42c6915468afa7912e92fb8436",
     "description": "Creating interactive user interfaces with React components and modern design patterns.",
     "skills": [
       "React",
+      "Web Interface Design",
       "UI/UX",
-      "Component Design",
-      "Interactive Interfaces"
+      "Component Design"
     ]
   },
   {
     "id": "react-accessibility",
     "name": "React: Accessibility",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-07-25",
+    "issueDate": "2024-07-01",
     "category": "Frontend Development",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/532d7325734a344aae3bdffd27f7ecc5702914389e7ffc1f1dffe476ede597b7",
     "description": "Building accessible React applications following WCAG guidelines and best practices.",
     "skills": [
       "React",
-      "Accessibility",
+      "Accessible Design",
       "WCAG",
       "Inclusive Design",
       "Screen Readers"
@@ -640,13 +612,13 @@
     "id": "react-fullstack-site",
     "name": "React: Creating and Hosting a Full-Stack Site",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-06-30",
+    "issueDate": "2024-07-01",
     "category": "Frontend Development",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/5fc4b80892321b4be5714b38d9afb792c87cc07452c63a24c01c1e50388e8a9b",
     "description": "End-to-end full-stack development with React, including deployment and hosting strategies.",
     "skills": [
       "React",
-      "Full-stack",
+      "Full-Stack Development",
       "Deployment",
       "Hosting",
       "Backend Integration"
@@ -656,7 +628,7 @@
     "id": "shopify-essential",
     "name": "Shopify Essential Training",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-05-15",
+    "issueDate": "2024-07-01",
     "category": "E-commerce",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/e8e3070d4b795966d780f9b4cd1f37d6e8b9b3babbe9f471691a97e470514bec",
     "description": "Complete Shopify development including themes, apps, and store customization.",
@@ -669,10 +641,40 @@
     ]
   },
   {
+    "id": "tailwind-css-essential",
+    "name": "Tailwind CSS Essential Training",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-07-01",
+    "category": "Frontend Development",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/2ef8121b8dbc1b318f5b90644012c27dcfb69b29670b6e48ee3de6b3deef0cde",
+    "description": "Utility-first CSS framework for rapid UI development.",
+    "skills": [
+      "Tailwind CSS",
+      "CSS",
+      "Responsive Design",
+      "UI Development"
+    ]
+  },
+  {
+    "id": "typescript-essential",
+    "name": "TypeScript Essential Training",
+    "issuer": "LinkedIn Learning",
+    "issueDate": "2024-07-01",
+    "category": "Frontend Development",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/7317a25682c89e23b5455ccf03b44646fc7f905919d81c9a45c7ce81c2543a65",
+    "description": "TypeScript fundamentals for type-safe JavaScript development.",
+    "skills": [
+      "TypeScript",
+      "JavaScript",
+      "Type Safety",
+      "Web Development"
+    ]
+  },
+  {
     "id": "python-quick-start",
     "name": "A Quick Start Guide to Programming in Python",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-04-20",
+    "issueDate": "2024-06-01",
     "category": "Programming Fundamentals",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/039d0390acb2adbfdc3f2585efde17c5bea99ebeab326936422d17701002454b",
     "description": "Fast-track introduction to Python programming for beginners and developers from other languages.",
@@ -687,7 +689,7 @@
     "id": "python-hands-on",
     "name": "Hands-On Introduction: Python",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-04-10",
+    "issueDate": "2024-06-01",
     "category": "Programming Fundamentals",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/06caba61e7d0d83e43bbbb342d4b6ba757444e81fc8a840bf45803f37c390979",
     "description": "Practical Python programming with hands-on exercises and real-world examples.",
@@ -702,7 +704,7 @@
     "id": "python-level-up",
     "name": "Level Up: Python",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-03-25",
+    "issueDate": "2024-06-01",
     "category": "Programming Fundamentals",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/642089d3799f4acbb3dd036fdad77a24154b84ae4f355ae3e5662ae0fe42fc81",
     "description": "Advanced Python concepts and techniques for experienced programmers.",
@@ -717,7 +719,7 @@
     "id": "python-programming-concepts",
     "name": "Programming Concepts for Python",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-03-15",
+    "issueDate": "2024-06-01",
     "category": "Programming Fundamentals",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/b1ab77ae2d9b2a1dc4b87db53dccccb48defa8499d1d652bf0af5bab504483c3",
     "description": "Core programming concepts applied through Python including algorithms and data structures.",
@@ -732,7 +734,7 @@
     "id": "programming-beyond-fundamentals",
     "name": "Programming Foundations: Beyond the Fundamentals",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-02-28",
+    "issueDate": "2024-06-01",
     "category": "Programming Fundamentals",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/2672e3ff728cf107bd5e457c0003056f6007ec3d6dac449ed7f91f78e7654f18",
     "description": "Advanced programming concepts including object-oriented programming and design patterns.",
@@ -747,7 +749,7 @@
     "id": "programming-fundamentals",
     "name": "Programming Foundations: Fundamentals",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-02-15",
+    "issueDate": "2024-06-01",
     "category": "Programming Fundamentals",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/23ea0a7fc9be39f20217ee2bcc8f19b17be7498a4d5fb03c368dbeabc644752b",
     "description": "Essential programming concepts and foundations applicable across all programming languages.",
@@ -762,7 +764,7 @@
     "id": "python-essential",
     "name": "Python Essential Training",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-08-12",
+    "issueDate": "2024-06-01",
     "category": "Programming Fundamentals",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/53c1d4177d42bc7917564bfdaeecd9563fcd1ad2cdb510153384993cdf03267c",
     "description": "Foundation Python programming including syntax, data structures, and object-oriented programming.",
@@ -777,7 +779,7 @@
     "id": "javascript-algorithms",
     "name": "JavaScript Algorithms and Data Structures",
     "issuer": "freeCodeCamp",
-    "issueDate": "2023-10-05",
+    "issueDate": "2023-09-01",
     "category": "Programming Fundamentals",
     "credentialUrl": "https://freecodecamp.org/certification/thmentis/javascript-algorithms-and-data-structures",
     "description": "Comprehensive certification covering JavaScript fundamentals, algorithms, and data structures.",
@@ -785,14 +787,15 @@
       "JavaScript",
       "Algorithms",
       "Data Structures",
-      "Problem Solving"
+      "Problem Solving",
+      "WordPress"
     ]
   },
   {
     "id": "instagram-marketing",
     "name": "Marketing on Instagram",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-01-20",
+    "issueDate": "2018-11-01",
     "category": "Digital Marketing",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/27e20a7924aeb2d441a2f997f581977c27b29d561940674923b5b122390357c2",
     "description": "Instagram marketing strategies including content creation, audience engagement, and advertising.",
@@ -807,38 +810,39 @@
     "id": "website-performance-design",
     "name": "Designing Websites for Performance",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-01-10",
+    "issueDate": "2018-09-01",
     "category": "Performance & Optimization",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/e622a73a95963b0613addd5df582d237fa11d784c5df3e2ada5d54b34a76d37d",
     "description": "Performance-focused web design principles and optimization techniques.",
     "skills": [
-      "Web Performance",
-      "Optimization",
-      "Design",
-      "User Experience"
+      "Responsive Web Design",
+      "Web Development",
+      "WordPress",
+      "WooCommerce",
+      "E-Commerce"
     ]
   },
   {
     "id": "gdpr-compliance",
     "name": "GDPR Compliance: Essential Training",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-06-15",
+    "issueDate": "2018-05-01",
     "category": "Security & Compliance",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/aec94a00fe54703c49a0bc85c415d5014dc8cb0bda6b50cc324c36f5e92b983c",
     "description": "Understanding GDPR requirements and implementing compliant data protection practices.",
     "skills": [
-      "GDPR",
-      "Data Protection",
-      "Privacy",
-      "Compliance",
-      "Legal"
+      "Web Development",
+      "WordPress",
+      "WooCommerce",
+      "E-Commerce",
+      "GDPR"
     ]
   },
   {
     "id": "ethical-hacking-wireless",
     "name": "Ethical Hacking: Wireless Networks",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-05-10",
+    "issueDate": "2018-02-01",
     "category": "Security & Compliance",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/71609b1cdf57fb5714735f563becf687764396d0421d934b6774a4ca00b897af",
     "description": "Network security testing and vulnerability assessment for wireless networks.",
@@ -853,7 +857,7 @@
     "id": "facebook-business",
     "name": "Facebook for Business",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2022-12-15",
+    "issueDate": "2018-02-01",
     "category": "Digital Marketing",
     "credentialUrl": "http://www.linkedin.com/learning/facebook-for-business",
     "description": "Facebook business marketing strategies including pages, advertising, and audience targeting.",
@@ -868,7 +872,7 @@
     "id": "gmail-outlook-migration",
     "name": "Migrating from Gmail and Google Calendar to Outlook",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2022-11-20",
+    "issueDate": "2017-12-01",
     "category": "Productivity Tools",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/591f878e7896afa20138a2e05911bb9d6ebc85b732681d69cd0d2ecc328bb3ba",
     "description": "Seamless migration strategies and best practices for moving from Google Workspace to Microsoft Outlook.",
@@ -883,7 +887,7 @@
     "id": "apache-administration",
     "name": "Apache Web Server: Administration",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2023-07-20",
+    "issueDate": "2017-08-01",
     "category": "DevOps & Infrastructure",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/80a0898beed4f1cc2781c094fdb201fc6743bcfd462ebbf3a1a432e54ecc37c7",
     "description": "Professional Apache web server configuration, security, and performance optimization.",
@@ -899,39 +903,39 @@
     "id": "access-advanced-tips",
     "name": "Access 2016: Advanced Tips and Tricks",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2022-09-10",
+    "issueDate": "2017-05-01",
     "category": "Database Management",
     "credentialUrl": "https://www.linkedin.com/learning/certificates/6cbbb7a2b639f8b48e245b6e7bba716bb6a7386d93d82771335f7aad3b3f5a98",
     "description": "Advanced Microsoft Access techniques for database optimization and complex queries.",
     "skills": [
+      "Microsoft Office",
       "Microsoft Access",
       "Database Management",
-      "Query Optimization",
-      "Advanced Features"
+      "Query Optimization"
     ]
   },
   {
     "id": "access-2016-learning",
     "name": "Learning Access 2016",
     "issuer": "LinkedIn Learning",
-    "issueDate": "2022-08-25",
+    "issueDate": "2017-04-01",
     "category": "Database Management",
     "credentialUrl": "http://www.lynda.com//Security-tutorials/Introduction-Ethical-Hacking/455716-2.html",
     "description": "Comprehensive Microsoft Access 2016 training covering database design and management.",
     "skills": [
+      "Microsoft Office",
       "Microsoft Access",
       "Database Design",
-      "Data Management",
-      "Forms & Reports"
+      "Data Management"
     ]
   },
   {
     "id": "ethical-hacking-intro",
     "name": "Introduction to Ethical Hacking",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2022-07-15",
+    "issuer": "Lynda.com",
+    "issueDate": "2016-05-01",
     "category": "Security & Compliance",
-    "credentialUrl": "https://www.linkedin.com/learning/certificates/e622a73a95963b0613addd5df582d237fa11d784c5df3e2ada5d54b34a76d37d",
+    "credentialUrl": "http://www.lynda.com/ViewCertificate/133FB7",
     "description": "Foundational ethical hacking concepts and methodologies for cybersecurity professionals.",
     "skills": [
       "Ethical Hacking",
@@ -943,42 +947,42 @@
   {
     "id": "wordpress-analytics-plugins",
     "name": "WordPress Plugins: Analytics",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2022-06-20",
+    "issuer": "Lynda.com",
+    "issueDate": "2016-03-01",
     "category": "CMS Development",
-    "credentialUrl": "http://www.lynda.com//WordPress-tutorials/WordPress-Plugins-Analytics/163114-2.html",
+    "credentialUrl": "http://www.lynda.com/ViewCertificate/41CCC3",
     "description": "WordPress analytics plugins setup, configuration, and optimization for data-driven insights.",
     "skills": [
+      "Web Development",
       "WordPress",
-      "Analytics",
-      "Plugins",
-      "Data Tracking",
-      "Performance Metrics"
+      "WooCommerce",
+      "E-Commerce",
+      "Analytics"
     ]
   },
   {
     "id": "centos-linux",
     "name": "Up and Running with CentOS Linux",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2022-05-15",
+    "issuer": "Lynda.com",
+    "issueDate": "2016-01-01",
     "category": "DevOps & Infrastructure",
-    "credentialUrl": "http://www.lynda.com/ViewCertificate/E1D48F1AEA7C46BC9A926A6DFA856055",
+    "credentialUrl": "http://www.lynda.com/ViewCertificate/E1D48F",
     "description": "CentOS Linux server administration including installation, configuration, and management.",
     "skills": [
-      "CentOS",
-      "Linux",
       "Server Administration",
-      "System Management",
+      "Network Administration",
+      "Linux",
+      "CentOS",
       "Command Line"
     ]
   },
   {
     "id": "google-tag-manager",
     "name": "Google Tag Manager (V2) Essential Training",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2022-04-10",
+    "issuer": "Lynda.com",
+    "issueDate": "2015-12-01",
     "category": "Digital Marketing",
-    "credentialUrl": "http://www.lynda.com/ViewCertificate/1CF24B5AD00344C780CDD68D347425EC",
+    "credentialUrl": "http://www.lynda.com/ViewCertificate/1CF24B",
     "description": "Google Tag Manager implementation for tracking, analytics, and marketing automation.",
     "skills": [
       "Google Tag Manager",
@@ -991,32 +995,48 @@
   {
     "id": "seo-fundamentals",
     "name": "SEO Fundamentals",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2023-04-08",
+    "issuer": "Lynda.com",
+    "issueDate": "2015-10-01",
     "category": "Digital Marketing",
-    "credentialUrl": "http://www.lynda.com//Marketing-Enterprise-Marketing-tutorials/SEO-Fundamentals/187858-2.html",
+    "credentialUrl": "http://www.lynda.com/ViewCertificate/342209",
     "description": "Search engine optimization strategies for improving website visibility and ranking.",
     "skills": [
       "SEO",
-      "Digital Marketing",
-      "Web Analytics",
-      "Content Strategy"
+      "Web Development",
+      "WordPress",
+      "WooCommerce",
+      "E-Commerce"
     ]
   },
   {
     "id": "seo-website-analysis",
     "name": "Analyzing Your Website to Improve SEO",
-    "issuer": "LinkedIn Learning",
-    "issueDate": "2022-01-25",
+    "issuer": "Lynda.com",
+    "issueDate": "2015-09-01",
     "category": "Digital Marketing",
-    "credentialUrl": "http://www.lynda.com//Marketing-Small-Business-Marketing-tutorials/Analyzing-Your-Website-Improve-SEO/82409-2.html",
+    "credentialUrl": "http://www.lynda.com/ViewCertificate/F71348",
     "description": "Website analysis techniques and tools for SEO improvement and search ranking optimization.",
     "skills": [
-      "SEO Analysis",
-      "Website Optimization",
-      "Search Rankings",
-      "Performance Analysis",
-      "Digital Marketing"
+      "SEO",
+      "Web Development",
+      "WordPress",
+      "WooCommerce",
+      "E-Commerce"
+    ]
+  },
+  {
+    "id": "big-bang-to-today",
+    "name": "From the Big Bang to Today",
+    "issuer": "National and Kapodistrian University of Athens",
+    "issueDate": "2014-07-01",
+    "category": "Science & Education",
+    "credentialUrl": "#",
+    "description": "Comprehensive course covering the history of the universe from the Big Bang to present day.",
+    "skills": [
+      "Astronomy",
+      "Physics",
+      "Science",
+      "Cosmology"
     ]
   }
 ]
