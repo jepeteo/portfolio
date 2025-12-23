@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Self-hosted fonts** - Eliminated external Google Fonts requests
 
   - Migrated to fontsource packages (Inter, Space Grotesk, JetBrains Mono)
+  - Latin subset only (472KB vs 1.7MB) - 72% reduction
   - Fonts now bundled with app for faster loading
   - Removed Google Font preconnect/preload hints
 
