@@ -265,6 +265,7 @@ const Hero: React.FC = memo(() => {
                   className={`w-full h-auto rounded-3xl transform transition-transform duration-500 hover:scale-105 ${
                     prefersReducedMotion ? "!transform-none !transition-none" : ""
                   }`}
+                  style={{ animation: "fadeIn 0.6s ease-out" }}
                   loading="eager"
                   fetchPriority="high"
                   decoding="async"

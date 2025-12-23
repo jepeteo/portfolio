@@ -102,8 +102,6 @@ body {
             /* Circuit pattern overlay */
             radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
             radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
-            /* Subtle grid */
-            var(--tech-grid),
             /* Base gradient */
             linear-gradient(135deg,
                 rgb(248, 250, 252) 0%,
@@ -112,7 +110,6 @@ body {
         background-size:
             800px 800px,
             600px 600px,
-            40px 40px,
             100% 100%;
         background-attachment: fixed;
     }
@@ -133,8 +130,6 @@ body {
             /* Circuit pattern overlay */
             radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
             radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-            /* Subtle grid */
-            var(--tech-grid),
             /* Base gradient */
             linear-gradient(135deg,
                 rgb(15, 23, 42) 0%,
@@ -193,6 +188,15 @@ body {
 }
 
 /* Animation classes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
