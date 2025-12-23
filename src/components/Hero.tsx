@@ -256,24 +256,25 @@ const Hero: React.FC = memo(() => {
                   : "bg-white/50 backdrop-blur-sm border border-slate-200"
               }`}
             >
-              <img
-                ref={imageRef}
-                src="/images/opti/teo-hero.jpg"
-                srcSet="/images/opti/teo-hero.jpg 800w"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                width={800}
-                height={800}
-                alt="Theodoros Mentis - Professional headshot of a Senior Full-Stack Developer with 18+ years of experience, based in Berlin, Germany"
-                className={`w-full h-auto rounded-3xl transform transition-transform duration-500 hover:scale-105 ${
-                  prefersReducedMotion ? "!transform-none !transition-none" : ""
-                }`}
-                loading="eager"
-                fetchPriority="high"
-                decoding="async"
-                onError={(e) => {
-                  e.currentTarget.src = "/placeholder-image.png"
-                }}
-              />
+              <picture>
+                <source srcSet="/images/opti/teo-hero.webp" type="image/webp" />
+                <img
+                  ref={imageRef}
+                  src="/images/opti/teo-hero.jpg"
+                  width={800}
+                  height={800}
+                  alt="Theodoros Mentis - Professional headshot of a Senior Full-Stack Developer with 18+ years of experience, based in Berlin, Germany"
+                  className={`w-full h-auto rounded-3xl transform transition-transform duration-500 hover:scale-105 ${
+                    prefersReducedMotion ? "!transform-none !transition-none" : ""
+                  }`}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  onError={(e) => {
+                    e.currentTarget.src = "/placeholder-image.png"
+                  }}
+                />
+              </picture>
             </div>
 
             {/* Available for hire badge - centered below image */}
