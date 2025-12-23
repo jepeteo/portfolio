@@ -89,17 +89,17 @@ const Hero: React.FC = memo(() => {
           />
 
           <div className="absolute inset-0">
-            {[...Array(20)].map((_, i) => (
+            {[...Array(8)].map((_, i) => (
               <div
                 key={i}
                 className={`absolute w-2 h-2 ${
                   isDark ? "bg-blue-400/20" : "bg-blue-600/20"
-                } rounded-full animate-pulse`}
+                } rounded-full ${prefersReducedMotion ? "" : "animate-pulse"}`}
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 80}%`, // Keep dots in upper 80% to respect fade
-                  animationDelay: `${Math.random() * 3}s`,
-                  animationDuration: `${2 + Math.random() * 2}s`,
+                  left: `${(i * 12.5) + 6}%`,
+                  top: `${(i % 4) * 20 + 10}%`,
+                  animationDelay: `${i * 0.3}s`,
+                  animationDuration: "3s",
                 }}
               />
             ))}
@@ -261,6 +261,8 @@ const Hero: React.FC = memo(() => {
                   prefersReducedMotion ? "!transform-none !transition-none" : ""
                 }`}
                 loading="eager"
+                fetchPriority="high"
+                decoding="async"
                 onError={(e) => {
                   e.currentTarget.src = "/placeholder-image.png"
                 }}
