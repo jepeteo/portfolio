@@ -5,6 +5,7 @@ import { validateReactProject } from "../utils/validation"
 import { ModernReactProject } from "../types"
 import reactProjectsData from "../assets/myReactProjects.json"
 import { Code2, ExternalLink, Github, Zap, Star, Calendar } from "lucide-react"
+import { NoDataAvailable } from "./ui/EmptyState"
 
 const ReactProjects: React.FC = memo(() => {
   const { isDark } = useTheme()
@@ -25,7 +26,7 @@ const ReactProjects: React.FC = memo(() => {
   if (validReactProjects.length === 0) {
     return (
       <section className="container py-20" id="react-projects">
-        <div className="text-center">
+        <div className="text-center mb-8">
           <h2
             className={`text-4xl md:text-6xl font-display font-bold mb-4 ${
               isDark ? "text-white" : "text-slate-900"
@@ -33,14 +34,8 @@ const ReactProjects: React.FC = memo(() => {
           >
             React Projects
           </h2>
-          <p
-            className={`text-xl ${
-              isDark ? "text-slate-400" : "text-slate-600"
-            }`}
-          >
-            No React projects data available
-          </p>
         </div>
+        <NoDataAvailable dataType="React projects" />
       </section>
     )
   }

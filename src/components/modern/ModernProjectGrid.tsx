@@ -21,6 +21,7 @@ import {
   ProjectCardSkeleton,
   LoadingState,
 } from "../loading/ModernLoadingStates"
+import { NoProjectsFound } from "../ui/EmptyState"
 import { cn, typography, spacing, shadows } from "../../utils/styles"
 import { useViewTransition } from "../../hooks/useViewTransition"
 
@@ -51,15 +52,18 @@ const ModernProjectGrid: React.FC<ModernProjectGridProps> = ({
   const { isDark } = useTheme()
   const [selectedCategory, setSelectedCategory] = useState<string>("all")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
-  const { startTransition } = useViewTransition()
+  const { startTransition } = useViewTransition()
+
   const categories = useMemo(() => {
     const cats = ["all", ...new Set(projects.map((p) => p.category))]
     return cats
-  }, [projects])
+  }, [projects])
+
   const filteredProjects = useMemo(() => {
     if (selectedCategory === "all") return projects
     return projects.filter((p) => p.category === selectedCategory)
-  }, [projects, selectedCategory])
+  }, [projects, selectedCategory])
+
   const { featured, regular } = useMemo(() => {
     const featured = filteredProjects.filter((p) => p.featured)
     const regular = filteredProjects.filter((p) => !p.featured)
@@ -402,25 +406,13 @@ const ModernProjectGrid: React.FC<ModernProjectGridProps> = ({
               )}
 
               {filteredProjects.length === 0 && !loading && (
-                <motion.div
-                  className="text-center py-12"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Icon
-                    icon={icons.layout.grid}
-                    size="3xl"
-                    className="mx-auto mb-4 text-muted-foreground"
-                  />
-                  <h3 className="text-xl font-semibold mb-2">
-                    No projects found
-                  </h3>
-                  <p className="text-muted-foreground">
-                    Try adjusting your filter or check back later for new
-                    projects.
-                  </p>
-                </motion.div>
+                <NoProjectsFound
+                  onResetFilter={
+                    activeFilter !== "all"
+                      ? () => setActiveFilter("all")
+                      : undefined
+                  }
+                />
               )}
             </motion.div>
           </AnimatePresence>
