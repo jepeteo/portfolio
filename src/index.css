@@ -85,45 +85,62 @@ body {
     line-height: 1.6;
     color: rgb(var(--color-secondary-foreground));
 
-    /* Modern tech background */
-    background:
-        /* Circuit pattern overlay */
-        radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
-        /* Subtle grid */
-        var(--tech-grid),
-        /* Base gradient */
-        linear-gradient(135deg,
+    /* Simplified background for better performance */
+    background: linear-gradient(135deg,
             rgb(248, 250, 252) 0%,
             rgb(241, 245, 249) 50%,
             rgb(248, 250, 252) 100%);
-    background-size:
-        800px 800px,
-        600px 600px,
-        40px 40px,
-        100% 100%;
     background-attachment: fixed;
-
-    /* Hardware acceleration */
-    transform: translateZ(0);
-    will-change: background-position;
-
     min-height: 100vh;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background 0.3s ease;
+}
+
+/* Decorative backgrounds only on larger screens */
+@media (min-width: 768px) {
+    body {
+        background:
+            /* Circuit pattern overlay */
+            radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+            /* Subtle grid */
+            var(--tech-grid),
+            /* Base gradient */
+            linear-gradient(135deg,
+                rgb(248, 250, 252) 0%,
+                rgb(241, 245, 249) 50%,
+                rgb(248, 250, 252) 100%);
+        background-size:
+            800px 800px,
+            600px 600px,
+            40px 40px,
+            100% 100%;
+        background-attachment: fixed;
+    }
 }
 
 .dark body {
-    background:
-        /* Circuit pattern overlay */
-        radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-        /* Subtle grid */
-        var(--tech-grid),
-        /* Base gradient */
-        linear-gradient(135deg,
+    /* Simplified dark background for mobile performance */
+    background: linear-gradient(135deg,
             rgb(15, 23, 42) 0%,
             rgb(30, 41, 59) 50%,
             rgb(15, 23, 42) 100%);
+}
+
+/* Decorative dark backgrounds only on larger screens */
+@media (min-width: 768px) {
+    .dark body {
+        background:
+            /* Circuit pattern overlay */
+            radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+            /* Subtle grid */
+            var(--tech-grid),
+            /* Base gradient */
+            linear-gradient(135deg,
+                rgb(15, 23, 42) 0%,
+                rgb(30, 41, 59) 50%,
+                rgb(15, 23, 42) 100%);
+    }
 }
 
 /* Remove all yellow-blue gradients and replace with tech-inspired colors */

@@ -46,13 +46,14 @@ const Hero: React.FC = memo(() => {
     <section
       ref={heroRef}
       className={`relative min-h-screen flex flex-col items-center justify-center pt-24 pb-20 transition-all duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      } ${prefersReducedMotion ? "!transition-none" : ""}`}
+        prefersReducedMotion ? "!transition-none" : ""
+      }`}
       id="top"
       role="banner"
       aria-label="Hero section - Theodore Mentis, Senior Full Stack Developer"
     >
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Simplified background - use CSS containment for performance */}
+      <div className="absolute inset-0 overflow-hidden" style={{ contain: 'strict' }}>
         <div
           className={`absolute inset-0 ${
             isDark
@@ -60,8 +61,9 @@ const Hero: React.FC = memo(() => {
               : "bg-gradient-to-b from-slate-50 via-white to-transparent"
           }`}
         >
+          {/* Grid pattern - hidden on mobile for performance */}
           <div
-            className={`absolute inset-0 ${
+            className={`hidden md:block absolute inset-0 ${
               isDark
                 ? "bg-[linear-gradient(to_right,rgba(148,163,184,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.1)_1px,transparent_1px)]"
                 : "bg-[linear-gradient(to_right,rgba(71,85,105,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(71,85,105,0.1)_1px,transparent_1px)]"
@@ -80,30 +82,28 @@ const Hero: React.FC = memo(() => {
                 ? "bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent"
                 : "bg-gradient-to-t from-white via-white/80 to-transparent"
             }`}
-            style={{
-              maskImage:
-                "linear-gradient(to top, black 0%, black 60%, transparent 100%)",
-              WebkitMaskImage:
-                "linear-gradient(to top, black 0%, black 60%, transparent 100%)",
-            }}
           />
 
-          <div className="absolute inset-0">
-            {[...Array(8)].map((_, i) => (
-              <div
-                key={i}
-                className={`absolute w-2 h-2 ${
-                  isDark ? "bg-blue-400/20" : "bg-blue-600/20"
-                } rounded-full ${prefersReducedMotion ? "" : "animate-pulse"}`}
-                style={{
-                  left: `${(i * 12.5) + 6}%`,
-                  top: `${(i % 4) * 20 + 10}%`,
-                  animationDelay: `${i * 0.3}s`,
-                  animationDuration: "3s",
-                }}
-              />
-            ))}
-          </div>
+          {/* Reduced animated dots - only on desktop, hidden on mobile */}
+          {!prefersReducedMotion && (
+            <div className="hidden lg:block absolute inset-0" aria-hidden="true">
+              {[0, 1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className={`absolute w-2 h-2 ${
+                    isDark ? "bg-blue-400/20" : "bg-blue-600/20"
+                  } rounded-full animate-pulse`}
+                  style={{
+                    left: `${(i * 25) + 12}%`,
+                    top: `${(i % 2) * 30 + 20}%`,
+                    animationDelay: `${i * 0.5}s`,
+                    animationDuration: "3s",
+                    willChange: 'opacity',
+                  }}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -236,9 +236,7 @@ const Hero: React.FC = memo(() => {
         </div>
 
         <div
-          className={`flex-1 lg:flex-none lg:w-1/2 mt-12 lg:mt-0 transition-all duration-1000 delay-500 ${
-            isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
-          }`}
+          className="flex-1 lg:flex-none lg:w-1/2 mt-12 lg:mt-0"
         >
           <div className="relative max-w-lg mx-auto">
             <div
@@ -314,35 +312,20 @@ const Hero: React.FC = memo(() => {
       </div>
 
       <div
-        className={`container mx-auto px-6 py-12 transition-all duration-1000 delay-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        } ${prefersReducedMotion ? "!transition-none" : ""}`}
+        className={`container mx-auto px-6 py-12 ${prefersReducedMotion ? "" : ""}`}
         role="region"
         aria-labelledby="approach-title"
       >
         <div className="relative flex items-center justify-center mb-6">
+          {/* Simplified gradient line - no animation on mobile */}
           <div className="flex-1 h-px relative mr-6">
             <div
               className={`absolute inset-0 bg-gradient-to-r ${
                 isDark
                   ? "from-transparent via-purple-500/40 to-blue-500/40"
                   : "from-transparent via-purple-400/40 to-blue-400/40"
-              } animate-pulse`}
-              style={{
-                animationDuration: "3s",
-                animationDelay: "0s",
-              }}
-            />
-            <div
-              className={`absolute inset-0 bg-gradient-to-r ${
-                isDark
-                  ? "from-transparent via-blue-500/30 to-purple-500/30"
-                  : "from-transparent via-blue-400/30 to-purple-400/30"
-              } animate-pulse`}
-              style={{
-                animationDuration: "2.5s",
-                animationDelay: "1s",
-              }}
+              } ${prefersReducedMotion ? "" : "md:animate-pulse"}`}
+              style={{ animationDuration: "3s", willChange: "opacity" }}
             />
           </div>
 
@@ -361,22 +344,8 @@ const Hero: React.FC = memo(() => {
                 isDark
                   ? "from-transparent via-purple-500/40 to-blue-500/40"
                   : "from-transparent via-purple-400/40 to-blue-400/40"
-              } animate-pulse`}
-              style={{
-                animationDuration: "3s",
-                animationDelay: "0.5s",
-              }}
-            />
-            <div
-              className={`absolute inset-0 bg-gradient-to-l ${
-                isDark
-                  ? "from-transparent via-blue-500/30 to-purple-500/30"
-                  : "from-transparent via-blue-400/30 to-purple-400/30"
-              } animate-pulse`}
-              style={{
-                animationDuration: "2.5s",
-                animationDelay: "1.5s",
-              }}
+              } ${prefersReducedMotion ? "" : "md:animate-pulse"}`}
+              style={{ animationDuration: "3s", animationDelay: "1.5s", willChange: "opacity" }}
             />
           </div>
         </div>

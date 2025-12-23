@@ -17,8 +17,6 @@ import {
   seoManager,
 } from "./utils/enhancedSEO"
 import useServiceWorker from "./hooks/useServiceWorker"
-import { usePostHog } from "posthog-js/react"
-import { postHogAnalytics } from "./utils/postHogAnalytics"
 
 // Lazy-load components that use framer-motion to reduce initial bundle
 const ModernHeader = lazy(() => import("./components/navigation/ModernHeader"))
@@ -111,14 +109,6 @@ const ExperienceLoader: React.FC = () => (
 const AppContent: React.FC = () => {
   const { isDark } = useTheme()
 
-  const postHog = usePostHog()
-
-  React.useEffect(() => {
-    if (postHog) {
-      postHogAnalytics.setPostHogInstance(postHog)
-    }
-  }, [postHog])
-
   useServiceWorker()
 
   // Lazy-load production monitor and track page view
@@ -135,11 +125,7 @@ const AppContent: React.FC = () => {
         theme: isDark ? "dark" : "light",
       })
     })
-
-    postHog?.capture("theme_changed", {
-      theme: isDark ? "dark" : "light",
-    })
-  }, [isDark, postHog])
+  }, [isDark])
 
   React.useEffect(() => {
     seoManager.optimizeCorewWebVitals()
