@@ -120,31 +120,43 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = links.map((link) => link.href.slice(1))
-      const scrollPosition = window.scrollY + 100
+      const scrollPosition = window.scrollY + 150 // Offset for header height
 
-      for (const sectionId of sections) {
-        const element = document.getElementById(
-          sectionId === "top" ? "" : sectionId
-        )
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + offsetHeight
-          ) {
-            setActiveSection(`#${sectionId}`)
-            break
-          }
+      // Check if at the top of the page
+      if (scrollPosition < 300) {
+        setActiveSection("#top")
+        return
+      }
+
+      // Get all section elements and find which one is currently in view
+      const sections = links
+        .map((link) => {
+          const id = link.href.slice(1)
+          const element = document.getElementById(id)
+          return element ? { id, element } : null
+        })
+        .filter((section): section is { id: string; element: HTMLElement } => section !== null)
+
+      // Find the section that's currently in view (from bottom to top for accuracy)
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const { id, element } = sections[i]
+        const { offsetTop } = element
+        
+        if (scrollPosition >= offsetTop) {
+          setActiveSection(`#${id}`)
+          return
         }
       }
+
+      // Default to first section if nothing matches
+      setActiveSection("#top")
     }
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     handleScroll() // Set initial active section
 
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [links])
+  }, []) // Remove links dependency to prevent re-creating listener
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -181,9 +193,12 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
         isMobile
           ? "w-full text-left justify-start px-5 py-4 min-h-[44px]"
           : "px-4 py-2",
-        isActive && "text-primary font-medium",
-        // Add subtle background for active mobile items
-        isMobile && isActive && (isDark ? "bg-blue-500/10" : "bg-blue-500/5")
+        // Enhanced active state styling
+        isActive && "text-primary font-semibold",
+        !isActive && (isDark ? "text-slate-300" : "text-slate-600"),
+        // Add subtle background for active items
+        isActive && (isDark ? "bg-blue-500/15" : "bg-blue-500/10"),
+        isMobile && isActive && (isDark ? "bg-blue-500/20" : "bg-blue-500/10")
       )}
       onClick={(e) => handleNavClick(e, link.href.slice(1))}
       whileHover={{ scale: isMobile ? 1 : 1.02 }}
@@ -194,10 +209,11 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       {/* Desktop underline indicator */}
       {isActive && !isMobile && (
         <motion.div
-          className="absolute bottom-0 left-1/2 h-0.5 bg-primary rounded-full"
+          className="absolute bottom-0 left-1/2 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+          layoutId="activeIndicator"
           initial={{ width: 0, x: "-50%" }}
           animate={{ width: "80%", x: "-50%" }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+          transition={{ type: "spring", stiffness: 380, damping: 30 }}
         />
       )}
 
