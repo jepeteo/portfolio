@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2025-12-23
+
+### Added
+
+#### Medium Priority UX Improvements
+- **Micro-interactions** - Enhanced hover effects for interactive elements
+  - Card component with lift, glow, scale, and subtle hover variants
+  - Spring physics animations for natural feel
+  - Configurable per-card interaction styles
+
+- **Toast Notification System** - User feedback for form submissions
+  - `Toast` component with success, error, warning, info types
+  - `ToastProvider` with configurable position
+  - `useToast` hook for easy integration
+  - Auto-dismiss with progress bar
+  - Accessible ARIA attributes
+
+- **Keyboard Navigation Indicators** - Enhanced accessibility
+  - `SkipLink` component for skip-to-main-content
+  - `useFocusTrap` hook for modal/menu focus management
+  - Enhanced global focus-visible styles
+  - High contrast and reduced motion support
+
+- **Empty State Components** - Better UI for empty data
+  - `EmptyState` component with animated entrance
+  - `NoSearchResults`, `NoProjectsFound`, `NoDataAvailable` presets
+  - Action buttons for user recovery paths
+
+- **Scroll Progress Bar** - Visual reading progress indicator
+  - `ScrollProgress` component with smooth spring animation
+  - Gradient, primary, and accent color schemes
+  - `ReadingProgress` variant with time remaining
+
+---
+
 ## [0.1.0] - 2025-12-23
 
 ### Added

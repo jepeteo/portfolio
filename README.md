@@ -1,6 +1,6 @@
 # Modern Portfolio Website
 
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/jepeteo/portfolio)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/jepeteo/portfolio)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 A high-performance, accessible portfolio website built with modern web technologies and best practices.
@@ -27,6 +27,14 @@ A high-performance, accessible portfolio website built with modern web technolog
 - **Form Validation UX**: Real-time feedback, character counters, and progress indicator
 - **Mobile Nav Animation**: Animated hamburger-to-X morphing button
 - **Image Blur-up Loading**: Smooth blur-to-sharp transitions with gradient placeholders
+
+### UX Enhancements (v0.2.0)
+
+- **Micro-interactions**: Enhanced card hover effects with lift, glow, and scale variants
+- **Toast Notifications**: User feedback system for form submissions
+- **Keyboard Navigation**: Skip links, focus trapping, enhanced focus indicators
+- **Empty States**: Beautiful UI components for empty data scenarios
+- **Scroll Progress Bar**: Visual reading progress indicator with smooth animation
 
 ### Performance & Optimization
 

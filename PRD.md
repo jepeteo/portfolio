@@ -3,7 +3,7 @@
 ## 📋 Project Overview
 
 **Product Name:** Theodoros Mentis - Senior Full Stack Developer Portfolio  
-**Version:** 2.2  
+**Version:** 2.3  
 **Last Updated:** December 23, 2025  
 **Website:** [theodorosmentis.com](https://theodorosmentis.com)
 
