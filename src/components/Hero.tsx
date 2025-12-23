@@ -270,20 +270,24 @@ const Hero: React.FC = memo(() => {
               />
             </div>
 
-            <div
-              className={`absolute -top-4 -right-4 px-3 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 ${
-                isDark
-                  ? "bg-green-500/20 text-green-300 border border-green-500/30"
-                  : "bg-green-100 text-green-700 border border-green-200"
-              }`}
-              role="status"
-              aria-label="Current availability status"
-            >
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              Available for hire
+            {/* Available for hire badge - centered below image */}
+            <div className="flex justify-center mt-4">
+              <div
+                className={`px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 ${
+                  isDark
+                    ? "bg-green-500/20 text-green-300 border border-green-500/30"
+                    : "bg-green-100 text-green-700 border border-green-200"
+                }`}
+                role="status"
+                aria-label="Current availability status"
+              >
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                Available for hire
+              </div>
             </div>
 
-            <div
+            {/* Relocation badge hidden for now */}
+            {/* <div
               className={`absolute -bottom-4 -left-4 px-3 py-2 rounded-xl text-sm font-semibold animate-pulse transition-all duration-1000 delay-700 ${
                 isVisible
                   ? "opacity-100 translate-y-0"
@@ -297,7 +301,7 @@ const Hero: React.FC = memo(() => {
               aria-label="Relocation availability status"
             >
               🌍 Open for relocation
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

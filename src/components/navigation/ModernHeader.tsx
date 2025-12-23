@@ -42,9 +42,9 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
           : "bg-surface-primary/80 border-border/30 backdrop-blur-sm",
         className
       )}
-      initial={{ y: -100, opacity: 0 }}
+      initial={false}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
       role="banner"
       style={{
         position: "sticky",
