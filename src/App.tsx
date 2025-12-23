@@ -186,7 +186,7 @@ const AppContent: React.FC = () => {
       jobTitle: "Senior Full Stack Developer",
       email: "th.mentis@gmail.com",
       url: "https://theodorosmentis.com",
-      image: "https://theodorosmentis.com/src/assets/images/teo.png",
+      image: "https://theodorosmentis.com/images/teo-square.webp",
       sameAs: [
         "https://github.com/jepeteo",
         "https://linkedin.com/in/theodorosmentis",

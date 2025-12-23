@@ -1,20 +1,30 @@
 /* TEAM */
 Developer: Theodoros Mentis
 Contact: th.mentis@gmail.com
+Site: https://theodorosmentis.com
+Twitter: @theodorosmentis
+GitHub: github.com/jepeteo
+LinkedIn: linkedin.com/in/theodorosmentis
+Location: Berlin, Germany
 From: Greece
 
 /* SITE */
-Last update: 2025/01/15
+Last update: 2025/12/23
+Standards: HTML5, CSS3, ES2020+
 Language: English
 Doctype: HTML5
 IDE: Visual Studio Code
-Technologies: React, TypeScript, Vite, Tailwind CSS
-Analytics: Vercel Analytics, Google Analytics
+Technologies: React 18, TypeScript, Vite 7, Tailwind CSS 4, Framer Motion
+Analytics: Vercel Analytics, PostHog
 Hosting: Vercel
+Performance: Lighthouse 95+, Core Web Vitals optimized
 
 /* THANKS */
 React Team
 Vite Team
 Tailwind CSS Team
+Framer Motion Team
 Vercel Team
+PostHog Team
+Lucide Icons
 GitHub Copilot
