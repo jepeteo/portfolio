@@ -159,7 +159,7 @@ const getIssuerUrl = (issuer: string): string => {
   )
 }
 
-const categoryIcons: Record<string, React.ComponentType<any>> = {
+const categoryIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   "AI & Machine Learning": Zap,
   "Frontend Development": Code,
   "Backend Development": Server,
@@ -193,7 +193,7 @@ const ModernCertificates: React.FC = memo(() => {
 
   const { categories, certsByCategory, validCertificates } = useMemo(() => {
     const validCerts = myCertificates
-      .filter((cert: any) => validateCertificate(cert))
+      .filter((cert: ModernCertificate) => validateCertificate(cert))
       .map((cert: ModernCertificate) => cert)
 
     const grouped = validCerts.reduce(

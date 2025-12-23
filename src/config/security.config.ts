@@ -213,7 +213,7 @@ export const SECURITY_CONFIG: SecurityConfig = {
     name: {
       minLength: 2,
       maxLength: 50,
-      pattern: /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s\-\'\.]+$/,
+      pattern: /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s\-'.]+$/,
       blockedPatterns: [
         /script/gi,
         /javascript/gi,

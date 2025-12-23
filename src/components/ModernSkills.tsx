@@ -25,7 +25,7 @@ type SkillData = {
 type SkillCategoryData = {
   title: string
   subtitle: string
-  icon: any
+  icon: React.ComponentType<{ className?: string }>
   gradient: string
   description: string
   skills: SkillData[]

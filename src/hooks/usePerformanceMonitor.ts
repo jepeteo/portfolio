@@ -42,8 +42,10 @@ const usePerformanceMonitor = (componentName: string) => {
 
       metricsRef.current.push(metrics)
 
-      if (process.env.NODE_ENV === "development" && renderTime > 50) {
-      }
+      // Log slow renders in development (commented out to reduce noise)
+      // if (process.env.NODE_ENV === "development" && renderTime > 50) {
+      //   console.warn(`Slow render: ${renderTime}ms`)
+      // }
 
       if (metricsRef.current.length > 10) {
         metricsRef.current = metricsRef.current.slice(-10)

@@ -1,5 +1,6 @@
 import React, { ComponentType, LazyExoticComponent } from "react"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function createLazyComponent<T extends ComponentType<any>>(
   importFunc: () => Promise<{ default: T }>,
   options: {
@@ -24,11 +25,14 @@ export function createLazyComponent<T extends ComponentType<any>>(
 }
 export class ComponentPreloader {
   private static preloadedComponents = new Set<string>()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private static preloadPromises = new Map<string, Promise<any>>()
 
   static preload(
     componentName: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     importFunc: () => Promise<any>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
     if (this.preloadedComponents.has(componentName)) {
       return Promise.resolve()
@@ -52,6 +56,7 @@ export class ComponentPreloader {
     return promise
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static preloadOnHover(componentName: string, importFunc: () => Promise<any>) {
     return {
       onMouseEnter: () => this.preload(componentName, importFunc),
@@ -61,6 +66,7 @@ export class ComponentPreloader {
 
   static preloadOnIntersection(
     componentName: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     importFunc: () => Promise<any>,
     options: IntersectionObserverInit = {}
   ) {
@@ -86,6 +92,7 @@ export class ComponentPreloader {
 }
 
 export const createRouteComponent = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   importFunc: () => Promise<{ default: ComponentType<any> }>
 ) => {
   return createLazyComponent(importFunc, {
@@ -94,6 +101,7 @@ export const createRouteComponent = (
 }
 
 export const createFeatureComponent = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   importFunc: () => Promise<{ default: ComponentType<any> }>,
   shouldPreload = false
 ) => {
@@ -103,6 +111,7 @@ export const createFeatureComponent = (
 }
 
 export const loadCriticalComponent = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   importFunc: () => Promise<{ default: ComponentType<any> }>
 ) => {
   return createLazyComponent(importFunc, {
@@ -111,6 +120,7 @@ export const loadCriticalComponent = (
 }
 
 export const loadNonCriticalComponent = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   importFunc: () => Promise<{ default: ComponentType<any> }>
 ) => {
   return createLazyComponent(importFunc, {
@@ -132,6 +142,7 @@ export const withPerformanceMonitoring = <P extends object>(
         const entries = list.getEntries()
         entries.forEach((entry) => {
           if (entry.name.includes(componentName)) {
+            // Performance entry found for component - can add logging here
           }
         })
       })
@@ -143,11 +154,7 @@ export const withPerformanceMonitoring = <P extends object>(
       }
 
       return () => {
-        if (startTime.current) {
-          const loadTime = performance.now() - startTime.current
-          if (loadTime > 100) {
-          }
-        }
+        // Component unmount cleanup
         observer?.disconnect()
       }
     }, [])

@@ -58,7 +58,9 @@ export function getSecurityHeaders(): SecurityHeaders {
   }
 }
 
+// Express middleware types - using any for framework compatibility
 export function expressSecurityMiddleware() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (_req: any, res: any, next: any) => {
     const headers = getSecurityHeaders()
 
@@ -70,7 +72,10 @@ export function expressSecurityMiddleware() {
   }
 }
 
+// Fastify plugin types - using any for framework compatibility
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function fastifySecurityPlugin(fastify: any, _options: any, done: any) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fastify.addHook("onSend", async (_request: any, reply: any) => {
     const headers = getSecurityHeaders()
 
@@ -86,10 +91,13 @@ export function nextSecurityHeaders() {
   return getSecurityHeaders()
 }
 
+// Vite server types - using any for framework compatibility
 export function viteSecurityPlugin() {
   return {
     name: "security-headers",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     configureServer(server: any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       server.middlewares.use((_req: any, res: any, next: any) => {
         const headers = getSecurityHeaders()
 
@@ -132,6 +140,7 @@ export function createCSRFConfig() {
       maxAge: securityConfig.csrf.tokenTTL,
     },
     ignoreMethods: ["GET", "HEAD", "OPTIONS"],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: (req: any) => {
       return (
         req.body?.csrfToken ||

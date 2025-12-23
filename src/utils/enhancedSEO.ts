@@ -26,7 +26,8 @@ export interface EnhancedSEOConfig {
   articleSection?: string
   articleTags?: string[]
 
-  structuredData?: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  structuredData?: Record<string, any>
 
   robots?: string
   language?: string
@@ -169,7 +170,8 @@ class SEOManager {
     this.linkTags.set(key, link)
   }
 
-  private setStructuredData(data: any): void {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private setStructuredData(data: Record<string, any>): void {
     if (this.structuredDataScript) {
       document.head.removeChild(this.structuredDataScript)
     }

@@ -27,10 +27,13 @@ interface ReactSchemaProject {
   image?: string
 }
 
-export const usePortfolioSchema = () => {
+export const usePortfolioSchema = () => {
+
   const portfolioProjects = useMemo((): PortfolioSchemaProject[] => {
     return myProjects
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .filter((project: any) => project.prName && project.prDescription)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((project: any) => ({
         name: project.prName,
         description: project.prDescription,
@@ -41,10 +44,13 @@ export const usePortfolioSchema = () => {
         featured: project.prFeatured || false,
         imageUrl: generateImageUrl(project.prImageSlug),
       }))
-  }, [])
+  }, [])
+
   const reactProjects = useMemo((): ReactSchemaProject[] => {
     return myReactProjects
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .filter((project: any) => project.title && project.description)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((project: any) => ({
         id: project.id,
         title: project.title,
@@ -58,7 +64,8 @@ export const usePortfolioSchema = () => {
         performance: project.performance,
         image: project.image,
       }))
-  }, [])
+  }, [])
+
   const portfolioStats = useMemo(() => {
     const totalProjects = portfolioProjects.length + reactProjects.length
     const featuredProjects =
@@ -91,9 +98,12 @@ export const usePortfolioSchema = () => {
     reactProjects,
     portfolioStats,
   }
-}
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function extractTechnologiesFromProject(project: any): string[] {
-  const technologies: string[] = []
+  const technologies: string[] = []
+
   if (project.prType) {
     if (
       project.prType.includes("WordPress") ||
@@ -121,7 +131,8 @@ function extractTechnologiesFromProject(project: any): string[] {
         "HTML5"
       )
     }
-  }
+  }
+
   if (project.prTags) {
     const tags = Array.isArray(project.prTags)
       ? project.prTags
@@ -134,7 +145,8 @@ function extractTechnologiesFromProject(project: any): string[] {
         technologies.push("React", "JavaScript", "CSS3", "HTML5")
       }
     })
-  }
+  }
+
   if (project.prEmployer) {
     technologies.push("Professional Development")
   }
@@ -142,22 +154,30 @@ function extractTechnologiesFromProject(project: any): string[] {
   return [...new Set(technologies)]
 }
 
-function estimateProjectDate(project: any): string {
-  if (project.dateCreated) return project.dateCreated
-  const currentYear = new Date().getFullYear()
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function estimateProjectDate(project: any): string {
+
+  if (project.dateCreated) return project.dateCreated
+
+  const currentYear = new Date().getFullYear()
+
   if (project.prFeatured) {
     return (currentYear - 1).toString()
-  }
+  }
+
   if (
     project.prType?.includes("E-Shop") ||
     project.prType?.includes("E-commerce")
   ) {
     return (currentYear - 2).toString()
-  }
+  }
+
   return (currentYear - 3).toString()
 }
 
 function generateImageUrl(imageSlug?: string): string | undefined {
-  if (!imageSlug) return undefined
+  if (!imageSlug) return undefined
+
+
   return `/src/assets/images/projects/${imageSlug}.jpg`
 }

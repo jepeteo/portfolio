@@ -18,7 +18,7 @@ const ReactProjects: React.FC = memo(() => {
 
   const validReactProjects = useMemo(() => {
     return reactProjectsData.filter(
-      (project: any): project is ModernReactProject =>
+      (project: ModernReactProject): project is ModernReactProject =>
         validateReactProject(project)
     )
   }, [])

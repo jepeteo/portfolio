@@ -112,8 +112,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       variant,
       size,
       animation,
-      // asChild reserved for future Radix slot pattern
-      asChild: _asChild = false,
+      // asChild reserved for future Radix slot pattern (unused)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      asChild: _asChild,
       loading = false,
       leftIcon,
       rightIcon,

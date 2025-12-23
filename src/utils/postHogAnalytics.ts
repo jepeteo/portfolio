@@ -2,12 +2,15 @@
 
 
 
+// PostHog instance type is dynamic from the posthog-js library
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let posthogInstance: any = null
 
 interface PostHogConfig {
   apiKey: string
   host?: string
-  options?: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  options?: Record<string, any>
 }
 
 class PostHogAnalytics {
@@ -20,6 +23,7 @@ class PostHogAnalytics {
     return PostHogAnalytics.instance
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setPostHogInstance(instance: any) {
     posthogInstance = instance
   }
@@ -32,7 +36,7 @@ class PostHogAnalytics {
     return
   }
 
-  trackPageView(path?: string, additionalProperties?: Record<string, any>) {
+  trackPageView(path?: string, additionalProperties?: Record<string, unknown>) {
     if (!posthogInstance) {
       return
     }
@@ -44,7 +48,7 @@ class PostHogAnalytics {
     })
   }
 
-  trackEvent(eventName: string, properties?: Record<string, any>) {
+  trackEvent(eventName: string, properties?: Record<string, unknown>) {
     if (!posthogInstance) {
       return
     }
@@ -65,7 +69,7 @@ class PostHogAnalytics {
     userAgent?: string
     timestamp?: number
     component?: string
-    props?: Record<string, any>
+    props?: Record<string, unknown>
     severity?: "low" | "medium" | "high" | "critical"
   }) {
     if (!posthogInstance) {
@@ -99,7 +103,7 @@ class PostHogAnalytics {
     })
   }
 
-  trackUserFlow(flowStep: string, additionalData?: Record<string, any>) {
+  trackUserFlow(flowStep: string, additionalData?: Record<string, unknown>) {
     if (!posthogInstance) {
       return
     }
@@ -112,7 +116,7 @@ class PostHogAnalytics {
     })
   }
 
-  identify(userId: string, properties?: Record<string, any>) {
+  identify(userId: string, properties?: Record<string, unknown>) {
     if (!posthogInstance) {
       return
     }
@@ -129,7 +133,7 @@ class PostHogAnalytics {
     return posthogInstance.isFeatureEnabled(featureKey) ?? defaultValue
   }
 
-  updateUserProperties(properties: Record<string, any>) {
+  updateUserProperties(properties: Record<string, unknown>) {
     if (!posthogInstance) {
       return
     }

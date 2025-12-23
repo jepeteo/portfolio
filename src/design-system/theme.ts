@@ -1,7 +1,9 @@
 
-import { designTokens } from "./tokens"
+import { designTokens } from "./tokens"
+
 export const createCSSVariables = (theme: "light" | "dark") => {
-  const variables: Record<string, string> = {}
+  const variables: Record<string, string> = {}
+
   Object.entries(designTokens.colors.semantic).forEach(([key, value]) => {
     variables[`--color-${key}`] = value
   })
@@ -20,7 +22,8 @@ export const createCSSVariables = (theme: "light" | "dark") => {
 
   Object.entries(designTokens.typography.fontSizes).forEach(([key, value]) => {
     variables[`--font-size-${key}`] = value
-  })
+  })
+
   if (theme === "dark") {
     variables["--color-background"] = designTokens.colors.neutral[900]
     variables["--color-foreground"] = designTokens.colors.neutral[50]
@@ -32,7 +35,8 @@ export const createCSSVariables = (theme: "light" | "dark") => {
   }
 
   return variables
-}
+}
+
 export const useDesignSystem = () => {
   const tokens = designTokens
 
@@ -41,11 +45,12 @@ export const useDesignSystem = () => {
     spacing: (size: keyof typeof tokens.spacing) => tokens.spacing[size],
     color: (path: string) => {
       const keys = path.split(".")
-      let value: any = tokens.colors
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let value: Record<string, any> = tokens.colors
       for (const key of keys) {
         value = value[key]
       }
-      return value
+      return value as string
     },
     typography: (size: keyof typeof tokens.typography.fontSizes) => ({
       fontSize: tokens.typography.fontSizes[size],
@@ -54,13 +59,15 @@ export const useDesignSystem = () => {
     shadow: (size: keyof typeof tokens.shadows) => tokens.shadows[size],
     radius: (size: keyof typeof tokens.radii) => tokens.radii[size],
   }
-}
+}
+
 export const containerQueries = {
   sm: "@container (min-width: 320px)",
   md: "@container (min-width: 640px)",
   lg: "@container (min-width: 1024px)",
   xl: "@container (min-width: 1280px)",
-}
+}
+
 export const focusStyles = {
   base: "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
   rounded:

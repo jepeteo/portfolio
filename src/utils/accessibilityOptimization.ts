@@ -348,7 +348,7 @@ export function useAccessibleForm() {
   const { announce } = useScreenReader()
 
   const validateField = useCallback(
-    (name: string, value: string, rules: any) => {
+    (name: string, value: string, rules: { required?: boolean; email?: boolean; minLength?: number }) => {
       let error = ""
 
       if (rules.required && !value.trim()) {

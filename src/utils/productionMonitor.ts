@@ -10,6 +10,7 @@ interface ErrorReport {
   userAgent: string
   userId?: string
   sessionId: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   metadata: Record<string, any>
 }
 
@@ -115,6 +116,7 @@ class ProductionMonitor {
     })
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private captureError(errorData: any): void {
     const errorReport: ErrorReport = {
       id: this.generateId(),
@@ -142,9 +144,7 @@ class ProductionMonitor {
     if (this.errorQueue.length >= this.maxQueueSize) {
       this.flushQueues()
     }
-
-    if (!this.isProduction) {
-    }
+    // Development-only error logging can be added here
   }
 
   private monitorNetworkErrors(): void {
@@ -343,6 +343,7 @@ class ProductionMonitor {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async sendToAnalytics(data: any): Promise<void> {
     try {
       if (data.errors && data.errors.length > 0) {
@@ -476,7 +477,7 @@ class ProductionMonitor {
     return "medium" // Default severity
   }
 
-  public trackEvent(event: string, properties?: Record<string, any>): void {
+  public trackEvent(event: string, properties?: Record<string, unknown>): void {
     postHogAnalytics.trackEvent(event, {
       source: "production_monitor",
       session_id: this.sessionId,
@@ -499,7 +500,9 @@ class ProductionMonitor {
     this.userId = userId
     try {
       localStorage.setItem("portfolio_user_id", userId)
-    } catch {}
+    } catch {
+      // localStorage not available - ignore silently
+    }
   }
 }
 

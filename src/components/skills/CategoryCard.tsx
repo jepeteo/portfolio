@@ -9,7 +9,7 @@ interface CategoryCardProps {
     subtitle: string
     icon: LucideIcon
     gradient: string
-    skills: any[]
+    skills: { name: string; level: number; yearsExperience?: number }[]
   }
   isActive: boolean
   onClick: (categoryKey: string) => void

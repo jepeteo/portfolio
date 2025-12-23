@@ -48,6 +48,7 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
 
           disable_compression: isDevelopment,
 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           loaded: (posthog: any) => {
             posthog.register({
               portfolio_version: "2.0",
@@ -56,9 +57,7 @@ export const usePostHog = (options: UsePostHogOptions = {}) => {
               framework: "react_vite",
               deployment: "vercel",
             })
-
-            if (isDevelopment) {
-            }
+            // Development-specific setup can be added here if needed
           },
         },
       })

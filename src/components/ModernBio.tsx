@@ -24,8 +24,23 @@ import {
 } from "lucide-react"
 
 import profileImage from "../assets/images/gteo.webp"
+import type { LucideIcon } from "lucide-react"
 
 const resumePDF = "./cv/Theodoros-Mentis-CV.pdf"
+
+interface StatItem {
+  label: string
+  value: string
+  icon: LucideIcon
+  color: string
+}
+
+interface ColorClasses {
+  bg: string
+  icon: string
+  label: string
+  value: string
+}
 
 const StatsCard = memo(
   ({
@@ -34,10 +49,10 @@ const StatsCard = memo(
     isDark,
     getColorClasses,
   }: {
-    stat: any
+    stat: StatItem
     index: number
     isDark: boolean
-    getColorClasses: (color: string) => any
+    getColorClasses: (color: string) => ColorClasses
   }) => {
     const [displayValue, setDisplayValue] = useState("0")
     const [hasAnimated, setHasAnimated] = useState(false)
@@ -271,7 +286,7 @@ const ModernBio: React.FC = () => {
   }: {
     id: "about" | "expertise" | "approach"
     label: string
-    icon: any
+    icon: LucideIcon
   }) => (
     <button
       onClick={() => setActiveSection(id)}

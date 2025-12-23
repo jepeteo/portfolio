@@ -118,7 +118,7 @@ const ModernProjects = memo(() => {
 
   const validatedProjects = useMemo(() => {
     return myProjects
-      .filter((project: any): project is any => isValidProject(project))
+      .filter((project: Project): project is Project => isValidProject(project))
       .map((project, index) => ({
         ...project,
         id: `project-${index}-${project.prName
@@ -320,7 +320,7 @@ const ModernProjects = memo(() => {
   }, [])
 
   const getProjectIcon = (type: string) => {
-    const icons: Record<string, React.ComponentType<any>> = {
+    const icons: Record<string, React.ComponentType<{ className?: string }>> = {
       WordPress: Layers,
       "E-commerce": Globe,
       Portfolio: Star,

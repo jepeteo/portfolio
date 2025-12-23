@@ -1,10 +1,5 @@
 import { useState, useMemo } from "react"
 
-interface PaginationProps<T> {
-  items: T[]
-  itemsPerPage: number
-}
-
 interface PaginationHook<T> {
   displayItems: T[]
   currentPage: number

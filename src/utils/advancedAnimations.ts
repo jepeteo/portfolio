@@ -1,7 +1,8 @@
 
 
 import { useEffect, useRef, useState, useCallback } from "react"
-import { useReducedMotion } from "./accessibilityOptimization"
+import { useReducedMotion } from "./accessibilityOptimization"
+
 export interface AnimationConfig {
   duration?: number
   delay?: number
@@ -10,13 +11,15 @@ export interface AnimationConfig {
   fillMode?: "none" | "forwards" | "backwards" | "both"
   iterationCount?: number | "infinite"
   playState?: "running" | "paused"
-}
+}
+
 export interface MicroInteractionState {
   isHovered: boolean
   isPressed: boolean
   isFocused: boolean
   isActive: boolean
-}
+}
+
 export function useAdvancedHover<T extends HTMLElement>() {
   const elementRef = useRef<T>(null)
   const [hoverState, setHoverState] = useState<MicroInteractionState>({
@@ -73,7 +76,8 @@ export function useAdvancedHover<T extends HTMLElement>() {
   }, [prefersReducedMotion])
 
   return { elementRef, hoverState }
-}
+}
+
 export function useMagneticEffect<T extends HTMLElement>(
   strength = 0.5,
   speed = 0.3
@@ -130,7 +134,8 @@ export function useMagneticEffect<T extends HTMLElement>(
   }, [strength, speed, prefersReducedMotion])
 
   return elementRef
-}
+}
+
 export function useParallaxScroll(speed = 0.5) {
   const elementRef = useRef<HTMLElement>(null)
   const prefersReducedMotion = useReducedMotion()
@@ -157,7 +162,8 @@ export function useParallaxScroll(speed = 0.5) {
   }, [speed, prefersReducedMotion])
 
   return elementRef
-}
+}
+
 export function useTextReveal(
   delay = 0,
   duration = 1000,
@@ -208,7 +214,8 @@ export function useTextReveal(
   }, [isVisible, duration, direction, prefersReducedMotion])
 
   return { elementRef, isVisible }
-}
+}
+
 export function useStaggerAnimation<T extends HTMLElement>(
   itemSelector = ".stagger-item",
   staggerDelay = 100,
@@ -240,7 +247,8 @@ export function useStaggerAnimation<T extends HTMLElement>(
   }, [isTriggered, itemSelector, staggerDelay, duration, prefersReducedMotion])
 
   return { containerRef, trigger, isTriggered }
-}
+}
+
 export function useMorphingShape(shapes: string[], interval = 3000) {
   const [currentShapeIndex, setCurrentShapeIndex] = useState(0)
   const prefersReducedMotion = useReducedMotion()
@@ -259,7 +267,8 @@ export function useMorphingShape(shapes: string[], interval = 3000) {
     currentShape: shapes[currentShapeIndex],
     currentIndex: currentShapeIndex,
   }
-}
+}
+
 export function useCursorFollow<T extends HTMLElement>(sensitivity = 0.1) {
   const elementRef = useRef<T>(null)
   const prefersReducedMotion = useReducedMotion()
@@ -268,7 +277,8 @@ export function useCursorFollow<T extends HTMLElement>(sensitivity = 0.1) {
     const element = elementRef.current
     if (!element || prefersReducedMotion) return
 
-    let cursorElement: HTMLDivElement | null = null
+    let cursorElement: HTMLDivElement | null = null
+
     cursorElement = document.createElement("div")
     cursorElement.className = "cursor-follower"
     cursorElement.style.cssText = `
@@ -311,7 +321,8 @@ export function useCursorFollow<T extends HTMLElement>(sensitivity = 0.1) {
   }, [sensitivity, prefersReducedMotion])
 
   return elementRef
-}
+}
+
 export function useSkeletonMorph(isLoading: boolean, morphDuration = 300) {
   const elementRef = useRef<HTMLElement>(null)
   const [isInMorphState, setIsInMorphState] = useState(isLoading)
@@ -331,12 +342,15 @@ export function useSkeletonMorph(isLoading: boolean, morphDuration = 300) {
     isInMorphState,
     morphClass: isInMorphState ? "skeleton-morph" : "",
   }
-}
-export const animationStyles = {
+}
+
+export const animationStyles = {
+
   magneticButton: `
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
-  `,
+  `,
+
   floating: `
     animation: floating 3s ease-in-out infinite;
     
@@ -344,7 +358,8 @@ export const animationStyles = {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
-  `,
+  `,
+
   pulseGlow: `
     animation: pulseGlow 2s ease-in-out infinite;
     
@@ -352,7 +367,8 @@ export const animationStyles = {
       0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
       50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
     }
-  `,
+  `,
+
   textShimmer: `
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
     background-size: 200% 100%;
@@ -362,7 +378,8 @@ export const animationStyles = {
       0% { background-position: -200% 0; }
       100% { background-position: 200% 0; }
     }
-  `,
+  `,
+
   ripple: `
     position: relative;
     overflow: hidden;
@@ -385,7 +402,8 @@ export const animationStyles = {
       height: 300px;
     }
   `,
-}
+}
+
 export class TransitionManager {
   private static instance: TransitionManager
 
@@ -394,7 +412,8 @@ export class TransitionManager {
       TransitionManager.instance = new TransitionManager()
     }
     return TransitionManager.instance
-  }
+  }
+
   createPageTransition(
     fromElement: HTMLElement,
     toElement: HTMLElement,
@@ -425,14 +444,16 @@ export class TransitionManager {
         },
       }
 
-      const transform = transforms[direction]
+      const transform = transforms[direction]
+
       fromElement.animate(
         [
           { transform: transform.from, opacity: 1 },
           { transform: transform.to, opacity: 0 },
         ],
         { duration, easing: "cubic-bezier(0.4, 0, 0.2, 1)" }
-      )
+      )
+
       toElement.style.transform = transform.enter
       toElement.style.opacity = "0"
 
@@ -452,7 +473,8 @@ export class TransitionManager {
         }
       }, duration / 2)
     })
-  }
+  }
+
   createModalTransition(modal: HTMLElement, isOpening: boolean): Promise<void> {
     return new Promise((resolve) => {
       const duration = 250
@@ -480,18 +502,23 @@ export class TransitionManager {
       }
     })
   }
-}
-export const transitionManager = TransitionManager.getInstance()
+}
+
+export const transitionManager = TransitionManager.getInstance()
+
 export function supportsAnimations(): boolean {
   return typeof window !== "undefined" && "animate" in HTMLElement.prototype
-}
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function withPerformanceCheck<T extends (...args: any[]) => any>(
   animationFunction: T
 ): T {
   return ((...args: Parameters<T>) => {
     if (!supportsAnimations()) {
       return Promise.resolve()
-    }
+    }
+
     if (performance.now() - performance.timing.navigationStart > 3000) {
       return Promise.resolve()
     }
