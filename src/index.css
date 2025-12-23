@@ -411,3 +411,129 @@ html {
         left: 100%;
     }
 }
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    /* Reset background colors for printing */
+    body,
+    .dark body {
+        background: white !important;
+        color: black !important;
+    }
+
+    /* Hide non-essential elements */
+    nav,
+    header,
+    footer,
+    .back-to-top,
+    .scroll-progress,
+    .toast-container,
+    .offline-indicator,
+    .performance-dashboard,
+    button[aria-label*="theme"],
+    button[aria-label*="menu"],
+    .fixed {
+        display: none !important;
+    }
+
+    /* Remove decorative backgrounds */
+    * {
+        background-image: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    /* Ensure text is readable */
+    *,
+    *::before,
+    *::after {
+        color: black !important;
+        background: transparent !important;
+    }
+
+    /* Show links as URLs */
+    a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666 !important;
+    }
+
+    /* Don't show URL for internal links */
+    a[href^="#"]::after,
+    a[href^="/"]::after {
+        content: none;
+    }
+
+    /* Page breaks */
+    section {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+    }
+
+    /* Ensure images don't break across pages */
+    img {
+        page-break-inside: avoid;
+        max-width: 100% !important;
+    }
+
+    /* Print margins */
+    @page {
+        margin: 2cm;
+        size: A4;
+    }
+
+    /* Container width for print */
+    .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Show borders for cards */
+    .card,
+    [class*="Card"] {
+        border: 1px solid #ddd !important;
+        padding: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    /* Skill badges visible on print */
+    .skill-badge,
+    [class*="badge"] {
+        border: 1px solid #999 !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+
+    /* Experience timeline adjustments */
+    .experience-card {
+        border-left: 2px solid #333 !important;
+        padding-left: 1rem !important;
+    }
+
+    /* Project cards */
+    .project-card {
+        break-inside: avoid;
+        margin-bottom: 1rem !important;
+    }
+
+    /* Print header with name */
+    .print-header {
+        display: block !important;
+        text-align: center;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid #333;
+        padding-bottom: 1rem;
+    }
+
+    /* Hide animations */
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

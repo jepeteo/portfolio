@@ -14,6 +14,7 @@ import { VercelIntegrations } from "./components/VercelIntegrations"
 import { ToastProvider } from "./components/ui/Toast"
 import { SkipLink } from "./components/accessibility/SkipLink"
 import { ScrollProgress } from "./components/ui/ScrollProgress"
+import { OfflineIndicator } from "./components/ui/OfflineIndicator"
 import { ThemeProvider, useTheme } from "./context/ThemeContext"
 import {
   createLazyComponent,
@@ -228,7 +229,7 @@ const AppContent: React.FC = () => {
       <main id="main-content" tabIndex={-1}>
         <Hero />
 
-        <ErrorBoundary>
+        <ErrorBoundary componentName="Experience">
           <Suspense fallback={<ExperienceLoader />}>
             <ModernExperience />
           </Suspense>
@@ -236,19 +237,19 @@ const AppContent: React.FC = () => {
 
         <ModernSkills />
 
-        <ErrorBoundary>
+        <ErrorBoundary componentName="Projects">
           <Suspense fallback={<ProjectsLoader />}>
             <ModernProjects />
           </Suspense>
         </ErrorBoundary>
 
-        <ErrorBoundary>
+        <ErrorBoundary componentName="Web Projects">
           <Suspense fallback={<ProjectsLoader />}>
             <UnifiedProjects />
           </Suspense>
         </ErrorBoundary>
 
-        <ErrorBoundary>
+        <ErrorBoundary componentName="Certificates">
           <Suspense fallback={<SectionLoader />}>
             <ModernCertificates />
           </Suspense>
@@ -261,6 +262,7 @@ const AppContent: React.FC = () => {
       </main>
       <Footer />
 
+      <OfflineIndicator position="bottom" />
       <PerformanceDashboard />
     </div>
   )
