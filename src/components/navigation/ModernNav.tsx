@@ -31,12 +31,12 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
     {
       href: "#projects",
       text: "Projects",
-      ariaLabel: "Navigate to projects section",
+      ariaLabel: "Navigate to client projects section",
     },
     {
       href: "#web-projects",
       text: "Web Projects",
-      ariaLabel: "Navigate to web projects section",
+      ariaLabel: "Navigate to featured web projects section",
     },
     {
       href: "#certificates",
@@ -119,46 +119,67 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
   )
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 150 // Offset for header height
+    let rafId: number | null = null
 
+    const computeActiveSection = () => {
+      rafId = null
+
+      const scrollY = window.scrollY
       // Check if at the top of the page
-      if (scrollPosition < 300) {
+      if (scrollY < 200) {
         setActiveSection("#top")
         return
       }
 
-      // Get all section elements and find which one is currently in view
+      // Use a probe line ~1/3 from the top of the viewport so the section the
+      // user is visually focused on becomes active (not the one just scrolled in
+      // from the bottom).
+      const probeY = scrollY + window.innerHeight / 3
+
       const sections = links
         .map((link) => {
+          if (link.href === "#top") return null
           const id = link.href.slice(1)
           const element = document.getElementById(id)
-          return element ? { id, element } : null
+          if (!element) return null
+          // getBoundingClientRect is relative to the viewport, independent of
+          // any `position: relative` / `transform` ancestors, so adding scrollY
+          // gives the section's absolute document offset reliably.
+          const absoluteTop = element.getBoundingClientRect().top + scrollY
+          return { id, top: absoluteTop }
         })
         .filter(
-          (section): section is { id: string; element: HTMLElement } =>
-            section !== null
+          (section): section is { id: string; top: number } => section !== null
         )
+        .sort((a, b) => a.top - b.top)
 
-      // Find the section that's currently in view (from bottom to top for accuracy)
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const { id, element } = sections[i]
-        const { offsetTop } = element
-
-        if (scrollPosition >= offsetTop) {
-          setActiveSection(`#${id}`)
-          return
+      // Find the last section whose top is above the probe line.
+      let activeId: string | null = null
+      for (const { id, top } of sections) {
+        if (top <= probeY) {
+          activeId = id
+        } else {
+          break
         }
       }
 
-      // Default to first section if nothing matches
-      setActiveSection("#top")
+      setActiveSection(activeId ? `#${activeId}` : "#top")
+    }
+
+    const handleScroll = () => {
+      if (rafId !== null) return
+      rafId = window.requestAnimationFrame(computeActiveSection)
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
+    window.addEventListener("resize", handleScroll)
     handleScroll() // Set initial active section
 
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("resize", handleScroll)
+      if (rafId !== null) window.cancelAnimationFrame(rafId)
+    }
   }, []) // Remove links dependency to prevent re-creating listener
 
   useEffect(() => {

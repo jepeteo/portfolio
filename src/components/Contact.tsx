@@ -611,7 +611,7 @@ const Contact: React.FC = memo(() => {
               }`}
             >
               <Mail className="w-4 h-4" />
-              Get In Touch
+              Start a Project
             </div>
 
             <h2
@@ -629,8 +629,8 @@ const Contact: React.FC = memo(() => {
                 isDark ? "text-slate-300" : "text-slate-600"
               }`}
             >
-              Ready to collaborate? Let's discuss your next project and bring
-              your ideas to life.
+              Ready to collaborate? Start a project and I will help you shape
+              scope, timeline, and delivery.
             </p>
           </div>
 
@@ -642,7 +642,7 @@ const Contact: React.FC = memo(() => {
                     isDark ? "text-white" : "text-slate-900"
                   }`}
                 >
-                  Let's Connect
+                  Start a Project
                 </h3>
 
                 <p
@@ -921,7 +921,7 @@ const Contact: React.FC = memo(() => {
                   ) : (
                     <>
                       <Send className="w-5 h-5" />
-                      Send Message
+                      Start Project Request
                     </>
                   )}
                 </button>

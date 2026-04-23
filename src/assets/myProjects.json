@@ -219,8 +219,8 @@
   },
   {
     "prName": "Mitsidis Group",
-    "prUrl": "https://aggelikas.gr/",
-    "prImageSlug": "aggelikas",
+    "prUrl": "https://mitsidis-group.gr/",
+    "prImageSlug": "mitsidis-group",
     "prDescription": "A supplier of professional bakery and confectionery equipment.",
     "prType": "Dynamic Site",
     "prTags": "From scratch",
@@ -593,7 +593,7 @@
   {
     "prName": "Cylinder Master",
     "prUrl": "https://cylindermaster.gr/",
-    "prImageSlug": "cylidermaster",
+    "prImageSlug": "cylindermaster",
     "prDescription": "A company specializing in the manufacture and repair of hydraulic cylinders.",
     "prType": "Dynamic Site",
     "prTags": "From scratch",
@@ -620,7 +620,7 @@
     ]
   },
   {
-    "prName": "Papalias Andreas ",
+    "prName": "Papalias Andreas",
     "prUrl": "https://teletes-papaliasandreas.gr/",
     "prImageSlug": "papalias",
     "prDescription": "Funeral home website.",
@@ -747,7 +747,7 @@
     ]
   },
   {
-    "prName": "Taxi & Van ",
+    "prName": "Taxi & Van",
     "prUrl": "https://www.taxigalaxidi.gr/",
     "prImageSlug": "taxigalaxidi",
     "prDescription": "Taxi & Van driver website.",
@@ -765,20 +765,6 @@
     "prUrl": "https://www.irametaforiki.gr/",
     "prImageSlug": "irametaforiki",
     "prDescription": "A national transportation and moving services company.",
-    "prType": "Static",
-    "prTags": "From scratch",
-    "prEmployer": "gron",
-    "prFeatured": false,
-    "tech": [
-      "WordPress",
-      "Divi"
-    ]
-  },
-  {
-    "prName": "Metaxas",
-    "prUrl": "https://www.odiki-metaxas.gr/",
-    "prImageSlug": "odiki-metaxas",
-    "prDescription": "A road assistance company providing emergency services for vehicles.",
     "prType": "Static",
     "prTags": "From scratch",
     "prEmployer": "gron",
@@ -1058,7 +1044,7 @@
     "prName": "Almotek",
     "prUrl": "https://www.almotek.gr",
     "prImageSlug": "almotek",
-    "prDescription": "Contstuctions & Eneregy related company website.",
+    "prDescription": "Construction and energy related company website.",
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
@@ -1588,7 +1574,7 @@
     "prName": "New Earth Retreats",
     "prUrl": "https://www.newearthretreats.eu",
     "prImageSlug": "newearthretreats",
-    "prDescription": "",
+    "prDescription": "Retreat center website focused on bookings, experiences, and wellness-focused content.",
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
@@ -1660,7 +1646,7 @@
     "prName": "Santorini Photoshoot",
     "prUrl": "https://www.santoriniphotoshoot.com",
     "prImageSlug": "santoriniphotoshoot",
-    "prDescription": "",
+    "prDescription": "Photography booking website showcasing Santorini packages, availability, and conversion-first inquiry flows.",
     "prType": "E-Shop",
     "prTags": "From scratch",
     "prEmployer": "gtouch",
@@ -1676,7 +1662,7 @@
     "prName": "Seaside Santorini",
     "prUrl": "https://www.seasidesantorini.com",
     "prImageSlug": "seasidesantorini",
-    "prDescription": "",
+    "prDescription": "Hospitality website for seaside stays in Santorini with bookings and local experience highlights.",
     "prType": "Dynamic Site",
     "prTags": "From scratch",
     "prEmployer": "gtouch",

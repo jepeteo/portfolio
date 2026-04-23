@@ -109,12 +109,23 @@ const ModernProjects = memo(() => {
   const [shouldLoadImages, setShouldLoadImages] = useState<Set<string>>(
     new Set()
   )
+  const [initialImageCount, setInitialImageCount] = useState(4)
   const { targetRef: ref, isVisible } = useIntersectionObserver<HTMLElement>({
     threshold: 0.1,
     rootMargin: "50px",
   })
 
   const projectsPerPage = 6
+
+  useEffect(() => {
+    const updateInitialImageCount = () => {
+      setInitialImageCount(window.innerWidth < 768 ? 2 : 4)
+    }
+
+    updateInitialImageCount()
+    window.addEventListener("resize", updateInitialImageCount)
+    return () => window.removeEventListener("resize", updateInitialImageCount)
+  }, [])
 
   const validatedProjects = useMemo(() => {
     return myProjects
@@ -216,10 +227,12 @@ const ModernProjects = memo(() => {
   const shouldLoadImageImmediately = useCallback(
     (project: Project, index: number) => {
       return (
-        project.prFeatured || index < 6 || shouldLoadImages.has(project.prName)
+        project.prFeatured ||
+        index < initialImageCount ||
+        shouldLoadImages.has(project.prName)
       )
     },
-    [shouldLoadImages]
+    [initialImageCount, shouldLoadImages]
   )
 
   const triggerImageLoad = useCallback((projectName: string) => {
@@ -281,13 +294,13 @@ const ModernProjects = memo(() => {
   }, [currentPage, totalPages])
 
   React.useEffect(() => {
-    const first6Projects = filteredProjects.slice(0, 6)
+    const firstProjects = filteredProjects.slice(0, initialImageCount)
     setShouldLoadImages((prev) => {
       const newSet = new Set(prev)
-      first6Projects.forEach((project) => newSet.add(project.prName))
+      firstProjects.forEach((project) => newSet.add(project.prName))
       return newSet
     })
-  }, [])
+  }, [filteredProjects, initialImageCount])
 
   const handleProjectTypeChange = useCallback(
     (type: string | null) => {
@@ -304,15 +317,15 @@ const ModernProjects = memo(() => {
         .sort((a, b) => a.prName.localeCompare(b.prName))
 
       const sortedFiltered = [...featured, ...nonFeatured]
-      const first6Projects = sortedFiltered.slice(0, 6)
+      const firstProjects = sortedFiltered.slice(0, initialImageCount)
 
       setShouldLoadImages((prev) => {
         const newSet = new Set(prev)
-        first6Projects.forEach((project) => newSet.add(project.prName))
+        firstProjects.forEach((project) => newSet.add(project.prName))
         return newSet
       })
     },
-    [validatedProjects]
+    [initialImageCount, validatedProjects]
   )
 
   const handleImageError = useCallback((projectName: string) => {

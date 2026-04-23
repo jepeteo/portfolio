@@ -1,6 +1,5 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom/client"
-import { BrowserRouter as Router } from "react-router-dom"
 import App from "./App.tsx"
 import "/src/index.css"
 
@@ -69,13 +68,6 @@ function AppWithDeferredAnalytics() {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <Router
-      future={{
-        v7_startTransition: true,
-        v7_relativeSplatPath: true,
-      }}
-    >
-      <AppWithDeferredAnalytics />
-    </Router>
+    <AppWithDeferredAnalytics />
   </React.StrictMode>
 )

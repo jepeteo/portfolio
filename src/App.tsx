@@ -4,6 +4,8 @@ import Hero from "./components/Hero"
 import Footer from "./components/Footer"
 import ErrorBoundary from "./components/ErrorBoundary"
 import PortfolioSchema from "./components/PortfolioSchema"
+import BuyerIntentSection from "./components/BuyerIntentSection"
+import ProofHighlights from "./components/ProofHighlights"
 import {
   LoadingSpinner,
   ProjectGridSkeleton,
@@ -77,7 +79,7 @@ const Contact = createLazyComponent(() => import("./components/Contact"), {})
 
 const ModernProjects = createLazyComponent(
   () => import("./components/ModernProjects"),
-  { preload: true }
+  {}
 )
 
 const ModernExperience = createLazyComponent(
@@ -87,7 +89,7 @@ const ModernExperience = createLazyComponent(
 
 const UnifiedProjects = createLazyComponent(
   () => import("./components/UnifiedProjects"),
-  { preload: true }
+  {}
 )
 
 const ModernCertificates = createLazyComponent(
@@ -155,25 +157,37 @@ const AppContent: React.FC = () => {
   }, [])
 
   React.useEffect(() => {
-    const experienceSection = document.getElementById("experience")
-    if (experienceSection) {
-      ComponentPreloader.preloadOnIntersection(
+    const disposers: Array<() => void> = []
+
+    const proofSection = document.getElementById("proof")
+    if (proofSection) {
+      const dispose = ComponentPreloader.preloadOnIntersection(
         "modern-projects",
         () => import("./components/ModernProjects")
-      )(experienceSection)
+      )(proofSection)
+      if (dispose) disposers.push(dispose)
+    }
+
+    const skillsSection = document.getElementById("skills")
+    if (skillsSection) {
+      const dispose = ComponentPreloader.preloadOnIntersection(
+        "unified-projects",
+        () => import("./components/UnifiedProjects")
+      )(skillsSection)
+      if (dispose) disposers.push(dispose)
     }
 
     const projectsNav = document.querySelector('a[href*="projects"]')
     if (projectsNav) {
       const preloadHandlers = ComponentPreloader.preloadOnHover(
-        "react-projects",
-        () => import("./components/ReactProjects")
+        "unified-projects",
+        () => import("./components/UnifiedProjects")
       )
 
       projectsNav.addEventListener("mouseenter", preloadHandlers.onMouseEnter)
       projectsNav.addEventListener("touchstart", preloadHandlers.onTouchStart)
 
-      return () => {
+      disposers.push(() => {
         projectsNav.removeEventListener(
           "mouseenter",
           preloadHandlers.onMouseEnter
@@ -182,8 +196,10 @@ const AppContent: React.FC = () => {
           "touchstart",
           preloadHandlers.onTouchStart
         )
-      }
+      })
     }
+
+    return () => disposers.forEach((fn) => fn())
   }, [])
 
   useEnhancedSEO({
@@ -275,12 +291,8 @@ const AppContent: React.FC = () => {
       </Suspense>
       <main id="main-content" tabIndex={-1}>
         <Hero />
-
-        <ErrorBoundary componentName="Experience">
-          <Suspense fallback={<ExperienceLoader />}>
-            <ModernExperience />
-          </Suspense>
-        </ErrorBoundary>
+        <BuyerIntentSection />
+        <ProofHighlights />
 
         <ErrorBoundary componentName="Skills">
           <Suspense fallback={<SkillsSkeleton />}>
@@ -297,6 +309,12 @@ const AppContent: React.FC = () => {
         <ErrorBoundary componentName="Web Projects">
           <Suspense fallback={<ProjectsLoader />}>
             <UnifiedProjects />
+          </Suspense>
+        </ErrorBoundary>
+
+        <ErrorBoundary componentName="Experience">
+          <Suspense fallback={<ExperienceLoader />}>
+            <ModernExperience />
           </Suspense>
         </ErrorBoundary>
 

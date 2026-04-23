@@ -237,11 +237,11 @@ const ModernExperience: React.FC = () => {
                 isDark ? "text-slate-300" : "text-slate-700"
               }`}
             >
-              A comprehensive overview of my {stats.totalYears} years in web
-              development ({stats.employmentYears} years employment and{" "}
-              {stats.freelanceYears} years freelance), spanning{" "}
-              {stats.totalProjects}+ projects and {stats.totalClients}+
-              satisfied clients.
+              {stats.totalYears} years of hands-on delivery across web
+              development, server administration, and infrastructure support
+              ({stats.employmentYears} years employment, {stats.freelanceYears}{" "}
+              years freelance), covering {stats.totalProjects}+ projects and{" "}
+              {stats.totalClients}+ clients.
             </p>
           </div>
 

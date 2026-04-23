@@ -175,9 +175,9 @@ const Hero: React.FC = memo(() => {
                 prefersReducedMotion ? "!transform-none !transition-none" : ""
               }`}
               role="button"
-              aria-label="View My Work - portfolio projects"
+              aria-label="Start a Project - jump to contact form"
             >
-              <span className="relative z-10">View My Work</span>
+              <span className="relative z-10">Start a Project</span>
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </a>
 
@@ -191,9 +191,9 @@ const Hero: React.FC = memo(() => {
                 prefersReducedMotion ? "!transform-none !transition-none" : ""
               }`}
               role="button"
-              aria-label="Get In Touch - contact form"
+              aria-label="View My Work - jump to portfolio projects"
             >
-              Get In Touch
+              View My Work
             </a>
           </div>
 

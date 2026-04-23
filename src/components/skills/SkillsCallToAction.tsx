@@ -46,7 +46,7 @@ const SkillsCallToAction: React.FC<SkillsCallToActionProps> = ({
               className="px-8 py-4 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-2xl font-semibold hover:from-violet-600 hover:to-purple-600 transition-all duration-300 flex items-center gap-3 shadow-lg hover:shadow-xl hover:scale-105"
             >
               <Heart className="w-5 h-5" />
-              View My Projects
+              View My Work
               <ArrowRight className="w-5 h-5" />
             </button>
             <button
@@ -57,7 +57,7 @@ const SkillsCallToAction: React.FC<SkillsCallToActionProps> = ({
                   : "border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400"
               }`}
             >
-              Start a Conversation
+              Start a Project
             </button>
           </div>
         </div>

@@ -43,7 +43,7 @@ export const ExperienceCallToAction: React.FC<ExperienceCallToActionProps> = ({
           } shadow-lg`}
         >
           <Mail className="w-5 h-5" />
-          Get In Touch
+          Start a Project
         </a>
 
         <a
