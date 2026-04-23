@@ -260,9 +260,9 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
       aria-label="Main navigation"
     >
       <div className="flex items-center gap-4">
-        <ul className="hidden lg:flex items-center gap-2" role="menubar">
+        <ul className="hidden lg:flex items-center gap-2">
           {links.map((link) => (
-            <li key={link.href} role="none">
+            <li key={link.href}>
               <NavLink link={link} isActive={activeSection === link.href} />
             </li>
           ))}

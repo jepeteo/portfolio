@@ -182,29 +182,16 @@ export class EnhancedRateLimiter {
 }
 
 export const checkContactFormLimit = (
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   identifier = "default"
 ): RateLimitResult => {
-  return {
-    allowed: true,
-    remaining: 999,
-    resetTime: Date.now() + 60000,
-    blocked: false,
-  }
+  return EnhancedRateLimiter.checkRateLimit(identifier, "contactForm")
 }
 
 export const recordContactFormAttempt = (
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   identifier = "default",
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   success = false
 ): RateLimitResult => {
-  return {
-    allowed: true,
-    remaining: 999,
-    resetTime: Date.now() + 60000,
-    blocked: false,
-  }
+  return EnhancedRateLimiter.recordAttempt(identifier, "contactForm", success)
 }
 
 export const checkEmailLimit = (identifier = "default"): RateLimitResult => {

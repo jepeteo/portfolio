@@ -431,6 +431,22 @@ const Contact: React.FC = memo(() => {
         !emailjsConfig.templateId ||
         !emailjsConfig.publicKey
       ) {
+        if (!import.meta.env.DEV) {
+          setSubmitStatus("error")
+          setErrors({
+            general:
+              "Contact form is temporarily unavailable. Please email me directly.",
+          })
+          addToast({
+            type: "error",
+            title: "Contact Form Unavailable",
+            message:
+              "Please email me directly while the form configuration is being fixed.",
+            duration: 7000,
+          })
+          return
+        }
+
         setIsSubmitting(true)
         setSubmitStatus("idle")
 
@@ -438,6 +454,7 @@ const Contact: React.FC = memo(() => {
           await new Promise((resolve) => setTimeout(resolve, 2000))
 
           setCsrfToken(CSRFProtection.getCurrentToken())
+          recordContactFormAttempt("default", true)
 
           setFormData({ name: "", email: "", subject: "", message: "" })
           setSubmitStatus("success")
@@ -501,6 +518,7 @@ const Contact: React.FC = memo(() => {
         )
 
         setCsrfToken(CSRFProtection.getCurrentToken())
+        recordContactFormAttempt("default", true)
 
         setFormData({ name: "", email: "", subject: "", message: "" })
         setErrors({})
