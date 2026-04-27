@@ -33,8 +33,7 @@
     "check-urls": "node scripts/check-project-urls.js",
     "validate:project-data": "node scripts/validate-project-data.js",
     "performance:analyze": "npm run build && npx vite-bundle-visualizer -o bundle-report.html",
-    "deploy:redirect": "echo 'Deploying redirect page to GitHub Pages...' && git add redirect.html .github/workflows/redirect-deploy.yml && git commit -m 'deploy: update GitHub Pages redirect' && git push",
-    "prepare": "echo \"Skipping lint and type-check in prepare script\""
+    "deploy:redirect": "echo 'Deploying redirect page to GitHub Pages...' && git add redirect.html .github/workflows/redirect-deploy.yml && git commit -m 'deploy: update GitHub Pages redirect' && git push"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
