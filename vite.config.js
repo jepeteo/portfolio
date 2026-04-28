@@ -32,8 +32,6 @@ export default defineConfig({
           // Utils and smaller dependencies
           'utils': ['react-typed'],
 
-          // EmailJS (only loaded when contact form is used)
-          'emailjs': ['@emailjs/browser'],
         },
         // Optimize chunk file names
         chunkFileNames: (chunkInfo) => {

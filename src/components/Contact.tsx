@@ -2,7 +2,6 @@ import React, { memo, useState, useCallback, useMemo } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import { motion, AnimatePresence } from "framer-motion"
-import emailjs from "@emailjs/browser"
 import {
   Mail,
   MapPin,
@@ -25,13 +24,7 @@ import {
   ContactFormErrors,
   validateContactFormSecure,
   detectBot,
-  sanitizeContactFormData,
 } from "../utils/secureContactValidation"
-import {
-  checkContactFormLimit,
-  recordContactFormAttempt,
-} from "../utils/enhancedRateLimit"
-import { CSRFProtection } from "../utils/enhancedCSRF"
 import { useToast } from "./ui/Toast"
 
 // SEO Schema generation for Contact section
@@ -287,9 +280,7 @@ const Contact: React.FC = memo(() => {
     "idle" | "success" | "error"
   >("idle")
 
-  const [csrfToken, setCsrfToken] = useState(() =>
-    CSRFProtection.getCurrentToken()
-  )
+  const [csrfToken, setCsrfToken] = useState("")
   const [honeypot, setHoneypot] = useState("")
   const [startTime] = useState(() => Date.now())
   const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set())
@@ -308,11 +299,21 @@ const Contact: React.FC = memo(() => {
     return Object.values(fieldValidation).every(Boolean)
   }, [fieldValidation])
 
-  const emailjsConfig = {
-    serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID || "",
-    templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "",
-    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "",
-  }
+  const fetchCsrfToken = useCallback(async (): Promise<string> => {
+    const response = await fetch("/api/contact/csrf", {
+      method: "GET",
+      credentials: "same-origin",
+    })
+    if (!response.ok) {
+      throw new Error("Failed to initialize secure contact session")
+    }
+    const data = (await response.json()) as { csrfToken?: string }
+    if (!data.csrfToken) {
+      throw new Error("Missing CSRF token")
+    }
+    setCsrfToken(data.csrfToken)
+    return data.csrfToken
+  }, [])
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -350,27 +351,6 @@ const Contact: React.FC = memo(() => {
   }, [])
 
   const validateForm = useCallback((): boolean => {
-    const rateLimitResult = checkContactFormLimit("default")
-
-    if (!rateLimitResult.allowed) {
-      if (rateLimitResult.blocked) {
-        setErrors({
-          general:
-            rateLimitResult.message ||
-            "Too many attempts. Please try again later.",
-        })
-      } else {
-        setErrors({
-          general: `Rate limit exceeded. ${
-            rateLimitResult.remaining
-          } attempts remaining. Try again after ${new Date(
-            rateLimitResult.resetTime
-          ).toLocaleTimeString()}.`,
-        })
-      }
-      return false
-    }
-
     const secureData: SecureContactFormData = {
       ...formData,
       csrfToken,
@@ -400,22 +380,7 @@ const Contact: React.FC = memo(() => {
     async (e: React.FormEvent) => {
       e.preventDefault()
 
-      recordContactFormAttempt("default")
-
       if (!validateForm()) return
-
-      if (!CSRFProtection.isTokenValid(csrfToken)) {
-        const newToken = CSRFProtection.getCurrentToken()
-        setCsrfToken(newToken)
-
-        if (!CSRFProtection.isTokenValid(newToken)) {
-          setErrors({
-            general:
-              "Security validation failed. Please refresh the page and try again.",
-          })
-          return
-        }
-      }
 
       const submissionTime = Date.now() - startTime
       if (submissionTime < 3000) {
@@ -426,103 +391,50 @@ const Contact: React.FC = memo(() => {
         return
       }
 
-      if (
-        !emailjsConfig.serviceId ||
-        !emailjsConfig.templateId ||
-        !emailjsConfig.publicKey
-      ) {
-        if (!import.meta.env.DEV) {
-          setSubmitStatus("error")
-          setErrors({
-            general:
-              "Contact form is temporarily unavailable. Please email me directly.",
-          })
-          addToast({
-            type: "error",
-            title: "Contact Form Unavailable",
-            message:
-              "Please email me directly while the form configuration is being fixed.",
-            duration: 7000,
-          })
-          return
-        }
-
-        setIsSubmitting(true)
-        setSubmitStatus("idle")
-
-        try {
-          await new Promise((resolve) => setTimeout(resolve, 2000))
-
-          setCsrfToken(CSRFProtection.getCurrentToken())
-          recordContactFormAttempt("default", true)
-
-          setFormData({ name: "", email: "", subject: "", message: "" })
-          setSubmitStatus("success")
-          addToast({
-            type: "success",
-            title: "Message Sent!",
-            message: "Thank you for reaching out. I'll get back to you soon.",
-            duration: 5000,
-          })
-          setTimeout(() => setSubmitStatus("idle"), 5000)
-        } catch {
-          setSubmitStatus("error")
-          addToast({
-            type: "error",
-            title: "Failed to Send",
-            message: "Something went wrong. Please try again.",
-            duration: 6000,
-          })
-          setTimeout(() => setSubmitStatus("idle"), 5000)
-        } finally {
-          setIsSubmitting(false)
-        }
-        return
-      }
-
       setIsSubmitting(true)
       setSubmitStatus("idle")
 
       try {
-        if (!CSRFProtection.validateToken(csrfToken)) {
-          setErrors({
-            general:
-              "Security validation failed. Please refresh the page and try again.",
-          })
-          setIsSubmitting(false)
-          return
-        }
+        const token = csrfToken || (await fetchCsrfToken())
 
         const secureData: SecureContactFormData = {
           ...formData,
-          csrfToken,
+          csrfToken: token,
           timestamp: startTime, // Use the form's start time for bot detection
           honeypot,
         }
-        const sanitizedData = sanitizeContactFormData(secureData)
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": token,
+          },
+          body: JSON.stringify(secureData),
+        })
 
-        const templateParams = {
-          from_name: sanitizedData.name,
-          from_email: sanitizedData.email,
-          subject: sanitizedData.subject,
-          message: sanitizedData.message,
-          to_email: import.meta.env.VITE_CONTACT_EMAIL || "th.mentis@gmail.com",
-          reply_to: sanitizedData.email,
+        if (!response.ok) {
+          const result = (await response.json().catch(() => ({}))) as {
+            error?: string
+            fields?: ContactFormErrors
+          }
+          if (response.status === 400 && result.fields) {
+            setErrors(result.fields)
+          } else {
+            setErrors({
+              general:
+                result.error ||
+                "Something went wrong. Please try again or email me directly.",
+            })
+          }
+          setSubmitStatus("error")
+          return
         }
-
-        await emailjs.send(
-          emailjsConfig.serviceId,
-          emailjsConfig.templateId,
-          templateParams,
-          emailjsConfig.publicKey
-        )
-
-        setCsrfToken(CSRFProtection.getCurrentToken())
-        recordContactFormAttempt("default", true)
 
         setFormData({ name: "", email: "", subject: "", message: "" })
         setErrors({})
         setSubmitStatus("success")
+        setCsrfToken("")
         addToast({
           type: "success",
           title: "Message Sent!",
@@ -548,11 +460,11 @@ const Contact: React.FC = memo(() => {
     [
       formData,
       validateForm,
-      emailjsConfig,
       csrfToken,
       startTime,
-      setCsrfToken,
+      fetchCsrfToken,
       addToast,
+      honeypot,
     ]
   )
 
