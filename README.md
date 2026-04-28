@@ -266,6 +266,14 @@ VITE_ENABLE_MONITORING=true
 - [PRD](PRD.md) - Product requirements document
 - [Deployment Notes](src/docs/DEPLOYMENT.md) - Deployment guides
 
+## Redirect Deployment
+
+- Redirect publishing is handled by `.github/workflows/redirect-deploy.yml`.
+- Safe options:
+  - Commit `redirect.html` changes and push to `main` (workflow runs automatically).
+  - Trigger manually with `npm run deploy:redirect:trigger` (requires GitHub CLI auth).
+- `npm run deploy:redirect` is informational only and does not run `git add`, `git commit`, or `git push`.
+
 ## 🤝 Contributing
 
 This is a personal portfolio project, but suggestions and feedback are welcome! Feel free to open an issue or reach out via email.
