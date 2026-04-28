@@ -151,6 +151,9 @@ npm run type-check
 
 # Check project URLs
 npm run check-urls
+
+# Verify service worker pre-cache assets after build
+npm run build && npm run verify:sw-precache
 ```
 
 ## 📁 Project Structure

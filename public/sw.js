@@ -53,7 +53,19 @@ self.addEventListener('install', (event) => {
         Promise.all([
             // Cache static assets
             caches.open(STATIC_CACHE).then(cache => {
-                return cache.addAll(STATIC_ASSETS)
+                return Promise.all(
+                    STATIC_ASSETS.map(async (asset) => {
+                        try {
+                            const response = await fetch(asset, { cache: 'no-store' })
+                            if (!response.ok) {
+                                throw new Error(`HTTP ${response.status}`)
+                            }
+                            await cache.put(asset, response.clone())
+                        } catch (error) {
+                            console.warn(`⚠️ Skipping pre-cache for ${asset}:`, error)
+                        }
+                    })
+                )
             }),
 
             // Skip font preloading to avoid CSP issues during install
