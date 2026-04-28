@@ -27,6 +27,7 @@
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "pretest:smoke": "playwright install --with-deps chromium || playwright install chromium",
     "test:smoke": "playwright test",
     "test:ci": "npm run test && npm run test:smoke",
     "clean": "npx rimraf dist node_modules/.vite",
