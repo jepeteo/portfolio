@@ -84,6 +84,12 @@ A high-performance, accessible portfolio website built with modern web technolog
 - **Vercel Analytics** - Performance tracking
 - **Service Workers** - Offline functionality
 
+### Deployment Header Notes
+
+- **Cross-Origin-Embedder-Policy**: Uses `credentialless` in production headers.
+- **Why not `require-corp`**: The site loads third-party analytics and contact-provider resources that may not return compatible CORP/CORS headers in every path.
+- **Security stance**: Keep strict CSP and other security headers, but avoid unnecessary cross-origin isolation requirements that can block analytics/contact behavior.
+
 ### Development Tools
 
 - **ESLint** - Code quality enforcement
