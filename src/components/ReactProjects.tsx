@@ -2,7 +2,6 @@ import React, { memo, useMemo, useState } from "react"
 import { useTheme } from "../context/ThemeContext"
 import useIntersectionObserver from "../hooks/useIntersectionObserver"
 import { validateReactProject } from "../utils/validation"
-import { ModernReactProject } from "../types"
 import reactProjectsData from "../assets/myReactProjects.json"
 import { Code2, ExternalLink, Github, Zap, Star, Calendar } from "lucide-react"
 import { NoDataAvailable } from "./ui/EmptyState"
@@ -17,10 +16,7 @@ const ReactProjects: React.FC = memo(() => {
   const [hoveredProject, setHoveredProject] = useState<string | null>(null)
 
   const validReactProjects = useMemo(() => {
-    return reactProjectsData.filter(
-      (project: ModernReactProject): project is ModernReactProject =>
-        validateReactProject(project)
-    )
+    return (reactProjectsData as unknown[]).filter(validateReactProject)
   }, [])
 
   if (validReactProjects.length === 0) {

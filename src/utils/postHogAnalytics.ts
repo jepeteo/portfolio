@@ -25,7 +25,7 @@ class PostHogAnalytics {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  initialize(config: PostHogConfig) {
+  initialize(_config: PostHogConfig) {
     console.warn(
       "PostHogAnalytics.initialize() is deprecated. Use PostHogProvider instead."
     )

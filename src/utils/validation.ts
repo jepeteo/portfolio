@@ -47,7 +47,7 @@ export const isValidReactProject = (
   )
 }
 
-export const validateReactProject = (obj: unknown): boolean => {
+export const validateReactProject = (obj: unknown): obj is ModernReactProject => {
   if (typeof obj !== "object" || obj === null) return false
   const project = obj as Record<string, unknown>
   return (

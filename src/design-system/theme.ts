@@ -49,7 +49,7 @@ export const useDesignSystem = () => {
       for (const key of keys) {
         value = value[key]
       }
-      return value as string
+      return value as unknown as string
     },
     typography: (size: keyof typeof tokens.typography.fontSizes) => ({
       fontSize: tokens.typography.fontSizes[size],

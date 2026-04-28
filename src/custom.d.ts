@@ -12,6 +12,19 @@ declare module "*.webp" {
   export default content
 }
 
+declare const process: {
+  env: {
+    NODE_ENV?: "development" | "production" | "test"
+    VERCEL?: string
+    VITE_VERCEL_ANALYTICS_ENABLED?: string
+    VITE_VERCEL_SPEED_INSIGHTS_ENABLED?: string
+  }
+}
+
+declare const describe: typeof import("vitest")["describe"]
+declare const it: typeof import("vitest")["it"]
+declare const expect: typeof import("vitest")["expect"]
+
 interface ImportMeta {
   env: {
     MODE: string
