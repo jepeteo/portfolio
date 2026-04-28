@@ -40,7 +40,7 @@ interface PerformanceReport {
     used: number
     total: number
     limit: number
-  }
+  } | null
 }
 
 class ProductionMonitor {

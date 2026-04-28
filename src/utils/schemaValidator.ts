@@ -1,5 +1,4 @@
 import type {
-  SchemaOrgType,
   SchemaOrgCreativeWork,
   SchemaOrgWebSite,
   SchemaOrgItemList,
@@ -14,7 +13,7 @@ export interface SchemaValidationResult {
   suggestions: string[]
 }
 
-type SchemaInput = SchemaOrgType | UnknownObject
+type SchemaInput = UnknownObject
 
 export class SchemaValidator {
   static validateSchemaInConsole() {
@@ -104,7 +103,7 @@ export class SchemaValidator {
     const warnings: string[] = []
     const suggestions: string[] = []
 
-    const schemaObj = schema as SchemaOrgWebSite
+    const schemaObj = schema as unknown as SchemaOrgWebSite
     if (!schemaObj.url) errors.push("Website schema missing URL")
     if (!schemaObj.name) errors.push("Website schema missing name")
 
@@ -129,7 +128,7 @@ export class SchemaValidator {
     const warnings: string[] = []
     const suggestions: string[] = []
 
-    const schemaObj = schema as SchemaOrgItemList
+    const schemaObj = schema as unknown as SchemaOrgItemList
     if (
       !schemaObj.itemListElement ||
       !Array.isArray(schemaObj.itemListElement)
@@ -155,7 +154,7 @@ export class SchemaValidator {
     const warnings: string[] = []
     const suggestions: string[] = []
 
-    const schemaObj = schema as SchemaOrgOrganization
+    const schemaObj = schema as unknown as SchemaOrgOrganization
     if (!schemaObj.name) errors.push("Organization schema missing 'name'")
 
     if (!schemaObj.url) warnings.push("Consider adding 'url' field")
@@ -241,7 +240,7 @@ export class SchemaValidator {
   }
 
   static optimizeSchema<T extends SchemaInput>(schema: T): T {
-    const optimized = { ...schema } as T & UnknownObject
+    const optimized: UnknownObject = { ...schema }
 
     if (!optimized["@context"]) {
       optimized["@context"] = "https://schema.org"

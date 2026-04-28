@@ -128,8 +128,8 @@ const ModernProjects = memo(() => {
   }, [])
 
   const validatedProjects = useMemo(() => {
-    return myProjects
-      .filter((project: Project): project is Project => isValidProject(project))
+    return (myProjects as unknown[])
+      .filter(isValidProject)
       .map((project, index) => ({
         ...project,
         id: `project-${index}-${project.prName

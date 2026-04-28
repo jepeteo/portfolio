@@ -402,8 +402,8 @@ const ModernProjectGrid: React.FC<ModernProjectGridProps> = ({
               {filteredProjects.length === 0 && !loading && (
                 <NoProjectsFound
                   onResetFilter={
-                    activeFilter !== "all"
-                      ? () => setActiveFilter("all")
+                    selectedCategory !== "all"
+                      ? () => setSelectedCategory("all")
                       : undefined
                   }
                 />

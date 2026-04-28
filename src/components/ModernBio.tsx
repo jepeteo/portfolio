@@ -37,9 +37,8 @@ interface StatItem {
 
 interface ColorClasses {
   bg: string
-  icon: string
-  label: string
-  value: string
+  text: string
+  border: string
 }
 
 const StatsCard = memo(
