@@ -45,3 +45,16 @@ instagram-card-generator.html
 og-image-generator.html
 .vercel
 nul
+
+# Local AI / automation artifacts
+.codex/
+.openclaw/
+.openclaw-audits/
+HEARTBEAT.md
+IDENTITY.md
+SOUL.md
+TOOLS.md
+USER.md
+AGENTS.md
+=22
+.codex
