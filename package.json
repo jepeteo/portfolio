@@ -35,7 +35,8 @@
     "verify:sw-precache": "node scripts/verify-sw-precache.js",
     "validate:project-data": "node scripts/validate-project-data.js",
     "performance:analyze": "npm run build && npx vite-bundle-visualizer -o bundle-report.html",
-    "deploy:redirect": "echo 'Deploying redirect page to GitHub Pages...' && git add redirect.html .github/workflows/redirect-deploy.yml && git commit -m 'deploy: update GitHub Pages redirect' && git push"
+    "deploy:redirect": "echo 'Redirect deployment is handled by .github/workflows/redirect-deploy.yml. Commit redirect.html changes and push to main, or run: gh workflow run redirect-deploy.yml'",
+    "deploy:redirect:trigger": "gh workflow run redirect-deploy.yml"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
