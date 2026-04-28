@@ -166,7 +166,7 @@ const Hero: React.FC = memo(() => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <a
-              href="#projects"
+              href="#contact"
               className={`group relative px-8 py-4 rounded-xl font-semibold text-white overflow-hidden transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500/50 ${
                 isDark
                   ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500"
@@ -182,7 +182,7 @@ const Hero: React.FC = memo(() => {
             </a>
 
             <a
-              href="#contact"
+              href="#projects"
               className={`px-8 py-4 rounded-xl font-semibold border-2 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500/50 ${
                 isDark
                   ? "border-slate-600 text-slate-300 hover:border-blue-400 hover:text-blue-400 hover:bg-blue-400/10"
