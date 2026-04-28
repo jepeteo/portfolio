@@ -1,61 +1,12 @@
-import { securityConfig } from "../utils/security"
+import { getAllSecurityHeaders, securityConfig } from "../utils/security"
 
 export interface SecurityHeaders {
   [key: string]: string
 }
 
 export function getSecurityHeaders(): SecurityHeaders {
-  const csp = [
-    "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://cdn.emailjs.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu-assets.i.posthog.com https://app.posthog.com",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "font-src 'self' https://fonts.gstatic.com",
-    "img-src 'self' data: https:",
-    "connect-src 'self' https://api.emailjs.com https://vitals.vercel-insights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://app.posthog.com https://fonts.googleapis.com https://fonts.gstatic.com",
-    "frame-ancestors 'none'",
-    "base-uri 'self'",
-    "form-action 'self'",
-    "object-src 'none'",
-    "upgrade-insecure-requests",
-  ]
-    .filter(Boolean)
-    .join("; ")
-
-  return {
-    "Content-Security-Policy": csp,
-
-    "X-XSS-Protection": "1; mode=block",
-
-    "X-Content-Type-Options": "nosniff",
-
-    "X-Frame-Options": "DENY",
-
-    "Referrer-Policy": "strict-origin-when-cross-origin",
-
-    "Permissions-Policy": [
-      "camera=()",
-      "microphone=()",
-      "geolocation=()",
-      "payment=()",
-      "usb=()",
-      "bluetooth=()",
-      "magnetometer=()",
-      "gyroscope=()",
-      "accelerometer=()",
-    ].join(", "),
-
-    "Cross-Origin-Embedder-Policy": "require-corp",
-    "Cross-Origin-Opener-Policy": "same-origin",
-    "Cross-Origin-Resource-Policy": "same-origin",
-
-    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-
-    "Expect-CT": "max-age=86400, enforce",
-
-    "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-    Pragma: "no-cache",
-    Expires: "0",
-  }
+  const isDevelopment = process.env.NODE_ENV !== "production"
+  return getAllSecurityHeaders(isDevelopment)
 }
 
 // Express middleware types - using any for framework compatibility

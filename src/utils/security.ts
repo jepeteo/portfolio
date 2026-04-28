@@ -2,7 +2,6 @@ export const securityConfig = {
   csp: {
     scriptSrc: [
       "'self'",
-      "'unsafe-inline'", // Required for development - remove in production
       "https://cdnjs.cloudflare.com",
       "https://cdn.emailjs.com",
       "https://www.googletagmanager.com", // For analytics
@@ -177,14 +176,15 @@ export const securityConfig = {
 
 export const generateCSPHeader = (isDevelopment = false): string => {
   const { csp } = securityConfig
+  const scriptSources = [...csp.scriptSrc]
+
+  if (isDevelopment) {
+    scriptSources.push("'unsafe-inline'")
+  }
 
   const directives = [
     `default-src ${csp.defaultSrc.join(" ")}`,
-    `script-src ${
-      isDevelopment
-        ? csp.scriptSrc.join(" ")
-        : csp.scriptSrc.filter((src) => !src.includes("unsafe")).join(" ")
-    }`,
+    `script-src ${scriptSources.join(" ")}`,
     `style-src ${csp.styleSrc.join(" ")}`,
     `img-src ${csp.imgSrc.join(" ")}`,
     `font-src ${csp.fontSrc.join(" ")}`,
