@@ -113,9 +113,11 @@ npm install
 cp .env.example .env
 
 # Add your API keys to .env
-# VITE_EMAILJS_SERVICE_ID=your_service_id
-# VITE_EMAILJS_TEMPLATE_ID=your_template_id
-# VITE_EMAILJS_PUBLIC_KEY=your_public_key
+# EMAILJS_SERVICE_ID=your_service_id
+# EMAILJS_TEMPLATE_ID=your_template_id
+# EMAILJS_PUBLIC_KEY=your_public_key
+# CONTACT_EMAIL=your_email@example.com
+# PUBLIC_SITE_ORIGIN=https://theodorosmentis.com
 # VITE_POSTHOG_API_KEY=your_posthog_key
 # VITE_POSTHOG_HOST=https://eu.i.posthog.com
 ```
@@ -233,10 +235,12 @@ The project uses a modern design system with:
 Create a `.env` file in the root directory:
 
 ```env
-# EmailJS Configuration
-VITE_EMAILJS_SERVICE_ID=your_service_id
-VITE_EMAILJS_TEMPLATE_ID=your_template_id
-VITE_EMAILJS_PUBLIC_KEY=your_public_key
+# Contact API / EmailJS configuration (server-side)
+EMAILJS_SERVICE_ID=your_service_id
+EMAILJS_TEMPLATE_ID=your_template_id
+EMAILJS_PUBLIC_KEY=your_public_key
+CONTACT_EMAIL=your_email@example.com
+PUBLIC_SITE_ORIGIN=https://theodorosmentis.com
 
 # PostHog Analytics
 VITE_POSTHOG_API_KEY=your_posthog_key
