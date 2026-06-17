@@ -58,8 +58,8 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
       {" "}
       <div
         className={cn(
-          "container flex items-center justify-between",
-          "py-4 px-6"
+          "container flex items-center justify-between px-6",
+          isScrolled ? "py-2.5" : "py-4"
         )}
       >
         <motion.a
@@ -87,9 +87,13 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
             transition={{ delay: 0.2 }}
           >
             <div
-              className={`font-bold leading-tight tracking-tight text-base sm:text-lg lg:text-xl xl:text-2xl transition-colors duration-200 ${
-                isDark 
-                  ? "text-white group-hover:text-blue-400" 
+              className={`font-bold leading-tight tracking-tight transition-colors duration-200 ${
+                isScrolled
+                  ? "text-sm sm:text-base lg:text-lg xl:text-xl"
+                  : "text-base sm:text-lg lg:text-xl xl:text-2xl"
+              } ${
+                isDark
+                  ? "text-white group-hover:text-blue-400"
                   : "text-slate-900 group-hover:text-blue-600"
               }`}
             >

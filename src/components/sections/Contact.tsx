@@ -26,48 +26,18 @@ import {
   detectBot,
 } from "../../utils/secureContactValidation"
 import { useToast } from "../ui/Toast"
+import SectionShell from "../ui/SectionShell"
+import { site } from "../../config/site"
+import {
+  generateContactSchema,
+} from "../../content/schemas/contactSchema"
 
-// SEO Schema generation for Contact section
-const generateContactSchema = () => {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Theodoros Mentis",
-    jobTitle: "Senior Full-Stack Developer",
-    email: "th.mentis@gmail.com",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Berlin",
-      addressRegion: "Berlin",
-      addressCountry: "Germany",
-    },
-    contactPoint: [
-      {
-        "@type": "ContactPoint",
-        contactType: "professional",
-        email: "th.mentis@gmail.com",
-        availableLanguage: ["English", "Greek"],
-      },
-    ],
-    sameAs: [
-      "https://github.com/jepeteo",
-      "https://www.linkedin.com/in/thmentis/",
-    ],
-    url: "https://theodorosmentis.vercel.app",
-    worksFor: {
-      "@type": "Organization",
-      name: "Freelance Web Development",
-    },
-  }
-}
-
-// Individual Contact Method Schema Component
 const ContactMethodSchema: React.FC<{
   method: {
     icon: React.ComponentType<{ className?: string }>
     label: string
     value: string
-    href: string
+    href?: string
   }
 }> = ({ method }) => {
   const schema = {
@@ -78,9 +48,9 @@ const ContactMethodSchema: React.FC<{
     ...(method.label === "Location" && {
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Berlin",
-        addressRegion: "Berlin",
-        addressCountry: "Germany",
+        addressLocality: site.location.city,
+        addressRegion: site.location.region,
+        addressCountry: site.location.country,
       },
     }),
   }
@@ -262,7 +232,7 @@ const FormField: React.FC<FormFieldProps> = ({
 const Contact: React.FC = memo(() => {
   const { isDark } = useTheme()
   const { addToast } = useToast()
-  const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
+  const { targetRef, isVisible } = useIntersectionObserver<HTMLDivElement>({
     threshold: 0.1,
     rootMargin: "50px",
   })
@@ -472,14 +442,13 @@ const Contact: React.FC = memo(() => {
     {
       icon: Mail,
       label: "Email",
-      value: "th.mentis@gmail.com",
-      href: "mailto:th.mentis@gmail.com",
+      value: site.email,
+      href: `mailto:${site.email}`,
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "Berlin, Germany",
-      href: "https://www.linkedin.com/in/thmentis/",
+      value: site.location.label,
     },
   ]
 
@@ -487,12 +456,12 @@ const Contact: React.FC = memo(() => {
     {
       icon: Github,
       label: "GitHub",
-      href: "https://github.com/jepeteo",
+      href: site.social.github,
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "https://www.linkedin.com/in/thmentis/",
+      href: site.social.linkedin,
     },
   ]
 
@@ -506,45 +475,17 @@ const Contact: React.FC = memo(() => {
         }}
       />
 
-      <section
-        ref={targetRef}
-        className={`py-20 transition-all duration-1000 ${
+      <SectionShell
+        id="contact"
+        variant="default"
+        eyebrow="Start a Project"
+        title="Conversations I Welcome"
+        subtitle="Ready to collaborate? Start a project and I will help you shape scope, timeline, and delivery."
+        className={`transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
-        id="contact"
       >
-        <div className="container">
-          <div className="text-center mb-16">
-            <div
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
-                isDark
-                  ? "bg-green-500/20 text-green-300 border border-green-500/30"
-                  : "bg-green-100 text-green-700 border border-green-200"
-              }`}
-            >
-              <Mail className="w-4 h-4" />
-              Start a Project
-            </div>
-
-            <h2
-              className={`text-6xl md:text-8xl font-bold mb-8 ${
-                isDark ? "text-white" : "text-slate-900"
-              }`}
-            >
-              <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-red-500 bg-clip-text text-transparent">
-                Conversations I Welcome
-              </span>
-            </h2>
-
-            <p
-              className={`text-xl max-w-3xl mx-auto ${
-                isDark ? "text-slate-300" : "text-slate-600"
-              }`}
-            >
-              Ready to collaborate? Start a project and I will help you shape
-              scope, timeline, and delivery.
-            </p>
-          </div>
+        <div ref={targetRef} className="sr-only" aria-hidden="true" />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-8">
@@ -569,17 +510,17 @@ const Contact: React.FC = memo(() => {
               </div>
 
               <div className="space-y-4">
-                {contactInfo.map((item, index) => (
-                  <React.Fragment key={index}>
-                    <ContactMethodSchema method={item} />
-                    <a
-                      href={item.href}
-                      className={`flex items-center gap-4 p-4 rounded-xl transition-all hover:scale-105 ${
-                        isDark
-                          ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-green-500/50"
-                          : "bg-white/50 backdrop-blur-sm border border-slate-200 hover:border-green-500/50"
-                      }`}
-                    >
+                {contactInfo.map((item, index) => {
+                  const cardClassName = `flex items-center gap-4 p-4 rounded-xl transition-all ${
+                    item.href ? "hover:scale-105" : ""
+                  } ${
+                    isDark
+                      ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-green-500/50"
+                      : "bg-white/50 backdrop-blur-sm border border-slate-200 hover:border-green-500/50"
+                  }`
+
+                  const cardContent = (
+                    <>
                       <div
                         className={`w-12 h-12 rounded-xl flex items-center justify-center ${
                           isDark
@@ -605,9 +546,22 @@ const Contact: React.FC = memo(() => {
                           {item.value}
                         </div>
                       </div>
-                    </a>
-                  </React.Fragment>
-                ))}
+                    </>
+                  )
+
+                  return (
+                    <React.Fragment key={index}>
+                      <ContactMethodSchema method={item} />
+                      {item.href ? (
+                        <a href={item.href} className={cardClassName}>
+                          {cardContent}
+                        </a>
+                      ) : (
+                        <div className={cardClassName}>{cardContent}</div>
+                      )}
+                    </React.Fragment>
+                  )
+                })}
               </div>
 
               <div>
@@ -840,8 +794,7 @@ const Contact: React.FC = memo(() => {
               </form>
             </div>
           </div>
-        </div>
-      </section>
+      </SectionShell>
     </>
   )
 })

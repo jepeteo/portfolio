@@ -4,7 +4,8 @@ import { useTheme } from "../../context/ThemeContext"
 import { Icon, icons } from "../ui/icons/Icons"
 import { Button } from "../ui/Button"
 import { cn, typography } from "../../utils/styles"
-import { NavigationLink } from "../../types"
+import { navLinks, sectionOrder } from "../../config/navigation"
+import type { NavigationLink } from "../../types"
 
 interface NavProps {
   className?: string
@@ -16,44 +17,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
   const [activeSection, setActiveSection] = useState("")
   // View transitions are handled automatically by the browser for anchor links
 
-  const links: NavigationLink[] = [
-    { href: "#top", text: "Home", ariaLabel: "Navigate to home section" },
-    {
-      href: "#experience",
-      text: "Experience",
-      ariaLabel: "Navigate to experience section",
-    },
-    {
-      href: "#skills",
-      text: "Skills",
-      ariaLabel: "Navigate to skills section",
-    },
-    {
-      href: "#projects",
-      text: "Projects",
-      ariaLabel: "Navigate to client projects section",
-    },
-    {
-      href: "#web-projects",
-      text: "Web Projects",
-      ariaLabel: "Navigate to featured web projects section",
-    },
-    {
-      href: "#certificates",
-      text: "Certificates",
-      ariaLabel: "Navigate to certificates section",
-    },
-    {
-      href: "#about",
-      text: "About",
-      ariaLabel: "Navigate to about section",
-    },
-    {
-      href: "#contact",
-      text: "Contact",
-      ariaLabel: "Navigate to contact section",
-    },
-  ]
+  const links = navLinks
 
   // Haptic feedback for mobile devices
   const triggerHaptic = useCallback(() => {
@@ -136,21 +100,14 @@ const Nav: React.FC<NavProps> = ({ className }) => {
       // from the bottom).
       const probeY = scrollY + window.innerHeight / 3
 
-      const sections = links
-        .map((link) => {
-          if (link.href === "#top") return null
-          const id = link.href.slice(1)
+      const sections = sectionOrder
+        .flatMap((id) => {
+          if (id === "top") return []
           const element = document.getElementById(id)
-          if (!element) return null
-          // getBoundingClientRect is relative to the viewport, independent of
-          // any `position: relative` / `transform` ancestors, so adding scrollY
-          // gives the section's absolute document offset reliably.
+          if (!element) return []
           const absoluteTop = element.getBoundingClientRect().top + scrollY
-          return { id, top: absoluteTop }
+          return [{ id, top: absoluteTop }]
         })
-        .filter(
-          (section): section is { id: string; top: number } => section !== null
-        )
         .sort((a, b) => a.top - b.top)
 
       // Find the last section whose top is above the probe line.
@@ -216,7 +173,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
         // Enhanced mobile touch targets (min 44px height for accessibility)
         isMobile
           ? "w-full text-left justify-start px-5 py-4 min-h-[44px]"
-          : "px-4 py-2",
+          : cn("px-4 py-2", isActive && "rounded-full"),
         // Enhanced active state styling
         isActive && "text-primary font-semibold",
         !isActive && (isDark ? "text-slate-300" : "text-slate-600"),

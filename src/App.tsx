@@ -23,6 +23,7 @@ import {
   seoManager,
 } from "./utils/enhancedSEO"
 import useServiceWorker from "./hooks/useServiceWorker"
+import { site, sitePersonSchema } from "./config/site"
 
 const Header = lazy(() => import("./components/layout/Header"))
 const ToastProvider = lazy(() =>
@@ -84,11 +85,6 @@ const Projects = createLazyComponent(
 const Experience = createLazyComponent(
   () => import("./components/sections/Experience"),
   { preload: true }
-)
-
-const WebProjects = createLazyComponent(
-  () => import("./components/sections/WebProjects"),
-  {}
 )
 
 const Certificates = createLazyComponent(
@@ -168,17 +164,17 @@ const AppContent: React.FC = () => {
     const skillsSection = document.getElementById("skills")
     if (skillsSection) {
       const dispose = ComponentPreloader.preloadOnIntersection(
-        "web-projects",
-        () => import("./components/sections/WebProjects")
+        "experience",
+        () => import("./components/sections/Experience")
       )(skillsSection)
       if (dispose) disposers.push(dispose)
     }
 
-    const projectsNav = document.querySelector('a[href*="projects"]')
+    const projectsNav = document.querySelector('a[href="#projects"]')
     if (projectsNav) {
       const preloadHandlers = ComponentPreloader.preloadOnHover(
-        "web-projects",
-        () => import("./components/sections/WebProjects")
+        "projects",
+        () => import("./components/sections/Projects")
       )
 
       projectsNav.addEventListener("mouseenter", preloadHandlers.onMouseEnter)
@@ -202,35 +198,7 @@ const AppContent: React.FC = () => {
   useEnhancedSEO({
     ...defaultSEOConfig,
     structuredData: {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": "https://theodorosmentis.com/#person",
-      name: "Theodoros Mentis",
-      alternateName: "Theodore Mentis",
-      jobTitle: "Senior Full Stack Developer",
-      email: "th.mentis@gmail.com",
-      url: "https://theodorosmentis.com",
-      image: "https://theodorosmentis.com/images/teo-square.webp",
-      sameAs: [
-        "https://github.com/jepeteo",
-        "https://linkedin.com/in/theodorosmentis",
-      ],
-      knowsAbout: [
-        "WordPress Development",
-        "React Development",
-        "JavaScript",
-        "TypeScript",
-        "PHP",
-        "MySQL",
-        "Server Administration",
-        "Web Development",
-        "Full Stack Development",
-        "E-commerce Development",
-        "Custom Web Applications",
-      ],
-      location: "Berlin, Germany",
-      description:
-        "Senior Full-Stack Developer with 18+ years of experience in WordPress, React, and modern web technologies. Based in Berlin, Germany. Specializing in scalable web solutions and server administration.",
+      ...sitePersonSchema,
       hasCredential: [
         {
           "@type": "EducationalOccupationalCredential",
@@ -245,22 +213,13 @@ const AppContent: React.FC = () => {
           name: "React Specialist",
         },
       ],
-      worksFor: {
-        "@type": "Organization",
-        name: "Freelance Web Development Services",
-      },
       owns: [
         {
           "@type": "CreativeWork",
-          "@id": "https://theodorosmentis.com/#portfolio",
+          "@id": `${site.url}/#portfolio`,
           name: "Professional Portfolio",
         },
       ],
-      address: {
-        "@type": "Place",
-        addressCountry: "GR",
-        addressLocality: "Greece",
-      },
     },
   })
 
@@ -300,12 +259,6 @@ const AppContent: React.FC = () => {
         <ErrorBoundary componentName="Projects">
           <Suspense fallback={<ProjectsLoader />}>
             <Projects />
-          </Suspense>
-        </ErrorBoundary>
-
-        <ErrorBoundary componentName="Web Projects">
-          <Suspense fallback={<ProjectsLoader />}>
-            <WebProjects />
           </Suspense>
         </ErrorBoundary>
 

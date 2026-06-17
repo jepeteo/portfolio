@@ -4,6 +4,7 @@ import useIntersectionObserver from "../../hooks/useIntersectionObserver"
 import { ModernCertificate } from "../../types"
 import { validateCertificate } from "../../utils/validation"
 import Loading from "../system/loading/Loading"
+import SectionShell from "../ui/SectionShell"
 import myCertificates from "../../assets/myCertificates.json"
 import {
   Award,
@@ -274,24 +275,15 @@ const Certificates: React.FC = memo(() => {
 
   if (validCertificates.length === 0) {
     return (
-      <section className="container py-20" id="certificates">
-        <div className="text-center">
-          <h2
-            className={`text-4xl md:text-6xl font-display font-bold mb-4 ${
-              isDark ? "text-white" : "text-slate-900"
-            }`}
-          >
-            Certifications
-          </h2>
-          <p
-            className={`text-xl ${
-              isDark ? "text-slate-400" : "text-slate-600"
-            }`}
-          >
-            No certificates data available
-          </p>
-        </div>
-      </section>
+      <SectionShell id="certificates" title="Certifications" variant="default">
+        <p
+          className={`text-center text-xl ${
+            isDark ? "text-slate-400" : "text-slate-600"
+          }`}
+        >
+          No certificates data available
+        </p>
+      </SectionShell>
     )
   }
 
@@ -309,45 +301,17 @@ const Certificates: React.FC = memo(() => {
         }}
       />
 
-      <section
-        ref={targetRef}
-        className={`py-20 transition-all duration-1000 ${
+      <SectionShell
+        id="certificates"
+        variant="default"
+        eyebrow="Professional Development"
+        title="Skills I've Unlocked"
+        subtitle="Professional certifications showcasing expertise across various technologies and methodologies"
+        className={`transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
-        id="certificates"
       >
-        <div className="container">
-          <div className="text-center mb-16">
-            <div
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
-                isDark
-                  ? "bg-purple-500/20 text-purple-300 border border-purple-500/30"
-                  : "bg-purple-100 text-purple-700 border border-purple-200"
-              }`}
-            >
-              <Award className="w-4 h-4" />
-              Professional Development
-            </div>
-
-            <h2
-              className={`text-6xl md:text-8xl font-bold mb-8 ${
-                isDark ? "text-white" : "text-slate-900"
-              }`}
-            >
-              <span className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 bg-clip-text text-transparent">
-                Skills I've Unlocked
-              </span>
-            </h2>
-
-            <p
-              className={`text-xl max-w-3xl mx-auto ${
-                isDark ? "text-slate-300" : "text-slate-600"
-              }`}
-            >
-              Professional certifications showcasing expertise across various
-              technologies and methodologies
-            </p>
-          </div>
+        <div ref={targetRef} className="sr-only" aria-hidden="true" />
 
           <div className="mb-12">
             <div
@@ -680,8 +644,7 @@ const Certificates: React.FC = memo(() => {
               </div>
             </>
           )}
-        </div>
-      </section>
+      </SectionShell>
     </>
   )
 })

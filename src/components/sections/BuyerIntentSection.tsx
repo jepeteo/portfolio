@@ -17,7 +17,7 @@ const intents = [
     title: "Custom app (React / TS)",
     description:
       "Custom frontends, product features, and web apps built with React and TypeScript.",
-    href: "#web-projects",
+    href: "#projects?tab=client",
     cta: "See featured web apps",
     icon: AppWindow,
   },

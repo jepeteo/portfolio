@@ -2,6 +2,7 @@ import React, { memo, useState, useEffect, useRef } from "react"
 import { useTheme } from "../../context/ThemeContext"
 import useIntersectionObserver from "../../hooks/useIntersectionObserver"
 import { BlurImage } from "../system/loading/LoadingStates"
+import SectionShell from "../ui/SectionShell"
 import {
   User,
   MapPin,
@@ -139,7 +140,7 @@ StatsCard.displayName = "StatsCard"
 
 const Bio: React.FC = () => {
   const { isDark } = useTheme()
-  const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
+  const { targetRef, isVisible } = useIntersectionObserver<HTMLDivElement>({
     threshold: 0.1,
     rootMargin: "50px",
   })
@@ -330,44 +331,17 @@ const Bio: React.FC = () => {
   }
 
   return (
-    <section
-      ref={targetRef}
-      className={`py-20 transition-all duration-1000 ${
+    <SectionShell
+      id="about"
+      variant="muted"
+      eyebrow="About Me"
+      title="Stories I Tell"
+      subtitle="Crafting exceptional digital experiences with 18+ years of expertise"
+      className={`transition-all duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
-      id="about"
     >
-      <div className="container">
-        <div className="text-center mb-16">
-          <div
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6 ${
-              isDark
-                ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                : "bg-blue-100 text-blue-700 border border-blue-200"
-            }`}
-          >
-            <User className="w-4 h-4" />
-            About Me
-          </div>
-
-          <h2
-            className={`text-6xl md:text-8xl font-bold mb-8 ${
-              isDark ? "text-white" : "text-slate-900"
-            }`}
-          >
-            <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 bg-clip-text text-transparent">
-              Stories I Tell
-            </span>
-          </h2>
-
-          <p
-            className={`text-xl max-w-3xl mx-auto leading-relaxed ${
-              isDark ? "text-slate-300" : "text-slate-600"
-            }`}
-          >
-            Crafting exceptional digital experiences with 18+ years of expertise
-          </p>
-        </div>
+      <div ref={targetRef} className="sr-only" aria-hidden="true" />
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
           {stats.map((stat, index) => (
@@ -791,8 +765,7 @@ const Bio: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+    </SectionShell>
   )
 }
 

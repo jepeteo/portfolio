@@ -8,9 +8,9 @@ import type { ExperienceFilterType } from "../../types"
 import { ExperienceStatsComponent } from "./experience/ExperienceStats"
 import { ExperienceCallToAction } from "./experience/ExperienceCallToAction"
 import { ExperienceSidebar } from "./experience/ExperienceSidebar"
+import SectionShell from "../ui/SectionShell"
 import { ExperienceDetails } from "./experience/ExperienceDetails"
 import {
-  Briefcase,
   Filter,
   Calendar,
   ChevronDown,
@@ -133,7 +133,7 @@ const formatDateForSchema = (dateString: string): string => {
 
 const Experience: React.FC = () => {
   const { isDark } = useTheme()
-  const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
+  const { targetRef, isVisible } = useIntersectionObserver<HTMLDivElement>({
     threshold: 0.1,
     rootMargin: "50px",
   })
@@ -206,44 +206,17 @@ const Experience: React.FC = () => {
         }}
       />
 
-      <section
-        ref={targetRef}
+      <SectionShell
         id="experience"
-        className={`py-20 transition-all duration-1000 ${
+        variant="muted"
+        eyebrow="Professional Experience"
+        title="Career Journey"
+        subtitle={`${stats.totalYears} years of hands-on delivery across web development, server administration, and infrastructure support (${stats.employmentYears} years employment, ${stats.freelanceYears} years freelance), covering ${stats.totalProjects}+ projects and ${stats.totalClients}+ clients.`}
+        className={`transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        } ${isDark ? "bg-slate-900" : "bg-slate-50"}`}
+        }`}
       >
-        <div className="container">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 mb-6">
-              <Briefcase className="w-5 h-5 text-green-500" />
-              <span className="text-green-500 font-semibold">
-                Professional Experience
-              </span>
-            </div>
-
-            <h2
-              className={`text-5xl md:text-7xl font-bold mb-8 ${
-                isDark ? "text-white" : "text-slate-900"
-              }`}
-            >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">
-                Career Journey
-              </span>
-            </h2>
-
-            <p
-              className={`text-xl max-w-3xl mx-auto leading-relaxed ${
-                isDark ? "text-slate-300" : "text-slate-700"
-              }`}
-            >
-              {stats.totalYears} years of hands-on delivery across web
-              development, server administration, and infrastructure support
-              ({stats.employmentYears} years employment, {stats.freelanceYears}{" "}
-              years freelance), covering {stats.totalProjects}+ projects and{" "}
-              {stats.totalClients}+ clients.
-            </p>
-          </div>
+        <div ref={targetRef} className="sr-only" aria-hidden="true" />
 
           <ExperienceStatsComponent stats={stats} isDark={isDark} />
 
@@ -468,8 +441,7 @@ const Experience: React.FC = () => {
           </div>
 
           <ExperienceCallToAction isDark={isDark} />
-        </div>
-      </section>
+      </SectionShell>
     </>
   )
 }
