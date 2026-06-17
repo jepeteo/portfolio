@@ -207,6 +207,7 @@ const Experience: React.FC = () => {
       />
 
       <SectionShell
+        ref={targetRef}
         id="experience"
         variant="muted"
         eyebrow="Professional Experience"
@@ -216,8 +217,6 @@ const Experience: React.FC = () => {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <div ref={targetRef} className="sr-only" aria-hidden="true" />
-
           <ExperienceStatsComponent stats={stats} isDark={isDark} />
 
           <div className="flex flex-col items-center gap-4 mb-8">

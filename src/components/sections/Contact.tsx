@@ -476,6 +476,7 @@ const Contact: React.FC = memo(() => {
       />
 
       <SectionShell
+        ref={targetRef}
         id="contact"
         variant="default"
         eyebrow="Start a Project"
@@ -485,8 +486,6 @@ const Contact: React.FC = memo(() => {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <div ref={targetRef} className="sr-only" aria-hidden="true" />
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-8">
               <div>

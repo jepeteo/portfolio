@@ -302,6 +302,7 @@ const Certificates: React.FC = memo(() => {
       />
 
       <SectionShell
+        ref={targetRef}
         id="certificates"
         variant="default"
         eyebrow="Professional Development"
@@ -311,8 +312,6 @@ const Certificates: React.FC = memo(() => {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <div ref={targetRef} className="sr-only" aria-hidden="true" />
-
           <div className="mb-12">
             <div
               className={`flex items-center gap-2 mb-6 ${

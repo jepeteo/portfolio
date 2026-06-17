@@ -332,6 +332,7 @@ const Bio: React.FC = () => {
 
   return (
     <SectionShell
+      ref={targetRef}
       id="about"
       variant="muted"
       eyebrow="About Me"
@@ -341,8 +342,6 @@ const Bio: React.FC = () => {
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
-      <div ref={targetRef} className="sr-only" aria-hidden="true" />
-
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
           {stats.map((stat, index) => (
             <StatsCard

@@ -170,6 +170,7 @@ const Skills: React.FC = () => {
       />
 
       <SectionShell
+        ref={targetRef}
         id="skills"
         variant="muted"
         eyebrow="My Technical Journey"
@@ -179,8 +180,6 @@ const Skills: React.FC = () => {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <div ref={targetRef} className="sr-only" aria-hidden="true" />
-
           <div className="lg:hidden mb-8">
             <SkillsStats
               totalSkills={stats.totalSkills}
