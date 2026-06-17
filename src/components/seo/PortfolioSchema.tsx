@@ -2,6 +2,7 @@ import React from "react"
 import { usePortfolioSchema } from "../../hooks/usePortfolioSchema"
 import { seoManager } from "../../utils/enhancedSEO"
 import { SchemaValidator } from "../../utils/schemaValidator"
+import { site } from "../../config/site"
 
 interface PortfolioSchemaProps {
   includePersonSchema?: boolean
@@ -23,32 +24,32 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://theodorosmentis.com/#website",
-    name: "Theodoros Mentis - Senior Full Stack Developer Portfolio",
-    alternateName: "Theodore Mentis Portfolio",
-    url: "https://theodorosmentis.com",
+    "@id": `${site.url}/#website`,
+    name: `${site.name} - ${site.title} Portfolio`,
+    alternateName: `${site.alternateName} Portfolio`,
+    url: site.url,
     description: `Professional portfolio showcasing ${portfolioStats.totalProjects} web development projects with expertise in WordPress, React, and modern web technologies`,
-    inLanguage: "en-US",
+    inLanguage: site.locale,
     isPartOf: {
       "@type": "WebSite",
-      "@id": "https://theodorosmentis.com/#website",
+      "@id": `${site.url}/#website`,
     },
     author: {
       "@type": "Person",
-      "@id": "https://theodorosmentis.com/#person",
-      name: "Theodoros Mentis",
+      "@id": `${site.url}/#person`,
+      name: site.name,
     },
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://theodorosmentis.com/?s={search_term_string}",
+        urlTemplate: `${site.url}/?s={search_term_string}`,
       },
       "query-input": "required name=search_term_string",
     },
     mainEntity: {
       "@type": "Person",
-      "@id": "https://theodorosmentis.com/#person",
+      "@id": `${site.url}/#person`,
     },
   }
 
@@ -56,21 +57,15 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
     ? {
         "@context": "https://schema.org",
         "@type": "Person",
-        "@id": "https://theodorosmentis.com/#person",
-        name: "Theodoros Mentis",
-        alternateName: "Theodore Mentis",
-        jobTitle: "Senior Full Stack Developer",
+        "@id": `${site.url}/#person`,
+        name: site.name,
+        alternateName: site.alternateName,
+        jobTitle: site.title,
         description: `Experienced developer with ${portfolioStats.totalProjects} completed projects specializing in WordPress, React, and modern web development`,
-        url: "https://theodorosmentis.com",
-        email: "th.mentis@gmail.com",
-        image: [
-          "https://theodorosmentis.com/images/opti/teo-portrait.jpg",
-          "https://theodorosmentis.com/images/opti/teo-hero.jpg",
-        ],
-        sameAs: [
-          "https://github.com/jepeteo",
-          "https://linkedin.com/in/theodorosmentis",
-        ],
+        url: site.url,
+        email: site.email,
+        image: [`${site.url}${site.ogImage}`],
+        sameAs: [site.social.github, site.social.linkedin],
         knowsAbout: portfolioStats.uniqueTechnologies,
         hasCredential: {
           "@type": "EducationalOccupationalCredential",
@@ -82,12 +77,12 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
         },
         owns: {
           "@type": "CreativeWork",
-          "@id": "https://theodorosmentis.com/#portfolio",
+          "@id": `${site.url}/#portfolio`,
         },
         address: {
           "@type": "Place",
-          addressCountry: "DE",
-          addressLocality: "Berlin, Germany",
+          addressCountry: site.location.country,
+          addressLocality: site.location.label,
         },
       }
     : null
@@ -96,16 +91,16 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
     ? {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "@id": "https://theodorosmentis.com/#organization",
-        name: "Theodoros Mentis Web Development Services",
-        alternateName: "Theodore Mentis Development",
-        url: "https://theodorosmentis.com",
-        logo: "https://theodorosmentis.com/images/opti/teo-portrait.jpg",
-        email: "th.mentis@gmail.com",
+        "@id": `${site.url}/#organization`,
+        name: `${site.name} Web Development Services`,
+        alternateName: `${site.alternateName} Development`,
+        url: site.url,
+        logo: `${site.url}${site.ogImage}`,
+        email: site.email,
         foundingDate: "2010",
         founder: {
           "@type": "Person",
-          "@id": "https://theodorosmentis.com/#person",
+          "@id": `${site.url}/#person`,
         },
         numberOfEmployees: 1,
         slogan: "Creating seamless web experiences with modern technologies",
@@ -159,19 +154,19 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://theodorosmentis.com",
+        item: site.url,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Portfolio",
-        item: "https://theodorosmentis.com/#projects",
+        item: `${site.url}/#projects`,
       },
       {
         "@type": "ListItem",
         position: 3,
-        name: "React Projects",
-        item: "https://theodorosmentis.com/#react-projects",
+        name: "Web Apps",
+        item: `${site.url}/#projects?tab=client`,
       },
     ],
   }
@@ -182,10 +177,10 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
     mainEntity: [
       {
         "@type": "Question",
-        name: "What technologies does Theodoros Mentis specialize in?",
+        name: `What technologies does ${site.name} specialize in?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Theodoros specializes in ${portfolioStats.uniqueTechnologies
+          text: `${site.name} specializes in ${portfolioStats.uniqueTechnologies
             .slice(0, 8)
             .join(", ")} and has experience with ${
             portfolioStats.totalProjects
@@ -194,18 +189,18 @@ export const PortfolioSchema: React.FC<PortfolioSchemaProps> = ({
       },
       {
         "@type": "Question",
-        name: "How many projects has Theodoros Mentis completed?",
+        name: `How many projects has ${site.name} completed?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Theodoros has completed ${portfolioStats.totalProjects} projects, including ${portfolioStats.featuredProjects} featured projects across various technologies.`,
+          text: `${site.name} has completed ${portfolioStats.totalProjects} projects, including ${portfolioStats.featuredProjects} featured projects across various technologies.`,
         },
       },
       {
         "@type": "Question",
-        name: "What types of projects does Theodoros Mentis work on?",
+        name: `What types of projects does ${site.name} work on?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Theodoros works on ${portfolioStats.projectTypes.join(
+          text: `${site.name} works on ${portfolioStats.projectTypes.join(
             ", "
           )} and specializes in both traditional web development and modern React applications.`,
         },

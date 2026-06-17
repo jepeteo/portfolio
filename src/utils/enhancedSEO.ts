@@ -1,4 +1,5 @@
 import { useEffect } from "react"
+import { site } from "../config/site"
 
 export interface EnhancedSEOConfig {
   title?: string
@@ -491,30 +492,16 @@ export class SEOUtils {
 export const seoManager = SEOManager.getInstance()
 
 export const defaultSEOConfig: EnhancedSEOConfig = {
-  title: "Theodoros Mentis - Senior Full-Stack Developer Portfolio",
-  description:
-    "Senior Full-Stack Developer with 18+ years of experience in WordPress, React, and modern web technologies. Based in Berlin, Germany. Specializing in scalable web solutions and server administration.",
-  keywords: [
-    "full stack developer",
-    "wordpress expert",
-    "react developer",
-    "web development",
-    "javascript",
-    "typescript",
-    "php",
-    "mysql",
-    "theodoros mentis",
-    "portfolio",
-    "berlin developer",
-  ],
-  ogTitle: "Theodoros Mentis - Senior Full-Stack Developer",
-  ogDescription:
-    "Experienced developer creating seamless web experiences with WordPress, React, and modern web technologies. Based in Berlin, Germany.",
-  ogImage: "/src/assets/images/teo.png",
+  title: `${site.name} - ${site.title} Portfolio`,
+  description: site.description,
+  keywords: [...site.keywords],
+  ogTitle: `${site.name} - ${site.title}`,
+  ogDescription: site.shortDescription,
+  ogImage: site.ogImage,
   ogType: "profile",
-  ogSiteName: "Theodore Mentis Portfolio",
+  ogSiteName: `${site.alternateName} Portfolio`,
   twitterCard: "summary_large_image",
-  twitterCreator: "@your_twitter",
+  twitterCreator: site.twitterCreator,
   robots: "index,follow,max-image-preview:large",
-  language: "en-US",
+  language: site.locale,
 }

@@ -167,25 +167,23 @@ portfolio/
 │   └── manifest.json   # PWA manifest
 ├── src/
 │   ├── assets/         # Data files (JSON)
-│   ├── components/     # React components
-│   │   ├── animations/ # Animation components
-│   │   ├── certificates/ # Certificate components
-│   │   ├── experience/ # Experience components
-│   │   ├── icons/      # Icon components
-│   │   ├── loading/    # Loading states
-│   │   ├── modern/     # Modern UI components
-│   │   ├── navigation/ # Navigation components
-│   │   ├── skills/     # Skills components
-│   │   └── ui/         # Reusable UI components
+│   ├── config/         # Site metadata (URL, SEO, contact)
+│   ├── content/        # Unified content layer + schemas
+│   ├── components/
+│   │   ├── layout/     # Header, Nav, Footer
+│   │   ├── sections/   # Page sections + subcomponents
+│   │   ├── ui/         # Reusable UI primitives
+│   │   ├── accessibility/
+│   │   ├── seo/
+│   │   └── system/     # Error boundary, loading, integrations
 │   ├── context/        # React context
-│   ├── design-system/  # Design tokens
 │   ├── hooks/          # Custom React hooks
 │   ├── styles/         # Global styles
 │   ├── types/          # TypeScript types
-│   ├── utils/          # Utility functions
-│   └── middleware/     # Security middleware
-├── scripts/            # Build scripts
-└── docs/              # Documentation
+│   └── utils/          # Utility functions
+├── deploy/             # GitHub Pages redirect site
+├── scripts/            # Build and validation scripts
+└── docs/               # Documentation (incl. UI/UX polish plan)
 
 ```
 
