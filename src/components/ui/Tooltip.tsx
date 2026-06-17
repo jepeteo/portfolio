@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import ReactDOM from "react-dom"
-import "../../styles/tooltip.css"
+import "./tooltip.css"
 
 interface TooltipProps {
   content: string
@@ -10,7 +10,7 @@ interface TooltipProps {
 export const Tooltip: React.FC<TooltipProps> = ({ content, children }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [position, setPosition] = useState({ top: 0, left: 0 })
-  const containerRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const updateTooltipPosition = () => {
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect()
@@ -19,7 +19,7 @@ export const Tooltip: React.FC<TooltipProps> = ({ content, children }) => {
         left: rect.left + rect.width / 2, // Center horizontally
       })
     }
-  }
+  }
   const handleMouseEnter = () => {
     updateTooltipPosition()
     setIsVisible(true)
@@ -27,7 +27,7 @@ export const Tooltip: React.FC<TooltipProps> = ({ content, children }) => {
 
   const handleMouseLeave = () => {
     setIsVisible(false)
-  }
+  }
   useEffect(() => {
     if (isVisible) {
       const handleWindowEvents = () => {

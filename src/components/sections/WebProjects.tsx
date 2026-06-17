@@ -2,9 +2,9 @@ import React from "react"
 import { motion } from "framer-motion"
 import { ExternalLink, Globe, Code, Star, Github, Calendar } from "lucide-react"
 import { useState } from "react"
-import { useTheme } from "../context/ThemeContext"
-import clientProjectsData from "../assets/clientProjects.json"
-import personalProjectsData from "../assets/personalProjects.json"
+import { useTheme } from "../../context/ThemeContext"
+import clientProjectsData from "../../assets/clientProjects.json"
+import personalProjectsData from "../../assets/personalProjects.json"
 
 // Define project type
 interface Project {
@@ -188,7 +188,7 @@ const typeColors = {
   personal: "border-l-4 border-blue-500",
 }
 
-export default function UnifiedProjects() {
+export default function WebProjects() {
   const { isDark } = useTheme()
   const [activeFilter, setActiveFilter] = useState("all")
 

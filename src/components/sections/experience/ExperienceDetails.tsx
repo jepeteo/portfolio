@@ -7,7 +7,7 @@ import {
   Briefcase,
   CheckCircle,
 } from "lucide-react"
-import { TechExperience } from "../../hooks/useExperienceData"
+import { TechExperience } from "../../../hooks/useExperienceData"
 
 interface ExperienceDetailsProps {
   experience: TechExperience | null

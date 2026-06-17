@@ -1,17 +1,16 @@
 import React, { Suspense, lazy } from "react"
-// Critical path components - loaded eagerly
-import Hero from "./components/Hero"
-import Footer from "./components/Footer"
-import ErrorBoundary from "./components/ErrorBoundary"
-import PortfolioSchema from "./components/PortfolioSchema"
-import BuyerIntentSection from "./components/BuyerIntentSection"
-import ProofHighlights from "./components/ProofHighlights"
+import Hero from "./components/sections/Hero"
+import Footer from "./components/layout/Footer"
+import ErrorBoundary from "./components/system/ErrorBoundary"
+import PortfolioSchema from "./components/seo/PortfolioSchema"
+import BuyerIntentSection from "./components/sections/BuyerIntentSection"
+import ProofHighlights from "./components/sections/ProofHighlights"
 import {
   LoadingSpinner,
   ProjectGridSkeleton,
   ExperienceCardSkeleton,
   SkillsSkeleton,
-} from "./components/loading/ModernLoadingStates"
+} from "./components/system/loading/LoadingStates"
 import { SkipLink } from "./components/accessibility/SkipLink"
 import { ThemeProvider, useTheme } from "./context/ThemeContext"
 import {
@@ -25,8 +24,7 @@ import {
 } from "./utils/enhancedSEO"
 import useServiceWorker from "./hooks/useServiceWorker"
 
-// Lazy-load components that use framer-motion to reduce initial bundle
-const ModernHeader = lazy(() => import("./components/navigation/ModernHeader"))
+const Header = lazy(() => import("./components/layout/Header"))
 const ToastProvider = lazy(() =>
   import("./components/ui/Toast").then((m) => ({ default: m.ToastProvider }))
 )
@@ -46,17 +44,16 @@ const OfflineIndicator = lazy(() =>
   }))
 )
 
-// Lazy-loaded components (below the fold)
 const VercelIntegrations = createLazyComponent(
   () =>
-    import("./components/VercelIntegrations").then((m) => ({
+    import("./components/system/VercelIntegrations").then((m) => ({
       default: m.VercelIntegrations,
     })),
   {}
 )
 
 const PerformanceDashboard = createLazyComponent(
-  () => import("./components/PerformanceDashboard"),
+  () => import("./components/system/PerformanceDashboard"),
   {}
 )
 
@@ -64,36 +61,38 @@ if (process.env.NODE_ENV === "development") {
   import("./utils/schemaTesting")
 }
 
-// Lazy-load all below-fold sections
-const ModernSkills = createLazyComponent(
-  () => import("./components/ModernSkills"),
+const Skills = createLazyComponent(
+  () => import("./components/sections/Skills"),
   { preload: true }
 )
 
-const ModernBio = createLazyComponent(
-  () => import("./components/ModernBio"),
+const Bio = createLazyComponent(
+  () => import("./components/sections/Bio"),
   {}
 )
 
-const Contact = createLazyComponent(() => import("./components/Contact"), {})
-
-const ModernProjects = createLazyComponent(
-  () => import("./components/ModernProjects"),
+const Contact = createLazyComponent(
+  () => import("./components/sections/Contact"),
   {}
 )
 
-const ModernExperience = createLazyComponent(
-  () => import("./components/ModernExperience"),
+const Projects = createLazyComponent(
+  () => import("./components/sections/Projects"),
+  {}
+)
+
+const Experience = createLazyComponent(
+  () => import("./components/sections/Experience"),
   { preload: true }
 )
 
-const UnifiedProjects = createLazyComponent(
-  () => import("./components/UnifiedProjects"),
+const WebProjects = createLazyComponent(
+  () => import("./components/sections/WebProjects"),
   {}
 )
 
-const ModernCertificates = createLazyComponent(
-  () => import("./components/ModernCertificates"),
+const Certificates = createLazyComponent(
+  () => import("./components/sections/Certificates"),
   {}
 )
 
@@ -132,7 +131,6 @@ const AppContent: React.FC = () => {
 
   useServiceWorker()
 
-  // Lazy-load production monitor and track page view
   React.useEffect(() => {
     import("./utils/productionMonitor").then(
       ({ default: productionMonitor }) => {
@@ -141,7 +139,6 @@ const AppContent: React.FC = () => {
     )
   }, [])
 
-  // Track theme changes (lazy load production monitor)
   React.useEffect(() => {
     import("./utils/productionMonitor").then(
       ({ default: productionMonitor }) => {
@@ -162,8 +159,8 @@ const AppContent: React.FC = () => {
     const proofSection = document.getElementById("proof")
     if (proofSection) {
       const dispose = ComponentPreloader.preloadOnIntersection(
-        "modern-projects",
-        () => import("./components/ModernProjects")
+        "projects",
+        () => import("./components/sections/Projects")
       )(proofSection)
       if (dispose) disposers.push(dispose)
     }
@@ -171,8 +168,8 @@ const AppContent: React.FC = () => {
     const skillsSection = document.getElementById("skills")
     if (skillsSection) {
       const dispose = ComponentPreloader.preloadOnIntersection(
-        "unified-projects",
-        () => import("./components/UnifiedProjects")
+        "web-projects",
+        () => import("./components/sections/WebProjects")
       )(skillsSection)
       if (dispose) disposers.push(dispose)
     }
@@ -180,8 +177,8 @@ const AppContent: React.FC = () => {
     const projectsNav = document.querySelector('a[href*="projects"]')
     if (projectsNav) {
       const preloadHandlers = ComponentPreloader.preloadOnHover(
-        "unified-projects",
-        () => import("./components/UnifiedProjects")
+        "web-projects",
+        () => import("./components/sections/WebProjects")
       )
 
       projectsNav.addEventListener("mouseenter", preloadHandlers.onMouseEnter)
@@ -287,7 +284,7 @@ const AppContent: React.FC = () => {
         includeOrganizationSchema={true}
       />
       <Suspense fallback={<div className="h-16" />}>
-        <ModernHeader />
+        <Header />
       </Suspense>
       <main id="main-content" tabIndex={-1}>
         <Hero />
@@ -296,37 +293,37 @@ const AppContent: React.FC = () => {
 
         <ErrorBoundary componentName="Skills">
           <Suspense fallback={<SkillsSkeleton />}>
-            <ModernSkills />
+            <Skills />
           </Suspense>
         </ErrorBoundary>
 
         <ErrorBoundary componentName="Projects">
           <Suspense fallback={<ProjectsLoader />}>
-            <ModernProjects />
+            <Projects />
           </Suspense>
         </ErrorBoundary>
 
         <ErrorBoundary componentName="Web Projects">
           <Suspense fallback={<ProjectsLoader />}>
-            <UnifiedProjects />
+            <WebProjects />
           </Suspense>
         </ErrorBoundary>
 
         <ErrorBoundary componentName="Experience">
           <Suspense fallback={<ExperienceLoader />}>
-            <ModernExperience />
+            <Experience />
           </Suspense>
         </ErrorBoundary>
 
         <ErrorBoundary componentName="Certificates">
           <Suspense fallback={<SectionLoader />}>
-            <ModernCertificates />
+            <Certificates />
           </Suspense>
         </ErrorBoundary>
 
         <ErrorBoundary componentName="Bio">
           <Suspense fallback={<SectionLoader />}>
-            <ModernBio />
+            <Bio />
           </Suspense>
         </ErrorBoundary>
 

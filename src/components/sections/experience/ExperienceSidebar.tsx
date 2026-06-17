@@ -1,6 +1,6 @@
 import React from "react"
 import { Calendar, ChevronRight } from "lucide-react"
-import { TechExperience } from "../../hooks/useExperienceData"
+import { TechExperience } from "../../../hooks/useExperienceData"
 
 interface ExperienceSidebarProps {
   experiences: TechExperience[]

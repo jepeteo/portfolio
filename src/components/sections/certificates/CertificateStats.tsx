@@ -1,6 +1,6 @@
 import React from "react"
 import { Award, Calendar, Users, TrendingUp } from "lucide-react"
-import { CertificateStats } from "../../hooks/useCertificatesData"
+import { CertificateStats } from "../../../hooks/useCertificatesData"
 
 interface CertificateStatsProps {
   stats: CertificateStats

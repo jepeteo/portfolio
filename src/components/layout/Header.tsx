@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react"
 import { motion, useScroll, useSpring } from "framer-motion"
 import { cn, typography } from "../../utils/styles"
-import ModernNav from "../navigation/ModernNav"
+import Nav from "./Nav"
 import { useTheme } from "../../context/ThemeContext"
 
-interface ModernHeaderProps {
+interface HeaderProps {
   className?: string
 }
 
-const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
+const Header: React.FC<HeaderProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = useState(false)
   const { isDark } = useTheme()
 
@@ -114,7 +114,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
           transition={{ delay: 0.3 }}
           className="flex items-center"
         >
-          <ModernNav />
+          <Nav />
         </motion.div>
       </div>
       <motion.div
@@ -132,4 +132,4 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({ className }) => {
   )
 }
 
-export default ModernHeader
+export default Header

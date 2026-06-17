@@ -1,7 +1,7 @@
 import React from "react"
-import { usePortfolioSchema } from "../hooks/usePortfolioSchema"
-import { seoManager } from "../utils/enhancedSEO"
-import { SchemaValidator } from "../utils/schemaValidator"
+import { usePortfolioSchema } from "../../hooks/usePortfolioSchema"
+import { seoManager } from "../../utils/enhancedSEO"
+import { SchemaValidator } from "../../utils/schemaValidator"
 
 interface PortfolioSchemaProps {
   includePersonSchema?: boolean

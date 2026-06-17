@@ -78,7 +78,7 @@ import {
   type LucideIcon,
 } from "lucide-react"
 import React from "react"
-import { cn } from "../../utils/styles"
+import { cn } from "../../../utils/styles"
 
 export const iconSizes = {
   xs: "w-3 h-3",

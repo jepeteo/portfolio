@@ -1,4 +1,3 @@
 {
-  "name": "Portfolio CodeQL config",
-  "paths-ignore": ["src/config/security.config.ts"],
+  "name": "Portfolio CodeQL config"
 }

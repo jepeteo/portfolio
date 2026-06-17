@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
-import { useTheme } from "../context/ThemeContext"
-import useIntersectionObserver from "../hooks/useIntersectionObserver"
-import usePerformanceMonitor from "../hooks/usePerformanceMonitor"
-import { useExperienceData } from "../hooks/useExperienceData"
-import type { TechExperience } from "../hooks/useExperienceData"
-import type { ExperienceFilterType } from "../types"
+import { useTheme } from "../../context/ThemeContext"
+import useIntersectionObserver from "../../hooks/useIntersectionObserver"
+import usePerformanceMonitor from "../../hooks/usePerformanceMonitor"
+import { useExperienceData } from "../../hooks/useExperienceData"
+import type { TechExperience } from "../../hooks/useExperienceData"
+import type { ExperienceFilterType } from "../../types"
 import { ExperienceStatsComponent } from "./experience/ExperienceStats"
 import { ExperienceCallToAction } from "./experience/ExperienceCallToAction"
 import { ExperienceSidebar } from "./experience/ExperienceSidebar"
@@ -131,7 +131,7 @@ const formatDateForSchema = (dateString: string): string => {
   return `${year}-${month.padStart(2, "0")}-01`
 }
 
-const ModernExperience: React.FC = () => {
+const Experience: React.FC = () => {
   const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
     threshold: 0.1,
@@ -139,7 +139,7 @@ const ModernExperience: React.FC = () => {
   })
 
   // Monitor component performance
-  usePerformanceMonitor("ModernExperience")
+  usePerformanceMonitor("Experience")
 
   const {
     experiences,
@@ -474,4 +474,4 @@ const ModernExperience: React.FC = () => {
   )
 }
 
-export default ModernExperience
+export default Experience

@@ -1,6 +1,6 @@
 import React, { memo, useState, useCallback, useMemo } from "react"
-import { useTheme } from "../context/ThemeContext"
-import useIntersectionObserver from "../hooks/useIntersectionObserver"
+import { useTheme } from "../../context/ThemeContext"
+import useIntersectionObserver from "../../hooks/useIntersectionObserver"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Mail,
@@ -18,14 +18,14 @@ import {
   validateFieldEmail,
   sanitizeEmail,
   sanitizeTextInput,
-} from "../utils/contactValidation"
+} from "../../utils/contactValidation"
 import {
   SecureContactFormData,
   ContactFormErrors,
   validateContactFormSecure,
   detectBot,
-} from "../utils/secureContactValidation"
-import { useToast } from "./ui/Toast"
+} from "../../utils/secureContactValidation"
+import { useToast } from "../ui/Toast"
 
 // SEO Schema generation for Contact section
 const generateContactSchema = () => {

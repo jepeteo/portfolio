@@ -1,16 +1,16 @@
 import React, { useState, useCallback, useEffect } from "react"
 import { motion, AnimatePresence, PanInfo } from "framer-motion"
 import { useTheme } from "../../context/ThemeContext"
-import { Icon, icons } from "../icons/ModernIcons"
+import { Icon, icons } from "../ui/icons/Icons"
 import { Button } from "../ui/Button"
 import { cn, typography } from "../../utils/styles"
 import { NavigationLink } from "../../types"
 
-interface ModernNavProps {
+interface NavProps {
   className?: string
 }
 
-const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
+const Nav: React.FC<NavProps> = ({ className }) => {
   const { toggleTheme, isDark } = useTheme()
   const [isOpen, setIsOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("")
@@ -449,4 +449,4 @@ const ModernNav: React.FC<ModernNavProps> = ({ className }) => {
   )
 }
 
-export default ModernNav
+export default Nav

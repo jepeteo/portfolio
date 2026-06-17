@@ -79,9 +79,9 @@ export default defineConfig({
     // Preload important modules
     warmup: {
       clientFiles: [
-        './src/components/Hero.tsx',
-        './src/components/ModernSkills.tsx',
-        './src/components/Contact.tsx',
+        './src/components/sections/Hero.tsx',
+        './src/components/sections/Skills.tsx',
+        './src/components/sections/Contact.tsx',
       ],
     },
   },

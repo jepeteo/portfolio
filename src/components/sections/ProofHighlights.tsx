@@ -1,5 +1,5 @@
 import React from "react"
-import { useTheme } from "../context/ThemeContext"
+import { useTheme } from "../../context/ThemeContext"
 
 const proofItems = [
   { label: "Years of experience", value: "18+" },

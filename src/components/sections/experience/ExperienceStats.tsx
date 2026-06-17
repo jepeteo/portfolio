@@ -1,7 +1,7 @@
 import React from "react"
 import { Users, Activity, Briefcase, Code } from "lucide-react"
-import { ExperienceStats } from "../../hooks/useExperienceData"
-import { Tooltip } from "../ui/Tooltip"
+import { ExperienceStats } from "../../../hooks/useExperienceData"
+import { Tooltip } from "../../ui/Tooltip"
 
 interface StatItem {
   icon: React.ElementType

@@ -1,6 +1,6 @@
 import React from "react"
 import { Building, TrendingUp } from "lucide-react"
-import { CertificateStats } from "../../hooks/useCertificatesData"
+import { CertificateStats } from "../../../hooks/useCertificatesData"
 
 interface TopIssuersProps {
   stats: CertificateStats

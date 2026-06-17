@@ -1,5 +1,5 @@
 import React from "react"
-import { ExperienceStats } from "../../hooks/useExperienceData"
+import { ExperienceStats } from "../../../hooks/useExperienceData"
 
 interface TopTechnologiesProps {
   stats: ExperienceStats

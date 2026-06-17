@@ -1,10 +1,10 @@
 import React, { useMemo, useState, memo, useCallback } from "react"
-import { useTheme } from "../context/ThemeContext"
-import useIntersectionObserver from "../hooks/useIntersectionObserver"
-import { ModernCertificate } from "../types"
-import { validateCertificate } from "../utils/validation"
-import Loading from "./Loading"
-import myCertificates from "../assets/myCertificates.json"
+import { useTheme } from "../../context/ThemeContext"
+import useIntersectionObserver from "../../hooks/useIntersectionObserver"
+import { ModernCertificate } from "../../types"
+import { validateCertificate } from "../../utils/validation"
+import Loading from "../system/loading/Loading"
+import myCertificates from "../../assets/myCertificates.json"
 import {
   Award,
   Calendar,
@@ -181,7 +181,7 @@ interface ExpandedSkills {
   [certificateId: string]: boolean
 }
 
-const ModernCertificates: React.FC = memo(() => {
+const Certificates: React.FC = memo(() => {
   const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLDivElement>({
     threshold: 0.1,
@@ -686,5 +686,5 @@ const ModernCertificates: React.FC = memo(() => {
   )
 })
 
-ModernCertificates.displayName = "ModernCertificates"
-export default ModernCertificates
+Certificates.displayName = "Certificates"
+export default Certificates

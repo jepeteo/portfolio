@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
-import { getBundleInfo } from "../utils/performanceOptimization"
-import { A11yChecker } from "../utils/accessibilityOptimization"
+import { getBundleInfo } from "../../utils/performanceOptimization"
+import { A11yChecker } from "../../utils/accessibilityOptimization"
 
 interface PerformanceMetrics {
   navigation?: {

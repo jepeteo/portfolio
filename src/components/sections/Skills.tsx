@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from "react"
-import { useTheme } from "../context/ThemeContext"
-import useIntersectionObserver from "../hooks/useIntersectionObserver"
-import useSkillsData from "../hooks/useSkillsData"
-import usePerformanceMonitor from "../hooks/usePerformanceMonitor"
+import { useTheme } from "../../context/ThemeContext"
+import useIntersectionObserver from "../../hooks/useIntersectionObserver"
+import useSkillsData from "../../hooks/useSkillsData"
+import usePerformanceMonitor from "../../hooks/usePerformanceMonitor"
 import CategoryCard from "./skills/CategoryCard"
 import CategoryHeader from "./skills/CategoryHeader"
 import SkillCard from "./skills/SkillCard"
@@ -98,14 +98,14 @@ const generateSkillsSchema = (skillCategories: SkillCategoryData[]) => {
   }
 }
 
-const ModernSkills: React.FC = () => {
+const Skills: React.FC = () => {
   const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
     threshold: 0.1,
     rootMargin: "50px",
   })
 
-  const { getPerformanceReport } = usePerformanceMonitor("ModernSkills")
+  const { getPerformanceReport } = usePerformanceMonitor("Skills")
 
   const [activeCategory, setActiveCategory] = useState<string>("languages")
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
@@ -367,5 +367,5 @@ const ModernSkills: React.FC = () => {
   )
 }
 
-ModernSkills.displayName = "ModernSkills"
-export default ModernSkills
+Skills.displayName = "Skills"
+export default Skills

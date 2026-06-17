@@ -1,5 +1,5 @@
 import React, { memo, useCallback } from "react"
-import { useTheme } from "../context/ThemeContext"
+import { useTheme } from "../../context/ThemeContext"
 import { Github, Linkedin, Mail, Heart, ArrowUp } from "lucide-react"
 
 const Footer: React.FC = memo(() => {
@@ -26,17 +26,17 @@ const Footer: React.FC = memo(() => {
       href: "mailto:th.mentis@gmail.com",
       hoverColor: "hover:text-green-400",
     },
-  ]
+  ]
   const handleNavClick = useCallback(
     (e: React.MouseEvent, sectionId: string) => {
-      e.preventDefault()
+      e.preventDefault()
       if (sectionId === "top" || sectionId === "home") {
         window.scrollTo({
           top: 0,
           behavior: "smooth",
         })
         return
-      }
+      }
       const targetElement = document.getElementById(sectionId)
       if (targetElement) {
         const headerOffset = 80 // Adjust based on your header height
@@ -54,7 +54,7 @@ const Footer: React.FC = memo(() => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
-  }
+  }
   const navigationItems = [
     { sectionId: "top", label: "Home" },
     { sectionId: "about", label: "About" },

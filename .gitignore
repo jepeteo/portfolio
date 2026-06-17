@@ -15,6 +15,8 @@ dist-ssr
 bundle-report.html
 .lighthouseci
 lighthouse-report.html
+lighthouse-*.html
+lighthouse-*.json
 .eslintcache
 
 # Editor directories and files
@@ -40,9 +42,14 @@ updateDescriptions.js
 # Ignore root docs folder (except README)
 /docs/
 
-# Personal tools (not for deployment)
-instagram-card-generator.html
+# One-off root tools and debug pages
+favicon-generator.html
 og-image-generator.html
+instagram-card-generator.html
+csrf-test.html
+redirect.html
+clean-comments.cjs
+clean-console.js
 .vercel
 nul
 
@@ -56,5 +63,3 @@ SOUL.md
 TOOLS.md
 USER.md
 AGENTS.md
-=22
-.codex

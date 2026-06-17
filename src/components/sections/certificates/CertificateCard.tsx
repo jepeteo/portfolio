@@ -7,7 +7,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react"
-import { ModernCertificate } from "../../hooks/useCertificatesData"
+import { ModernCertificate } from "../../../hooks/useCertificatesData"
 
 interface CertificateCardProps {
   certificate: ModernCertificate

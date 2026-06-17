@@ -1,11 +1,11 @@
 import React, { useState, useMemo, memo, useCallback, useEffect } from "react"
-import { useTheme } from "../context/ThemeContext"
-import useIntersectionObserver from "../hooks/useIntersectionObserver"
-import { useProjectImage } from "../hooks/useProjectImage"
-import myProjects from "../assets/myProjects.json"
-import { Project } from "../types"
-import { isValidProject } from "../utils/validation"
-import { BlurImage } from "./loading/ModernLoadingStates"
+import { useTheme } from "../../context/ThemeContext"
+import useIntersectionObserver from "../../hooks/useIntersectionObserver"
+import { useProjectImage } from "../../hooks/useProjectImage"
+import myProjects from "../../assets/myProjects.json"
+import { Project } from "../../types"
+import { isValidProject } from "../../utils/validation"
+import { BlurImage } from "../system/loading/LoadingStates"
 import {
   ExternalLink,
   Star,
@@ -99,7 +99,7 @@ const ProjectSchema: React.FC<{ project: Project }> = ({ project }) => {
   )
 }
 
-const ModernProjects = memo(() => {
+const Projects = memo(() => {
   const { isDark } = useTheme()
   const [projectType, setProjectType] = useState<string | null>(null)
   const [selectedTech, setSelectedTech] = useState<string | null>(null)
@@ -906,5 +906,5 @@ const ModernProjects = memo(() => {
   )
 })
 
-ModernProjects.displayName = "ModernProjects"
-export default ModernProjects
+Projects.displayName = "Projects"
+export default Projects

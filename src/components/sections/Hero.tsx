@@ -1,11 +1,11 @@
 import React, { memo, useEffect, useRef, useState } from "react"
-import { useTheme } from "../context/ThemeContext"
+import { useTheme } from "../../context/ThemeContext"
 import TypedText from "./TypedText"
 import {
   useReducedMotion,
   useSkipLinks,
   useScreenReader,
-} from "../utils/accessibilityOptimization"
+} from "../../utils/accessibilityOptimization"
 
 const Hero: React.FC = memo(() => {
   const { isDark } = useTheme()

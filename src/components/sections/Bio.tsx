@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect, useRef } from "react"
-import { useTheme } from "../context/ThemeContext"
-import useIntersectionObserver from "../hooks/useIntersectionObserver"
-import { BlurImage } from "./loading/ModernLoadingStates"
+import { useTheme } from "../../context/ThemeContext"
+import useIntersectionObserver from "../../hooks/useIntersectionObserver"
+import { BlurImage } from "../system/loading/LoadingStates"
 import {
   User,
   MapPin,
@@ -23,7 +23,7 @@ import {
   Github,
 } from "lucide-react"
 
-import profileImage from "../assets/images/gteo.webp"
+import profileImage from "../../assets/images/gteo.webp"
 import type { LucideIcon } from "lucide-react"
 
 const resumePDF = "./cv/Theodoros-Mentis-CV.pdf"
@@ -137,7 +137,7 @@ const StatsCard = memo(
 
 StatsCard.displayName = "StatsCard"
 
-const ModernBio: React.FC = () => {
+const Bio: React.FC = () => {
   const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLElement>({
     threshold: 0.1,
@@ -796,5 +796,5 @@ const ModernBio: React.FC = () => {
   )
 }
 
-ModernBio.displayName = "ModernBio"
-export default memo(ModernBio)
+Bio.displayName = "Bio"
+export default memo(Bio)

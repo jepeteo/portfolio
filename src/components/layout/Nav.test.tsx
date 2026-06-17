@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react"
-import ModernNav from "./ModernNav"
+import Nav from "./Nav"
 import { ThemeProvider } from "../../context/ThemeContext"
 
-describe("ModernNav", () => {
+describe("Nav", () => {
   it("renders the core navigation links", () => {
     render(
       <ThemeProvider>
-        <ModernNav />
+        <Nav />
       </ThemeProvider>
     )
 

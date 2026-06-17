@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import Hero from "./Hero"
-import { ThemeProvider } from "../context/ThemeContext"
+import { ThemeProvider } from "../../context/ThemeContext"
 
 describe("Hero CTA accessibility", () => {
   it("matches CTA labels with their destination anchors", () => {

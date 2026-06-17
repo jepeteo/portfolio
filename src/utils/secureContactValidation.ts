@@ -1,4 +1,10 @@
-import { sanitizeInput, validationPatterns } from "./security"
+import { sanitizeInput } from "./validation"
+
+const validationPatterns = {
+  email:
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+  name: /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s'.-]{2,50}$/,
+}
 
 export interface SecureContactFormData {
   name: string
