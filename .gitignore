@@ -48,6 +48,7 @@ og-image-generator.html
 instagram-card-generator.html
 csrf-test.html
 redirect.html
+!deploy/redirect.html
 clean-comments.cjs
 clean-console.js
 .vercel
