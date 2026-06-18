@@ -399,6 +399,10 @@ const Contact: React.FC = memo(() => {
           csrfToken: token,
           timestamp: startTime, // Use the form's start time for bot detection
           honeypot,
+          sourcePage:
+            typeof window !== "undefined"
+              ? window.location.pathname + window.location.search
+              : undefined,
         }
         const response = await fetch("/api/contact", {
           method: "POST",

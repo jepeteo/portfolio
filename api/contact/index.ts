@@ -32,6 +32,13 @@ const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000
 const RATE_LIMIT_MAX = 5
 const RATE_LIMIT_BLOCK_MS = 30 * 60 * 1000
 
+// Best-effort, per-instance rate limiting. This Map lives in the memory of a
+// single serverless instance and is NOT shared across instances or cold starts,
+// so it cannot guarantee a global limit. It is a cheap first line of defense
+// against bursts; combined with the CSRF double-submit token, honeypot, and
+// timing checks it is sufficient for a low-traffic contact form. For a hard
+// global guarantee, back this with a shared store (e.g. Upstash Redis / Vercel
+// KV) keyed by the request fingerprint.
 const rateLimitStore = new Map<string, RateLimitEntry>()
 
 function getHeader(req: VercelRequest, key: string): string {
@@ -135,8 +142,9 @@ async function sendViaEmailJs(data: SecureContactFormData) {
     throw new Error("Email provider is not configured")
   }
 
-  // TODO: Update the EmailJS template to include request_type, urgency, budget,
-  // and website_url variables so lead qualification fields appear in notification emails.
+  // NOTE: The EmailJS template must reference these variables so lead
+  // qualification fields appear in notification emails:
+  //   request_type, urgency, budget, website_url, source_page, submitted_at
   const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -153,6 +161,8 @@ async function sendViaEmailJs(data: SecureContactFormData) {
         urgency: data.urgency || "Not provided",
         budget: data.budget || "Not provided",
         website_url: data.websiteUrl || "Not provided",
+        source_page: data.sourcePage || "Not provided",
+        submitted_at: new Date().toISOString(),
         to_email: toEmail || "contact@theodorosmentis.com",
         reply_to: data.email,
       },
@@ -204,6 +214,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     websiteUrl: payload.websiteUrl || "",
     honeypot: payload.honeypot || "",
     timestamp: payload.timestamp || 0,
+    sourcePage: payload.sourcePage || "",
   }
 
   if (detectBot(secureData)) {

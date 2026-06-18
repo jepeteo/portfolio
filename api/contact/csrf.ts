@@ -14,19 +14,39 @@ type VercelResponse = {
 const CSRF_COOKIE_NAME = "contact_csrf_token"
 const TOKEN_TTL_MS = 30 * 60 * 1000
 
-const tokenStore = new Map<string, number>()
+// Stateless, signed double-submit CSRF tokens.
+//
+// Serverless functions do not share memory across instances, so an in-memory
+// token store is unreliable (the GET that issues a token and the POST that
+// verifies it may run on different instances). Instead we issue a token of the
+// form `${nonce}.${expiry}.${hmac}` set in an HttpOnly+SameSite=Strict cookie
+// and also returned in the response body. Verification recomputes the HMAC and
+// checks expiry, then requires the cookie value to match the submitted value
+// (double-submit). This is the real CSRF protection: a cross-site attacker can
+// neither read the HttpOnly cookie nor forge a matching body token, regardless
+// of which instance handles the request. The HMAC + expiry add integrity and a
+// lifetime so tokens cannot be replayed indefinitely.
+//
+// CSRF_SECRET should be set in the deployment environment. A static fallback is
+// used otherwise so the feature keeps working, but the double-submit cookie is
+// what actually prevents forgery.
+function getSecret(): string {
+  return (
+    process.env.CSRF_SECRET ||
+    process.env.PUBLIC_SITE_ORIGIN ||
+    "tm-portfolio-contact-csrf-fallback-secret"
+  )
+}
 
-function pruneExpiredTokens() {
-  const now = Date.now()
-  for (const [token, expiresAt] of tokenStore.entries()) {
-    if (expiresAt <= now) {
-      tokenStore.delete(token)
-    }
-  }
+function sign(payload: string): string {
+  return crypto.createHmac("sha256", getSecret()).update(payload).digest("hex")
 }
 
 function createToken(): string {
-  return crypto.randomBytes(32).toString("hex")
+  const nonce = crypto.randomBytes(16).toString("hex")
+  const expiry = Date.now() + TOKEN_TTL_MS
+  const payload = `${nonce}.${expiry}`
+  return `${payload}.${sign(payload)}`
 }
 
 function buildCookie(token: string): string {
@@ -47,10 +67,30 @@ function extractCookieValue(cookieHeader: string | undefined, name: string): str
   return cookie ? decodeURIComponent(cookie.split("=").slice(1).join("=")) : ""
 }
 
-export function verifyCsrf(req: VercelRequest, providedToken: string): boolean {
-  pruneExpiredTokens()
+function isValidSignedToken(token: string): boolean {
+  const parts = token.split(".")
+  if (parts.length !== 3) {
+    return false
+  }
 
-  if (!providedToken) {
+  const [nonce, expiryRaw, providedSig] = parts
+  const expiry = Number(expiryRaw)
+  if (!nonce || !Number.isFinite(expiry) || expiry <= Date.now()) {
+    return false
+  }
+
+  const expectedSig = sign(`${nonce}.${expiry}`)
+  const expectedBuf = Buffer.from(expectedSig, "hex")
+  const providedBuf = Buffer.from(providedSig, "hex")
+  if (expectedBuf.length !== providedBuf.length) {
+    return false
+  }
+
+  return crypto.timingSafeEqual(expectedBuf, providedBuf)
+}
+
+export function verifyCsrf(req: VercelRequest, providedToken: string): boolean {
+  if (!providedToken || !isValidSignedToken(providedToken)) {
     return false
   }
 
@@ -59,12 +99,15 @@ export function verifyCsrf(req: VercelRequest, providedToken: string): boolean {
     : req.headers.cookie
   const cookieToken = extractCookieValue(cookieHeader, CSRF_COOKIE_NAME)
 
-  if (!cookieToken || cookieToken !== providedToken) {
+  if (!cookieToken || cookieToken.length !== providedToken.length) {
     return false
   }
 
-  const expiresAt = tokenStore.get(providedToken)
-  return typeof expiresAt === "number" && expiresAt > Date.now()
+  // Constant-time double-submit comparison.
+  return crypto.timingSafeEqual(
+    Buffer.from(cookieToken),
+    Buffer.from(providedToken)
+  )
 }
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
@@ -73,9 +116,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     return
   }
 
-  pruneExpiredTokens()
   const token = createToken()
-  tokenStore.set(token, Date.now() + TOKEN_TTL_MS)
 
   res.setHeader("Cache-Control", "no-store")
   res.setHeader("Set-Cookie", buildCookie(token))
