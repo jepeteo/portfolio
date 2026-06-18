@@ -1,9 +1,10 @@
 import React, { Suspense } from "react"
 import Hero from "../components/sections/Hero"
 import ErrorBoundary from "../components/system/ErrorBoundary"
-import BuyerIntentSection from "../components/sections/BuyerIntentSection"
 import ProofHighlights from "../components/sections/ProofHighlights"
 import FastHelpSection from "../components/services/FastHelpSection"
+import ProcessSection from "../components/sections/ProcessSection"
+import EmergencyCTA from "../components/sections/EmergencyCTA"
 import {
   LoadingSpinner,
   ProjectGridSkeleton,
@@ -195,19 +196,21 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Hero />
-      <BuyerIntentSection />
       <ProofHighlights />
       <FastHelpSection />
-
-      <ErrorBoundary componentName="Skills">
-        <Suspense fallback={<SkillsSkeleton />}>
-          <Skills />
-        </Suspense>
-      </ErrorBoundary>
 
       <ErrorBoundary componentName="Projects">
         <Suspense fallback={<ProjectsLoader />}>
           <Projects />
+        </Suspense>
+      </ErrorBoundary>
+
+      <ProcessSection />
+      <EmergencyCTA />
+
+      <ErrorBoundary componentName="Skills">
+        <Suspense fallback={<SkillsSkeleton />}>
+          <Skills />
         </Suspense>
       </ErrorBoundary>
 

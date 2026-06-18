@@ -1,23 +1,36 @@
 import { render, screen } from "@testing-library/react"
+import { MemoryRouter } from "react-router-dom"
 import Hero from "./Hero"
 import { ThemeProvider } from "../../context/ThemeContext"
 
 describe("Hero CTA accessibility", () => {
-  it("matches CTA labels with their destination anchors", () => {
+  it("exposes the primary and secondary CTAs with correct destinations", () => {
     render(
       <ThemeProvider>
-        <Hero />
+        <MemoryRouter>
+          <Hero />
+        </MemoryRouter>
       </ThemeProvider>
     )
 
-    const startProjectCta = screen.getByLabelText(
-      "Start a Project - jump to contact form"
-    )
-    const viewWorkCta = screen.getByLabelText(
-      "View My Work - jump to portfolio projects"
+    const requestCta = screen.getByRole("link", {
+      name: /request a fix or quote/i,
+    })
+    const servicesCta = screen.getByRole("link", { name: /browse services/i })
+
+    expect(requestCta).toHaveAttribute("href", "#contact")
+    expect(servicesCta).toHaveAttribute("href", "/services")
+  })
+
+  it("renders a single H1", () => {
+    render(
+      <ThemeProvider>
+        <MemoryRouter>
+          <Hero />
+        </MemoryRouter>
+      </ThemeProvider>
     )
 
-    expect(startProjectCta).toHaveAttribute("href", "#contact")
-    expect(viewWorkCta).toHaveAttribute("href", "#projects")
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1)
   })
 })

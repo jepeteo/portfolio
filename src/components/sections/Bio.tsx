@@ -380,7 +380,7 @@ const Bio: React.FC = () => {
                     placeholderColor={
                       isDark ? "rgb(59 130 246 / 0.2)" : "rgb(219 234 254)"
                     }
-                    loading="eager"
+                    loading="lazy"
                   />
 
                   <div

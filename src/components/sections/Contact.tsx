@@ -532,9 +532,9 @@ const Contact: React.FC = memo(() => {
         ref={targetRef}
         id="contact"
         variant="default"
-        eyebrow="Start a Project"
-        title="Conversations I Welcome"
-        subtitle="Ready to collaborate? Start a project and I will help you shape scope, timeline, and delivery."
+        eyebrow="Start here"
+        title="Tell me what you need fixed or built."
+        subtitle="Send the website URL, the problem and your deadline. You'll get a clear next step and a fixed quote — no long questionnaire before we've spoken."
         className={`transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
@@ -547,7 +547,7 @@ const Contact: React.FC = memo(() => {
                     isDark ? "text-white" : "text-slate-900"
                   }`}
                 >
-                  Start a Project
+                  What to include
                 </h3>
 
                 <p
@@ -555,9 +555,11 @@ const Contact: React.FC = memo(() => {
                     isDark ? "text-slate-300" : "text-slate-600"
                   }`}
                 >
-                  I'm always interested in hearing about new opportunities and
-                  exciting projects. Whether you're a company looking to hire,
-                  or you're looking for a freelancer, I'd love to hear from you.
+                  A link to the site, a short description of what's broken or
+                  what you want to build, and your timeline. Whether you're a
+                  business owner, an agency needing extra capacity, or a team
+                  looking to hire, I'll get back to you with practical next
+                  steps.
                 </p>
               </div>
 
