@@ -1,6 +1,9 @@
 import React from "react"
 import { Calendar, MapPin, Building, Award, ChevronRight } from "lucide-react"
 import { TechExperience } from "../../../hooks/useExperienceData"
+import SurfaceCard from "../../ui/SurfaceCard"
+import { useMotionConfig } from "../../../hooks/useMotionConfig"
+import { cn } from "../../../utils/styles"
 
 interface ExperienceCardProps {
   experience: TechExperience
@@ -15,15 +18,15 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
   isExpanded,
   onToggleExpanded,
 }) => {
+  const { pulseClass } = useMotionConfig()
+
   return (
-    <div
-      className={`group relative overflow-hidden rounded-2xl transition-all duration-300 ${
-        isDark
-          ? "bg-slate-800/50 border border-slate-700/50 hover:border-slate-600/50"
-          : "bg-white/70 border border-slate-200/50 hover:border-slate-300/50"
-      } backdrop-blur-sm hover:shadow-xl ${
+    <SurfaceCard
+      interactive
+      className={cn(
+        "group relative overflow-hidden",
         experience.isFreelance ? "ring-2 ring-purple-500/20" : ""
-      }`}
+      )}
     >
       
       <div className="absolute top-4 right-4 flex items-center gap-2">
@@ -37,7 +40,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
         )}
         {experience.status === "current" && (
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 border border-green-500/30">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+            <div className={cn("h-2 w-2 rounded-full bg-green-500", pulseClass)} />
             <span className="text-xs font-medium text-green-600 dark:text-green-400">
               Current
             </span>
@@ -262,6 +265,6 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </SurfaceCard>
   )
 }

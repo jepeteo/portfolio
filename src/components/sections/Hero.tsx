@@ -1,4 +1,5 @@
 import React, { memo, useEffect, useRef, useState } from "react"
+import { Hand } from "lucide-react"
 import { useTheme } from "../../context/ThemeContext"
 import TypedText from "./TypedText"
 import {
@@ -98,7 +99,7 @@ const Hero: React.FC = memo(() => {
                   key={i}
                   className={`absolute w-2 h-2 ${
                     isDark ? "bg-blue-400/20" : "bg-blue-600/20"
-                  } rounded-full animate-pulse`}
+                  } rounded-full animate-soft-pulse`}
                   style={{
                     left: `${i * 25 + 12}%`,
                     top: `${(i % 2) * 30 + 20}%`,
@@ -121,15 +122,16 @@ const Hero: React.FC = memo(() => {
               : "opacity-0 -translate-x-10"
           }`}
         >
-          <div className="mb-6">
+          <div className="mb-6 flex justify-center lg:justify-start">
             <span
-              className={`inline-block px-4 py-2 rounded-full text-sm font-medium ${
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${
                 isDark
-                  ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                  : "bg-blue-100 text-blue-700 border border-blue-200"
+                  ? "border border-blue-500/40 bg-slate-800/90 text-blue-200"
+                  : "border border-blue-200 bg-blue-50 text-blue-700"
               }`}
             >
-              👋 Hello, I'm Theodoros
+              <Hand className="h-4 w-4 text-blue-400" aria-hidden="true" />
+              Hello, I'm Theodoros
             </span>
           </div>
 
@@ -246,7 +248,7 @@ const Hero: React.FC = memo(() => {
                 isDark
                   ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20"
                   : "bg-gradient-to-r from-blue-100 to-purple-100"
-              } blur-xl animate-pulse`}
+              } blur-xl animate-soft-pulse`}
             />
 
             <div
@@ -291,14 +293,20 @@ const Hero: React.FC = memo(() => {
                 role="status"
                 aria-label="Current availability status"
               >
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <div
+                  className={`h-2 w-2 rounded-full bg-green-500 ${
+                    prefersReducedMotion ? "" : "animate-soft-pulse"
+                  }`}
+                />
                 Available for hire
               </div>
             </div>
 
             {/* Relocation badge hidden for now */}
             {/* <div
-              className={`absolute -bottom-4 -left-4 px-3 py-2 rounded-xl text-sm font-semibold animate-pulse transition-all duration-1000 delay-700 ${
+              className={`absolute -bottom-4 -left-4 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-1000 delay-700 ${
+                prefersReducedMotion ? "" : "animate-soft-pulse"
+              } ${
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-10"
@@ -331,7 +339,7 @@ const Hero: React.FC = memo(() => {
                 isDark
                   ? "from-transparent via-purple-500/40 to-blue-500/40"
                   : "from-transparent via-purple-400/40 to-blue-400/40"
-              } ${prefersReducedMotion ? "" : "md:animate-pulse"}`}
+              } ${prefersReducedMotion ? "" : "md:animate-soft-pulse"}`}
               style={{ animationDuration: "3s", willChange: "opacity" }}
             />
           </div>
@@ -351,7 +359,7 @@ const Hero: React.FC = memo(() => {
                 isDark
                   ? "from-transparent via-purple-500/40 to-blue-500/40"
                   : "from-transparent via-purple-400/40 to-blue-400/40"
-              } ${prefersReducedMotion ? "" : "md:animate-pulse"}`}
+              } ${prefersReducedMotion ? "" : "md:animate-soft-pulse"}`}
               style={{
                 animationDuration: "3s",
                 animationDelay: "1.5s",
@@ -438,7 +446,7 @@ const Hero: React.FC = memo(() => {
                 isDark
                   ? "from-transparent via-blue-500/40 to-purple-500/40"
                   : "from-transparent via-blue-400/40 to-purple-400/40"
-              } animate-pulse`}
+              } animate-soft-pulse`}
               style={{
                 animationDuration: "3s",
                 animationDelay: "0s",
@@ -449,7 +457,7 @@ const Hero: React.FC = memo(() => {
                 isDark
                   ? "from-transparent via-purple-500/30 to-blue-500/30"
                   : "from-transparent via-purple-400/30 to-blue-400/30"
-              } animate-pulse`}
+              } animate-soft-pulse`}
               style={{
                 animationDuration: "2.5s",
                 animationDelay: "1s",
@@ -472,7 +480,7 @@ const Hero: React.FC = memo(() => {
                 isDark
                   ? "from-transparent via-blue-500/40 to-purple-500/40"
                   : "from-transparent via-blue-400/40 to-purple-400/40"
-              } animate-pulse`}
+              } animate-soft-pulse`}
               style={{
                 animationDuration: "3s",
                 animationDelay: "0.5s",
@@ -483,7 +491,7 @@ const Hero: React.FC = memo(() => {
                 isDark
                   ? "from-transparent via-purple-500/30 to-blue-500/30"
                   : "from-transparent via-purple-400/30 to-blue-400/30"
-              } animate-pulse`}
+              } animate-soft-pulse`}
               style={{
                 animationDuration: "2.5s",
                 animationDelay: "1.5s",

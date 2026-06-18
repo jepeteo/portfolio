@@ -2,6 +2,7 @@
 import plugin from "tailwindcss/plugin"
 
 export default {
+  darkMode: "class",
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -163,6 +164,7 @@ export default {
         "float": "float 6s ease-in-out infinite",
         "gradient": "gradient 8s ease infinite",
         "pulse-slow": "pulse 3s ease-in-out infinite",
+        "soft-pulse": "softPulse 3s ease-in-out infinite",
         "spin-slow": "spin 3s linear infinite",
       },
       keyframes: {
@@ -189,6 +191,10 @@ export default {
         gradient: {
           "0%, 100%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },
+        },
+        softPulse: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.55" },
         },
       },
       // Modern backdrop blur

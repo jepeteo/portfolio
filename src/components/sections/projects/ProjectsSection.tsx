@@ -96,6 +96,7 @@ const ProjectsSection: React.FC = () => {
         title="Projects"
         subtitle="WordPress client work, modern web apps, and personal builds — organized so you can browse by what matters to you."
         variant="default"
+        decoration="gradient-orb"
       >
         <ProjectTabBar activeTab={activeTab} onTabChange={handleTabChange} />
 

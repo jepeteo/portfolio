@@ -4,16 +4,9 @@ import Footer from "./Footer"
 import PortfolioSchema from "../seo/PortfolioSchema"
 import { SkipLink } from "../accessibility/SkipLink"
 import ScrollToTop from "../system/ScrollToTop"
-import { useTheme } from "../../context/ThemeContext"
 import { createLazyComponent } from "../../utils/performanceOptimization"
 
 const Header = lazy(() => import("./Header"))
-
-const ScrollProgress = lazy(() =>
-  import("../ui/ScrollProgress").then((m) => ({
-    default: m.ScrollProgress,
-  }))
-)
 
 const OfflineIndicator = lazy(() =>
   import("../ui/OfflineIndicator").then((m) => ({
@@ -27,24 +20,10 @@ const PerformanceDashboard = createLazyComponent(
 )
 
 const Layout: React.FC = () => {
-  const { isDark } = useTheme()
-
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 ${
-        isDark ? "bg-slate-900 text-white" : "bg-white text-slate-900"
-      }`}
-    >
+    <div className="min-h-screen transition-colors duration-300 text-slate-900 dark:text-slate-100">
       <ScrollToTop />
       <SkipLink href="#main-content" />
-      <Suspense fallback={null}>
-        <ScrollProgress
-          position="top"
-          height={3}
-          colorScheme="gradient"
-          hideAtTop={true}
-        />
-      </Suspense>
       <PortfolioSchema
         includePersonSchema={false}
         includeOrganizationSchema={true}

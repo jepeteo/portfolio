@@ -6,6 +6,7 @@ import { wordpressProjects } from "../../../content/projects"
 import { generateWordPressProjectSchema } from "../../../content/schemas/projectsSchema"
 import { Project } from "../../../types"
 import { BlurImage } from "../../system/loading/LoadingStates"
+import ProjectCardOverlay from "./ProjectCardOverlay"
 import {
   ExternalLink,
   Star,
@@ -336,25 +337,10 @@ const WordPressProjectGrid = memo(() => {
                       isDark ? "rgb(71 85 105)" : "rgb(203 213 225)"
                     }
                   />
-                  <div
-                    className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                      isDark
-                        ? "bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent"
-                        : "bg-gradient-to-t from-slate-900/60 via-slate-900/20 to-transparent"
-                    }`}
+                  <ProjectCardOverlay
+                    href={project.prUrl}
+                    ariaLabel={`View ${project.prName} project`}
                   />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-                    <a
-                      href={project.prUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 bg-white/90 backdrop-blur-sm text-slate-900 rounded-xl font-medium text-sm transition-all hover:scale-105 shadow-lg"
-                      aria-label={`View ${project.prName} project`}
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      View Project
-                    </a>
-                  </div>
                 </>
               ) : !shouldLoadImage ? (
                 <div

@@ -25,8 +25,8 @@ const FeaturedServices: React.FC = () => {
         agencies.
       </p>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {featuredServices.map((service) => (
-          <ServiceCard key={service.id} service={service} />
+        {featuredServices.map((service, index) => (
+          <ServiceCard key={service.id} service={service} index={index} />
         ))}
       </div>
     </section>

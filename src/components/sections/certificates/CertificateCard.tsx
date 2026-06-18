@@ -8,6 +8,7 @@ import {
   ChevronUp,
 } from "lucide-react"
 import { ModernCertificate } from "../../../hooks/useCertificatesData"
+import SurfaceCard from "../../ui/SurfaceCard"
 
 interface CertificateCardProps {
   certificate: ModernCertificate
@@ -32,26 +33,20 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
   const getLevelColor = (level: string) => {
     switch (level) {
       case "Beginner":
-        return "bg-green-100 text-green-700 border-green-200"
+        return "bg-green-100 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800"
       case "Intermediate":
-        return "bg-blue-100 text-blue-700 border-blue-200"
+        return "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800"
       case "Advanced":
-        return "bg-purple-100 text-purple-700 border-purple-200"
+        return "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800"
       case "Expert":
-        return "bg-red-100 text-red-700 border-red-200"
+        return "bg-red-100 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800"
       default:
-        return "bg-gray-100 text-gray-700 border-gray-200"
+        return "bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800/50 dark:text-gray-300 dark:border-gray-700"
     }
   }
 
   return (
-    <div
-      className={`group relative overflow-hidden rounded-2xl transition-all duration-300 ${
-        isDark
-          ? "bg-slate-800/50 border border-slate-700/50 hover:border-slate-600/50"
-          : "bg-white/70 border border-slate-200/50 hover:border-slate-300/50"
-      } backdrop-blur-sm hover:shadow-xl`}
-    >
+    <SurfaceCard interactive className="group relative overflow-hidden">
       <div className="p-6">
         
         <div className="flex items-start justify-between mb-4">
@@ -246,6 +241,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           )}
         </div>
       </div>
-    </div>
+    </SurfaceCard>
   )
 }

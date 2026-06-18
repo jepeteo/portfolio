@@ -44,13 +44,7 @@ const Footer: React.FC = memo(() => {
   }
 
   return (
-    <footer
-      className={`relative overflow-hidden ${
-        isDark
-          ? "bg-slate-900/50 backdrop-blur-sm border-t border-slate-800"
-          : "bg-white/50 backdrop-blur-sm border-t border-slate-200"
-      }`}
-    >
+    <footer className="relative overflow-hidden border-t border-slate-200/80 bg-white/70 backdrop-blur-sm dark:border-slate-700/80 dark:bg-slate-900/70">
       <div className="absolute inset-0">
         <div
           className={`absolute inset-0 ${
@@ -173,16 +167,9 @@ const Footer: React.FC = memo(() => {
         </div>
 
         <div className="mt-6 text-center">
-          <div
-            className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs ${
-              isDark
-                ? "bg-green-500/20 text-green-300"
-                : "bg-green-100 text-green-700"
-            }`}
-          >
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            Optimized for Performance & Accessibility
-          </div>
+          <p className="text-xs text-slate-500 dark:text-slate-500">
+            Built with React & TypeScript
+          </p>
         </div>
       </div>
     </footer>

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { motion } from "framer-motion"
 import {
   ExternalLink,
@@ -8,11 +8,20 @@ import {
   Github,
   Calendar,
 } from "lucide-react"
-import { useTheme } from "../../../context/ThemeContext"
-import { getWebProjectsForTab, type WebProject } from "../../../content/projects"
+import {
+  getWebProjectsForTab,
+  getWebProjectGradient,
+  getWebProjectInitials,
+  type WebProject,
+} from "../../../content/projects"
 import { generateWebProjectSchema } from "../../../content/schemas/projectsSchema"
 import type { ProjectTab } from "../../../config/navigation"
 import ProjectServiceTags from "../../services/ProjectServiceTags"
+import SurfaceCard from "../../ui/SurfaceCard"
+import ProjectCardOverlay from "./ProjectCardOverlay"
+import { BlurImage } from "../../system/loading/LoadingStates"
+import { useMotionConfig } from "../../../hooks/useMotionConfig"
+import { cn } from "../../../utils/styles"
 
 const ProjectSchema: React.FC<{ project: WebProject }> = ({ project }) => (
   <script
@@ -41,208 +50,204 @@ const statusColors = {
     "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300",
 }
 
-const typeColors = {
-  client: "border-l-4 border-green-500",
-  personal: "border-l-4 border-blue-500",
-}
-
 type WebProjectGridProps = {
   type: Exclude<ProjectTab, "wordpress">
 }
 
+const WebProjectThumbnail: React.FC<{ project: WebProject }> = ({ project }) => {
+  const [imageError, setImageError] = useState(false)
+  const gradient = getWebProjectGradient(project.category)
+  const initials = getWebProjectInitials(project.title)
+
+  if (project.imageUrl && !imageError) {
+    return (
+      <div className="relative aspect-video w-full overflow-hidden">
+        <BlurImage
+          src={project.imageUrl}
+          alt={`${project.title} preview`}
+          containerClassName="h-full w-full"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          aspectRatio="auto"
+          onError={() => setImageError(true)}
+        />
+        <ProjectCardOverlay
+          href={project.url}
+          ariaLabel={`View ${project.title} project`}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div
+      className={cn(
+        "relative flex aspect-video w-full items-center justify-center overflow-hidden bg-gradient-to-br",
+        gradient
+      )}
+    >
+      <span className="text-4xl font-bold text-white/90">{initials}</span>
+      <ProjectCardOverlay
+        href={project.url}
+        ariaLabel={`View ${project.title} project`}
+      />
+    </div>
+  )
+}
+
 const WebProjectGrid: React.FC<WebProjectGridProps> = ({ type }) => {
-  const { isDark } = useTheme()
   const projects = getWebProjectsForTab(type)
+  const { stagger, pulseClass } = useMotionConfig()
 
   if (projects.length === 0) {
     return (
-      <p
-        className={`text-center py-12 ${
-          isDark ? "text-slate-400" : "text-slate-600"
-        }`}
-      >
+      <p className="py-12 text-center text-slate-600 dark:text-slate-400">
         No projects in this category yet.
       </p>
     )
   }
 
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {projects.map((project: WebProject, index: number) => (
         <motion.div
           key={project.id}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: index * 0.1 }}
-          viewport={{ once: true }}
-          className={`rounded-2xl p-6 border shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 group relative ${
-            isDark
-              ? "bg-slate-800/50 border-slate-700 hover:border-primary/40"
-              : "bg-white border-slate-200 hover:border-primary/40"
-          } ${
-            project.featured
-              ? isDark
-                ? "ring-2 ring-blue-400/20"
-                : "ring-2 ring-blue-500/20"
-              : ""
-          } ${typeColors[project.type as keyof typeof typeColors]}`}
+          transition={{ duration: 0.5, delay: stagger(index) }}
+          viewport={{ once: true, margin: "-40px" }}
+          className="group relative"
         >
           <ProjectSchema project={project} />
 
           {project.featured && (
-            <div className="absolute -top-3 -right-3 bg-blue-600 text-white p-2 rounded-full shadow-lg">
-              <Star className="w-4 h-4" fill="currentColor" />
+            <div className="absolute -right-3 -top-3 z-20 flex items-center gap-1 rounded-full border border-yellow-500/30 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 px-3 py-1.5 text-xs font-semibold text-yellow-700 shadow-lg dark:text-yellow-300">
+              <Star className="h-3.5 w-3.5" aria-hidden="true" />
+              Featured
             </div>
           )}
 
-          <div className="absolute top-4 left-4">
-            <span
-              className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                project.type === "client"
-                  ? isDark
-                    ? "bg-green-900/30 text-green-300"
-                    : "bg-green-100 text-green-800"
-                  : isDark
-                    ? "bg-blue-900/30 text-blue-300"
-                    : "bg-blue-100 text-blue-800"
-              }`}
-            >
-              {project.type === "client" ? (
-                <>
-                  <Globe className="w-3 h-3 mr-1" />
-                  Client Work
-                </>
-              ) : (
-                <>
-                  <Code className="w-3 h-3 mr-1" />
-                  Personal
-                </>
-              )}
-            </span>
-          </div>
+          <SurfaceCard
+            interactive
+            className="h-full overflow-hidden p-0"
+          >
+            <WebProjectThumbnail project={project} />
 
-          <div className="mt-8 mb-4">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center space-x-2">
+            <div className="p-6">
+              <div className="mb-4 flex items-start justify-between gap-2">
                 <span
-                  className={`text-xs font-medium uppercase tracking-wider px-2 py-1 rounded-full ${
+                  className={cn(
+                    "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
+                    project.type === "client"
+                      ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
+                      : "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+                  )}
+                >
+                  {project.type === "client" ? (
+                    <>
+                      <Globe className="mr-1 h-3 w-3" aria-hidden="true" />
+                      Client Work
+                    </>
+                  ) : (
+                    <>
+                      <Code className="mr-1 h-3 w-3" aria-hidden="true" />
+                      Personal
+                    </>
+                  )}
+                </span>
+                <span
+                  className={cn(
+                    "rounded-full px-2 py-1 text-xs font-medium uppercase tracking-wider",
+                    statusColors[project.status as keyof typeof statusColors]
+                  )}
+                >
+                  {project.status}
+                </span>
+              </div>
+
+              <div className="mb-3 flex flex-wrap items-center gap-2">
+                <span
+                  className={cn(
+                    "rounded-full px-2 py-1 text-xs font-medium uppercase tracking-wider",
                     categoryColors[
                       project.category as keyof typeof categoryColors
                     ]
-                  }`}
+                  )}
                 >
                   {project.category}
                 </span>
-                <span
-                  className={`text-xs flex items-center ${
-                    isDark ? "text-gray-400" : "text-gray-500"
-                  }`}
-                >
-                  <Calendar className="w-3 h-3 mr-1" />
+                <span className="flex items-center text-xs text-slate-500 dark:text-slate-400">
+                  <Calendar className="mr-1 h-3 w-3" aria-hidden="true" />
                   {project.year}
                 </span>
               </div>
 
-              <span
-                className={`text-xs font-medium uppercase tracking-wider px-2 py-1 rounded-full ${
-                  statusColors[project.status as keyof typeof statusColors]
-                }`}
-              >
-                {project.status}
-              </span>
-            </div>
+              <h3 className="mb-3 text-xl font-semibold text-slate-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
+                {project.title}
+              </h3>
 
-            <h3
-              className={`text-xl font-semibold mb-3 transition-colors ${
-                isDark
-                  ? "text-white group-hover:text-blue-400"
-                  : "text-gray-900 group-hover:text-blue-600"
-              }`}
-            >
-              {project.title}
-            </h3>
+              <p className="mb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                {project.description}
+              </p>
 
-            <p
-              className={`mb-4 text-sm leading-relaxed ${
-                isDark ? "text-gray-300" : "text-gray-600"
-              }`}
-            >
-              {project.description}
-            </p>
-
-            <div className="flex flex-wrap gap-2 mb-6">
-              {project.tech.slice(0, 3).map((tech: string) => (
-                <span
-                  key={tech}
-                  className={`px-2 py-1 text-xs rounded-full ${
-                    isDark
-                      ? "bg-gray-700 text-gray-300"
-                      : "bg-gray-100 text-gray-600"
-                  }`}
-                >
-                  {tech}
-                </span>
-              ))}
-              {project.tech.length > 3 && (
-                <span
-                  className={`px-2 py-1 text-xs rounded-full ${
-                    isDark ? "text-slate-500" : "text-slate-400"
-                  }`}
-                >
-                  +{project.tech.length - 3}
-                </span>
-              )}
-            </div>
-
-            {project.servicesDemonstrated && (
-              <ProjectServiceTags tags={project.servicesDemonstrated} />
-            )}
-
-            <div className="flex items-center justify-between mt-6">
-              <div className="flex items-center space-x-3">
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center space-x-2 font-medium text-sm transition-colors ${
-                    isDark
-                      ? "text-blue-400 hover:text-blue-300"
-                      : "text-blue-600 hover:text-blue-700"
-                  }`}
-                >
-                  <span>Visit</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-
-                {project.githubUrl && (
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center space-x-2 font-medium text-sm transition-colors ${
-                      isDark
-                        ? "text-gray-400 hover:text-gray-200"
-                        : "text-gray-600 hover:text-gray-900"
-                    }`}
+              <div className="mb-4 flex flex-wrap gap-2">
+                {project.tech.slice(0, 3).map((tech: string) => (
+                  <span
+                    key={tech}
+                    className="rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-600 dark:bg-slate-700 dark:text-slate-300"
                   >
-                    <Github className="w-3 h-3" />
-                    <span>Code</span>
-                  </a>
+                    {tech}
+                  </span>
+                ))}
+                {project.tech.length > 3 && (
+                  <span className="px-2 py-1 text-xs text-slate-400">
+                    +{project.tech.length - 3}
+                  </span>
                 )}
               </div>
 
-              {project.status === "Live" && (
-                <div
-                  className={`flex items-center space-x-1 ${
-                    isDark ? "text-emerald-400" : "text-emerald-600"
-                  }`}
-                >
-                  <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                  <span className="text-xs font-medium">Online</span>
-                </div>
+              {project.servicesDemonstrated && (
+                <ProjectServiceTags tags={project.servicesDemonstrated} />
               )}
+
+              <div className="mt-6 flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-2 text-sm font-medium text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                  >
+                    <span>Visit</span>
+                    <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                  </a>
+
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
+                    >
+                      <Github className="h-3 w-3" aria-hidden="true" />
+                      <span>Code</span>
+                    </a>
+                  )}
+                </div>
+
+                {project.status === "Live" && (
+                  <div className="flex items-center space-x-1 text-emerald-600 dark:text-emerald-400">
+                    <div
+                      className={cn(
+                        "h-2 w-2 rounded-full bg-emerald-500",
+                        pulseClass
+                      )}
+                    />
+                    <span className="text-xs font-medium">Online</span>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          </SurfaceCard>
         </motion.div>
       ))}
     </div>

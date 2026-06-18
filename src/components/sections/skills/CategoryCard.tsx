@@ -1,6 +1,8 @@
 import React from "react"
 import { useTheme } from "../../../context/ThemeContext"
 import { LucideIcon } from "lucide-react"
+import { cn } from "../../../utils/styles"
+import IconWell from "../../ui/IconWell"
 
 interface CategoryCardProps {
   categoryKey: string
@@ -30,50 +32,36 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
     return (
       <button
         onClick={() => onClick(categoryKey)}
-        className={`relative flex-shrink-0 px-3 py-2 rounded-lg text-left transition-all duration-300 ${
-          isActive ? "ring-2 ring-white/20 shadow-lg" : "hover:shadow-md"
-        }`}
-        style={{
-          background: isActive
-            ? `linear-gradient(135deg, ${category.gradient
-                .replace("from-", "")
-                .replace(" via-", ", ")
-                .replace(" to-", ", ")})`
+        className={cn(
+          "relative flex-shrink-0 rounded-lg px-3 py-2 text-left transition-all duration-300",
+          isActive
+            ? cn("bg-gradient-to-br text-white shadow-lg ring-2 ring-white/20", category.gradient)
             : isDark
-            ? "rgba(30, 41, 59, 0.5)"
-            : "rgba(255, 255, 255, 0.8)",
-        }}
+              ? "bg-slate-800/50 hover:shadow-md"
+              : "bg-white/80 hover:shadow-md"
+        )}
       >
         <div className="flex items-center gap-2">
           <IconComponent
-            className={`w-4 h-4 flex-shrink-0 ${
-              isActive
-                ? "text-white"
-                : isDark
-                ? "text-slate-300"
-                : "text-slate-600"
-            }`}
+            className={cn(
+              "h-4 w-4 flex-shrink-0",
+              isActive ? "text-white" : isDark ? "text-slate-300" : "text-slate-600"
+            )}
           />
           <div className="min-w-0">
             <div
-              className={`text-sm font-semibold truncate ${
-                isActive
-                  ? "text-white"
-                  : isDark
-                  ? "text-slate-200"
-                  : "text-slate-700"
-              }`}
+              className={cn(
+                "truncate text-sm font-semibold",
+                isActive ? "text-white" : isDark ? "text-slate-200" : "text-slate-700"
+              )}
             >
               {category.title}
             </div>
             <div
-              className={`text-xs opacity-80 ${
-                isActive
-                  ? "text-white"
-                  : isDark
-                  ? "text-slate-400"
-                  : "text-slate-600"
-              }`}
+              className={cn(
+                "text-xs opacity-80",
+                isActive ? "text-white" : isDark ? "text-slate-400" : "text-slate-600"
+              )}
             >
               {category.skills.length} skills
             </div>
@@ -86,69 +74,40 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   return (
     <button
       onClick={() => onClick(categoryKey)}
-      className={`relative w-full p-6 rounded-2xl text-left transition-all duration-500 hover:scale-[1.02] group overflow-hidden ${
-        isActive ? "ring-2 ring-white/20 shadow-2xl" : "hover:shadow-xl"
-      }`}
-      style={{
-        background: isActive
-          ? `linear-gradient(135deg, ${category.gradient
-              .replace("from-", "")
-              .replace(" via-", ", ")
-              .replace(" to-", ", ")})`
+      className={cn(
+        "group relative w-full overflow-hidden rounded-2xl p-6 text-left transition-all duration-500 hover:scale-[1.02]",
+        isActive
+          ? cn("bg-gradient-to-br text-white shadow-2xl ring-2 ring-white/20", category.gradient)
           : isDark
-          ? "rgba(30, 41, 59, 0.5)"
-          : "rgba(255, 255, 255, 0.5)",
-      }}
+            ? "bg-slate-800/50 hover:shadow-xl"
+            : "bg-white/50 hover:shadow-xl"
+      )}
     >
       <div className="relative z-10">
-        <div className="flex items-start gap-4 mb-3">
-          <div
-            className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-              isActive
-                ? isDark
-                  ? "bg-white/20 backdrop-blur-sm"
-                  : "bg-slate-700/20"
-                : isDark
-                ? "bg-slate-700"
-                : "bg-slate-100"
-            }`}
-          >
-            <IconComponent
-              className={`w-6 h-6 ${
-                isActive
-                  ? isDark
-                    ? "text-white"
-                    : "text-slate-900"
-                  : isDark
-                  ? "text-white"
-                  : "text-slate-900"
-              }`}
-            />
-          </div>
+        <div className="mb-3 flex items-start gap-4">
+          {isActive ? (
+            <IconWell icon={IconComponent} active size="md" />
+          ) : (
+            <IconWell icon={IconComponent} size="md" />
+          )}
           <div className="flex-1">
             <h3
-              className={`font-bold text-lg ${
-                isActive
-                  ? isDark
-                    ? "text-white"
-                    : "text-slate-900"
-                  : isDark
-                  ? "text-white"
-                  : "text-slate-900"
-              }`}
+              className={cn(
+                "text-lg font-bold",
+                isActive ? "text-white" : isDark ? "text-white" : "text-slate-900"
+              )}
             >
               {category.title}
             </h3>
             <p
-              className={`text-sm ${
+              className={cn(
+                "text-sm",
                 isActive
-                  ? isDark
-                    ? "text-white/80"
-                    : "text-slate-700"
+                  ? "text-white/80"
                   : isDark
-                  ? "text-slate-400"
-                  : "text-slate-600"
-              }`}
+                    ? "text-slate-400"
+                    : "text-slate-600"
+              )}
             >
               {category.subtitle}
             </p>
@@ -156,15 +115,14 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         </div>
 
         <p
-          className={`text-sm leading-relaxed ${
+          className={cn(
+            "text-sm leading-relaxed",
             isActive
-              ? isDark
-                ? "text-white/70"
-                : "text-slate-800"
+              ? "text-white/70"
               : isDark
-              ? "text-slate-400"
-              : "text-slate-600"
-          }`}
+                ? "text-slate-400"
+                : "text-slate-600"
+          )}
         >
           {category.skills.length} technologies
         </p>

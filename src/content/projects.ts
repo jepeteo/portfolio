@@ -20,6 +20,7 @@ export type WebProject = {
   status: "Live" | "In Development"
   year: string
   servicesDemonstrated?: string[]
+  imageUrl?: string
 }
 
 export type ReactShowcaseProject = {
@@ -167,6 +168,26 @@ export const projectTabCounts: Record<ProjectTab, number> = {
 
 export const getWebProjectsForTab = (tab: "client" | "personal") =>
   webProjects.filter((project) => project.type === tab)
+
+export const getWebProjectInitials = (title: string) =>
+  title
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase()
+
+const categoryGradients: Record<string, string> = {
+  Business: "from-blue-600 to-cyan-500",
+  Gaming: "from-purple-600 to-pink-500",
+  Portfolio: "from-indigo-600 to-blue-500",
+  "Web App": "from-cyan-600 to-teal-500",
+  Tool: "from-orange-500 to-amber-500",
+  Productivity: "from-violet-600 to-purple-500",
+}
+
+export const getWebProjectGradient = (category: string) =>
+  categoryGradients[category] ?? "from-slate-600 to-slate-800"
 
 export const getAllProjectsForSchema = () => ({
   wordpress: wordpressProjects,
