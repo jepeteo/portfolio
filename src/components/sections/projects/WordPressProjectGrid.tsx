@@ -304,25 +304,13 @@ const WordPressProjectGrid = memo(() => {
           style={{ animationDelay: `${index * 100}ms` }}
         >
           {project.prFeatured && (
-            <div
-              className={`absolute top-4 right-4 z-10 flex items-center gap-2 px-3 py-2 rounded-full text-sm font-semibold ${
-                isDark
-                  ? "bg-gradient-to-r from-yellow-500/20 to-orange-500/20 text-yellow-300 border border-yellow-500/30"
-                  : "bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-700 border border-yellow-200"
-              }`}
-            >
+            <div className="absolute top-4 right-4 z-10 flex items-center gap-2 rounded-full bg-[var(--v2-acid)] px-3 py-2 text-sm font-bold text-[var(--v2-acid-ink)] shadow-lg">
               <Star className="w-4 h-4" />
               Featured
             </div>
           )}
 
-          <div
-            className={`h-full overflow-hidden rounded-2xl transition-all duration-500 border ${
-              isDark
-                ? "bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:border-blue-500/50"
-                : "bg-white/50 backdrop-blur-sm border-slate-200 hover:border-blue-500/50"
-            }`}
-          >
+          <div className="h-full overflow-hidden rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] transition-all duration-500 hover:border-[var(--v2-acid)]/40">
             <div className="relative w-full h-64 overflow-hidden">
               {shouldLoadImage && !hasGlobalImageError && !hasError ? (
                 <>
@@ -345,45 +333,17 @@ const WordPressProjectGrid = memo(() => {
                   )}
                 </>
               ) : !shouldLoadImage ? (
-                <div
-                  className={`w-full h-full flex flex-col items-center justify-center ${
-                    isDark
-                      ? "bg-gradient-to-br from-slate-700 to-slate-800"
-                      : "bg-gradient-to-br from-slate-100 to-slate-200"
-                  }`}
-                >
-                  <div
-                    className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-3 ${
-                      isDark
-                        ? "bg-slate-600/50 text-slate-400"
-                        : "bg-slate-300/50 text-slate-500"
-                    }`}
-                  >
+                <div className="flex h-full w-full flex-col items-center justify-center bg-[var(--v2-panel-2)]">
+                  <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-soft)]">
                     <ImageIcon className="w-8 h-8" />
                   </div>
-                  <p
-                    className={`text-xs ${
-                      isDark ? "text-slate-500" : "text-slate-400"
-                    }`}
-                  >
+                  <p className="text-xs text-[var(--v2-soft)]">
                     Image loads on scroll
                   </p>
                 </div>
               ) : (
-                <div
-                  className={`w-full h-full flex items-center justify-center ${
-                    isDark
-                      ? "bg-gradient-to-br from-slate-700 to-slate-800"
-                      : "bg-gradient-to-br from-slate-100 to-slate-200"
-                  }`}
-                >
-                  <div
-                    className={`w-20 h-20 rounded-2xl flex items-center justify-center ${
-                      isDark
-                        ? "bg-slate-600/50 text-slate-400"
-                        : "bg-slate-300/50 text-slate-500"
-                    }`}
-                  >
+                <div className="flex h-full w-full items-center justify-center bg-[var(--v2-panel-2)]">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-soft)]">
                     <ImageIcon className="w-10 h-10" />
                   </div>
                 </div>
@@ -392,40 +352,20 @@ const WordPressProjectGrid = memo(() => {
 
             <div className="p-5">
               <div className="flex items-center justify-between mb-3">
-                <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                    isDark
-                      ? "bg-gradient-to-br from-blue-500/20 to-purple-500/20 text-blue-300"
-                      : "bg-gradient-to-br from-blue-100 to-purple-100 text-blue-600"
-                  }`}
-                >
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-acid)]">
                   <IconComponent className="w-5 h-5" />
                 </div>
 
-                <span
-                  className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    isDark
-                      ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                      : "bg-blue-100 text-blue-700 border border-blue-200"
-                  }`}
-                >
+                <span className="rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/70 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--v2-muted)]">
                   {project.prType}
                 </span>
               </div>
 
-              <h3
-                className={`text-lg font-bold mb-2 group-hover:text-blue-500 transition-colors line-clamp-2 ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
-              >
+              <h3 className="mb-2 line-clamp-2 text-lg font-bold tracking-tight text-[var(--v2-text)] transition-colors group-hover:text-[var(--v2-acid)]">
                 {project.prName}
               </h3>
 
-              <p
-                className={`text-sm mb-3 leading-relaxed line-clamp-2 ${
-                  isDark ? "text-slate-300" : "text-slate-600"
-                }`}
-              >
+              <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-[var(--v2-muted)]">
                 {project.prDescription}
               </p>
 
@@ -435,21 +375,13 @@ const WordPressProjectGrid = memo(() => {
                   {project.tech.slice(0, 3).map((tech, idx) => (
                     <span
                       key={idx}
-                      className={`px-2 py-1 rounded-md text-xs font-medium transition-colors ${
-                        isDark
-                          ? "bg-slate-700/50 text-slate-300 border border-slate-600"
-                          : "bg-slate-100 text-slate-600 border border-slate-200"
-                      }`}
+                      className="rounded-md border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 px-2 py-1 text-xs font-medium text-[var(--v2-muted)]"
                     >
                       {tech}
                     </span>
                   ))}
                   {project.tech.length > 3 && (
-                    <span
-                      className={`px-2 py-1 rounded-md text-xs ${
-                        isDark ? "text-slate-500" : "text-slate-400"
-                      }`}
-                    >
+                    <span className="px-2 py-1 text-xs text-[var(--v2-soft)]">
                       +{project.tech.length - 3}
                     </span>
                   )}
@@ -462,11 +394,7 @@ const WordPressProjectGrid = memo(() => {
                     href={project.prUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all hover:scale-105 ${
-                      isDark
-                        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-500 hover:to-purple-500"
-                        : "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600"
-                    }`}
+                    className="inline-flex items-center gap-2 rounded-xl bg-[var(--v2-acid)] px-4 py-2 text-sm font-bold text-[var(--v2-acid-ink)] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] motion-reduce:hover:translate-y-0"
                     aria-label={`View ${project.prName} project`}
                   >
                     <ExternalLink className="w-4 h-4" />
@@ -495,30 +423,18 @@ const WordPressProjectGrid = memo(() => {
           <div className="max-w-4xl mx-auto mb-8 space-y-4">
             {/* Search Bar */}
             <div className="relative">
-              <Search
-                className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${
-                  isDark ? "text-slate-400" : "text-slate-500"
-                }`}
-              />
+              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--v2-soft)]" />
               <input
                 type="text"
                 placeholder="Search projects by name, description, or technology..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={`w-full pl-12 pr-12 py-4 rounded-2xl text-base transition-all ${
-                  isDark
-                    ? "bg-slate-800/50 border border-slate-700 text-white placeholder-slate-400 focus:bg-slate-800 focus:border-blue-500"
-                    : "bg-white border border-slate-200 text-slate-900 placeholder-slate-500 focus:border-blue-500"
-                } focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
+                className="w-full rounded-2xl border border-[var(--v2-line-strong)] bg-[var(--v2-panel-2)] py-4 pl-12 pr-12 text-base text-[var(--v2-text)] transition-all placeholder:text-[var(--v2-soft)] focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[var(--v2-brand)]"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className={`absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-full transition-colors ${
-                    isDark
-                      ? "hover:bg-slate-700 text-slate-400"
-                      : "hover:bg-slate-100 text-slate-500"
-                  }`}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-1 text-[var(--v2-soft)] transition-colors hover:bg-[var(--v2-panel)]"
                   aria-label="Clear search"
                 >
                   <X className="w-5 h-5" />
@@ -529,17 +445,9 @@ const WordPressProjectGrid = memo(() => {
             {/* Technology Filter */}
             <div className="flex flex-wrap gap-2 items-center">
               <div className="flex items-center gap-2">
-                <Filter
-                  className={`w-4 h-4 ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}
-                />
-                <span
-                  className={`text-sm font-medium ${
-                    isDark ? "text-slate-300" : "text-slate-700"
-                  }`}
-                >
-                  Filter by Tech:
+                <Filter className="h-4 w-4 text-[var(--v2-soft)]" />
+                <span className="text-sm font-medium text-[var(--v2-muted)]">
+                  Filter by tech:
                 </span>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -549,25 +457,18 @@ const WordPressProjectGrid = memo(() => {
                     onClick={() =>
                       setSelectedTech(selectedTech === tech ? null : tech)
                     }
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                    className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] ${
                       selectedTech === tech
-                        ? isDark
-                          ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25"
-                          : "bg-blue-500 text-white shadow-lg shadow-blue-500/25"
-                        : isDark
-                        ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
-                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        ? "bg-[var(--v2-acid)] text-[var(--v2-acid-ink)]"
+                        : "border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-muted)] hover:border-[var(--v2-acid)]/40"
                     }`}
+                    aria-pressed={selectedTech === tech}
                   >
                     {tech}
                   </button>
                 ))}
                 {allTechnologies.length > 12 && (
-                  <span
-                    className={`px-3 py-1.5 text-xs ${
-                      isDark ? "text-slate-400" : "text-slate-500"
-                    }`}
-                  >
+                  <span className="px-3 py-1.5 text-xs text-[var(--v2-soft)]">
                     +{allTechnologies.length - 12} more
                   </span>
                 )}
@@ -578,13 +479,9 @@ const WordPressProjectGrid = memo(() => {
                     setSelectedTech(null)
                     setSearchQuery("")
                   }}
-                  className={`ml-auto px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
-                    isDark
-                      ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                  }`}
+                  className="ml-auto rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel)] px-4 py-1.5 text-xs font-medium text-[var(--v2-muted)] transition-colors hover:border-[var(--v2-acid)]/40"
                 >
-                  Clear Filters
+                  Clear filters
                 </button>
               )}
             </div>
@@ -594,15 +491,12 @@ const WordPressProjectGrid = memo(() => {
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             <button
               onClick={() => handleProjectTypeChange(null)}
-              className={`px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105 ${
+              className={`rounded-full px-6 py-3 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] ${
                 projectType === null
-                  ? isDark
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25"
-                    : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25"
-                  : isDark
-                  ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
-                  : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+                  ? "bg-[var(--v2-acid)] text-[var(--v2-acid-ink)]"
+                  : "border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-muted)] hover:border-[var(--v2-acid)]/40"
               }`}
+              aria-pressed={projectType === null}
             >
               All Projects ({validatedProjects.length})
             </button>
@@ -614,15 +508,12 @@ const WordPressProjectGrid = memo(() => {
                 <button
                   key={type}
                   onClick={() => handleProjectTypeChange(type)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105 ${
+                  className={`flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] ${
                     projectType === type
-                      ? isDark
-                        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25"
-                        : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25"
-                      : isDark
-                      ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
-                      : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+                      ? "bg-[var(--v2-acid)] text-[var(--v2-acid-ink)]"
+                      : "border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-muted)] hover:border-[var(--v2-acid)]/40"
                   }`}
+                  aria-pressed={projectType === type}
                 >
                   {React.createElement(getProjectIcon(type), {
                     className: "w-4 h-4",
@@ -653,11 +544,7 @@ const WordPressProjectGrid = memo(() => {
           </div>
 
           <div className="text-center mt-8">
-            <p
-              className={`text-sm ${
-                isDark ? "text-slate-400" : "text-slate-600"
-              }`}
-            >
+            <p className="text-sm text-[var(--v2-muted)]">
               Showing {displayProjects.length} of {filteredProjects.length}{" "}
               projects
               {(projectType || selectedTech || searchQuery) && (
@@ -681,14 +568,10 @@ const WordPressProjectGrid = memo(() => {
               <button
                 onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
                   currentPage === 1
-                    ? isDark
-                      ? "bg-slate-800/50 text-slate-600 cursor-not-allowed"
-                      : "bg-slate-100/50 text-slate-400 cursor-not-allowed"
-                    : isDark
-                    ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
-                    : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+                    ? "cursor-not-allowed border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-soft)] opacity-50"
+                    : "border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-muted)] hover:border-[var(--v2-acid)]/40"
                 }`}
               >
                 Previous
@@ -699,9 +582,7 @@ const WordPressProjectGrid = memo(() => {
                   return (
                     <span
                       key={`ellipsis-${index}`}
-                      className={`w-10 h-10 flex items-center justify-center text-sm ${
-                        isDark ? "text-slate-500" : "text-slate-400"
-                      }`}
+                      className="flex h-10 w-10 items-center justify-center text-sm text-[var(--v2-soft)]"
                     >
                       ...
                     </span>
@@ -713,15 +594,12 @@ const WordPressProjectGrid = memo(() => {
                   <button
                     key={pageNum}
                     onClick={() => handlePageChange(pageNum)}
-                    className={`w-10 h-10 rounded-lg font-medium text-sm transition-all ${
+                    className={`h-10 w-10 rounded-lg text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] ${
                       currentPage === pageNum
-                        ? isDark
-                          ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
-                          : "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
-                        : isDark
-                        ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
-                        : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+                        ? "bg-[var(--v2-acid)] text-[var(--v2-acid-ink)]"
+                        : "border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-muted)] hover:border-[var(--v2-acid)]/40"
                     }`}
+                    aria-current={currentPage === pageNum ? "page" : undefined}
                   >
                     {pageNum}
                   </button>
@@ -733,14 +611,10 @@ const WordPressProjectGrid = memo(() => {
                   handlePageChange(Math.min(totalPages, currentPage + 1))
                 }
                 disabled={currentPage === totalPages}
-                className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
                   currentPage === totalPages
-                    ? isDark
-                      ? "bg-slate-800/50 text-slate-600 cursor-not-allowed"
-                      : "bg-slate-100/50 text-slate-400 cursor-not-allowed"
-                    : isDark
-                    ? "bg-slate-700/50 text-slate-300 hover:bg-slate-600/50"
-                    : "bg-white/50 text-slate-600 hover:bg-white border border-slate-200"
+                    ? "cursor-not-allowed border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-soft)] opacity-50"
+                    : "border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-muted)] hover:border-[var(--v2-acid)]/40"
                 }`}
               >
                 Next

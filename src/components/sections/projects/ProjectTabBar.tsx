@@ -19,7 +19,7 @@ const ProjectTabBar: React.FC<ProjectTabBarProps> = ({
       role="tablist"
       aria-label="Project categories"
     >
-      <div className="flex flex-wrap gap-2 rounded-2xl border border-slate-200/90 bg-white/90 p-1.5 backdrop-blur-sm dark:border-slate-600/70 dark:bg-slate-800/95">
+      <div className="flex flex-wrap gap-2 rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-1.5">
         {projectTabs.map((tab) => {
           const isActive = activeTab === tab.id
           const count = projectTabCounts[tab.id]
@@ -35,16 +35,16 @@ const ProjectTabBar: React.FC<ProjectTabBarProps> = ({
               onClick={() => onTabChange(tab.id)}
               className={cn(
                 "relative rounded-xl px-4 py-2.5 text-sm font-medium transition-colors",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)]",
                 isActive
-                  ? "text-white"
-                  : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+                  ? "text-[var(--v2-acid-ink)]"
+                  : "text-[var(--v2-muted)] hover:text-[var(--v2-text)]"
               )}
             >
               {isActive && (
                 <motion.span
                   layoutId="project-tab-indicator"
-                  className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 shadow-sm"
+                  className="absolute inset-0 rounded-xl bg-[var(--v2-acid)] shadow-sm"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
@@ -54,8 +54,8 @@ const ProjectTabBar: React.FC<ProjectTabBarProps> = ({
                   className={cn(
                     "ml-2 rounded-full px-2 py-0.5 text-xs",
                     isActive
-                      ? "bg-white/20 text-inherit"
-                      : "bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300"
+                      ? "bg-black/15 text-inherit"
+                      : "border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/70 text-[var(--v2-muted)]"
                   )}
                 >
                   {count}
@@ -65,7 +65,7 @@ const ProjectTabBar: React.FC<ProjectTabBarProps> = ({
           )
         })}
       </div>
-      <p className="text-sm text-slate-500 dark:text-slate-400">
+      <p className="text-sm text-[var(--v2-soft)]">
         {projectTabs.find((tab) => tab.id === activeTab)?.description}
       </p>
     </div>
