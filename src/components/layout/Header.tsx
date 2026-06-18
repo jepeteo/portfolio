@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom"
 import { motion, useScroll, useSpring } from "framer-motion"
 import { cn, typography } from "../../utils/styles"
 import Nav from "./Nav"
-import { useTheme } from "../../context/ThemeContext"
 
 interface HeaderProps {
   className?: string
@@ -11,7 +10,6 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = useState(false)
-  const { isDark } = useTheme()
   const navigate = useNavigate()
 
   // Use framer-motion's useScroll for better performance
@@ -84,14 +82,10 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
             transition={{ delay: 0.2 }}
           >
             <div
-              className={`font-bold leading-tight tracking-tight transition-colors duration-200 ${
+              className={`font-display font-bold leading-tight tracking-tight text-[var(--v2-text)] transition-colors duration-200 group-hover:text-[var(--v2-acid)] ${
                 isScrolled
                   ? "text-sm sm:text-base lg:text-lg xl:text-xl"
                   : "text-base sm:text-lg lg:text-xl xl:text-2xl"
-              } ${
-                isDark
-                  ? "text-white group-hover:text-blue-400"
-                  : "text-slate-900 group-hover:text-blue-600"
               }`}
             >
               <span>Theodoros</span> <span>Mentis</span>
@@ -119,14 +113,14 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
         </motion.div>
       </div>
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent"
+        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--v2-line-strong)] to-transparent"
         initial={{ opacity: 0, scaleX: 0 }}
         animate={{ opacity: 1, scaleX: 1 }}
         transition={{ delay: 0.5, duration: 0.8 }}
       />
       {/* Smooth scroll progress indicator */}
       <motion.div
-        className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 origin-left"
+        className="absolute bottom-0 left-0 h-0.5 origin-left bg-[var(--v2-acid)]"
         style={{ scaleX }}
       />
     </motion.header>
