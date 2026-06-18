@@ -89,6 +89,7 @@ interface FormFieldProps {
   rows?: number
   isValid?: boolean
   showCharCount?: boolean
+  autoComplete?: string
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -106,10 +107,12 @@ const FormField: React.FC<FormFieldProps> = ({
   rows = 6,
   isValid,
   showCharCount = true,
+  autoComplete,
 }) => {
   const [isFocused, setIsFocused] = useState(false)
   const charCount = value.length
   const charPercentage = (charCount / maxLength) * 100
+  const errorId = `${id}-error`
 
   const getCharCountColor = () => {
     if (charPercentage >= 90) return "text-red-500"
@@ -176,6 +179,10 @@ const FormField: React.FC<FormFieldProps> = ({
             placeholder={placeholder}
             disabled={disabled}
             maxLength={maxLength}
+            autoComplete={autoComplete}
+            aria-required="true"
+            aria-invalid={error ? "true" : undefined}
+            aria-describedby={error ? errorId : undefined}
           />
         ) : (
           <input
@@ -193,6 +200,10 @@ const FormField: React.FC<FormFieldProps> = ({
             placeholder={placeholder}
             disabled={disabled}
             maxLength={maxLength}
+            autoComplete={autoComplete}
+            aria-required="true"
+            aria-invalid={error ? "true" : undefined}
+            aria-describedby={error ? errorId : undefined}
           />
         )}
 
@@ -220,13 +231,15 @@ const FormField: React.FC<FormFieldProps> = ({
       <AnimatePresence>
         {error && (
           <motion.p
-            className="mt-2 text-sm text-red-500 flex items-center gap-1"
+            id={errorId}
+            role="alert"
+            className="mt-2 text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
             initial={{ opacity: 0, y: -10, height: 0 }}
             animate={{ opacity: 1, y: 0, height: "auto" }}
             exit={{ opacity: 0, y: -10, height: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <AlertCircle className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
             {error}
           </motion.p>
         )}
@@ -642,13 +655,15 @@ const Contact: React.FC = memo(() => {
             >
               {submitStatus === "success" && (
                 <div
+                  role="status"
+                  aria-live="polite"
                   className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
                     isDark
                       ? "bg-green-500/20 text-green-300 border border-green-500/30"
                       : "bg-green-100 text-green-700 border border-green-200"
                   }`}
                 >
-                  <CheckCircle className="w-5 h-5" />
+                  <CheckCircle className="w-5 h-5" aria-hidden="true" />
                   <span>
                     Message sent successfully! I'll get back to you soon.
                   </span>
@@ -657,13 +672,14 @@ const Contact: React.FC = memo(() => {
 
               {submitStatus === "error" && (
                 <div
+                  role="alert"
                   className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
                     isDark
                       ? "bg-red-500/20 text-red-300 border border-red-500/30"
                       : "bg-red-100 text-red-700 border border-red-200"
                   }`}
                 >
-                  <AlertCircle className="w-5 h-5" />
+                  <AlertCircle className="w-5 h-5" aria-hidden="true" />
                   <span>Failed to send message. Please try again.</span>
                 </div>
               )}
@@ -731,6 +747,7 @@ const Contact: React.FC = memo(() => {
                   disabled={isSubmitting}
                   isDark={isDark}
                   isValid={fieldValidation.name}
+                  autoComplete="name"
                 />
 
                 <FormField
@@ -746,6 +763,7 @@ const Contact: React.FC = memo(() => {
                   disabled={isSubmitting}
                   isDark={isDark}
                   isValid={fieldValidation.email}
+                  autoComplete="email"
                 />
 
                 <FormField
@@ -815,7 +833,7 @@ const Contact: React.FC = memo(() => {
                   rows={6}
                 />
 
-                <div style={{ display: "none" }}>
+                <div style={{ display: "none" }} aria-hidden="true">
                   <label htmlFor="website">Website</label>
                   <input
                     type="text"
@@ -829,8 +847,13 @@ const Contact: React.FC = memo(() => {
                 </div>
 
                 {errors.general && (
-                  <div className="p-4 rounded-xl bg-red-50 border border-red-200">
-                    <p className="text-sm text-red-600">{errors.general}</p>
+                  <div
+                    role="alert"
+                    className="p-4 rounded-xl bg-red-50 border border-red-200 dark:bg-red-500/10 dark:border-red-500/30"
+                  >
+                    <p className="text-sm text-red-700 dark:text-red-300">
+                      {errors.general}
+                    </p>
                   </div>
                 )}
 

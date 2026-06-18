@@ -126,6 +126,8 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
             disabled={disabled}
             placeholder="https://yourwebsite.com"
             maxLength={500}
+            autoComplete="url"
+            inputMode="url"
             className={`${selectClass(isDark)} ${
               websiteUrlError ? "border-red-500 focus:ring-red-500" : ""
             }`}
@@ -133,7 +135,11 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
             aria-describedby={websiteUrlError ? "websiteUrl-error" : undefined}
           />
           {websiteUrlError && (
-            <p id="websiteUrl-error" className="mt-2 text-sm text-red-500">
+            <p
+              id="websiteUrl-error"
+              role="alert"
+              className="mt-2 text-sm text-red-600 dark:text-red-400"
+            >
               {websiteUrlError}
             </p>
           )}
