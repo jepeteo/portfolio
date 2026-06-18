@@ -337,10 +337,12 @@ const WordPressProjectGrid = memo(() => {
                       isDark ? "rgb(71 85 105)" : "rgb(203 213 225)"
                     }
                   />
-                  <ProjectCardOverlay
-                    href={project.prUrl}
-                    ariaLabel={`View ${project.prName} project`}
-                  />
+                  {project.prUrl && (
+                    <ProjectCardOverlay
+                      href={project.prUrl}
+                      ariaLabel={`View ${project.prName} project`}
+                    />
+                  )}
                 </>
               ) : !shouldLoadImage ? (
                 <div

@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useEnhancedSEO, SEOUtils } from "../utils/enhancedSEO"
-import { site } from "../config/site"
+import { useEnhancedSEO } from "../utils/enhancedSEO"
+import { routeMeta, absoluteUrl } from "../config/routeMeta.js"
 import EmergencyHelpCTA from "../components/services/EmergencyHelpCTA"
 import SectionShell from "../components/ui/SectionShell"
 import SurfaceCard from "../components/ui/SurfaceCard"
@@ -45,30 +45,20 @@ const trustStats = [
   { value: "Fixed quote", label: "Before work starts" },
 ]
 
+const meta = routeMeta["/services/emergency-website-help"]
+
 const EmergencyHelpPage: React.FC = () => {
-  const canonical = `${site.url}/services/emergency-website-help`
-  const description =
-    "Fast help for WordPress errors, broken forms, WooCommerce checkout issues, DNS problems, email setup, SSL errors, and urgent website problems."
+  const canonical = absoluteUrl(meta.canonicalPath)
 
   useEnhancedSEO({
-    title: SEOUtils.generateTitle("Emergency Website Help"),
-    description,
+    title: meta.title,
+    description: meta.description,
     canonical,
     ogUrl: canonical,
-    ogType: "website",
+    ogType: meta.ogType,
     structuredData: {
       "@context": "https://schema.org",
-      "@type": "Service",
-      name: "Emergency Website Help",
-      description,
-      url: canonical,
-      provider: {
-        "@type": "Person",
-        name: site.name,
-        url: site.url,
-      },
-      areaServed: "Worldwide",
-      serviceType: "Emergency website support",
+      "@graph": meta.jsonLd,
     },
   })
 
@@ -77,6 +67,7 @@ const EmergencyHelpPage: React.FC = () => {
       <SectionShell
         id="emergency-hero"
         eyebrow="Emergency Support"
+        headingLevel="h1"
         title="Emergency Website Help"
         subtitle="Website broken or losing enquiries? I can help diagnose and fix urgent website, WordPress, WooCommerce, DNS, email, SSL, and performance issues."
         variant="muted"

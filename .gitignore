@@ -54,6 +54,10 @@ clean-console.js
 .vercel
 nul
 
+# Test artifacts
+test-results/
+playwright-report/
+
 # Local AI / automation artifacts
 .codex/
 .openclaw/

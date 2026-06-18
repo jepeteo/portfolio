@@ -9,6 +9,7 @@ type SectionShellProps = {
   variant?: "default" | "muted"
   decoration?: "none" | "grid" | "gradient-orb"
   align?: "center" | "left"
+  headingLevel?: "h1" | "h2"
   className?: string
   children: React.ReactNode
 }
@@ -23,11 +24,13 @@ const SectionShell = React.forwardRef<HTMLElement, SectionShellProps>(
       variant = "default",
       decoration = "none",
       align = "left",
+      headingLevel = "h2",
       className,
       children,
     },
     ref
   ) => {
+    const Heading = headingLevel
     return (
       <section
         ref={ref}
@@ -71,9 +74,9 @@ const SectionShell = React.forwardRef<HTMLElement, SectionShellProps>(
                 {eyebrow}
               </p>
             ) : null}
-            <h2 className="font-display text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 md:text-4xl lg:text-5xl">
+            <Heading className="font-display text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 md:text-4xl lg:text-5xl">
               {title}
-            </h2>
+            </Heading>
             {subtitle ? (
               <p
                 className={cn(

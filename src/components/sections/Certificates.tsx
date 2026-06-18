@@ -33,7 +33,7 @@ const generateCertificatesSchema = (certificates: ModernCertificate[]) => {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "@id": "https://theodorosmentis.com/#certificates",
+    "@id": "https://www.theodorosmentis.com/#certificates",
     name: "Professional Certifications & Credentials",
     description:
       "Educational and professional certifications earned by Theodoros Mentis",
@@ -43,7 +43,7 @@ const generateCertificatesSchema = (certificates: ModernCertificate[]) => {
       position: index + 1,
       item: {
         "@type": "EducationalOccupationalCredential",
-        "@id": `https://theodorosmentis.com/#certificate-${certificate.id}`,
+        "@id": `https://www.theodorosmentis.com/#certificate-${certificate.id}`,
         name: certificate.name,
         description: certificate.description,
         dateCreated: certificate.issueDate,
@@ -68,7 +68,7 @@ const generateCertificatesSchema = (certificates: ModernCertificate[]) => {
         })),
         credentialSubject: {
           "@type": "Person",
-          "@id": "https://theodorosmentis.com/#person",
+          "@id": "https://www.theodorosmentis.com/#person",
           name: "Theodoros Mentis",
           hasCredential: certificate.name,
         },
@@ -84,7 +84,7 @@ const CertificateSchema: React.FC<{ certificate: ModernCertificate }> = ({
   const schema = {
     "@context": "https://schema.org",
     "@type": "EducationalOccupationalCredential",
-    "@id": `https://theodorosmentis.com/#credential-${certificate.id}`,
+    "@id": `https://www.theodorosmentis.com/#credential-${certificate.id}`,
     name: certificate.name,
     description: certificate.description,
     dateCreated: certificate.issueDate,
@@ -105,13 +105,13 @@ const CertificateSchema: React.FC<{ certificate: ModernCertificate }> = ({
     })),
     credentialSubject: {
       "@type": "Person",
-      "@id": "https://theodorosmentis.com/#person",
+      "@id": "https://www.theodorosmentis.com/#person",
       name: "Theodoros Mentis",
       jobTitle: "Senior Full Stack Developer",
     },
     isPartOf: {
       "@type": "CreativeWork",
-      "@id": "https://theodorosmentis.com/#portfolio",
+      "@id": "https://www.theodorosmentis.com/#portfolio",
       name: "Theodoros Mentis Professional Portfolio",
     },
   }

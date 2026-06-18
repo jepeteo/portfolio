@@ -1,9 +1,11 @@
+import { SITE_URL, SITE_EMAIL } from "./routeMeta.js"
+
 export const site = {
   name: "Theodoros Mentis",
   alternateName: "Theodore Mentis",
   title: "Senior Full Stack Developer",
-  email: "th.mentis@gmail.com",
-  url: "https://theodorosmentis.com",
+  email: SITE_EMAIL,
+  url: SITE_URL,
   locale: "en-US",
   location: {
     city: "Berlin",

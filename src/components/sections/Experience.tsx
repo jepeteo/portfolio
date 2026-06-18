@@ -22,7 +22,7 @@ const generateExperienceSchema = (experiences: TechExperience[]) => {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "@id": "https://theodorosmentis.com/#experience",
+    "@id": "https://www.theodorosmentis.com/#experience",
     name: "Professional Work Experience",
     description:
       "Career history and professional experience of Theodoros Mentis",
@@ -32,7 +32,7 @@ const generateExperienceSchema = (experiences: TechExperience[]) => {
       position: index + 1,
       item: {
         "@type": "Role",
-        "@id": `https://theodorosmentis.com/#experience-${experience.id}`,
+        "@id": `https://www.theodorosmentis.com/#experience-${experience.id}`,
         roleName: experience.title,
         startDate: formatDateForSchema(experience.periodInfo.from),
         endDate: experience.periodInfo.isCurrent
@@ -42,7 +42,7 @@ const generateExperienceSchema = (experiences: TechExperience[]) => {
         skills: experience.techStack,
         creator: {
           "@type": "Person",
-          "@id": "https://theodorosmentis.com/#person",
+          "@id": "https://www.theodorosmentis.com/#person",
           name: "Theodoros Mentis",
         },
         worksFor: {
@@ -71,7 +71,7 @@ const ExperienceSchema: React.FC<{ experience: TechExperience }> = ({
   const schema = {
     "@context": "https://schema.org",
     "@type": "WorkHistory",
-    "@id": `https://theodorosmentis.com/#work-${experience.id}`,
+    "@id": `https://www.theodorosmentis.com/#work-${experience.id}`,
     position: experience.title,
     startDate: formatDateForSchema(experience.periodInfo.from),
     endDate: experience.periodInfo.isCurrent
@@ -82,7 +82,7 @@ const ExperienceSchema: React.FC<{ experience: TechExperience }> = ({
     workLocation: experience.location,
     employee: {
       "@type": "Person",
-      "@id": "https://theodorosmentis.com/#person",
+      "@id": "https://www.theodorosmentis.com/#person",
       name: "Theodoros Mentis",
       jobTitle: "Senior Full Stack Developer",
     },
@@ -96,11 +96,11 @@ const ExperienceSchema: React.FC<{ experience: TechExperience }> = ({
       experience.achievements.length > 0 && {
         award: experience.achievements.map((achievement, index) => ({
           "@type": "Achievement",
-          "@id": `https://theodorosmentis.com/#achievement-${experience.id}-${index}`,
+          "@id": `https://www.theodorosmentis.com/#achievement-${experience.id}-${index}`,
           name: achievement,
           achiever: {
             "@type": "Person",
-            "@id": "https://theodorosmentis.com/#person",
+            "@id": "https://www.theodorosmentis.com/#person",
             name: "Theodoros Mentis",
           },
         })),

@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useEnhancedSEO, SEOUtils } from "../utils/enhancedSEO"
-import { site } from "../config/site"
+import { useEnhancedSEO } from "../utils/enhancedSEO"
+import { routeMeta, absoluteUrl } from "../config/routeMeta.js"
 import FeaturedServices from "../components/services/FeaturedServices"
 import ServiceCategorySection from "../components/services/ServiceCategorySection"
 import EmergencyHelpCTA from "../components/services/EmergencyHelpCTA"
@@ -27,46 +27,20 @@ const howIWorkSteps = [
   },
 ]
 
+const meta = routeMeta["/services"]
+
 const ServicesPage: React.FC = () => {
-  const canonical = `${site.url}/services`
-  const description =
-    "Practical web development, WordPress, WooCommerce, technical SEO, and website support for small businesses and agencies."
+  const canonical = absoluteUrl(meta.canonicalPath)
 
   useEnhancedSEO({
-    title: SEOUtils.generateTitle(
-      "Practical Web Development, WordPress, SEO and Technical Support"
-    ),
-    description,
+    title: meta.title,
+    description: meta.description,
     canonical,
     ogUrl: canonical,
-    ogType: "website",
+    ogType: meta.ogType,
     structuredData: {
       "@context": "https://schema.org",
-      "@type": "OfferCatalog",
-      name: "Web Development and Technical Support Services",
-      url: canonical,
-      provider: {
-        "@type": "Person",
-        name: site.name,
-        url: site.url,
-      },
-      itemListElement: serviceCategories.flatMap((category) =>
-        category.services.map((service) => ({
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: service.title,
-            description: service.shortDescription,
-          },
-          ...(service.priceLabel && {
-            priceSpecification: {
-              "@type": "PriceSpecification",
-              priceCurrency: "EUR",
-              description: service.priceLabel,
-            },
-          }),
-        }))
-      ),
+      "@graph": meta.jsonLd,
     },
   })
 
@@ -75,6 +49,7 @@ const ServicesPage: React.FC = () => {
       <SectionShell
         id="services-hero"
         eyebrow="Services"
+        headingLevel="h1"
         title="Practical Web Development, WordPress, SEO and Technical Support"
         subtitle="I help small businesses, agencies, and independent professionals fix website problems, improve performance, launch better pages, and build reliable digital systems."
         decoration="gradient-orb"

@@ -1,20 +1,12 @@
-# Robots.txt for theodorosmentis.com
-# Allow all search engines to crawl the entire site
+# Robots.txt for www.theodorosmentis.com
+# Allow all search engines to crawl the public site.
 
 User-agent: *
 Allow: /
 
+# Block non-public build/source paths (not normally exposed, but explicit).
+Disallow: /api/
+Disallow: /assets/*.map$
+
 # Sitemap location
-Sitemap: https://theodorosmentis.com/sitemap.xml
-
-# Crawl-delay (optional - helps prevent overloading)
-Crawl-delay: 1
-
-# Disallow crawling of unnecessary files
-Disallow: /node_modules/
-Disallow: /src/
-Disallow: /.git/
-Disallow: /dist/
-Disallow: *.map$
-Disallow: *.ts$
-Disallow: *.tsx$
+Sitemap: https://www.theodorosmentis.com/sitemap.xml

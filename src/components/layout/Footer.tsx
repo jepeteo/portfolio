@@ -26,7 +26,7 @@ const Footer: React.FC = memo(() => {
     {
       icon: Mail,
       label: "Email",
-      href: "mailto:th.mentis@gmail.com",
+      href: "mailto:contact@theodorosmentis.com",
       hoverColor: "hover:text-green-400",
     },
   ]

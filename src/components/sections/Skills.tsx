@@ -43,7 +43,7 @@ const generateSkillsSchema = (skillCategories: SkillCategoryData[]) => {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "@id": "https://theodorosmentis.com/#skills",
+    "@id": "https://www.theodorosmentis.com/#skills",
     name: "Technical Skills & Expertise",
     description:
       "Professional technical skills and technologies mastered by Theodoros Mentis",
@@ -54,7 +54,7 @@ const generateSkillsSchema = (skillCategories: SkillCategoryData[]) => {
         position: index + 1,
         item: {
           "@type": "DefinedTerm",
-          "@id": `https://theodorosmentis.com/#skill-${skill.name
+          "@id": `https://www.theodorosmentis.com/#skill-${skill.name
             .toLowerCase()
             .replace(/\s+/g, "-")}`,
           name: skill.name,
@@ -66,7 +66,7 @@ const generateSkillsSchema = (skillCategories: SkillCategoryData[]) => {
           },
           about: {
             "@type": "Person",
-            "@id": "https://theodorosmentis.com/#person",
+            "@id": "https://www.theodorosmentis.com/#person",
             name: "Theodoros Mentis",
             knowsAbout: skill.name,
           },

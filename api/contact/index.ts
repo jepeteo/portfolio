@@ -153,7 +153,7 @@ async function sendViaEmailJs(data: SecureContactFormData) {
         urgency: data.urgency || "Not provided",
         budget: data.budget || "Not provided",
         website_url: data.websiteUrl || "Not provided",
-        to_email: toEmail || "th.mentis@gmail.com",
+        to_email: toEmail || "contact@theodorosmentis.com",
         reply_to: data.email,
       },
     }),
