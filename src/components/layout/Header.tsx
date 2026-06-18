@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { motion, useScroll, useSpring } from "framer-motion"
 import { cn, typography } from "../../utils/styles"
 import Nav from "./Nav"
@@ -11,6 +12,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = useState(false)
   const { isDark } = useTheme()
+  const navigate = useNavigate()
 
   // Use framer-motion's useScroll for better performance
   const { scrollYProgress } = useScroll()
@@ -63,19 +65,14 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
         )}
       >
         <motion.a
-          href="#hero"
+          href="/"
           className="flex items-center gap-4 cursor-pointer group"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           transition={{ duration: 0.2 }}
           onClick={(e) => {
             e.preventDefault()
-            const heroSection = document.getElementById("hero")
-            if (heroSection) {
-              heroSection.scrollIntoView({ behavior: "smooth" })
-            } else {
-              window.scrollTo({ top: 0, behavior: "smooth" })
-            }
+            navigate("/")
           }}
           aria-label="Theodoros Mentis"
           title="Go to homepage"

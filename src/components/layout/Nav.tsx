@@ -4,8 +4,8 @@ import { useTheme } from "../../context/ThemeContext"
 import { Icon, icons } from "../ui/icons/Icons"
 import { Button } from "../ui/Button"
 import { cn, typography } from "../../utils/styles"
-import { navLinks, sectionOrder } from "../../config/navigation"
-import type { NavigationLink } from "../../types"
+import type { AppNavigationLink } from "../../config/navigation"
+import { useAppNavigation } from "../../hooks/useAppNavigation"
 
 interface NavProps {
   className?: string
@@ -13,16 +13,12 @@ interface NavProps {
 
 const Nav: React.FC<NavProps> = ({ className }) => {
   const { toggleTheme, isDark } = useTheme()
+  const { navLinks: links, handleNavigation, isLinkActive } = useAppNavigation()
   const [isOpen, setIsOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState("")
-  // View transitions are handled automatically by the browser for anchor links
 
-  const links = navLinks
-
-  // Haptic feedback for mobile devices
   const triggerHaptic = useCallback(() => {
     if ("vibrate" in navigator) {
-      navigator.vibrate(10) // Subtle 10ms vibration
+      navigator.vibrate(10)
     }
   }, [])
 
@@ -35,10 +31,8 @@ const Nav: React.FC<NavProps> = ({ className }) => {
     setIsOpen(false)
   }, [])
 
-  // Handle swipe to close on mobile
   const handleDragEnd = useCallback(
     (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-      // Close if swiped up significantly (more than 100px)
       if (info.offset.y < -100 || info.velocity.y < -500) {
         triggerHaptic()
         closeMenu()
@@ -47,108 +41,24 @@ const Nav: React.FC<NavProps> = ({ className }) => {
     [closeMenu, triggerHaptic]
   )
 
-  // Navigation is handled by anchor tags, no need for handleNavigation function
-  // Keeping closeMenu for click handlers
-
   const handleNavClick = useCallback(
-    (e: React.MouseEvent, sectionId: string) => {
+    (e: React.MouseEvent, link: AppNavigationLink) => {
       e.preventDefault()
-
       triggerHaptic()
       closeMenu()
-
-      const targetId = sectionId === "top" ? "" : sectionId
-      const element = targetId
-        ? document.getElementById(targetId)
-        : document.body
-
-      if (element) {
-        const headerOffset = 80
-        const elementPosition = element.offsetTop
-        const offsetPosition = elementPosition - headerOffset
-
-        window.scrollTo({
-          top: targetId ? offsetPosition : 0,
-          behavior: "smooth",
-        })
-
-        if (targetId) {
-          history.pushState(null, "", `#${targetId}`)
-        } else {
-          history.pushState(null, "", window.location.pathname)
-        }
-      }
+      handleNavigation(link)
     },
-    [closeMenu]
+    [closeMenu, handleNavigation, triggerHaptic]
   )
 
   useEffect(() => {
-    let rafId: number | null = null
-
-    const computeActiveSection = () => {
-      rafId = null
-
-      const scrollY = window.scrollY
-      // Check if at the top of the page
-      if (scrollY < 200) {
-        setActiveSection("#top")
-        return
-      }
-
-      // Use a probe line ~1/3 from the top of the viewport so the section the
-      // user is visually focused on becomes active (not the one just scrolled in
-      // from the bottom).
-      const probeY = scrollY + window.innerHeight / 3
-
-      const sections = sectionOrder
-        .flatMap((id) => {
-          if (id === "top") return []
-          const element = document.getElementById(id)
-          if (!element) return []
-          const absoluteTop = element.getBoundingClientRect().top + scrollY
-          return [{ id, top: absoluteTop }]
-        })
-        .sort((a, b) => a.top - b.top)
-
-      // Find the last section whose top is above the probe line.
-      let activeId: string | null = null
-      for (const { id, top } of sections) {
-        if (top <= probeY) {
-          activeId = id
-        } else {
-          break
-        }
-      }
-
-      setActiveSection(activeId ? `#${activeId}` : "#top")
-    }
-
-    const handleScroll = () => {
-      if (rafId !== null) return
-      rafId = window.requestAnimationFrame(computeActiveSection)
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    window.addEventListener("resize", handleScroll)
-    handleScroll() // Set initial active section
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-      window.removeEventListener("resize", handleScroll)
-      if (rafId !== null) window.cancelAnimationFrame(rafId)
-    }
-  }, []) // Remove links dependency to prevent re-creating listener
-
-  useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        closeMenu()
-      }
+      if (e.key === "Escape") closeMenu()
     }
 
     if (isOpen) {
       document.addEventListener("keydown", handleEscape)
-      document.body.style.overflow = "hidden" // Prevent scroll when menu is open
+      document.body.style.overflow = "hidden"
     } else {
       document.body.style.overflow = ""
     }
@@ -160,7 +70,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
   }, [isOpen, closeMenu])
 
   const NavLink: React.FC<{
-    link: NavigationLink
+    link: AppNavigationLink
     isMobile?: boolean
     isActive?: boolean
   }> = ({ link, isMobile = false, isActive = false }) => (
@@ -170,24 +80,20 @@ const Nav: React.FC<NavProps> = ({ className }) => {
         "hover:bg-surface-elevated active:scale-[0.98]",
         "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
         isDark ? "focus:ring-offset-gray-900" : "focus:ring-offset-white",
-        // Enhanced mobile touch targets (min 44px height for accessibility)
         isMobile
           ? "w-full text-left justify-start px-5 py-4 min-h-[44px]"
           : cn("px-4 py-2", isActive && "rounded-full"),
-        // Enhanced active state styling
         isActive && "text-primary font-semibold",
         !isActive && (isDark ? "text-slate-300" : "text-slate-600"),
-        // Add subtle background for active items
         isActive && (isDark ? "bg-blue-500/15" : "bg-blue-500/10"),
         isMobile && isActive && (isDark ? "bg-blue-500/20" : "bg-blue-500/10")
       )}
-      onClick={(e) => handleNavClick(e, link.href.slice(1))}
+      onClick={(e) => handleNavClick(e, link)}
       whileHover={{ scale: isMobile ? 1 : 1.02 }}
       whileTap={{ scale: 0.98 }}
       aria-label={link.ariaLabel}
       aria-current={isActive ? "page" : undefined}
     >
-      {/* Desktop underline indicator */}
       {isActive && !isMobile && (
         <motion.div
           className="absolute bottom-0 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full origin-center"
@@ -198,7 +104,6 @@ const Nav: React.FC<NavProps> = ({ className }) => {
         />
       )}
 
-      {/* Mobile left border indicator */}
       {isActive && isMobile && (
         <motion.div
           className="absolute left-0 top-1/2 w-1 bg-primary rounded-r-full"
@@ -208,7 +113,6 @@ const Nav: React.FC<NavProps> = ({ className }) => {
         />
       )}
 
-      {/* Link text with improved sizing for mobile */}
       <span
         className={cn(
           isMobile ? typography.body.large : typography.body.base,
@@ -219,7 +123,6 @@ const Nav: React.FC<NavProps> = ({ className }) => {
         {link.text}
       </span>
 
-      {/* Mobile active indicator dot */}
       {isActive && isMobile && (
         <motion.div
           className="absolute right-5 top-1/2 w-2 h-2 rounded-full bg-primary"
@@ -241,7 +144,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
         <ul className="hidden lg:flex items-center gap-2">
           {links.map((link) => (
             <li key={link.href}>
-              <NavLink link={link} isActive={activeSection === link.href} />
+              <NavLink link={link} isActive={isLinkActive(link)} />
             </li>
           ))}
         </ul>
@@ -278,7 +181,6 @@ const Nav: React.FC<NavProps> = ({ className }) => {
           className={cn(
             "lg:hidden p-3 rounded-xl transition-all duration-200",
             "hover:bg-surface-elevated active:scale-95",
-            // Larger touch target for mobile (min 44px)
             "min-w-[44px] min-h-[44px]",
             "relative overflow-hidden"
           )}
@@ -286,17 +188,13 @@ const Nav: React.FC<NavProps> = ({ className }) => {
           aria-expanded={isOpen}
           aria-controls="mobile-menu"
         >
-          {/* Animated hamburger to X */}
           <div className="relative w-5 h-5 flex flex-col justify-center items-center">
             <motion.span
               className={cn(
                 "absolute w-5 h-0.5 rounded-full transition-colors",
                 isDark ? "bg-white" : "bg-slate-900"
               )}
-              animate={{
-                rotate: isOpen ? 45 : 0,
-                y: isOpen ? 0 : -6,
-              }}
+              animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 0 : -6 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             />
             <motion.span
@@ -304,10 +202,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
                 "absolute w-5 h-0.5 rounded-full transition-colors",
                 isDark ? "bg-white" : "bg-slate-900"
               )}
-              animate={{
-                opacity: isOpen ? 0 : 1,
-                scaleX: isOpen ? 0 : 1,
-              }}
+              animate={{ opacity: isOpen ? 0 : 1, scaleX: isOpen ? 0 : 1 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
             />
             <motion.span
@@ -315,10 +210,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
                 "absolute w-5 h-0.5 rounded-full transition-colors",
                 isDark ? "bg-white" : "bg-slate-900"
               )}
-              animate={{
-                rotate: isOpen ? -45 : 0,
-                y: isOpen ? 0 : 6,
-              }}
+              animate={{ rotate: isOpen ? -45 : 0, y: isOpen ? 0 : 6 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             />
           </div>
@@ -328,7 +220,6 @@ const Nav: React.FC<NavProps> = ({ className }) => {
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop with tap to close */}
             <motion.div
               className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
               initial={{ opacity: 0 }}
@@ -339,7 +230,6 @@ const Nav: React.FC<NavProps> = ({ className }) => {
               aria-hidden="true"
             />
 
-            {/* Mobile menu with swipe gesture */}
             <motion.div
               id="mobile-menu"
               className={cn(
@@ -359,7 +249,6 @@ const Nav: React.FC<NavProps> = ({ className }) => {
               onDragEnd={handleDragEnd}
               role="menu"
             >
-              {/* Swipe indicator */}
               <div className="flex justify-center pt-3 pb-2">
                 <div
                   className={cn(
@@ -369,7 +258,6 @@ const Nav: React.FC<NavProps> = ({ className }) => {
                 />
               </div>
 
-              {/* Menu items with larger touch targets */}
               <div className="px-4 pb-4 space-y-1 max-h-[70vh] overflow-y-auto">
                 {links.map((link, index) => (
                   <motion.div
@@ -382,13 +270,12 @@ const Nav: React.FC<NavProps> = ({ className }) => {
                     <NavLink
                       link={link}
                       isMobile
-                      isActive={activeSection === link.href}
+                      isActive={isLinkActive(link)}
                     />
                   </motion.div>
                 ))}
               </div>
 
-              {/* Bottom gradient fade for long lists */}
               <div
                 className={cn(
                   "absolute bottom-0 left-0 right-0 h-8 pointer-events-none",

@@ -3,6 +3,10 @@ export interface ContactFormData {
   email: string
   subject: string
   message: string
+  requestType?: string
+  urgency?: string
+  budget?: string
+  websiteUrl?: string
 }
 
 export interface ContactFormErrors {
@@ -189,5 +193,9 @@ export const sanitizeContactForm = (data: ContactFormData): ContactFormData => {
     email: sanitizeEmail(data.email),
     subject: sanitizeTextInput(data.subject),
     message: sanitizeTextInput(data.message),
+    requestType: data.requestType ? sanitizeTextInput(data.requestType) : undefined,
+    urgency: data.urgency ? sanitizeTextInput(data.urgency) : undefined,
+    budget: data.budget ? sanitizeTextInput(data.budget) : undefined,
+    websiteUrl: data.websiteUrl ? sanitizeTextInput(data.websiteUrl) : undefined,
   }
 }

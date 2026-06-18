@@ -135,6 +135,8 @@ async function sendViaEmailJs(data: SecureContactFormData) {
     throw new Error("Email provider is not configured")
   }
 
+  // TODO: Update the EmailJS template to include request_type, urgency, budget,
+  // and website_url variables so lead qualification fields appear in notification emails.
   const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -147,6 +149,10 @@ async function sendViaEmailJs(data: SecureContactFormData) {
         from_email: data.email,
         subject: data.subject,
         message: data.message,
+        request_type: data.requestType || "Not provided",
+        urgency: data.urgency || "Not provided",
+        budget: data.budget || "Not provided",
+        website_url: data.websiteUrl || "Not provided",
         to_email: toEmail || "th.mentis@gmail.com",
         reply_to: data.email,
       },
@@ -192,6 +198,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     email: payload.email || "",
     subject: payload.subject || "",
     message: payload.message || "",
+    requestType: payload.requestType || "",
+    urgency: payload.urgency || "",
+    budget: payload.budget || "",
+    websiteUrl: payload.websiteUrl || "",
     honeypot: payload.honeypot || "",
     timestamp: payload.timestamp || 0,
   }

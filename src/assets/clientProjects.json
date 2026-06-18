@@ -14,7 +14,14 @@
         "type": "client",
         "featured": true,
         "status": "Live",
-        "year": "2024"
+        "year": "2024",
+        "servicesDemonstrated": [
+            "Internal dashboard",
+            "Client management system",
+            "Project and task workflows",
+            "Notifications",
+            "Secure credential pointer architecture"
+        ]
     },
     {
         "id": "mentis-gaming",
@@ -31,7 +38,12 @@
         "type": "client",
         "featured": false,
         "status": "Live",
-        "year": "2024"
+        "year": "2024",
+        "servicesDemonstrated": [
+            "One-page landing page",
+            "Mobile-first design",
+            "Performance and SEO structure"
+        ]
     },
     {
         "id": "chronogarden",
@@ -49,7 +61,13 @@
         "type": "client",
         "featured": true,
         "status": "Live",
-        "year": "2024"
+        "year": "2024",
+        "servicesDemonstrated": [
+            "One-page landing page",
+            "Service offer page",
+            "Mobile-first design",
+            "Image optimization"
+        ]
     },
     {
         "id": "dionysia-menti",
@@ -68,7 +86,14 @@
         "type": "client",
         "featured": true,
         "status": "Live",
-        "year": "2025"
+        "year": "2025",
+        "servicesDemonstrated": [
+            "Portfolio website",
+            "Advanced gallery",
+            "Contact form",
+            "Mobile-first design",
+            "Image optimization"
+        ]
     },
     {
         "id": "director-value",
@@ -88,7 +113,13 @@
         "type": "client",
         "featured": true,
         "status": "Live",
-        "year": "2025"
+        "year": "2025",
+        "servicesDemonstrated": [
+            "Internal dashboard",
+            "Form to dashboard workflow",
+            "Technical SEO foundation",
+            "Mobile-first design"
+        ]
     },
     {
         "id": "christos-mentis",
@@ -107,6 +138,12 @@
         "type": "client",
         "featured": true,
         "status": "Live",
-        "year": "2025"
+        "year": "2025",
+        "servicesDemonstrated": [
+            "Portfolio website",
+            "Service offer page",
+            "Contact form",
+            "Technical SEO foundation"
+        ]
     }
 ]

@@ -19,6 +19,7 @@ export type WebProject = {
   featured: boolean
   status: "Live" | "In Development"
   year: string
+  servicesDemonstrated?: string[]
 }
 
 export type ReactShowcaseProject = {

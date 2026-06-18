@@ -1,9 +1,16 @@
 import { sanitizeInput } from "./validation"
+import {
+  budgetOptions,
+  requestTypeOptions,
+  urgencyOptions,
+} from "../content/services"
 
 const validationPatterns = {
   email:
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
   name: /^[a-zA-ZÀ-ÿ\u0100-\u017F\u0180-\u024F\s'.-]{2,50}$/,
+  websiteUrl:
+    /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=%]*)?$/i,
 }
 
 export interface SecureContactFormData {
@@ -11,6 +18,10 @@ export interface SecureContactFormData {
   email: string
   subject: string
   message: string
+  requestType?: string
+  urgency?: string
+  budget?: string
+  websiteUrl?: string
   csrfToken?: string
   timestamp?: number
   honeypot?: string // Bot detection
@@ -21,6 +32,7 @@ export interface ContactFormErrors {
   email?: string
   subject?: string
   message?: string
+  websiteUrl?: string
   general?: string
 }
 
@@ -131,17 +143,49 @@ export const validateSubjectSecure = (subject: string): boolean => {
   return true
 }
 
+export const validateWebsiteUrlOptional = (url: string): boolean => {
+  if (!url || !url.trim()) return true
+  const trimmed = url.trim()
+  if (trimmed.length > 500) return false
+  return validationPatterns.websiteUrl.test(trimmed)
+}
+
+const allowedRequestTypes = new Set(
+  requestTypeOptions.map((option) => option.value)
+)
+const allowedUrgency = new Set(urgencyOptions.map((option) => option.value))
+const allowedBudget = new Set(budgetOptions.map((option) => option.value))
+
 export const sanitizeContactFormData = (
   data: SecureContactFormData
 ): SecureContactFormData => {
+  const requestType =
+    data.requestType && allowedRequestTypes.has(data.requestType as never)
+      ? data.requestType
+      : undefined
+  const urgency =
+    data.urgency && allowedUrgency.has(data.urgency as never)
+      ? data.urgency
+      : undefined
+  const budget =
+    data.budget && allowedBudget.has(data.budget as never)
+      ? data.budget
+      : undefined
+
   return {
     name: sanitizeInput(data.name),
     email: sanitizeInput(data.email).toLowerCase(),
     subject: sanitizeInput(data.subject),
     message: sanitizeInput(data.message),
+    requestType,
+    urgency,
+    budget,
+    websiteUrl: data.websiteUrl
+      ? sanitizeInput(data.websiteUrl).trim()
+      : undefined,
     csrfToken: data.csrfToken,
     timestamp: data.timestamp,
-    honeypot: data.honeypot, // Should always be empty for humans
+    honeypot: data.honeypot,
   }
 }
 
@@ -284,6 +328,10 @@ export const validateContactFormSecure = (
 
   if (!validateMessageSecure(data.message)) {
     errors.message = "Please enter a valid message (10-2000 characters)"
+  }
+
+  if (data.websiteUrl && !validateWebsiteUrlOptional(data.websiteUrl)) {
+    errors.websiteUrl = "Please enter a valid website URL"
   }
 
   return {

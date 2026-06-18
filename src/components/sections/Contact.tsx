@@ -1,4 +1,5 @@
-import React, { memo, useState, useCallback, useMemo } from "react"
+import React, { memo, useState, useCallback, useMemo, useEffect } from "react"
+import { useSearchParams } from "react-router-dom"
 import { useTheme } from "../../context/ThemeContext"
 import useIntersectionObserver from "../../hooks/useIntersectionObserver"
 import { motion, AnimatePresence } from "framer-motion"
@@ -27,7 +28,12 @@ import {
 } from "../../utils/secureContactValidation"
 import { useToast } from "../ui/Toast"
 import SectionShell from "../ui/SectionShell"
+import ContactRequestFields from "../services/ContactRequestFields"
 import { site } from "../../config/site"
+import {
+  requestTypeOptions,
+  type RequestType,
+} from "../../content/services"
 import {
   generateContactSchema,
 } from "../../content/schemas/contactSchema"
@@ -242,7 +248,28 @@ const Contact: React.FC = memo(() => {
     email: "",
     subject: "",
     message: "",
+    requestType: "",
+    urgency: "",
+    budget: "",
+    websiteUrl: "",
   })
+
+  const [searchParams] = useSearchParams()
+
+  useEffect(() => {
+    const typeParam = searchParams.get("type")
+    if (!typeParam) return
+
+    const isValidType = requestTypeOptions.some(
+      (option) => option.value === typeParam
+    )
+    if (!isValidType) return
+
+    setFormData((prev) => ({
+      ...prev,
+      requestType: typeParam as RequestType,
+    }))
+  }, [searchParams])
 
   const [errors, setErrors] = useState<ContactFormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -401,7 +428,16 @@ const Contact: React.FC = memo(() => {
           return
         }
 
-        setFormData({ name: "", email: "", subject: "", message: "" })
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+          requestType: "",
+          urgency: "",
+          budget: "",
+          websiteUrl: "",
+        })
         setErrors({})
         setSubmitStatus("success")
         setCsrfToken("")
@@ -728,6 +764,31 @@ const Contact: React.FC = memo(() => {
                   isValid={fieldValidation.subject}
                 />
 
+                <ContactRequestFields
+                  requestType={formData.requestType || ""}
+                  urgency={formData.urgency || ""}
+                  budget={formData.budget || ""}
+                  websiteUrl={formData.websiteUrl || ""}
+                  websiteUrlError={errors.websiteUrl}
+                  disabled={isSubmitting}
+                  onRequestTypeChange={(value) =>
+                    setFormData((prev) => ({ ...prev, requestType: value }))
+                  }
+                  onUrgencyChange={(value) =>
+                    setFormData((prev) => ({ ...prev, urgency: value }))
+                  }
+                  onBudgetChange={(value) =>
+                    setFormData((prev) => ({ ...prev, budget: value }))
+                  }
+                  onWebsiteUrlChange={(value) => {
+                    const sanitized = sanitizeTextInput(value)
+                    setFormData((prev) => ({ ...prev, websiteUrl: sanitized }))
+                    if (errors.websiteUrl) {
+                      setErrors((prev) => ({ ...prev, websiteUrl: undefined }))
+                    }
+                  }}
+                />
+
                 <FormField
                   id="message"
                   label="Message"
@@ -742,7 +803,7 @@ const Contact: React.FC = memo(() => {
                       ? "Message must be 10-2000 characters"
                       : errors.message
                   }
-                  placeholder="Tell me about your project, requirements, timeline, etc."
+                  placeholder="Describe the issue, goals, timeline, or anything else that helps me understand your request."
                   maxLength={2000}
                   disabled={isSubmitting}
                   isDark={isDark}

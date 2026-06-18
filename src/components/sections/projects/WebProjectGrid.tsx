@@ -12,6 +12,7 @@ import { useTheme } from "../../../context/ThemeContext"
 import { getWebProjectsForTab, type WebProject } from "../../../content/projects"
 import { generateWebProjectSchema } from "../../../content/schemas/projectsSchema"
 import type { ProjectTab } from "../../../config/navigation"
+import ProjectServiceTags from "../../services/ProjectServiceTags"
 
 const ProjectSchema: React.FC<{ project: WebProject }> = ({ project }) => (
   <script
@@ -193,7 +194,11 @@ const WebProjectGrid: React.FC<WebProjectGridProps> = ({ type }) => {
               )}
             </div>
 
-            <div className="flex items-center justify-between">
+            {project.servicesDemonstrated && (
+              <ProjectServiceTags tags={project.servicesDemonstrated} />
+            )}
+
+            <div className="flex items-center justify-between mt-6">
               <div className="flex items-center space-x-3">
                 <a
                   href={project.url}

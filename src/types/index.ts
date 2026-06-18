@@ -19,6 +19,7 @@ export interface Project {
   tech?: string[]
   prEmployer?: string
   prFeatured?: boolean
+  servicesDemonstrated?: string[]
 }
 
 export interface ModernReactProject {

@@ -1,9 +1,12 @@
 import React, { memo, useCallback } from "react"
 import { useTheme } from "../../context/ThemeContext"
 import { Github, Linkedin, Mail, Heart, ArrowUp } from "lucide-react"
+import { footerLinks } from "../../config/navigation"
+import { useAppNavigation } from "../../hooks/useAppNavigation"
 
 const Footer: React.FC = memo(() => {
   const { isDark } = useTheme()
+  const { handleNavigation } = useAppNavigation()
 
   const currentYear = new Date().getFullYear()
 
@@ -27,42 +30,18 @@ const Footer: React.FC = memo(() => {
       hoverColor: "hover:text-green-400",
     },
   ]
-  const handleNavClick = useCallback(
-    (e: React.MouseEvent, sectionId: string) => {
-      e.preventDefault()
-      if (sectionId === "top" || sectionId === "home") {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        })
-        return
-      }
-      const targetElement = document.getElementById(sectionId)
-      if (targetElement) {
-        const headerOffset = 80 // Adjust based on your header height
-        const elementPosition = targetElement.offsetTop
-        const offsetPosition = elementPosition - headerOffset
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        })
-      }
+  const handleFooterNav = useCallback(
+    (e: React.MouseEvent, link: (typeof footerLinks)[number]) => {
+      e.preventDefault()
+      handleNavigation(link)
     },
-    []
+    [handleNavigation]
   )
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
-  const navigationItems = [
-    { sectionId: "top", label: "Home" },
-    { sectionId: "about", label: "About" },
-    { sectionId: "skills", label: "Skills" },
-    { sectionId: "experience", label: "Experience" },
-    { sectionId: "projects", label: "Projects" },
-    { sectionId: "contact", label: "Contact" },
-  ]
 
   return (
     <footer
@@ -72,7 +51,6 @@ const Footer: React.FC = memo(() => {
           : "bg-white/50 backdrop-blur-sm border-t border-slate-200"
       }`}
     >
-      
       <div className="absolute inset-0">
         <div
           className={`absolute inset-0 ${
@@ -85,7 +63,6 @@ const Footer: React.FC = memo(() => {
 
       <div className="container relative py-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-          
           <div className="text-center md:text-left">
             <h3
               className={`text-2xl font-bold mb-2 ${
@@ -113,18 +90,19 @@ const Footer: React.FC = memo(() => {
           </div>
 
           <div className="text-center">
-            <div className="flex flex-wrap justify-center gap-8">
-              {navigationItems.map((item, index) => (
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+              {footerLinks.map((link) => (
                 <button
-                  key={index}
-                  onClick={(e) => handleNavClick(e, item.sectionId)}
+                  key={link.href}
+                  type="button"
+                  onClick={(e) => handleFooterNav(e, link)}
                   className={`text-sm font-medium transition-all hover:scale-105 cursor-pointer ${
                     isDark
                       ? "text-slate-400 hover:text-white"
                       : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
-                  {item.label}
+                  {link.text}
                 </button>
               ))}
             </div>
@@ -151,6 +129,7 @@ const Footer: React.FC = memo(() => {
             </div>
 
             <button
+              type="button"
               onClick={scrollToTop}
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105 ${
                 isDark
