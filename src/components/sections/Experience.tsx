@@ -221,16 +221,8 @@ const Experience: React.FC = () => {
 
           <div className="flex flex-col items-center gap-4 mb-8">
             <div className="flex items-center gap-3">
-              <Filter
-                className={`w-4 h-4 ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}
-              />
-              <span
-                className={`font-medium text-sm ${
-                  isDark ? "text-slate-300" : "text-slate-700"
-                }`}
-              >
+              <Filter className="h-4 w-4 text-[var(--v2-soft)]" />
+              <span className="text-sm font-medium text-[var(--v2-muted)]">
                 Filter by:
               </span>
             </div>
@@ -266,15 +258,12 @@ const Experience: React.FC = () => {
                 <button
                   key={key}
                   onClick={() => setFilter(key as ExperienceFilterType)}
-                  className={`px-3 py-1.5 rounded-lg font-medium text-xs transition-all ${
+                  className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] ${
                     filter === key
-                      ? isDark
-                        ? "bg-green-600 text-white"
-                        : "bg-green-500 text-white"
-                      : isDark
-                      ? "bg-slate-700/50 text-slate-300 hover:bg-slate-700"
-                      : "bg-white/70 text-slate-700 hover:bg-white border border-slate-200"
+                      ? "bg-[var(--v2-acid)] text-[var(--v2-acid-ink)]"
+                      : "border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-muted)] hover:border-[var(--v2-acid)]/40"
                   }`}
+                  aria-pressed={filter === key}
                 >
                   {label} ({count})
                 </button>
@@ -284,18 +273,10 @@ const Experience: React.FC = () => {
 
           <div className="md:hidden mb-16">
             <div className="text-center mb-6">
-              <h3
-                className={`text-xl font-bold mb-2 ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
-              >
+              <h3 className="mb-2 text-xl font-bold tracking-tight text-[var(--v2-text)]">
                 My Experience Timeline
               </h3>
-              <p
-                className={`text-sm ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}
-              >
+              <p className="text-sm text-[var(--v2-muted)]">
                 Tap any position to explore details
               </p>
             </div>
@@ -304,11 +285,7 @@ const Experience: React.FC = () => {
               {filteredExperiences.map((experience) => (
                 <div
                   key={experience.id}
-                  className={`experience-card rounded-xl border transition-all duration-300 ${
-                    isDark
-                      ? "bg-slate-800/30 border-slate-700/50"
-                      : "bg-white/30 border-slate-200/50"
-                  } backdrop-blur-sm`}
+                  className="experience-card rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] transition-all duration-300"
                 >
                   {/* Individual Experience Schema */}
                   <ExperienceSchema experience={experience} />
@@ -317,41 +294,29 @@ const Experience: React.FC = () => {
                     <div className="flex justify-between items-start">
                       <div className="flex-1 mr-3">
                         <div className="flex items-start justify-between mb-1">
-                          <h3
-                            className={`font-bold text-base leading-tight ${
-                              isDark ? "text-white" : "text-slate-900"
-                            }`}
-                          >
+                          <h3 className="text-base font-bold leading-tight tracking-tight text-[var(--v2-text)]">
                             {experience.company}
                           </h3>
 
                           <div className="flex items-center space-x-1 ml-2 flex-shrink-0">
                             {experience.isFreelance && (
                               <div
-                                className="h-2 w-2 rounded-full bg-purple-500"
+                                className="h-2 w-2 rounded-full bg-[var(--v2-brand-2)]"
                                 title="Freelance"
                               />
                             )}
                             {experience.status === "current" && (
                               <div
-                                className="h-2 w-2 rounded-full bg-green-500 animate-pulse"
+                                className="h-2 w-2 animate-pulse rounded-full bg-[var(--v2-ok)]"
                                 title="Current"
                               />
                             )}
                           </div>
                         </div>
-                        <p
-                          className={`text-sm font-medium ${
-                            isDark ? "text-slate-300" : "text-slate-700"
-                          }`}
-                        >
+                        <p className="text-sm font-medium text-[var(--v2-muted)]">
                           {experience.title}
                         </p>
-                        <div
-                          className={`text-xs mt-1 flex items-center ${
-                            isDark ? "text-slate-500" : "text-slate-400"
-                          }`}
-                        >
+                        <div className="mt-1 flex items-center text-xs text-[var(--v2-soft)]">
                           <Calendar className="w-3 h-3 mr-1" />
                           {experience.periodInfo.from} -{" "}
                           {experience.periodInfo.to}
@@ -367,14 +332,10 @@ const Experience: React.FC = () => {
                             : experience.id
                         )
                       }
-                      className={`experience-toggle-btn mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-300 group relative overflow-hidden ${
+                      className={`experience-toggle-btn group relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] ${
                         selectedExperienceId === experience.id
-                          ? isDark
-                            ? "bg-gradient-to-r from-emerald-600/20 to-green-600/20 hover:from-emerald-600/30 hover:to-green-600/30 border border-emerald-500/40 text-emerald-300 shadow-lg shadow-emerald-500/10"
-                            : "bg-gradient-to-r from-emerald-500/15 to-green-500/15 hover:from-emerald-500/25 hover:to-green-500/25 border border-emerald-500/30 text-emerald-700 shadow-lg shadow-emerald-500/10"
-                          : isDark
-                          ? "bg-gradient-to-r from-slate-700/60 to-slate-600/60 hover:from-slate-600/80 hover:to-slate-700/80 border border-slate-600/40 text-slate-300 hover:text-white shadow-md hover:shadow-lg"
-                          : "bg-gradient-to-r from-white/90 to-slate-50/90 hover:from-white hover:to-slate-100 border border-slate-200/60 text-slate-700 hover:text-slate-900 shadow-md hover:shadow-lg"
+                          ? "border border-[var(--v2-acid)]/40 bg-[var(--v2-acid)]/12 text-[var(--v2-acid)]"
+                          : "border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 text-[var(--v2-muted)] hover:border-[var(--v2-acid)]/40"
                       }`}
                     >
                       <span className="relative z-10">
@@ -400,9 +361,7 @@ const Experience: React.FC = () => {
                     }`}
                   >
                     <div
-                      className={`px-4 pb-4 pt-3 border-t transition-all duration-300 ${
-                        isDark ? "border-slate-700/50" : "border-slate-200/50"
-                      } ${
+                      className={`px-4 pb-4 pt-3 border-t border-[var(--v2-line)] transition-all duration-300 ${
                         selectedExperienceId === experience.id
                           ? "translate-y-0"
                           : "translate-y-[-10px]"
@@ -422,7 +381,7 @@ const Experience: React.FC = () => {
           </div>
 
           <div className="hidden md:grid md:grid-cols-3 gap-6 mb-16">
-            <div className="md:col-span-1 md:border-r md:pr-4">
+            <div className="md:col-span-1 md:border-r md:border-[var(--v2-line)] md:pr-4">
               <ExperienceSidebar
                 experiences={filteredExperiences}
                 selectedExperienceId={selectedExperienceId}

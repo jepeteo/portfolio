@@ -1,5 +1,4 @@
 import React, { useMemo, useState, memo, useCallback } from "react"
-import { useTheme } from "../../context/ThemeContext"
 import useIntersectionObserver from "../../hooks/useIntersectionObserver"
 import { ModernCertificate } from "../../types"
 import { validateCertificate } from "../../utils/validation"
@@ -183,7 +182,6 @@ interface ExpandedSkills {
 }
 
 const Certificates: React.FC = memo(() => {
-  const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLDivElement>({
     threshold: 0.1,
     rootMargin: "50px",
@@ -276,11 +274,7 @@ const Certificates: React.FC = memo(() => {
   if (validCertificates.length === 0) {
     return (
       <SectionShell id="certificates" title="Certifications" variant="default">
-        <p
-          className={`text-center text-xl ${
-            isDark ? "text-slate-400" : "text-slate-600"
-          }`}
-        >
+        <p className="text-center text-xl text-[var(--v2-muted)]">
           No certificates data available
         </p>
       </SectionShell>
@@ -313,27 +307,20 @@ const Certificates: React.FC = memo(() => {
         }`}
       >
           <div className="mb-12">
-            <div
-              className={`flex items-center gap-2 mb-6 ${
-                isDark ? "text-slate-300" : "text-slate-700"
-              }`}
-            >
-              <Filter className="w-5 h-5" />
-              <span className="font-medium">Filter by Category:</span>
+            <div className="mb-6 flex items-center gap-2 text-[var(--v2-muted)]">
+              <Filter className="h-5 w-5" />
+              <span className="font-medium">Filter by category:</span>
             </div>
 
             <div className="flex flex-wrap gap-3 justify-center">
               <button
                 onClick={() => handleCategoryChange("All")}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] ${
                   selectedCategory === "All"
-                    ? isDark
-                      ? "bg-purple-500/30 text-purple-300 border-2 border-purple-500"
-                      : "bg-purple-100 text-purple-700 border-2 border-purple-500"
-                    : isDark
-                    ? "bg-slate-800/50 text-slate-300 border border-slate-600 hover:border-purple-400"
-                    : "bg-white/50 text-slate-700 border border-slate-300 hover:border-purple-400"
+                    ? "border-2 border-[var(--v2-acid)] bg-[var(--v2-acid)]/15 text-[var(--v2-acid)]"
+                    : "border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-muted)] hover:border-[var(--v2-acid)]/40"
                 }`}
+                aria-pressed={selectedCategory === "All"}
               >
                 <span className="flex items-center gap-2">
                   <Users className="w-4 h-4" />
@@ -349,15 +336,12 @@ const Certificates: React.FC = memo(() => {
                   <button
                     key={category}
                     onClick={() => handleCategoryChange(category)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                    className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] ${
                       selectedCategory === category
-                        ? isDark
-                          ? "bg-purple-500/30 text-purple-300 border-2 border-purple-500"
-                          : "bg-purple-100 text-purple-700 border-2 border-purple-500"
-                        : isDark
-                        ? "bg-slate-800/50 text-slate-300 border border-slate-600 hover:border-purple-400"
-                        : "bg-white/50 text-slate-700 border border-slate-300 hover:border-purple-400"
+                        ? "border-2 border-[var(--v2-acid)] bg-[var(--v2-acid)]/15 text-[var(--v2-acid)]"
+                        : "border border-[var(--v2-line)] bg-[var(--v2-panel)] text-[var(--v2-muted)] hover:border-[var(--v2-acid)]/40"
                     }`}
+                    aria-pressed={selectedCategory === category}
                   >
                     <span className="flex items-center gap-2">
                       <IconComponent className="w-4 h-4" />
@@ -375,21 +359,17 @@ const Certificates: React.FC = memo(() => {
             </div>
           ) : (
             <>
-              <div
-                className={`text-center mb-8 ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}
-              >
+              <div className="mb-8 text-center text-[var(--v2-muted)]">
                 <p>
                   Showing{" "}
-                  <span className="font-bold text-purple-500">
+                  <span className="font-bold text-[var(--v2-acid)]">
                     {displayedCertificates.length}
                   </span>{" "}
                   certificate{displayedCertificates.length !== 1 ? "s" : ""}{" "}
                   {selectedCategory !== "All" && (
                     <>
                       in{" "}
-                      <span className="font-medium text-purple-500">
+                      <span className="font-medium text-[var(--v2-acid)]">
                         {selectedCategory}
                       </span>
                     </>
@@ -419,62 +399,32 @@ const Certificates: React.FC = memo(() => {
                     <React.Fragment key={certificate.id}>
                       <CertificateSchema certificate={certificate} />
                       <div
-                        className={`group relative overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] hover:rotate-1 ${
-                          isDark
-                            ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-purple-500/50"
-                            : "bg-white/50 backdrop-blur-sm border border-slate-200 hover:border-purple-500/50"
-                        }`}
+                        className="group relative overflow-hidden rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--v2-acid)]/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                         style={{ animationDelay: `${index * 100}ms` }}
                       >
-                        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
                         <div className="relative p-6">
                           <div className="flex items-start justify-between mb-4">
-                            <div
-                              className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                                isDark
-                                  ? "bg-gradient-to-br from-purple-500/20 to-pink-500/20 text-purple-300"
-                                  : "bg-gradient-to-br from-purple-100 to-pink-100 text-purple-600"
-                              }`}
-                            >
+                            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-acid)]">
                               <IconComponent className="w-6 h-6" />
                             </div>
 
                             {certificate.category && (
-                              <span
-                                className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                  isDark
-                                    ? "bg-slate-700/60 text-slate-300"
-                                    : "bg-slate-100 text-slate-600"
-                                }`}
-                              >
+                              <span className="rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/70 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--v2-muted)]">
                                 {certificate.category}
                               </span>
                             )}
                           </div>
 
-                          <h3
-                            className={`text-lg font-bold mb-2 line-clamp-2 group-hover:text-purple-500 transition-colors ${
-                              isDark ? "text-white" : "text-slate-900"
-                            }`}
-                          >
+                          <h3 className="mb-2 line-clamp-2 text-lg font-bold tracking-tight text-[var(--v2-text)] transition-colors group-hover:text-[var(--v2-acid)]">
                             {certificate.name}
                           </h3>
 
-                          <p
-                            className={`text-sm font-medium mb-3 ${
-                              isDark ? "text-purple-300" : "text-purple-600"
-                            }`}
-                          >
+                          <p className="mb-3 text-sm font-medium text-[var(--v2-brand)]">
                             {certificate.issuer}
                           </p>
 
                           {certificate.description && (
-                            <p
-                              className={`text-sm mb-4 line-clamp-3 ${
-                                isDark ? "text-slate-400" : "text-slate-600"
-                              }`}
-                            >
+                            <p className="mb-4 line-clamp-3 text-sm text-[var(--v2-muted)]">
                               {certificate.description}
                             </p>
                           )}
@@ -486,11 +436,7 @@ const Certificates: React.FC = memo(() => {
                                   {visibleSkills?.map((skill, skillIndex) => (
                                     <span
                                       key={skillIndex}
-                                      className={`px-2 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
-                                        isDark
-                                          ? "bg-slate-700/60 text-slate-300"
-                                          : "bg-slate-100 text-slate-600"
-                                      }`}
+                                      className="rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 px-2 py-1 text-xs font-medium text-[var(--v2-muted)]"
                                     >
                                       {skill}
                                     </span>
@@ -503,11 +449,7 @@ const Certificates: React.FC = memo(() => {
                                       e.stopPropagation()
                                       toggleSkillsExpansion(certificate.id)
                                     }}
-                                    className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium transition-all duration-300 hover:scale-105 ${
-                                      isDark
-                                        ? "bg-slate-700/40 text-slate-400 hover:bg-slate-700/60"
-                                        : "bg-slate-100 text-slate-500 hover:bg-slate-200"
-                                    }`}
+                                    className="inline-flex items-center gap-1 rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 px-2 py-1 text-xs font-medium text-[var(--v2-muted)] transition-colors hover:border-[var(--v2-acid)]/40"
                                   >
                                     {isSkillsExpanded ? (
                                       <>
@@ -527,11 +469,7 @@ const Certificates: React.FC = memo(() => {
                             )}
 
                           <div className="flex items-center justify-between">
-                            <div
-                              className={`flex items-center gap-2 text-sm ${
-                                isDark ? "text-slate-400" : "text-slate-600"
-                              }`}
-                            >
+                            <div className="flex items-center gap-2 text-sm text-[var(--v2-muted)]">
                               <Calendar className="w-4 h-4" />
                               <span>
                                 {new Date(
@@ -548,11 +486,7 @@ const Certificates: React.FC = memo(() => {
                                 href={certificate.credentialUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={`flex items-center gap-2 px-3 py-1 rounded-lg text-sm font-medium transition-all hover:scale-105 ${
-                                  isDark
-                                    ? "bg-purple-500/20 text-purple-300 hover:bg-purple-500/30"
-                                    : "bg-purple-100 text-purple-700 hover:bg-purple-200"
-                                }`}
+                                className="inline-flex items-center gap-2 rounded-lg border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 px-3 py-1 text-sm font-medium text-[var(--v2-text)] transition-colors hover:border-[var(--v2-acid)]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
                               >
                                 <ExternalLink className="w-4 h-4" />
                                 View
@@ -567,30 +501,12 @@ const Certificates: React.FC = memo(() => {
               </div>
 
               <div className="mt-16">
-                <div
-                  className={`p-8 rounded-2xl text-center ${
-                    isDark
-                      ? "bg-slate-800/30 backdrop-blur-sm border border-slate-700"
-                      : "bg-white/30 backdrop-blur-sm border border-slate-200"
-                  }`}
-                >
-                  <GraduationCap
-                    className={`w-12 h-12 mx-auto mb-4 ${
-                      isDark ? "text-purple-400" : "text-purple-500"
-                    }`}
-                  />
-                  <h3
-                    className={`text-2xl font-bold mb-4 ${
-                      isDark ? "text-white" : "text-slate-900"
-                    }`}
-                  >
-                    Continuous Learning Journey
+                <div className="rounded-[2rem] border border-[var(--v2-line-strong)] bg-[radial-gradient(circle_at_15%_20%,rgb(from_var(--v2-brand)_r_g_b/0.16),transparent_40%),radial-gradient(circle_at_85%_80%,rgb(from_var(--v2-acid)_r_g_b/0.12),transparent_44%),var(--v2-panel)] p-8 text-center">
+                  <GraduationCap className="mx-auto mb-4 h-12 w-12 text-[var(--v2-acid)]" />
+                  <h3 className="mb-4 font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">
+                    Continuous learning journey
                   </h3>
-                  <p
-                    className={`text-lg mb-6 ${
-                      isDark ? "text-slate-300" : "text-slate-600"
-                    }`}
-                  >
+                  <p className="mb-6 text-lg text-[var(--v2-muted)]">
                     {validCertificates.length} certifications across{" "}
                     {categories.length} technology domains, representing ongoing
                     commitment to professional excellence
@@ -602,11 +518,7 @@ const Certificates: React.FC = memo(() => {
                       return (
                         <div
                           key={category}
-                          className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                            isDark
-                              ? "bg-purple-500/20 text-purple-300"
-                              : "bg-purple-100 text-purple-700"
-                          }`}
+                          className="flex items-center gap-2 rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 px-3 py-2 text-sm font-medium text-[var(--v2-muted)]"
                         >
                           <IconComponent className="w-4 h-4" />
                           {category}
@@ -618,11 +530,7 @@ const Certificates: React.FC = memo(() => {
                   {hasMoreCategories && (
                     <button
                       onClick={toggleSummaryExpansion}
-                      className={`inline-flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 hover:scale-105 text-sm font-medium ${
-                        isDark
-                          ? "bg-purple-500/20 text-slate-300"
-                          : "bg-purple-100 text-purple-700"
-                      }`}
+                      className="inline-flex items-center gap-2 rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 px-3 py-2 text-sm font-medium text-[var(--v2-text)] transition-colors hover:border-[var(--v2-acid)]/40"
                     >
                       {isSummaryExpanded ? (
                         <>

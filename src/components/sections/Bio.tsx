@@ -1,8 +1,9 @@
 import React, { memo, useState, useEffect, useRef } from "react"
-import { useTheme } from "../../context/ThemeContext"
 import useIntersectionObserver from "../../hooks/useIntersectionObserver"
 import { BlurImage } from "../system/loading/LoadingStates"
 import SectionShell from "../ui/SectionShell"
+import { v2PrimaryButton, v2SecondaryButton } from "../ui/v2Styles"
+import { cn } from "../../utils/styles"
 import {
   User,
   MapPin,
@@ -36,23 +37,16 @@ interface StatItem {
   color: string
 }
 
-interface ColorClasses {
-  bg: string
-  text: string
-  border: string
-}
+const iconTile =
+  "flex items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-acid)]"
 
 const StatsCard = memo(
   ({
     stat,
     index,
-    isDark,
-    getColorClasses,
   }: {
     stat: StatItem
     index: number
-    isDark: boolean
-    getColorClasses: (color: string) => ColorClasses
   }) => {
     const [displayValue, setDisplayValue] = useState("0")
     const [hasAnimated, setHasAnimated] = useState(false)
@@ -100,35 +94,26 @@ const StatsCard = memo(
     }, [stat.value, index, hasAnimated])
 
     const IconComponent = stat.icon
-    const colors = getColorClasses(stat.color)
 
     return (
       <div
         ref={cardRef}
-        className={`p-6 rounded-2xl text-center transition-all duration-500 hover:scale-105 border ${
-          isDark
-            ? "bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:border-slate-600"
-            : "bg-white/50 backdrop-blur-sm border-slate-200 hover:border-slate-300"
-        }`}
+        className="rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-6 text-center transition-all duration-500 hover:-translate-y-0.5 hover:border-[var(--v2-acid)]/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
         style={{
           transform: isVisible ? "translateY(0)" : "translateY(20px)",
           opacity: isVisible ? 1 : 0,
           transition: `all 0.6s ease ${index * 200}ms`,
         }}
       >
-        <div
-          className={`w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center ${colors.bg} ${colors.text} border ${colors.border}`}
-        >
-          <IconComponent className="w-8 h-8" />
+        <div className={cn("mx-auto mb-4 h-16 w-16", iconTile)}>
+          <IconComponent className="h-8 w-8" />
         </div>
-        <div className={`mb-2 ${isDark ? "text-white" : "text-slate-900"}`}>
-          <span className="font-bold text-2xl md:text-3xl">{displayValue}</span>
+        <div className="mb-2 text-[var(--v2-text)]">
+          <span className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+            {displayValue}
+          </span>
         </div>
-        <div
-          className={`text-sm font-medium ${
-            isDark ? "text-slate-400" : "text-slate-600"
-          }`}
-        >
+        <div className="text-sm font-medium text-[var(--v2-muted)]">
           {stat.label}
         </div>
       </div>
@@ -139,7 +124,6 @@ const StatsCard = memo(
 StatsCard.displayName = "StatsCard"
 
 const Bio: React.FC = () => {
-  const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLDivElement>({
     threshold: 0.1,
     rootMargin: "50px",
@@ -184,7 +168,6 @@ const Bio: React.FC = () => {
         "Tailwind CSS",
         "Modern CSS",
       ],
-      color: "blue",
     },
     {
       category: "Backend Development",
@@ -197,7 +180,6 @@ const Bio: React.FC = () => {
         "GraphQL",
         "Microservices",
       ],
-      color: "green",
     },
     {
       category: "Database & DevOps",
@@ -210,7 +192,6 @@ const Bio: React.FC = () => {
         "AWS",
         "Linux Administration",
       ],
-      color: "purple",
     },
     {
       category: "CMS & E-commerce",
@@ -222,7 +203,6 @@ const Bio: React.FC = () => {
         "Plugin Development",
         "Shopify",
       ],
-      color: "orange",
     },
   ]
 
@@ -253,32 +233,6 @@ const Bio: React.FC = () => {
     },
   ]
 
-  const getColorClasses = (color: string) => {
-    const colors = {
-      blue: {
-        bg: isDark ? "bg-blue-500/20" : "bg-blue-100",
-        text: isDark ? "text-blue-300" : "text-blue-700",
-        border: isDark ? "border-blue-500/30" : "border-blue-200",
-      },
-      green: {
-        bg: isDark ? "bg-green-500/20" : "bg-green-100",
-        text: isDark ? "text-green-300" : "text-green-700",
-        border: isDark ? "border-green-500/30" : "border-green-200",
-      },
-      purple: {
-        bg: isDark ? "bg-purple-500/20" : "bg-purple-100",
-        text: isDark ? "text-purple-300" : "text-purple-700",
-        border: isDark ? "border-purple-500/30" : "border-purple-200",
-      },
-      orange: {
-        bg: isDark ? "bg-orange-500/20" : "bg-orange-100",
-        text: isDark ? "text-orange-300" : "text-orange-700",
-        border: isDark ? "border-orange-500/30" : "border-orange-200",
-      },
-    }
-    return colors[color as keyof typeof colors] || colors.blue
-  }
-
   const TabButton = ({
     id,
     label,
@@ -290,36 +244,31 @@ const Bio: React.FC = () => {
   }) => (
     <button
       onClick={() => setActiveSection(id)}
-      className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
+      className={cn(
+        "flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]",
         activeSection === id
-          ? isDark
-            ? "bg-blue-500/20 text-blue-300 border-2 border-blue-500/30"
-            : "bg-blue-100 text-blue-700 border-2 border-blue-200"
-          : isDark
-          ? "text-slate-400 hover:text-slate-300 hover:bg-slate-800/50 border-2 border-transparent"
-          : "text-slate-600 hover:text-slate-700 hover:bg-slate-100/50 border-2 border-transparent"
-      }`}
+          ? "border-2 border-[var(--v2-acid)] bg-[var(--v2-acid)]/12 text-[var(--v2-acid)]"
+          : "border-2 border-transparent text-[var(--v2-muted)] hover:bg-[var(--v2-panel-2)]/60 hover:text-[var(--v2-text)]"
+      )}
+      aria-pressed={activeSection === id}
     >
-      <Icon className="w-4 h-4" />
+      <Icon className="h-4 w-4" />
       {label}
     </button>
   )
 
-  const scrollToContact = () => {
-    const contactSection = document.getElementById("contact")
-    if (contactSection) {
-      contactSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      })
-    }
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    })
   }
 
   const downloadResume = () => {
     const link = document.createElement("a")
     link.href = resumePDF
     link.download = "Theodoros_Mentis_CV.pdf"
-    link.target = "_blank" // Fallback
+    link.target = "_blank"
 
     document.body.appendChild(link)
     link.click()
@@ -330,440 +279,256 @@ const Bio: React.FC = () => {
     window.open("https://github.com/jepeteo", "_blank")
   }
 
+  const compactSecondary =
+    "flex items-center justify-center gap-2 rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 px-4 py-2 text-sm font-medium text-[var(--v2-text)] transition-colors hover:border-[var(--v2-acid)]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
+
   return (
     <SectionShell
       ref={targetRef}
       id="about"
       variant="muted"
-      eyebrow="About Me"
-      title="Stories I Tell"
-      subtitle="Crafting exceptional digital experiences with 18+ years of expertise"
+      eyebrow="About me"
+      title="The developer behind the work"
+      subtitle="18+ years fixing, improving and building web systems for real businesses."
       className={`transition-all duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          {stats.map((stat, index) => (
-            <StatsCard
-              key={`stats-${stat.label}`}
-              stat={stat}
-              index={index}
-              isDark={isDark}
-              getColorClasses={getColorClasses}
-            />
-          ))}
-        </div>
+      <div className="mb-16 grid grid-cols-2 gap-6 md:grid-cols-4">
+        {stats.map((stat, index) => (
+          <StatsCard key={`stats-${stat.label}`} stat={stat} index={index} />
+        ))}
+      </div>
 
-        <div className="grid lg:grid-cols-5 gap-12 items-start">
-          <div className="lg:col-span-2 space-y-8">
-            <div
-              className={`p-8 rounded-2xl border ${
-                isDark
-                  ? "bg-slate-800/50 backdrop-blur-sm border-slate-700"
-                  : "bg-white/50 backdrop-blur-sm border-slate-200"
-              }`}
-            >
-              <div className="text-center mb-8">
-                <div
-                  className={`w-32 h-32 mx-auto mb-4 rounded-3xl flex items-center justify-center relative overflow-hidden ${
-                    isDark
-                      ? "bg-gradient-to-br from-blue-500/20 to-purple-500/20"
-                      : "bg-gradient-to-br from-blue-100 to-purple-100"
-                  }`}
-                >
-                  <BlurImage
-                    src={profileImage}
-                    alt="Theodoros Mentis - Senior Full-Stack Developer based in Berlin, Germany"
-                    containerClassName="w-full h-full rounded-3xl"
-                    className="rounded-3xl"
-                    aspectRatio="square"
-                    placeholderColor={
-                      isDark ? "rgb(59 130 246 / 0.2)" : "rgb(219 234 254)"
-                    }
-                    loading="lazy"
-                  />
-
-                  <div
-                    className={`fallback-icon absolute inset-0 flex items-center justify-center ${
-                      isDark ? "text-blue-300" : "text-blue-600"
-                    }`}
-                    style={{ display: "none" }}
-                  >
-                    <User className="w-16 h-16" />
-                  </div>
-                </div>
+      <div className="grid items-start gap-12 lg:grid-cols-5">
+        <div className="space-y-8 lg:col-span-2">
+          <div className="rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-8">
+            <div className="mb-8 text-center">
+              <div className="relative mx-auto mb-4 flex h-32 w-32 items-center justify-center overflow-hidden rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)]">
+                <BlurImage
+                  src={profileImage}
+                  alt="Theodoros Mentis - Senior Full-Stack Developer based in Berlin, Germany"
+                  containerClassName="w-full h-full rounded-3xl"
+                  className="rounded-3xl"
+                  aspectRatio="square"
+                  placeholderColor="rgb(18 24 39)"
+                  loading="lazy"
+                />
 
                 <div
-                  className={`relative px-2 py-1 w-32 m-auto mb-2 rounded-full text-xs font-medium 
-                    ${
-                      isDark
-                        ? "bg-green-500/20 text-green-300 border border-green-500/30"
-                        : "bg-green-100 text-green-700 border border-green-200"
-                    }
-                  `}
+                  className="fallback-icon absolute inset-0 flex items-center justify-center text-[var(--v2-acid)]"
+                  style={{ display: "none" }}
                 >
-                  <div className="flex items-center gap-1 justify-around">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    Available
-                  </div>
-                </div>
-
-                <h3
-                  className={`text-2xl font-bold mb-2 ${
-                    isDark ? "text-white" : "text-slate-900"
-                  }`}
-                >
-                  Theodoros Mentis
-                </h3>
-                <p
-                  className={`text-lg mb-4 ${
-                    isDark ? "text-blue-300" : "text-blue-600"
-                  }`}
-                >
-                  Senior Full-Stack Developer • React | WordPress | Berlin-based
-                </p>
-
-                <div
-                  className={`flex items-center justify-center gap-2 text-sm mb-6 ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}
-                >
-                  <MapPin className="w-4 h-4" />
-                  Berlin, Germany
+                  <User className="h-16 w-16" />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                <div className="text-center">
-                  <div
-                    className={`text-2xl font-bold ${
-                      isDark ? "text-white" : "text-slate-900"
-                    }`}
-                  >
-                    18+
-                  </div>
-                  <div
-                    className={`text-sm ${
-                      isDark ? "text-slate-400" : "text-slate-600"
-                    }`}
-                  >
-                    Years Exp.
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div
-                    className={`text-2xl font-bold ${
-                      isDark ? "text-white" : "text-slate-900"
-                    }`}
-                  >
-                    390+
-                  </div>
-                  <div
-                    className={`text-sm ${
-                      isDark ? "text-slate-400" : "text-slate-600"
-                    }`}
-                  >
-                    Projects
-                  </div>
+              <div className="relative m-auto mb-2 w-32 rounded-full border border-[var(--v2-ok)]/30 bg-[var(--v2-ok)]/15 px-2 py-1 text-xs font-medium text-[var(--v2-ok)]">
+                <div className="flex items-center justify-around gap-1">
+                  <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--v2-ok)]" />
+                  Available
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <button
-                  onClick={scrollToContact}
-                  className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-all hover:scale-105 ${
-                    isDark
-                      ? "bg-blue-600 text-white hover:bg-blue-500"
-                      : "bg-blue-500 text-white hover:bg-blue-600"
-                  }`}
-                >
-                  <Mail className="w-4 h-4" />
-                  Get In Touch
-                </button>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    onClick={downloadResume}
-                    className={`flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all hover:scale-105 border ${
-                      isDark
-                        ? "border-slate-600 text-slate-300 hover:bg-slate-700"
-                        : "border-slate-300 text-slate-700 hover:bg-slate-50"
-                    }`}
-                  >
-                    <Download className="w-4 h-4" />
-                    Resume
-                  </button>
-
-                  <button
-                    onClick={openGitHub}
-                    className={`flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all hover:scale-105 border ${
-                      isDark
-                        ? "border-slate-600 text-slate-300 hover:bg-slate-700"
-                        : "border-slate-300 text-slate-700 hover:bg-slate-50"
-                    }`}
-                  >
-                    <Github className="w-4 h-4" />
-                    GitHub
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-3">
-            <div
-              className={`p-8 rounded-2xl border ${
-                isDark
-                  ? "bg-slate-800/50 backdrop-blur-sm border-slate-700"
-                  : "bg-white/50 backdrop-blur-sm border-slate-200"
-              }`}
-            >
-              <div className="flex flex-wrap gap-3 mb-8">
-                <TabButton id="about" label="About" icon={User} />
-                <TabButton id="expertise" label="Expertise" icon={Code2} />
-                <TabButton id="approach" label="Approach" icon={Target} />
-              </div>
-
-              <div className="min-h-[500px]">
-                {activeSection === "about" && (
-                  <div className="space-y-6 animate-fadeIn">
-                    <div className="space-y-6">
-                      <div>
-                        <h4
-                          className={`text-xl font-semibold mb-4 ${
-                            isDark ? "text-white" : "text-slate-900"
-                          }`}
-                        >
-                          Introduction
-                        </h4>
-                        <p
-                          className={`leading-relaxed text-lg ${
-                            isDark ? "text-slate-300" : "text-slate-700"
-                          }`}
-                        >
-                          {bioContent.intro}
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4
-                          className={`text-xl font-semibold mb-4 ${
-                            isDark ? "text-white" : "text-slate-900"
-                          }`}
-                        >
-                          What Drives Me
-                        </h4>
-                        <p
-                          className={`leading-relaxed text-lg ${
-                            isDark ? "text-slate-300" : "text-slate-700"
-                          }`}
-                        >
-                          {bioContent.passion}
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4
-                          className={`text-xl font-semibold mb-4 ${
-                            isDark ? "text-white" : "text-slate-900"
-                          }`}
-                        >
-                          Current Focus
-                        </h4>
-                        <p
-                          className={`leading-relaxed text-lg ${
-                            isDark ? "text-slate-300" : "text-slate-700"
-                          }`}
-                        >
-                          {bioContent.current}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-4 pt-6">
-                      <button
-                        onClick={() => {
-                          const projectsSection =
-                            document.getElementById("projects")
-                          if (projectsSection) {
-                            projectsSection.scrollIntoView({
-                              behavior: "smooth",
-                              block: "start",
-                            })
-                          }
-                        }}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-all hover:scale-105 ${
-                          isDark
-                            ? "bg-blue-500/20 text-blue-300 hover:bg-blue-500/30"
-                            : "bg-blue-100 text-blue-700 hover:bg-blue-200"
-                        }`}
-                      >
-                        View My Work
-                        <ArrowRight className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {activeSection === "expertise" && (
-                  <div className="space-y-6 animate-fadeIn">
-                    {expertise.map((area, index) => {
-                      const IconComponent = area.icon
-                      const colors = getColorClasses(area.color)
-
-                      return (
-                        <div
-                          key={index}
-                          className={`p-6 rounded-xl border transition-all hover:scale-[1.02] ${
-                            isDark
-                              ? "bg-slate-700/30 border-slate-600"
-                              : "bg-slate-50/50 border-slate-200"
-                          }`}
-                        >
-                          <div className="flex items-start gap-4">
-                            <div
-                              className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${colors.bg} ${colors.text} border ${colors.border}`}
-                            >
-                              <IconComponent className="w-6 h-6" />
-                            </div>
-                            <div className="flex-1">
-                              <h4
-                                className={`text-lg font-semibold mb-3 ${
-                                  isDark ? "text-white" : "text-slate-900"
-                                }`}
-                              >
-                                {area.category}
-                              </h4>
-                              <div className="flex flex-wrap gap-2">
-                                {area.skills.map((skill, skillIndex) => (
-                                  <span
-                                    key={skillIndex}
-                                    className={`px-3 py-1 rounded-lg text-sm font-medium transition-all hover:scale-105 ${
-                                      isDark
-                                        ? "bg-slate-600/50 text-slate-300"
-                                        : "bg-white text-slate-700 border border-slate-200"
-                                    }`}
-                                  >
-                                    {skill}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                )}
-
-                {activeSection === "approach" && (
-                  <div className="space-y-6 animate-fadeIn">
-                    {approach.map((principle, index) => {
-                      const IconComponent = principle.icon
-
-                      return (
-                        <div key={index} className="flex gap-4">
-                          <div
-                            className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                              isDark
-                                ? "bg-blue-500/20 text-blue-300"
-                                : "bg-blue-100 text-blue-600"
-                            }`}
-                          >
-                            <IconComponent className="w-6 h-6" />
-                          </div>
-                          <div>
-                            <h4
-                              className={`text-lg font-semibold mb-2 ${
-                                isDark ? "text-white" : "text-slate-900"
-                              }`}
-                            >
-                              {principle.title}
-                            </h4>
-                            <p
-                              className={`leading-relaxed ${
-                                isDark ? "text-slate-300" : "text-slate-700"
-                              }`}
-                            >
-                              {principle.description}
-                            </p>
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center mt-16">
-          <div
-            className={`p-8 rounded-2xl border relative overflow-hidden ${
-              isDark
-                ? "bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/20"
-                : "bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200"
-            }`}
-          >
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute top-0 left-0 w-32 h-32 bg-blue-500 rounded-full -translate-x-16 -translate-y-16"></div>
-              <div className="absolute bottom-0 right-0 w-32 h-32 bg-purple-500 rounded-full translate-x-16 translate-y-16"></div>
-            </div>
-
-            <div className="relative">
-              <h3
-                className={`text-3xl font-bold mb-4 ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
-              >
-                Ready to Build Something Amazing?
+              <h3 className="mb-2 font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">
+                Theodoros Mentis
               </h3>
-              <p
-                className={`text-lg mb-8 max-w-2xl mx-auto ${
-                  isDark ? "text-slate-300" : "text-slate-600"
-                }`}
-              >
-                Let's collaborate on your next project. I'm always excited to
-                work with creative minds and bring innovative ideas to life.
+              <p className="mb-4 text-lg text-[var(--v2-brand)]">
+                Senior Full-Stack Developer • React | WordPress | Berlin-based
               </p>
 
-              <div className="flex flex-wrap gap-4 justify-center">
-                <button
-                  onClick={scrollToContact}
-                  className={`flex items-center gap-2 px-8 py-4 rounded-xl font-medium transition-all hover:scale-105 ${
-                    isDark
-                      ? "bg-blue-600 text-white hover:bg-blue-500"
-                      : "bg-blue-500 text-white hover:bg-blue-600"
-                  }`}
-                >
-                  <Mail className="w-5 h-5" />
-                  Start a Conversation
+              <div className="mb-6 flex items-center justify-center gap-2 text-sm text-[var(--v2-muted)]">
+                <MapPin className="h-4 w-4" />
+                Berlin, Germany
+              </div>
+            </div>
+
+            <div className="mb-8 grid grid-cols-2 gap-4">
+              <div className="text-center">
+                <div className="font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">
+                  18+
+                </div>
+                <div className="text-sm text-[var(--v2-muted)]">Years Exp.</div>
+              </div>
+              <div className="text-center">
+                <div className="font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">
+                  390+
+                </div>
+                <div className="text-sm text-[var(--v2-muted)]">Projects</div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <button
+                onClick={() => scrollTo("contact")}
+                className={cn(v2PrimaryButton, "w-full")}
+              >
+                <Mail className="h-4 w-4" />
+                Get in touch
+              </button>
+
+              <div className="grid grid-cols-2 gap-3">
+                <button onClick={downloadResume} className={compactSecondary}>
+                  <Download className="h-4 w-4" />
+                  Resume
                 </button>
 
-                <button
-                  onClick={() => {
-                    const projectsSection = document.getElementById("projects")
-                    if (projectsSection) {
-                      projectsSection.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                      })
-                    }
-                  }}
-                  className={`flex items-center gap-2 px-8 py-4 rounded-xl font-medium transition-all hover:scale-105 border ${
-                    isDark
-                      ? "border-slate-600 text-slate-300 hover:bg-slate-700"
-                      : "border-slate-300 text-slate-700 hover:bg-slate-50"
-                  }`}
-                >
-                  <ExternalLink className="w-5 h-5" />
-                  View Portfolio
+                <button onClick={openGitHub} className={compactSecondary}>
+                  <Github className="h-4 w-4" />
+                  GitHub
                 </button>
               </div>
             </div>
           </div>
         </div>
+
+        <div className="lg:col-span-3">
+          <div className="rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-8">
+            <div className="mb-8 flex flex-wrap gap-3">
+              <TabButton id="about" label="About" icon={User} />
+              <TabButton id="expertise" label="Expertise" icon={Code2} />
+              <TabButton id="approach" label="Approach" icon={Target} />
+            </div>
+
+            <div className="min-h-[500px]">
+              {activeSection === "about" && (
+                <div className="animate-fadeIn space-y-6">
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="mb-4 text-xl font-semibold text-[var(--v2-text)]">
+                        Introduction
+                      </h4>
+                      <p className="text-lg leading-relaxed text-[var(--v2-muted)]">
+                        {bioContent.intro}
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 className="mb-4 text-xl font-semibold text-[var(--v2-text)]">
+                        What drives me
+                      </h4>
+                      <p className="text-lg leading-relaxed text-[var(--v2-muted)]">
+                        {bioContent.passion}
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 className="mb-4 text-xl font-semibold text-[var(--v2-text)]">
+                        Current focus
+                      </h4>
+                      <p className="text-lg leading-relaxed text-[var(--v2-muted)]">
+                        {bioContent.current}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-4 pt-6">
+                    <button
+                      onClick={() => scrollTo("projects")}
+                      className={v2SecondaryButton}
+                    >
+                      View my work
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {activeSection === "expertise" && (
+                <div className="animate-fadeIn space-y-6">
+                  {expertise.map((area, index) => {
+                    const IconComponent = area.icon
+
+                    return (
+                      <div
+                        key={index}
+                        className="rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/40 p-6 transition-colors hover:border-[var(--v2-acid)]/40"
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className={cn("h-12 w-12 flex-shrink-0", iconTile)}>
+                            <IconComponent className="h-6 w-6" />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="mb-3 text-lg font-semibold text-[var(--v2-text)]">
+                              {area.category}
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {area.skills.map((skill, skillIndex) => (
+                                <span
+                                  key={skillIndex}
+                                  className="rounded-lg border border-[var(--v2-line)] bg-[var(--v2-panel)] px-3 py-1 text-sm font-medium text-[var(--v2-muted)]"
+                                >
+                                  {skill}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+
+              {activeSection === "approach" && (
+                <div className="animate-fadeIn space-y-6">
+                  {approach.map((principle, index) => {
+                    const IconComponent = principle.icon
+
+                    return (
+                      <div key={index} className="flex gap-4">
+                        <div className={cn("h-12 w-12 flex-shrink-0", iconTile)}>
+                          <IconComponent className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <h4 className="mb-2 text-lg font-semibold text-[var(--v2-text)]">
+                            {principle.title}
+                          </h4>
+                          <p className="leading-relaxed text-[var(--v2-muted)]">
+                            {principle.description}
+                          </p>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-16 text-center">
+        <div className="relative overflow-hidden rounded-[2rem] border border-[var(--v2-line-strong)] bg-[radial-gradient(circle_at_15%_20%,rgb(from_var(--v2-brand)_r_g_b/0.16),transparent_40%),radial-gradient(circle_at_85%_80%,rgb(from_var(--v2-acid)_r_g_b/0.12),transparent_44%),var(--v2-panel)] p-8">
+          <div className="relative">
+            <h3 className="mb-4 font-display text-2xl font-bold tracking-tight text-[var(--v2-text)] md:text-3xl">
+              Ready to fix or build something?
+            </h3>
+            <p className="mx-auto mb-8 max-w-2xl text-lg text-[var(--v2-muted)]">
+              Tell me what's broken or what you want to build. I'll come back
+              with practical next steps and a clear quote.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-3">
+              <button
+                onClick={() => scrollTo("contact")}
+                className={v2PrimaryButton}
+              >
+                <Mail className="h-5 w-5" />
+                Start a conversation
+              </button>
+
+              <button
+                onClick={() => scrollTo("projects")}
+                className={v2SecondaryButton}
+              >
+                <ExternalLink className="h-5 w-5" />
+                View portfolio
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </SectionShell>
   )
 }

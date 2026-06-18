@@ -1,5 +1,4 @@
 import React from "react"
-import { useTheme } from "../../context/ThemeContext"
 import {
   budgetOptions,
   requestTypeOptions,
@@ -19,17 +18,10 @@ type ContactRequestFieldsProps = {
   onWebsiteUrlChange: (value: string) => void
 }
 
-const selectClass = (isDark: boolean) =>
-  `w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:border-transparent ${
-    isDark
-      ? "bg-slate-700 text-white border-slate-600 focus:ring-green-500"
-      : "bg-white text-slate-900 border-slate-300 focus:ring-green-500"
-  }`
+const selectClass =
+  "w-full rounded-xl border border-[var(--v2-line-strong)] bg-[var(--v2-panel-2)] px-4 py-3 text-[var(--v2-text)] transition-all focus:border-transparent focus:ring-2 focus:ring-[var(--v2-brand)]"
 
-const labelClass = (isDark: boolean) =>
-  `block text-sm font-medium mb-2 ${
-    isDark ? "text-slate-300" : "text-slate-700"
-  }`
+const labelClass = "mb-2 block text-sm font-medium text-[var(--v2-muted)]"
 
 const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
   requestType,
@@ -43,13 +35,11 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
   onBudgetChange,
   onWebsiteUrlChange,
 }) => {
-  const { isDark } = useTheme()
-
   return (
     <div className="space-y-6">
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <label htmlFor="requestType" className={labelClass(isDark)}>
+          <label htmlFor="requestType" className={labelClass}>
             Request type
           </label>
           <select
@@ -58,7 +48,7 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
             value={requestType}
             onChange={(e) => onRequestTypeChange(e.target.value)}
             disabled={disabled}
-            className={selectClass(isDark)}
+            className={selectClass}
           >
             <option value="">Select request type (optional)</option>
             {requestTypeOptions.map((option) => (
@@ -70,7 +60,7 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
         </div>
 
         <div>
-          <label htmlFor="urgency" className={labelClass(isDark)}>
+          <label htmlFor="urgency" className={labelClass}>
             Urgency
           </label>
           <select
@@ -79,7 +69,7 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
             value={urgency}
             onChange={(e) => onUrgencyChange(e.target.value)}
             disabled={disabled}
-            className={selectClass(isDark)}
+            className={selectClass}
           >
             <option value="">Select urgency (optional)</option>
             {urgencyOptions.map((option) => (
@@ -93,7 +83,7 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
 
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <label htmlFor="budget" className={labelClass(isDark)}>
+          <label htmlFor="budget" className={labelClass}>
             Budget range
           </label>
           <select
@@ -102,7 +92,7 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
             value={budget}
             onChange={(e) => onBudgetChange(e.target.value)}
             disabled={disabled}
-            className={selectClass(isDark)}
+            className={selectClass}
           >
             <option value="">Select budget (optional)</option>
             {budgetOptions.map((option) => (
@@ -114,7 +104,7 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
         </div>
 
         <div>
-          <label htmlFor="websiteUrl" className={labelClass(isDark)}>
+          <label htmlFor="websiteUrl" className={labelClass}>
             Website URL
           </label>
           <input
@@ -128,7 +118,7 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
             maxLength={500}
             autoComplete="url"
             inputMode="url"
-            className={`${selectClass(isDark)} ${
+            className={`${selectClass} ${
               websiteUrlError ? "border-red-500 focus:ring-red-500" : ""
             }`}
             aria-invalid={websiteUrlError ? true : undefined}

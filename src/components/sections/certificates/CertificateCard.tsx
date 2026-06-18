@@ -19,7 +19,6 @@ interface CertificateCardProps {
 
 export const CertificateCard: React.FC<CertificateCardProps> = ({
   certificate,
-  isDark,
   isExpanded,
   onToggleExpanded,
 }) => {
@@ -30,80 +29,43 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
     })
   }
 
-  const getLevelColor = (level: string) => {
-    switch (level) {
-      case "Beginner":
-        return "bg-green-100 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800"
-      case "Intermediate":
-        return "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800"
-      case "Advanced":
-        return "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800"
-      case "Expert":
-        return "bg-red-100 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800"
-      default:
-        return "bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800/50 dark:text-gray-300 dark:border-gray-700"
-    }
-  }
-
   return (
     <SurfaceCard interactive className="group relative overflow-hidden">
       <div className="p-6">
-        
-        <div className="flex items-start justify-between mb-4">
+        <div className="mb-4 flex items-start justify-between gap-4">
           <div className="flex-1">
-            <h3
-              className={`text-xl font-bold mb-2 group-hover:text-blue-500 transition-colors ${
-                isDark ? "text-white" : "text-slate-900"
-              }`}
-            >
+            <h3 className="mb-2 text-xl font-bold tracking-tight text-[var(--v2-text)] transition-colors group-hover:text-[var(--v2-acid)]">
               {certificate.title}
             </h3>
 
-            <div className="flex items-center gap-2 mb-3">
-              <Award
-                className={`w-4 h-4 ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}
-              />
-              <span
-                className={`font-semibold ${
-                  isDark ? "text-slate-300" : "text-slate-700"
-                }`}
-              >
+            <div className="mb-3 flex items-center gap-2">
+              <Award className="h-4 w-4 text-[var(--v2-soft)]" aria-hidden="true" />
+              <span className="font-semibold text-[var(--v2-muted)]">
                 {certificate.issuer}
               </span>
             </div>
 
-            <div className="flex items-center gap-1 mb-3">
+            <div className="mb-3 flex items-center gap-1.5">
               <Calendar
-                className={`w-4 h-4 ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}
+                className="h-4 w-4 text-[var(--v2-soft)]"
+                aria-hidden="true"
               />
-              <span
-                className={`text-sm ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}
-              >
+              <span className="text-sm text-[var(--v2-muted)]">
                 {formatDate(certificate.date)}
               </span>
             </div>
           </div>
 
-          <div
-            className={`px-3 py-1 rounded-full text-xs font-medium border ${getLevelColor(
-              certificate.level || "Intermediate"
-            )}`}
-          >
+          <div className="rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/70 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--v2-muted)]">
             {certificate.level || "Intermediate"}
           </div>
         </div>
 
         {certificate.verified && (
-          <div className="flex items-center gap-2 mb-4">
-            <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-green-100 dark:bg-green-900/30 border border-green-200 dark:border-green-700">
-              <div className="w-2 h-2 bg-green-500 rounded-full" />
-              <span className="text-xs font-medium text-green-700 dark:text-green-400">
+          <div className="mb-4 flex items-center gap-2">
+            <div className="flex items-center gap-1.5 rounded-full border border-[var(--v2-ok)]/30 bg-[var(--v2-ok)]/15 px-2 py-1">
+              <span className="h-2 w-2 rounded-full bg-[var(--v2-ok)]" />
+              <span className="text-xs font-semibold text-[var(--v2-ok)]">
                 Verified
               </span>
             </div>
@@ -111,24 +73,16 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
         )}
 
         {certificate.description && (
-          <p
-            className={`mb-4 leading-relaxed ${
-              isDark ? "text-slate-300" : "text-slate-700"
-            }`}
-          >
+          <p className="mb-4 leading-relaxed text-[var(--v2-muted)]">
             {certificate.description}
           </p>
         )}
 
         {certificate.skills && certificate.skills.length > 0 && (
           <div className="mb-4">
-            <h4
-              className={`text-sm font-semibold mb-2 flex items-center gap-2 ${
-                isDark ? "text-slate-300" : "text-slate-700"
-              }`}
-            >
-              <Users className="w-4 h-4" />
-              Skills Covered
+            <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-[var(--v2-muted)]">
+              <Users className="h-4 w-4" aria-hidden="true" />
+              Skills covered
             </h4>
             <div className="flex flex-wrap gap-2">
               {certificate.skills
@@ -136,21 +90,13 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
                 .map((skill, index) => (
                   <span
                     key={index}
-                    className={`px-3 py-1 rounded-lg text-sm font-medium ${
-                      isDark
-                        ? "bg-slate-700/50 text-slate-300 border border-slate-600/50"
-                        : "bg-slate-100 text-slate-700 border border-slate-200"
-                    }`}
+                    className="rounded-lg border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 px-3 py-1 text-sm font-medium text-[var(--v2-muted)]"
                   >
                     {skill}
                   </span>
                 ))}
               {!isExpanded && certificate.skills.length > 6 && (
-                <span
-                  className={`px-3 py-1 text-sm ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}
-                >
+                <span className="px-3 py-1 text-sm text-[var(--v2-soft)]">
                   +{certificate.skills.length - 6} more
                 </span>
               )}
@@ -160,21 +106,12 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
 
         {isExpanded && (
           <div className="space-y-4">
-            
             {certificate.credentialId && (
               <div>
-                <h4
-                  className={`text-sm font-semibold mb-2 ${
-                    isDark ? "text-slate-300" : "text-slate-700"
-                  }`}
-                >
+                <h4 className="mb-2 text-sm font-semibold text-[var(--v2-muted)]">
                   Credential ID
                 </h4>
-                <p
-                  className={`text-sm font-mono ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}
-                >
+                <p className="font-mono text-sm text-[var(--v2-soft)]">
                   {certificate.credentialId}
                 </p>
               </div>
@@ -182,18 +119,10 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
 
             {certificate.duration && (
               <div>
-                <h4
-                  className={`text-sm font-semibold mb-2 ${
-                    isDark ? "text-slate-300" : "text-slate-700"
-                  }`}
-                >
+                <h4 className="mb-2 text-sm font-semibold text-[var(--v2-muted)]">
                   Duration
                 </h4>
-                <p
-                  className={`text-sm ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}
-                >
+                <p className="text-sm text-[var(--v2-soft)]">
                   {certificate.duration}
                 </p>
               </div>
@@ -201,25 +130,21 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           </div>
         )}
 
-        <div className="flex items-center justify-between mt-6">
-          
+        <div className="mt-6 flex items-center justify-between">
           <button
             onClick={onToggleExpanded}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105 ${
-              isDark
-                ? "bg-slate-700/50 text-slate-300 hover:bg-slate-700"
-                : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-            }`}
+            className="inline-flex items-center gap-2 rounded-lg border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 px-4 py-2 text-sm font-medium text-[var(--v2-text)] transition-colors hover:border-[var(--v2-acid)]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
+            aria-expanded={isExpanded}
           >
             {isExpanded ? (
               <>
-                <ChevronUp className="w-4 h-4" />
-                Show Less
+                <ChevronUp className="h-4 w-4" aria-hidden="true" />
+                Show less
               </>
             ) : (
               <>
-                <ChevronDown className="w-4 h-4" />
-                Show More
+                <ChevronDown className="h-4 w-4" aria-hidden="true" />
+                Show more
               </>
             )}
           </button>
@@ -229,14 +154,10 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
               href={certificate.credentialUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105 ${
-                isDark
-                  ? "bg-blue-600 text-white hover:bg-blue-700"
-                  : "bg-blue-500 text-white hover:bg-blue-600"
-              }`}
+              className="inline-flex items-center gap-2 rounded-lg bg-[var(--v2-acid)] px-4 py-2 text-sm font-bold text-[var(--v2-acid-ink)] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] motion-reduce:hover:translate-y-0"
             >
-              <ExternalLink className="w-4 h-4" />
-              View Certificate
+              <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              View certificate
             </a>
           )}
         </div>

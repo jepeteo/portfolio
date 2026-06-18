@@ -1,62 +1,38 @@
 import React from "react"
 import { Mail, Download } from "lucide-react"
+import { v2PrimaryButton, v2SecondaryButton } from "../../ui/v2Styles"
 
 interface ExperienceCallToActionProps {
   isDark: boolean
 }
 
-export const ExperienceCallToAction: React.FC<ExperienceCallToActionProps> = ({
-  isDark,
-}) => {
+export const ExperienceCallToAction: React.FC<
+  ExperienceCallToActionProps
+> = () => {
   return (
-    <div
-      className={`rounded-2xl p-8 text-center ${
-        isDark
-          ? "bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50"
-          : "bg-gradient-to-br from-slate-50/50 to-white/50 border border-slate-200/50"
-      } backdrop-blur-sm`}
-    >
-      <h3
-        className={`text-2xl font-bold mb-4 ${
-          isDark ? "text-white" : "text-slate-900"
-        }`}
-      >
-        Let's Work Together
+    <div className="rounded-[2rem] border border-[var(--v2-line-strong)] bg-[radial-gradient(circle_at_15%_20%,rgb(from_var(--v2-brand)_r_g_b/0.16),transparent_40%),radial-gradient(circle_at_85%_80%,rgb(from_var(--v2-acid)_r_g_b/0.12),transparent_44%),var(--v2-panel)] p-8 text-center">
+      <h3 className="font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">
+        Let's work together
       </h3>
 
-      <p
-        className={`text-lg mb-8 max-w-2xl mx-auto ${
-          isDark ? "text-slate-300" : "text-slate-700"
-        }`}
-      >
-        Ready to bring your project to life? Let's discuss how my experience can
-        help you achieve your goals.
+      <p className="mx-auto mb-8 mt-4 max-w-2xl text-lg text-[var(--v2-muted)]">
+        Need someone who can fix, improve and build? Tell me about your project
+        and I'll explain how my experience maps to it.
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <a
-          href="#contact"
-          className={`inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-white transition-all transform hover:scale-105 ${
-            isDark
-              ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500"
-              : "bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
-          } shadow-lg`}
-        >
-          <Mail className="w-5 h-5" />
-          Start a Project
+      <div className="flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="#contact" className={v2PrimaryButton}>
+          <Mail className="h-5 w-5" aria-hidden="true" />
+          Start a project
         </a>
 
         <a
           href="/cv/Theodoros-Mentis-CV.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className={`inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold transition-all transform hover:scale-105 ${
-            isDark
-              ? "bg-slate-700/50 text-slate-300 border border-slate-600/50 hover:bg-slate-700 hover:border-slate-500"
-              : "bg-white/70 text-slate-700 border border-slate-300/50 hover:bg-white hover:border-slate-400"
-          } shadow-lg`}
+          className={v2SecondaryButton}
         >
-          <Download className="w-5 h-5" />
+          <Download className="h-5 w-5" aria-hidden="true" />
           Download CV
         </a>
       </div>

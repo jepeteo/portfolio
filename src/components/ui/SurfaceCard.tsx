@@ -24,13 +24,11 @@ const SurfaceCard = <T extends SurfaceCardElement = "div">({
   return (
     <Component
       className={cn(
-        "rounded-2xl border transition-all duration-300",
-        "bg-white border-slate-200/90 shadow-sm",
-        "dark:bg-slate-800 dark:border-slate-600/70 dark:shadow-lg dark:shadow-black/30",
+        "rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] transition-all duration-300",
         interactive &&
-          "hover:-translate-y-0.5 hover:border-blue-400/60 hover:shadow-md dark:hover:border-blue-500/50 dark:hover:bg-slate-700/90",
+          "hover:-translate-y-0.5 hover:border-[var(--v2-acid)]/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0",
         accent === "left" &&
-          "border-l-4 border-l-transparent hover:border-l-blue-500 dark:hover:border-l-blue-400",
+          "border-l-4 border-l-transparent hover:border-l-[var(--v2-acid)]",
         className
       )}
       {...props}
