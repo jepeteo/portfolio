@@ -99,7 +99,7 @@ class SEOManager {
     }
 
     if (config.canonical) {
-      this.setLinkTag("canonical", config.canonical, "canonical")
+      this.setCanonical(config.canonical)
     }
 
     config.alternateUrls?.forEach(({ lang, href }) => {
@@ -143,6 +143,22 @@ class SEOManager {
 
     meta.setAttribute("content", content)
     this.metaTags.set(name, meta)
+  }
+
+  // There must only ever be ONE canonical link. Update the existing one in
+  // place (whether it came from the static HTML or a previous route) instead of
+  // appending a second, conflicting canonical on client-side navigation.
+  private setCanonical(href: string): void {
+    let link = document.querySelector(
+      'link[rel="canonical"]'
+    ) as HTMLLinkElement | null
+    if (!link) {
+      link = document.createElement("link")
+      link.rel = "canonical"
+      document.head.appendChild(link)
+    }
+    link.href = href
+    this.linkTags.set("canonical", link)
   }
 
   private setLinkTag(
