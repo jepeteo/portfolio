@@ -396,16 +396,9 @@ class SEOManager {
   }
 
   optimizeCorewWebVitals() {
-    // Fonts are now self-hosted via fontsource, no preloading needed
-    this.addResourceHints()
-  }
-
-  private addResourceHints() {
-    const domains = ["cdn.jsdelivr.net"]
-
-    domains.forEach((domain) => {
-      this.setLinkTag(`dns-prefetch-${domain}`, `//${domain}`, "dns-prefetch")
-    })
+    // Fonts are self-hosted via fontsource (no preloading needed) and the only
+    // third-party origin (PostHog) is already hinted in index.html. Nothing to
+    // add here at runtime; kept as a stable no-op hook for callers.
   }
 }
 
