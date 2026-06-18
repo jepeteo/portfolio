@@ -8,8 +8,8 @@ export const BackToTopButton: React.FC = () => {
     const handleScroll = () => {
       const scrollTop = window.scrollY
       const windowHeight = window.innerHeight
-      const documentHeight = document.documentElement.scrollHeight
-      const shouldShow = scrollTop > 300
+      const documentHeight = document.documentElement.scrollHeight
+      const shouldShow = scrollTop > 300
       const nearFooter = scrollTop + windowHeight >= documentHeight - 150
 
       setShowButton(shouldShow && !nearFooter)
@@ -21,22 +21,21 @@ export const BackToTopButton: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  useEffect(() => {
+  useEffect(() => {
     const style = document.createElement("style")
     style.textContent = `
       @keyframes backToTopFloat {
         0%, 100% { transform: translateY(0px); }
         50% { transform: translateY(-3px); }
       }
-      
-      @keyframes backToTopPulse {
-        0% { box-shadow: 0 10px 25px rgba(0,0,0,0.2), 0 6px 15px rgba(102, 126, 234, 0.3), 0 0 0 0 rgba(102, 126, 234, 0.3); }
-        100% { box-shadow: 0 10px 25px rgba(0,0,0,0.2), 0 6px 15px rgba(102, 126, 234, 0.3), 0 0 0 6px rgba(102, 126, 234, 0); }
-      }
-      
+
       @keyframes backToTopArrowBounce {
         0%, 100% { transform: translateY(0px); }
         50% { transform: translateY(-1px); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .back-to-top-btn { animation: none !important; }
       }
     `
     document.head.appendChild(style)
@@ -68,49 +67,44 @@ export const BackToTopButton: React.FC = () => {
       }}
     >
       <button
+        className="back-to-top-btn"
         onClick={scrollToTop}
         style={{
-          width: "56px",
-          height: "56px",
-          borderRadius: "50%",
-          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-          color: "white",
-          border: "none",
+          width: "52px",
+          height: "52px",
+          borderRadius: "9999px",
+          background: "var(--v2-acid)",
+          color: "var(--v2-acid-ink)",
+          border: "1px solid var(--v2-line-strong)",
           cursor: "pointer",
-          boxShadow: showButton
-            ? "0 10px 25px rgba(0,0,0,0.2), 0 6px 15px rgba(102, 126, 234, 0.3)"
-            : "0 0 0 rgba(0,0,0,0)",
+          boxShadow: showButton ? "var(--v2-shadow)" : "0 0 0 rgba(0,0,0,0)",
           opacity: showButton ? 1 : 0,
           visibility: showButton ? "visible" : "hidden",
           transform: showButton
             ? "translateY(0px) scale(1)"
             : "translateY(10px) scale(0.9)",
-          transition: "all 0.3s ease-out",
+          transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           pointerEvents: "auto",
           animation: showButton
-            ? "backToTopFloat 2.5s ease-in-out infinite, backToTopPulse 3s ease-in-out infinite alternate"
+            ? "backToTopFloat 2.5s ease-in-out infinite"
             : "none",
         }}
         onMouseEnter={(e) => {
           if (showButton) {
-            e.currentTarget.style.animation = "none" // Disable animations during hover
+            e.currentTarget.style.animation = "none"
             e.currentTarget.style.transform = "translateY(-3px) scale(1.05)"
-            e.currentTarget.style.boxShadow =
-              "0 15px 35px rgba(0,0,0,0.3), 0 8px 20px rgba(102, 126, 234, 0.4)"
           }
         }}
         onMouseLeave={(e) => {
           if (showButton) {
             e.currentTarget.style.transform = "translateY(0px) scale(1)"
-            e.currentTarget.style.boxShadow =
-              "0 10px 25px rgba(0,0,0,0.2), 0 6px 15px rgba(102, 126, 234, 0.3)"
             setTimeout(() => {
               if (showButton) {
                 e.currentTarget.style.animation =
-                  "backToTopFloat 2.5s ease-in-out infinite, backToTopPulse 3s ease-in-out infinite alternate"
+                  "backToTopFloat 2.5s ease-in-out infinite"
               }
             }, 100)
           }

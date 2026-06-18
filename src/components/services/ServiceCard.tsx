@@ -1,37 +1,15 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
-import {
-  AlertCircle,
-  Clock,
-  Wrench,
-  Zap,
-  Globe,
-  type LucideIcon,
-} from "lucide-react"
+import { ArrowUpRight, Clock } from "lucide-react"
 import type { ServiceItem } from "../../content/services"
 import { mapServiceIdToRequestType } from "../../content/services"
-import SurfaceCard from "../ui/SurfaceCard"
-import IconWell from "../ui/IconWell"
 import { useMotionConfig } from "../../hooks/useMotionConfig"
 
 type ServiceCardProps = {
   service: ServiceItem
   compact?: boolean
   index?: number
-}
-
-const getServiceIcon = (service: ServiceItem): LucideIcon => {
-  if (service.emergency) return AlertCircle
-  if (service.featured) return Zap
-  if (service.id.includes("wordpress") || service.id.includes("woo")) return Wrench
-  return Globe
-}
-
-const getServiceGradient = (service: ServiceItem): string => {
-  if (service.emergency) return "from-amber-500 to-orange-500"
-  if (service.featured) return "from-blue-500 to-purple-500"
-  return "from-cyan-500 to-blue-500"
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({
@@ -42,8 +20,6 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   const requestType = mapServiceIdToRequestType(service.id)
   const contactHref = `/?type=${requestType}#contact`
   const { stagger } = useMotionConfig()
-  const Icon = getServiceIcon(service)
-  const gradient = getServiceGradient(service)
 
   return (
     <motion.div
@@ -53,62 +29,63 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       viewport={{ once: true, margin: "-40px" }}
       className="h-full"
     >
-      <SurfaceCard
-        as="article"
-        interactive
-        className={`group flex h-full flex-col p-6 ${
+      <article
+        className={`group flex h-full flex-col rounded-3xl border bg-[var(--v2-panel)] p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--v2-acid)]/40 ${
           service.featured && !compact
-            ? "ring-1 ring-blue-500/20 dark:ring-blue-400/20"
-            : ""
-        }`}
+            ? "border-[var(--v2-acid)]/40"
+            : "border-[var(--v2-line)]"
+        } motion-reduce:transition-none motion-reduce:hover:translate-y-0`}
       >
-        <div className="mb-4 flex flex-wrap items-center gap-2">
-          <IconWell icon={Icon} gradient={gradient} size="sm" />
-          <div className="flex flex-wrap gap-2">
+        {(service.emergency || (service.featured && !compact)) && (
+          <div className="mb-4 flex flex-wrap gap-2">
             {service.emergency && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/20 px-2 py-1 text-xs font-medium text-amber-800 dark:text-amber-300">
-                <AlertCircle className="h-3 w-3" aria-hidden="true" />
+              <span className="rounded-full border border-[var(--v2-line)] px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--v2-acid)]">
                 Urgent
               </span>
             )}
             {service.featured && !compact && (
-              <span className="rounded-full bg-blue-500/20 px-2 py-1 text-xs font-medium text-blue-800 dark:text-blue-300">
+              <span className="rounded-full border border-[var(--v2-line)] px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--v2-muted)]">
                 Featured
               </span>
             )}
           </div>
-        </div>
+        )}
 
-        <h3 className="mb-2 text-lg font-semibold text-slate-900 dark:text-white">
+        <h3 className="mb-2 flex items-start gap-1.5 text-lg font-bold tracking-tight text-[var(--v2-text)]">
           {service.title}
+          <ArrowUpRight
+            className="mt-1 h-4 w-4 flex-none text-[var(--v2-soft)] transition-colors group-hover:text-[var(--v2-acid)]"
+            aria-hidden="true"
+          />
         </h3>
 
-        <p className="mb-4 flex-grow text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+        <p className="mb-4 flex-grow text-sm leading-relaxed text-[var(--v2-muted)]">
           {service.shortDescription}
         </p>
 
         <div className="mt-auto space-y-3">
-          {service.priceLabel && (
-            <p className="text-sm font-semibold text-blue-600 dark:text-blue-300">
-              {service.priceLabel}
-            </p>
-          )}
-
-          {service.deliveryLabel && (
-            <p className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-              <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-              {service.deliveryLabel}
-            </p>
-          )}
+          <div className="flex flex-wrap items-center gap-2">
+            {service.priceLabel && (
+              <span className="whitespace-nowrap rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/70 px-3 py-1.5 text-sm font-bold text-[var(--v2-text)]">
+                {service.priceLabel}
+              </span>
+            )}
+            {service.deliveryLabel && (
+              <span className="inline-flex items-center gap-1.5 text-xs text-[var(--v2-soft)]">
+                <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+                {service.deliveryLabel}
+              </span>
+            )}
+          </div>
 
           <Link
             to={contactHref}
-            className="inline-flex text-sm font-semibold text-blue-600 transition-transform group-hover:translate-x-1 dark:text-blue-400"
+            className="inline-flex rounded-sm text-sm font-bold text-[var(--v2-brand)] transition-transform group-hover:translate-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
           >
             Ask about this →
           </Link>
         </div>
-      </SurfaceCard>
+      </article>
     </motion.div>
   )
 }

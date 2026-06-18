@@ -1,6 +1,6 @@
 import React from "react"
-import { useTheme } from "../../../context/ThemeContext"
-import { Heart, ArrowRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
+import { v2PrimaryButton, v2SecondaryButton } from "../../ui/v2Styles"
 
 interface SkillsCallToActionProps {
   onScrollToProjects: () => void
@@ -11,60 +11,33 @@ const SkillsCallToAction: React.FC<SkillsCallToActionProps> = ({
   onScrollToProjects,
   onScrollToContact,
 }) => {
-  const { isDark } = useTheme()
-
   return (
     <div className="mt-16">
-      <div
-        className={`p-8 rounded-2xl backdrop-blur-sm border text-center relative overflow-hidden ${
-          isDark
-            ? "bg-gradient-to-br from-slate-800/40 to-slate-900/40 border-slate-700/50"
-            : "bg-gradient-to-br from-white/40 to-slate-50/40 border-slate-200/50"
-        }`}
-      >
-        <div className="relative z-10">
-          <h3
-            className={`text-3xl font-bold mb-4 ${
-              isDark ? "text-white" : "text-slate-900"
-            }`}
-          >
-            Let's Create Something Amazing Together
-          </h3>
-          <p
-            className={`text-lg mb-8 max-w-2xl mx-auto leading-relaxed ${
-              isDark ? "text-slate-300" : "text-slate-600"
-            }`}
-          >
-            These technologies are more than just tools to me—they're the way I
-            bring ideas to life. I'd love to use them to help you build
-            something incredible.
-          </p>
+      <div className="relative overflow-hidden rounded-[2rem] border border-[var(--v2-line-strong)] bg-[radial-gradient(circle_at_15%_20%,rgb(from_var(--v2-brand)_r_g_b/0.16),transparent_40%),radial-gradient(circle_at_85%_80%,rgb(from_var(--v2-acid)_r_g_b/0.12),transparent_44%),var(--v2-panel)] p-8 text-center">
+        <h3 className="font-display text-2xl font-bold tracking-tight text-[var(--v2-text)] md:text-3xl">
+          Have a project that needs these skills?
+        </h3>
+        <p className="mx-auto mb-8 mt-4 max-w-2xl leading-relaxed text-[var(--v2-muted)]">
+          These are the tools I use to fix, improve and build business websites.
+          Tell me what you need and I'll map out a practical plan.
+        </p>
 
-          <div className="flex flex-wrap gap-4 justify-center">
-            <button
-              onClick={onScrollToProjects}
-              className="px-8 py-4 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-2xl font-semibold hover:from-violet-600 hover:to-purple-600 transition-all duration-300 flex items-center gap-3 shadow-lg hover:shadow-xl hover:scale-105"
-            >
-              <Heart className="w-5 h-5" />
-              View My Work
-              <ArrowRight className="w-5 h-5" />
-            </button>
-            <button
-              onClick={onScrollToContact}
-              className={`px-8 py-4 rounded-2xl font-semibold border-2 transition-all duration-300 hover:scale-105 ${
-                isDark
-                  ? "border-slate-600 text-slate-300 hover:bg-slate-700 hover:border-slate-500"
-                  : "border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400"
-              }`}
-            >
-              Start a Project
-            </button>
-          </div>
-        </div>
-
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-20 h-20 rounded-full bg-violet-500" />
-          <div className="absolute bottom-10 right-10 w-16 h-16 rounded-full bg-purple-500" />
+        <div className="flex flex-wrap justify-center gap-3">
+          <button
+            type="button"
+            onClick={onScrollToProjects}
+            className={v2PrimaryButton}
+          >
+            View my work
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={onScrollToContact}
+            className={v2SecondaryButton}
+          >
+            Start a project
+          </button>
         </div>
       </div>
     </div>

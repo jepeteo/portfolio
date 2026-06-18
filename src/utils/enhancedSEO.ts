@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { site } from "../config/site"
+import { routeMeta } from "../config/routeMeta.js"
 
 export interface EnhancedSEOConfig {
   title?: string
@@ -98,7 +99,7 @@ class SEOManager {
     }
 
     if (config.canonical) {
-      this.setLinkTag("canonical", config.canonical, "canonical")
+      this.setCanonical(config.canonical)
     }
 
     config.alternateUrls?.forEach(({ lang, href }) => {
@@ -144,6 +145,22 @@ class SEOManager {
     this.metaTags.set(name, meta)
   }
 
+  // There must only ever be ONE canonical link. Update the existing one in
+  // place (whether it came from the static HTML or a previous route) instead of
+  // appending a second, conflicting canonical on client-side navigation.
+  private setCanonical(href: string): void {
+    let link = document.querySelector(
+      'link[rel="canonical"]'
+    ) as HTMLLinkElement | null
+    if (!link) {
+      link = document.createElement("link")
+      link.rel = "canonical"
+      document.head.appendChild(link)
+    }
+    link.href = href
+    this.linkTags.set("canonical", link)
+  }
+
   private setLinkTag(
     key: string,
     href: string,
@@ -184,8 +201,9 @@ class SEOManager {
   }
 
   private cleanup(): void {
-    if (document.title !== "Theodoros Mentis - Senior Full Stack Developer") {
-      document.title = "Theodoros Mentis - Senior Full Stack Developer"
+    const homeTitle = routeMeta["/"].title
+    if (document.title !== homeTitle) {
+      document.title = homeTitle
     }
   }
 
@@ -254,13 +272,13 @@ class SEOManager {
     return {
       "@context": "https://schema.org",
       "@type": "CreativeWork",
-      "@id": "https://theodorosmentis.com/#portfolio",
+      "@id": "https://www.theodorosmentis.com/#portfolio",
       name: "Theodoros Mentis Portfolio",
       description:
         "Professional portfolio showcasing web development projects, applications, and technical expertise",
       creator: {
         "@type": "Person",
-        "@id": "https://theodorosmentis.com/#person",
+        "@id": "https://www.theodorosmentis.com/#person",
         name: "Theodoros Mentis",
         jobTitle: "Senior Full Stack Developer",
         sameAs: [
@@ -277,10 +295,10 @@ class SEOManager {
           project.type === "E-Shop" || project.type === "E-commerce"
             ? "WebApplication"
             : "SoftwareApplication",
-        "@id": `https://theodorosmentis.com/#project-${index}`,
+        "@id": `https://www.theodorosmentis.com/#project-${index}`,
         name: project.name,
         description: project.description,
-        url: project.url || `https://theodorosmentis.com/#project-${index}`,
+        url: project.url || `https://www.theodorosmentis.com/#project-${index}`,
         applicationCategory: this.mapProjectTypeToCategory(project.type),
         programmingLanguage: project.technologies,
         dateCreated: project.dateCreated || currentYear.toString(),
@@ -294,7 +312,7 @@ class SEOManager {
         }),
         creator: {
           "@type": "Person",
-          "@id": "https://theodorosmentis.com/#person",
+          "@id": "https://www.theodorosmentis.com/#person",
           name: "Theodoros Mentis",
         },
       })),
@@ -343,7 +361,7 @@ class SEOManager {
     return {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      "@id": "https://theodorosmentis.com/#react-projects",
+      "@id": "https://www.theodorosmentis.com/#react-projects",
       name: "React Projects by Theodoros Mentis",
       description:
         "Collection of React applications and components showcasing modern web development skills",
@@ -353,7 +371,7 @@ class SEOManager {
         position: index + 1,
         item: {
           "@type": "SoftwareApplication",
-          "@id": `https://theodorosmentis.com/#react-project-${project.id}`,
+          "@id": `https://www.theodorosmentis.com/#react-project-${project.id}`,
           name: project.title,
           description: project.description,
           applicationCategory: "Web Application",
@@ -378,13 +396,13 @@ class SEOManager {
               : "Development Project",
           creator: {
             "@type": "Person",
-            "@id": "https://theodorosmentis.com/#person",
+            "@id": "https://www.theodorosmentis.com/#person",
             name: "Theodoros Mentis",
           },
           ...(project.featured && {
             isPartOf: {
               "@type": "CreativeWork",
-              "@id": "https://theodorosmentis.com/#featured-projects",
+              "@id": "https://www.theodorosmentis.com/#featured-projects",
               name: "Featured Projects",
             },
           }),
@@ -394,16 +412,9 @@ class SEOManager {
   }
 
   optimizeCorewWebVitals() {
-    // Fonts are now self-hosted via fontsource, no preloading needed
-    this.addResourceHints()
-  }
-
-  private addResourceHints() {
-    const domains = ["cdn.jsdelivr.net"]
-
-    domains.forEach((domain) => {
-      this.setLinkTag(`dns-prefetch-${domain}`, `//${domain}`, "dns-prefetch")
-    })
+    // Fonts are self-hosted via fontsource (no preloading needed) and the only
+    // third-party origin (PostHog) is already hinted in index.html. Nothing to
+    // add here at runtime; kept as a stable no-op hook for callers.
   }
 }
 
@@ -492,14 +503,16 @@ export class SEOUtils {
 export const seoManager = SEOManager.getInstance()
 
 export const defaultSEOConfig: EnhancedSEOConfig = {
-  title: `${site.name} - ${site.title} Portfolio`,
-  description: site.description,
+  title: routeMeta["/"].title,
+  description: routeMeta["/"].description,
   keywords: [...site.keywords],
-  ogTitle: `${site.name} - ${site.title}`,
-  ogDescription: site.shortDescription,
-  ogImage: site.ogImage,
+  canonical: `${site.url}/`,
+  ogTitle: routeMeta["/"].title,
+  ogDescription: routeMeta["/"].description,
+  ogUrl: `${site.url}/`,
+  ogImage: `${site.url}${site.ogImage}`,
   ogType: "profile",
-  ogSiteName: `${site.alternateName} Portfolio`,
+  ogSiteName: `${site.name} Portfolio`,
   twitterCard: "summary_large_image",
   twitterCreator: site.twitterCreator,
   robots: "index,follow,max-image-preview:large",

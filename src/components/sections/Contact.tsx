@@ -89,6 +89,7 @@ interface FormFieldProps {
   rows?: number
   isValid?: boolean
   showCharCount?: boolean
+  autoComplete?: string
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -102,46 +103,37 @@ const FormField: React.FC<FormFieldProps> = ({
   placeholder,
   maxLength,
   disabled,
-  isDark,
   rows = 6,
   isValid,
   showCharCount = true,
+  autoComplete,
 }) => {
   const [isFocused, setIsFocused] = useState(false)
   const charCount = value.length
   const charPercentage = (charCount / maxLength) * 100
+  const errorId = `${id}-error`
 
   const getCharCountColor = () => {
     if (charPercentage >= 90) return "text-red-500"
-    if (charPercentage >= 75) return "text-yellow-500"
-    return isDark ? "text-slate-500" : "text-slate-400"
+    if (charPercentage >= 75) return "text-[var(--v2-acid)]"
+    return "text-[var(--v2-soft)]"
   }
 
   const getBorderColor = () => {
     if (error) return "border-red-500 focus:ring-red-500"
     if (isValid && value.length > 0)
-      return isDark
-        ? "border-green-500/50 focus:ring-green-500"
-        : "border-green-500 focus:ring-green-500"
-    return isDark
-      ? "border-slate-600 focus:ring-green-500"
-      : "border-slate-300 focus:ring-green-500"
+      return "border-[var(--v2-ok)]/60 focus:ring-[var(--v2-ok)]"
+    return "border-[var(--v2-line-strong)] focus:ring-[var(--v2-brand)]"
   }
 
-  const inputClasses = `w-full px-4 py-3 rounded-xl border transition-all focus:ring-2 focus:border-transparent ${getBorderColor()} ${
-    isDark
-      ? "bg-slate-700 text-white placeholder-slate-400"
-      : "bg-white text-slate-900 placeholder-slate-500"
-  }`
+  const inputClasses = `w-full rounded-xl border bg-[var(--v2-panel-2)] px-4 py-3 text-[var(--v2-text)] transition-all placeholder:text-[var(--v2-soft)] focus:border-transparent focus:ring-2 ${getBorderColor()}`
 
   return (
     <div className="relative">
       <div className="flex justify-between items-center mb-2">
         <label
           htmlFor={id}
-          className={`block text-sm font-medium ${
-            isDark ? "text-slate-300" : "text-slate-700"
-          }`}
+          className="block text-sm font-medium text-[var(--v2-muted)]"
         >
           {label} *
         </label>
@@ -176,6 +168,10 @@ const FormField: React.FC<FormFieldProps> = ({
             placeholder={placeholder}
             disabled={disabled}
             maxLength={maxLength}
+            autoComplete={autoComplete}
+            aria-required="true"
+            aria-invalid={error ? "true" : undefined}
+            aria-describedby={error ? errorId : undefined}
           />
         ) : (
           <input
@@ -193,6 +189,10 @@ const FormField: React.FC<FormFieldProps> = ({
             placeholder={placeholder}
             disabled={disabled}
             maxLength={maxLength}
+            autoComplete={autoComplete}
+            aria-required="true"
+            aria-invalid={error ? "true" : undefined}
+            aria-describedby={error ? errorId : undefined}
           />
         )}
 
@@ -209,7 +209,7 @@ const FormField: React.FC<FormFieldProps> = ({
               {error ? (
                 <X className="w-5 h-5 text-red-500" />
               ) : isValid ? (
-                <Check className="w-5 h-5 text-green-500" />
+                <Check className="w-5 h-5 text-[var(--v2-ok)]" />
               ) : null}
             </motion.div>
           )}
@@ -220,13 +220,15 @@ const FormField: React.FC<FormFieldProps> = ({
       <AnimatePresence>
         {error && (
           <motion.p
-            className="mt-2 text-sm text-red-500 flex items-center gap-1"
+            id={errorId}
+            role="alert"
+            className="mt-2 text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
             initial={{ opacity: 0, y: -10, height: 0 }}
             animate={{ opacity: 1, y: 0, height: "auto" }}
             exit={{ opacity: 0, y: -10, height: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <AlertCircle className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
             {error}
           </motion.p>
         )}
@@ -399,6 +401,10 @@ const Contact: React.FC = memo(() => {
           csrfToken: token,
           timestamp: startTime, // Use the form's start time for bot detection
           honeypot,
+          sourcePage:
+            typeof window !== "undefined"
+              ? window.location.pathname + window.location.search
+              : undefined,
         }
         const response = await fetch("/api/contact", {
           method: "POST",
@@ -515,9 +521,9 @@ const Contact: React.FC = memo(() => {
         ref={targetRef}
         id="contact"
         variant="default"
-        eyebrow="Start a Project"
-        title="Conversations I Welcome"
-        subtitle="Ready to collaborate? Start a project and I will help you shape scope, timeline, and delivery."
+        eyebrow="Start here"
+        title="Tell me what you need fixed or built."
+        subtitle="Send the website URL, the problem and your deadline. You'll get a clear next step and a fixed quote — no long questionnaire before we've spoken."
         className={`transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
@@ -525,59 +531,37 @@ const Contact: React.FC = memo(() => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-8">
               <div>
-                <h3
-                  className={`text-2xl font-semibold mb-6 ${
-                    isDark ? "text-white" : "text-slate-900"
-                  }`}
-                >
-                  Start a Project
+                <h3 className="mb-6 text-2xl font-semibold tracking-tight text-[var(--v2-text)]">
+                  What to include
                 </h3>
 
-                <p
-                  className={`text-lg mb-8 ${
-                    isDark ? "text-slate-300" : "text-slate-600"
-                  }`}
-                >
-                  I'm always interested in hearing about new opportunities and
-                  exciting projects. Whether you're a company looking to hire,
-                  or you're looking for a freelancer, I'd love to hear from you.
+                <p className="mb-8 text-lg text-[var(--v2-muted)]">
+                  A link to the site, a short description of what's broken or
+                  what you want to build, and your timeline. Whether you're a
+                  business owner, an agency needing extra capacity, or a team
+                  looking to hire, I'll get back to you with practical next
+                  steps.
                 </p>
               </div>
 
               <div className="space-y-4">
                 {contactInfo.map((item, index) => {
-                  const cardClassName = `flex items-center gap-4 p-4 rounded-xl transition-all ${
-                    item.href ? "hover:scale-105" : ""
-                  } ${
-                    isDark
-                      ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-green-500/50"
-                      : "bg-white/50 backdrop-blur-sm border border-slate-200 hover:border-green-500/50"
+                  const cardClassName = `flex items-center gap-4 rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-4 transition-all ${
+                    item.href
+                      ? "hover:-translate-y-0.5 hover:border-[var(--v2-acid)]/40 motion-reduce:hover:translate-y-0"
+                      : ""
                   }`
 
                   const cardContent = (
                     <>
-                      <div
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                          isDark
-                            ? "bg-green-500/20 text-green-300"
-                            : "bg-green-100 text-green-600"
-                        }`}
-                      >
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-acid)]">
                         <item.icon className="w-6 h-6" />
                       </div>
                       <div>
-                        <div
-                          className={`text-sm font-medium ${
-                            isDark ? "text-slate-400" : "text-slate-600"
-                          }`}
-                        >
+                        <div className="text-sm font-medium text-[var(--v2-soft)]">
                           {item.label}
                         </div>
-                        <div
-                          className={`font-semibold ${
-                            isDark ? "text-white" : "text-slate-900"
-                          }`}
-                        >
+                        <div className="font-semibold text-[var(--v2-text)]">
                           {item.value}
                         </div>
                       </div>
@@ -600,12 +584,8 @@ const Contact: React.FC = memo(() => {
               </div>
 
               <div>
-                <h4
-                  className={`text-lg font-semibold mb-4 ${
-                    isDark ? "text-white" : "text-slate-900"
-                  }`}
-                >
-                  Follow Me
+                <h4 className="mb-4 text-lg font-semibold tracking-tight text-[var(--v2-text)]">
+                  Follow me
                 </h4>
 
                 <div className="flex gap-4">
@@ -615,11 +595,7 @@ const Contact: React.FC = memo(() => {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all hover:scale-110 ${
-                        isDark
-                          ? "bg-slate-800 text-slate-400 hover:bg-green-500 hover:text-white"
-                          : "bg-slate-100 text-slate-600 hover:bg-green-500 hover:text-white"
-                      }`}
+                      className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-muted)] transition-all hover:bg-[var(--v2-acid)] hover:text-[var(--v2-acid-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
                       aria-label={social.label}
                     >
                       <social.icon className="w-5 h-5" />
@@ -629,22 +605,14 @@ const Contact: React.FC = memo(() => {
               </div>
             </div>
 
-            <div
-              className={`p-8 rounded-2xl ${
-                isDark
-                  ? "bg-slate-800/50 backdrop-blur-sm border border-slate-700"
-                  : "bg-white/50 backdrop-blur-sm border border-slate-200"
-              }`}
-            >
+            <div className="rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-8">
               {submitStatus === "success" && (
                 <div
-                  className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
-                    isDark
-                      ? "bg-green-500/20 text-green-300 border border-green-500/30"
-                      : "bg-green-100 text-green-700 border border-green-200"
-                  }`}
+                  role="status"
+                  aria-live="polite"
+                  className="mb-6 flex items-center gap-3 rounded-xl border border-[var(--v2-ok)]/30 bg-[var(--v2-ok)]/15 p-4 text-[var(--v2-ok)]"
                 >
-                  <CheckCircle className="w-5 h-5" />
+                  <CheckCircle className="w-5 h-5" aria-hidden="true" />
                   <span>
                     Message sent successfully! I'll get back to you soon.
                   </span>
@@ -653,13 +621,14 @@ const Contact: React.FC = memo(() => {
 
               {submitStatus === "error" && (
                 <div
+                  role="alert"
                   className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
                     isDark
                       ? "bg-red-500/20 text-red-300 border border-red-500/30"
                       : "bg-red-100 text-red-700 border border-red-200"
                   }`}
                 >
-                  <AlertCircle className="w-5 h-5" />
+                  <AlertCircle className="w-5 h-5" aria-hidden="true" />
                   <span>Failed to send message. Please try again.</span>
                 </div>
               )}
@@ -668,33 +637,23 @@ const Contact: React.FC = memo(() => {
                 {/* Form progress indicator */}
                 <div className="mb-6">
                   <div className="flex justify-between items-center mb-2">
-                    <span
-                      className={`text-sm font-medium ${
-                        isDark ? "text-slate-400" : "text-slate-600"
-                      }`}
-                    >
-                      Form Progress
+                    <span className="text-sm font-medium text-[var(--v2-muted)]">
+                      Form progress
                     </span>
                     <span
                       className={`text-sm font-medium ${
                         isFormValid
-                          ? "text-green-500"
-                          : isDark
-                          ? "text-slate-400"
-                          : "text-slate-600"
+                          ? "text-[var(--v2-acid)]"
+                          : "text-[var(--v2-muted)]"
                       }`}
                     >
                       {Object.values(fieldValidation).filter(Boolean).length}/4
                       fields complete
                     </span>
                   </div>
-                  <div
-                    className={`h-2 rounded-full overflow-hidden ${
-                      isDark ? "bg-slate-700" : "bg-slate-200"
-                    }`}
-                  >
+                  <div className="h-2 overflow-hidden rounded-full bg-[var(--v2-line)]">
                     <motion.div
-                      className="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"
+                      className="h-full rounded-full bg-[var(--v2-acid)]"
                       initial={{ width: 0 }}
                       animate={{
                         width: `${
@@ -727,6 +686,7 @@ const Contact: React.FC = memo(() => {
                   disabled={isSubmitting}
                   isDark={isDark}
                   isValid={fieldValidation.name}
+                  autoComplete="name"
                 />
 
                 <FormField
@@ -742,6 +702,7 @@ const Contact: React.FC = memo(() => {
                   disabled={isSubmitting}
                   isDark={isDark}
                   isValid={fieldValidation.email}
+                  autoComplete="email"
                 />
 
                 <FormField
@@ -811,7 +772,7 @@ const Contact: React.FC = memo(() => {
                   rows={6}
                 />
 
-                <div style={{ display: "none" }}>
+                <div style={{ display: "none" }} aria-hidden="true">
                   <label htmlFor="website">Website</label>
                   <input
                     type="text"
@@ -825,29 +786,30 @@ const Contact: React.FC = memo(() => {
                 </div>
 
                 {errors.general && (
-                  <div className="p-4 rounded-xl bg-red-50 border border-red-200">
-                    <p className="text-sm text-red-600">{errors.general}</p>
+                  <div
+                    role="alert"
+                    className="p-4 rounded-xl bg-red-50 border border-red-200 dark:bg-red-500/10 dark:border-red-500/30"
+                  >
+                    <p className="text-sm text-red-700 dark:text-red-300">
+                      {errors.general}
+                    </p>
                   </div>
                 )}
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-semibold text-white transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
-                    isDark
-                      ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500"
-                      : "bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
-                  }`}
+                  className="flex w-full items-center justify-center gap-3 rounded-full bg-[var(--v2-acid)] px-8 py-4 font-bold tracking-tight text-[var(--v2-acid-ink)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <div className="h-5 w-5 animate-spin rounded-full border-2 border-current/30 border-t-current" />
                       Sending...
                     </>
                   ) : (
                     <>
-                      <Send className="w-5 h-5" />
-                      Start Project Request
+                      <Send className="h-5 w-5" />
+                      Send project request
                     </>
                   )}
                 </button>

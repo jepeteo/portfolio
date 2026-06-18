@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.3.1",
   "type": "module",
-  "homepage": "https://theodorosmentis.com",
+  "homepage": "https://www.theodorosmentis.com",
   "description": "Modern portfolio website built with React, Vite, and Tailwind CSS",
   "keywords": [
     "portfolio",
@@ -20,7 +20,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && npm run prerender && npm run validate:seo",
+    "prerender": "node scripts/prerender.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -34,6 +35,7 @@
     "check-urls": "node scripts/check-project-urls.js",
     "verify:sw-precache": "node scripts/verify-sw-precache.js",
     "validate:project-data": "node scripts/validate-project-data.js",
+    "validate:seo": "node scripts/validate-seo.mjs",
     "performance:analyze": "npm run build && npx vite-bundle-visualizer -o bundle-report.html",
     "deploy:redirect": "echo 'Redirect deployment is handled by .github/workflows/redirect-deploy.yml. Commit deploy/redirect.html changes and push to main, or run: gh workflow run redirect-deploy.yml'",
     "deploy:redirect:trigger": "gh workflow run redirect-deploy.yml"

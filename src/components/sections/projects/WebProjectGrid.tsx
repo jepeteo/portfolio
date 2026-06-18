@@ -32,22 +32,21 @@ const ProjectSchema: React.FC<{ project: WebProject }> = ({ project }) => (
   />
 )
 
+const v2Chip =
+  "border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 text-[var(--v2-muted)]"
+
 const categoryColors = {
-  Business:
-    "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
-  Gaming:
-    "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300",
-  Portfolio: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
-  "Web App": "bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-cyan-300",
-  Tool: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300",
-  Productivity:
-    "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300",
+  Business: v2Chip,
+  Gaming: v2Chip,
+  Portfolio: v2Chip,
+  "Web App": v2Chip,
+  Tool: v2Chip,
+  Productivity: v2Chip,
 }
 
 const statusColors = {
-  Live: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300",
-  "In Development":
-    "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300",
+  Live: "border border-[var(--v2-ok)]/30 bg-[var(--v2-ok)]/15 text-[var(--v2-ok)]",
+  "In Development": v2Chip,
 }
 
 type WebProjectGridProps = {
@@ -100,7 +99,7 @@ const WebProjectGrid: React.FC<WebProjectGridProps> = ({ type }) => {
 
   if (projects.length === 0) {
     return (
-      <p className="py-12 text-center text-slate-600 dark:text-slate-400">
+      <p className="py-12 text-center text-[var(--v2-muted)]">
         No projects in this category yet.
       </p>
     )
@@ -120,7 +119,7 @@ const WebProjectGrid: React.FC<WebProjectGridProps> = ({ type }) => {
           <ProjectSchema project={project} />
 
           {project.featured && (
-            <div className="absolute -right-3 -top-3 z-20 flex items-center gap-1 rounded-full border border-yellow-500/30 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 px-3 py-1.5 text-xs font-semibold text-yellow-700 shadow-lg dark:text-yellow-300">
+            <div className="absolute -right-3 -top-3 z-20 flex items-center gap-1 rounded-full bg-[var(--v2-acid)] px-3 py-1.5 text-xs font-bold text-[var(--v2-acid-ink)] shadow-lg">
               <Star className="h-3.5 w-3.5" aria-hidden="true" />
               Featured
             </div>
@@ -137,9 +136,7 @@ const WebProjectGrid: React.FC<WebProjectGridProps> = ({ type }) => {
                 <span
                   className={cn(
                     "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
-                    project.type === "client"
-                      ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
-                      : "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+                    v2Chip
                   )}
                 >
                   {project.type === "client" ? (
@@ -175,17 +172,17 @@ const WebProjectGrid: React.FC<WebProjectGridProps> = ({ type }) => {
                 >
                   {project.category}
                 </span>
-                <span className="flex items-center text-xs text-slate-500 dark:text-slate-400">
+                <span className="flex items-center text-xs text-[var(--v2-soft)]">
                   <Calendar className="mr-1 h-3 w-3" aria-hidden="true" />
                   {project.year}
                 </span>
               </div>
 
-              <h3 className="mb-3 text-xl font-semibold text-slate-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
+              <h3 className="mb-3 text-xl font-semibold tracking-tight text-[var(--v2-text)] transition-colors group-hover:text-[var(--v2-acid)]">
                 {project.title}
               </h3>
 
-              <p className="mb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+              <p className="mb-4 text-sm leading-relaxed text-[var(--v2-muted)]">
                 {project.description}
               </p>
 
@@ -193,13 +190,13 @@ const WebProjectGrid: React.FC<WebProjectGridProps> = ({ type }) => {
                 {project.tech.slice(0, 3).map((tech: string) => (
                   <span
                     key={tech}
-                    className="rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-600 dark:bg-slate-700 dark:text-slate-300"
+                    className="rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 px-2 py-1 text-xs text-[var(--v2-muted)]"
                   >
                     {tech}
                   </span>
                 ))}
                 {project.tech.length > 3 && (
-                  <span className="px-2 py-1 text-xs text-slate-400">
+                  <span className="px-2 py-1 text-xs text-[var(--v2-soft)]">
                     +{project.tech.length - 3}
                   </span>
                 )}
@@ -215,7 +212,7 @@ const WebProjectGrid: React.FC<WebProjectGridProps> = ({ type }) => {
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 text-sm font-medium text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                    className="inline-flex items-center space-x-2 text-sm font-medium text-[var(--v2-brand)] transition-colors hover:text-[var(--v2-acid)]"
                   >
                     <span>Visit</span>
                     <ExternalLink className="h-3 w-3" aria-hidden="true" />
@@ -226,7 +223,7 @@ const WebProjectGrid: React.FC<WebProjectGridProps> = ({ type }) => {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
+                      className="inline-flex items-center space-x-2 text-sm font-medium text-[var(--v2-muted)] transition-colors hover:text-[var(--v2-text)]"
                     >
                       <Github className="h-3 w-3" aria-hidden="true" />
                       <span>Code</span>
@@ -235,10 +232,10 @@ const WebProjectGrid: React.FC<WebProjectGridProps> = ({ type }) => {
                 </div>
 
                 {project.status === "Live" && (
-                  <div className="flex items-center space-x-1 text-emerald-600 dark:text-emerald-400">
+                  <div className="flex items-center space-x-1 text-[var(--v2-ok)]">
                     <div
                       className={cn(
-                        "h-2 w-2 rounded-full bg-emerald-500",
+                        "h-2 w-2 rounded-full bg-[var(--v2-ok)]",
                         pulseClass
                       )}
                     />

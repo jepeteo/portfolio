@@ -31,8 +31,8 @@ const IconWell: React.FC<IconWellProps> = ({
         "flex items-center justify-center transition-transform duration-300 group-hover:scale-105",
         sizes.well,
         active
-          ? cn("bg-gradient-to-br text-white shadow-lg shadow-blue-500/20", gradient)
-          : "border border-slate-200 bg-blue-50 text-blue-600 dark:border-slate-600 dark:bg-slate-700 dark:text-blue-300",
+          ? cn("bg-gradient-to-br text-white shadow-lg shadow-black/20", gradient)
+          : "border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-acid)]",
         className
       )}
     >

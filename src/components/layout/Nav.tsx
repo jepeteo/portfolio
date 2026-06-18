@@ -73,66 +73,84 @@ const Nav: React.FC<NavProps> = ({ className }) => {
     link: AppNavigationLink
     isMobile?: boolean
     isActive?: boolean
-  }> = ({ link, isMobile = false, isActive = false }) => (
-    <motion.button
-      className={cn(
-        "relative rounded-xl transition-all duration-200",
-        "hover:bg-surface-elevated active:scale-[0.98]",
-        "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
-        isDark ? "focus:ring-offset-gray-900" : "focus:ring-offset-white",
-        isMobile
-          ? "w-full text-left justify-start px-5 py-4 min-h-[44px]"
-          : cn("px-4 py-2", isActive && "rounded-full"),
-        isActive && "text-primary font-semibold",
-        !isActive && (isDark ? "text-slate-300" : "text-slate-600"),
-        isActive && (isDark ? "bg-blue-500/15" : "bg-blue-500/10"),
-        isMobile && isActive && (isDark ? "bg-blue-500/20" : "bg-blue-500/10")
-      )}
-      onClick={(e) => handleNavClick(e, link)}
-      whileHover={{ scale: isMobile ? 1 : 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      aria-label={link.ariaLabel}
-      aria-current={isActive ? "page" : undefined}
-    >
-      {isActive && !isMobile && (
-        <motion.div
-          className="absolute bottom-0 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full origin-center"
-          initial={{ opacity: 0, scaleX: 0.3 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          exit={{ opacity: 0, scaleX: 0.3 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
-        />
-      )}
+  }> = ({ link, isMobile = false, isActive = false }) => {
+    // Services / Contact render as stand-out CTAs rather than plain nav items.
+    if (link.cta) {
+      const ctaBase =
+        "relative inline-flex items-center justify-center gap-2 rounded-full font-bold tracking-tight transition-transform duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+      const ctaVariant =
+        link.cta === "primary"
+          ? "bg-[var(--v2-acid)] text-[var(--v2-acid-ink)] focus-visible:ring-[var(--v2-acid)]"
+          : "border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] text-[var(--v2-text)] hover:border-[var(--v2-acid)]/50 focus-visible:ring-[var(--v2-brand)]"
+      return (
+        <motion.button
+          className={cn(
+            ctaBase,
+            ctaVariant,
+            isMobile ? "min-h-[44px] w-full px-5 py-3 text-base" : "px-4 py-2 text-sm",
+            isActive && "ring-2 ring-[var(--v2-acid)] ring-offset-2 ring-offset-[var(--v2-surface)]"
+          )}
+          onClick={(e) => handleNavClick(e, link)}
+          whileTap={{ scale: 0.98 }}
+          aria-label={link.ariaLabel}
+          aria-current={isActive ? "page" : undefined}
+        >
+          {link.text}
+        </motion.button>
+      )
+    }
 
-      {isActive && isMobile && (
-        <motion.div
-          className="absolute left-0 top-1/2 w-1 bg-primary rounded-r-full"
-          initial={{ height: 0, y: "-50%" }}
-          animate={{ height: "70%", y: "-50%" }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-        />
-      )}
-
-      <span
+    return (
+      <motion.button
         className={cn(
-          isMobile ? typography.body.large : typography.body.base,
-          "relative z-10",
-          isActive && "font-semibold"
+          "relative rounded-xl transition-all duration-200",
+          "hover:bg-[var(--v2-panel-2)]/60 active:scale-[0.98]",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)]",
+          isMobile
+            ? "w-full text-left justify-start px-5 py-4 min-h-[44px]"
+            : "px-4 py-2",
+          isActive
+            ? "text-[var(--v2-acid)] font-semibold"
+            : "text-[var(--v2-muted)] hover:text-[var(--v2-text)]",
+          isMobile && isActive && "bg-[var(--v2-acid)]/10"
         )}
+        onClick={(e) => handleNavClick(e, link)}
+        whileHover={{ scale: isMobile ? 1 : 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        aria-label={link.ariaLabel}
+        aria-current={isActive ? "page" : undefined}
       >
-        {link.text}
-      </span>
+        {isActive && !isMobile && (
+          <motion.div
+            className="absolute bottom-0 left-[10%] right-[10%] h-0.5 origin-center rounded-full bg-[var(--v2-acid)]"
+            initial={{ opacity: 0, scaleX: 0.3 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            exit={{ opacity: 0, scaleX: 0.3 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+          />
+        )}
 
-      {isActive && isMobile && (
-        <motion.div
-          className="absolute right-5 top-1/2 w-2 h-2 rounded-full bg-primary"
-          initial={{ scale: 0, y: "-50%" }}
-          animate={{ scale: 1, y: "-50%" }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
-        />
-      )}
-    </motion.button>
-  )
+        {isActive && isMobile && (
+          <motion.div
+            className="absolute left-0 top-1/2 w-1 rounded-r-full bg-[var(--v2-acid)]"
+            initial={{ height: 0, y: "-50%" }}
+            animate={{ height: "70%", y: "-50%" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          />
+        )}
+
+        <span
+          className={cn(
+            isMobile ? typography.body.large : typography.body.base,
+            "relative z-10",
+            isActive && "font-semibold"
+          )}
+        >
+          {link.text}
+        </span>
+      </motion.button>
+    )
+  }
 
   return (
     <nav
@@ -149,15 +167,17 @@ const Nav: React.FC<NavProps> = ({ className }) => {
           ))}
         </ul>
 
-        <Button
-          variant="ghost"
-          size="sm"
+        <button
+          type="button"
           onClick={toggleTheme}
           className={cn(
-            "relative p-2 rounded-lg transition-all duration-300",
-            "hover:bg-surface-elevated hover:rotate-12"
+            "relative flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-300",
+            "border border-[var(--v2-line-strong)] bg-[var(--v2-panel-2)] text-[var(--v2-acid)]",
+            "hover:border-[var(--v2-acid)]/60 hover:bg-[var(--v2-panel)]",
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)]"
           )}
           aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+          title={`Switch to ${isDark ? "light" : "dark"} mode`}
         >
           <motion.div
             key={isDark ? "dark" : "light"}
@@ -172,7 +192,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
               className="text-current"
             />
           </motion.div>
-        </Button>
+        </button>
 
         <Button
           variant="ghost"
@@ -190,26 +210,17 @@ const Nav: React.FC<NavProps> = ({ className }) => {
         >
           <div className="relative w-5 h-5 flex flex-col justify-center items-center">
             <motion.span
-              className={cn(
-                "absolute w-5 h-0.5 rounded-full transition-colors",
-                isDark ? "bg-white" : "bg-slate-900"
-              )}
+              className="absolute h-0.5 w-5 rounded-full bg-[var(--v2-text)] transition-colors"
               animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 0 : -6 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             />
             <motion.span
-              className={cn(
-                "absolute w-5 h-0.5 rounded-full transition-colors",
-                isDark ? "bg-white" : "bg-slate-900"
-              )}
+              className="absolute h-0.5 w-5 rounded-full bg-[var(--v2-text)] transition-colors"
               animate={{ opacity: isOpen ? 0 : 1, scaleX: isOpen ? 0 : 1 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
             />
             <motion.span
-              className={cn(
-                "absolute w-5 h-0.5 rounded-full transition-colors",
-                isDark ? "bg-white" : "bg-slate-900"
-              )}
+              className="absolute h-0.5 w-5 rounded-full bg-[var(--v2-text)] transition-colors"
               animate={{ rotate: isOpen ? -45 : 0, y: isOpen ? 0 : 6 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             />
@@ -234,10 +245,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
               id="mobile-menu"
               className={cn(
                 "fixed top-20 right-4 left-4 z-50 lg:hidden",
-                "border rounded-2xl shadow-2xl overflow-hidden",
-                isDark
-                  ? "bg-slate-900 border-slate-700"
-                  : "bg-white border-slate-200"
+                "overflow-hidden rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] shadow-2xl"
               )}
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -250,12 +258,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
               role="menu"
             >
               <div className="flex justify-center pt-3 pb-2">
-                <div
-                  className={cn(
-                    "w-12 h-1 rounded-full transition-colors",
-                    isDark ? "bg-slate-700" : "bg-slate-300"
-                  )}
-                />
+                <div className="h-1 w-12 rounded-full bg-[var(--v2-line-strong)]" />
               </div>
 
               <div className="px-4 pb-4 space-y-1 max-h-[70vh] overflow-y-auto">
@@ -276,15 +279,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
                 ))}
               </div>
 
-              <div
-                className={cn(
-                  "absolute bottom-0 left-0 right-0 h-8 pointer-events-none",
-                  "bg-gradient-to-t",
-                  isDark
-                    ? "from-slate-900/98 to-transparent"
-                    : "from-white/98 to-transparent"
-                )}
-              />
+              <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[var(--v2-panel)] to-transparent" />
             </motion.div>
           </>
         )}

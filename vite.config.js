@@ -63,19 +63,15 @@ export default defineConfig({
       external: [],
     },
     // Performance optimizations
-    chunkSizeWarningLimit: 1000, // Warn for chunks larger than 1MB
+    chunkSizeWarningLimit: 600, // Surface chunks larger than ~600KB (don't hide bloat)
     assetsInlineLimit: 4096, // Inline assets smaller than 4KB
   },
   // Enhanced development server
   server: {
-    host: 'localhost',
+    host: true,
     port: 5173,
     // Enable HTTP/2 for development
     https: false,
-    // Add headers for development
-    headers: {
-      'Content-Security-Policy': "default-src 'self'; script-src 'self' https://cdn.emailjs.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu-assets.i.posthog.com https://app.posthog.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://app.posthog.com https://fonts.googleapis.com https://fonts.gstatic.com; base-uri 'self'; form-action 'self'; object-src 'none';"
-    },
     // Preload important modules
     warmup: {
       clientFiles: [
@@ -84,6 +80,10 @@ export default defineConfig({
         './src/components/sections/Contact.tsx',
       ],
     },
+  },
+  preview: {
+    host: true,
+    port: 4173,
   },
   // Optimize dependencies
   optimizeDeps: {

@@ -25,6 +25,7 @@ export interface SecureContactFormData {
   csrfToken?: string
   timestamp?: number
   honeypot?: string // Bot detection
+  sourcePage?: string // Page path the request was submitted from
 }
 
 export interface ContactFormErrors {
@@ -186,6 +187,9 @@ export const sanitizeContactFormData = (
     csrfToken: data.csrfToken,
     timestamp: data.timestamp,
     honeypot: data.honeypot,
+    sourcePage: data.sourcePage
+      ? sanitizeInput(data.sourcePage).slice(0, 200)
+      : undefined,
   }
 }
 
@@ -201,38 +205,18 @@ export const detectBot = (data: SecureContactFormData): boolean => {
     }
   }
 
+  // The honeypot and timing checks above are the primary, low-false-positive
+  // bot signals. Content-phrase matching is intentionally minimal: broad
+  // business phrases (e.g. "SEO service", "free consultation", "increase
+  // traffic", "guaranteed") are NORMAL in real web-development inquiries and
+  // must not be blocked, or we lose legitimate leads. Only a small set of
+  // unambiguous pharma/gambling spam terms is rejected here.
   const combinedText =
     `${data.name} ${data.email} ${data.subject} ${data.message}`.toLowerCase()
 
-  const botPatterns = [
-    /buy.*now/gi,
-    /click.*here/gi,
-    /visit.*website/gi,
-    /guaranteed/gi,
-    /increase.*traffic/gi,
-    /seo.*service/gi,
-    /lorem ipsum/gi,
-    /viagra/gi,
-    /casino/gi,
-    /pharmacy/gi,
-    /debt.*relief/gi,
-    /weight.*loss/gi,
-    /work.*from.*home/gi,
-    /make.*money.*fast/gi,
-    /free.*consultation/gi,
-    /no.*obligation/gi,
-    /limited.*time.*offer/gi,
-    /act.*now/gi,
-  ]
+  const spamPatterns = [/viagra/i, /cialis/i, /\bcasino\b/i]
 
-  const matchedPattern = botPatterns.find((pattern) =>
-    pattern.test(combinedText)
-  )
-  if (matchedPattern) {
-    return true
-  }
-
-  return false
+  return spamPatterns.some((pattern) => pattern.test(combinedText))
 }
 
 export const checkRateLimit = (ip: string): RateLimitState => {

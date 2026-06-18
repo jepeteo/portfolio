@@ -8,32 +8,27 @@ import {
   CheckCircle,
 } from "lucide-react"
 import { TechExperience } from "../../../hooks/useExperienceData"
+import { cn } from "../../../utils/styles"
 
 interface ExperienceDetailsProps {
   experience: TechExperience | null
   isDark: boolean
 }
 
+const metaIcon = "h-4 w-4 text-[var(--v2-soft)]"
+
 export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
   experience,
-  isDark,
 }) => {
   if (!experience) {
     return (
-      <div
-        className={`h-full flex items-center justify-center p-8 rounded-2xl ${
-          isDark
-            ? "bg-slate-800/50 border border-slate-700/50"
-            : "bg-white/70 border border-slate-200/50"
-        }`}
-      >
+      <div className="flex h-full items-center justify-center rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-8">
         <div className="text-center">
           <Briefcase
-            className={`w-12 h-12 mx-auto mb-4 ${
-              isDark ? "text-slate-600" : "text-slate-400"
-            }`}
+            className="mx-auto mb-4 h-12 w-12 text-[var(--v2-soft)]"
+            aria-hidden="true"
           />
-          <p className={`${isDark ? "text-slate-400" : "text-slate-600"}`}>
+          <p className="text-[var(--v2-muted)]">
             Select a position from the sidebar to view details
           </p>
         </div>
@@ -43,28 +38,24 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl transition-all duration-300 ${
-        isDark
-          ? "bg-slate-800/50 border border-slate-700/50"
-          : "bg-white/70 border border-slate-200/50"
-      } backdrop-blur-sm ${
-        experience.isFreelance ? "ring-2 ring-purple-500/20" : ""
-      }`}
+      className={cn(
+        "relative overflow-hidden rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] transition-all duration-300",
+        experience.isFreelance ? "ring-1 ring-[var(--v2-brand-2)]/30" : ""
+      )}
     >
-      
-      <div className="flex items-center justify-center gap-2 p-2 md:absolute md:top-4 md:right-4 md:p-0">
+      <div className="flex items-center justify-center gap-2 p-2 md:absolute md:right-4 md:top-4 md:p-0">
         {experience.isFreelance && (
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/30">
-            <div className="w-2 h-2 bg-purple-500 rounded-full" />
-            <span className="text-xs font-medium text-purple-600 dark:text-purple-400">
+          <div className="flex items-center gap-2 rounded-full border border-[var(--v2-brand-2)]/30 bg-[var(--v2-brand-2)]/15 px-3 py-1">
+            <span className="h-2 w-2 rounded-full bg-[var(--v2-brand-2)]" />
+            <span className="text-xs font-semibold text-[var(--v2-brand-2)]">
               Freelance
             </span>
           </div>
         )}
         {experience.status === "current" && (
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 border border-green-500/30">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span className="text-xs font-medium text-green-600 dark:text-green-400">
+          <div className="flex items-center gap-2 rounded-full border border-[var(--v2-ok)]/30 bg-[var(--v2-ok)]/15 px-3 py-1">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--v2-ok)]" />
+            <span className="text-xs font-semibold text-[var(--v2-ok)]">
               Current
             </span>
           </div>
@@ -73,100 +64,58 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
 
       <div className="md:p-6">
         <div className="md:mb-6">
-          
-          <h3
-            className={`text-2xl font-bold mb-2 ${
-              isDark ? "text-white" : "text-slate-900"
-            }`}
-          >
+          <h3 className="mb-2 font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">
             {experience.title}
           </h3>
 
-          <div className="flex flex-wrap items-center gap-4 text-sm mb-4">
+          <div className="mb-4 flex flex-wrap items-center gap-4 text-sm">
             <div className="flex items-center gap-2">
-              <Building
-                className={`w-4 h-4 ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}
-              />
-              <span
-                className={`font-semibold ${
-                  isDark ? "text-slate-300" : "text-slate-700"
-                }`}
-              >
+              <Building className={metaIcon} />
+              <span className="font-semibold text-[var(--v2-muted)]">
                 {experience.company}
               </span>
             </div>
 
-            <div className="flex items-center gap-1">
-              <Calendar
-                className={`w-4 h-4 ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}
-              />
-              <span className={isDark ? "text-slate-400" : "text-slate-600"}>
+            <div className="flex items-center gap-1.5">
+              <Calendar className={metaIcon} />
+              <span className="text-[var(--v2-muted)]">
                 {experience.periodInfo.from} - {experience.periodInfo.to}
               </span>
             </div>
 
-            <div className="flex items-center gap-1">
-              <MapPin
-                className={`w-4 h-4 ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}
-              />
-              <span className={isDark ? "text-slate-400" : "text-slate-600"}>
+            <div className="flex items-center gap-1.5">
+              <MapPin className={metaIcon} />
+              <span className="text-[var(--v2-muted)]">
                 {experience.location}
               </span>
             </div>
 
-            <div className="flex items-center gap-1">
-              <Award
-                className={`w-4 h-4 ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}
-              />
-              <span
-                className={`font-medium ${
-                  isDark ? "text-slate-300" : "text-slate-700"
-                }`}
-              >
+            <div className="flex items-center gap-1.5">
+              <Award className={metaIcon} />
+              <span className="font-medium text-[var(--v2-muted)]">
                 {experience.duration.display}
               </span>
             </div>
           </div>
 
-          <p
-            className={`mb-6 leading-relaxed ${
-              isDark ? "text-slate-300" : "text-slate-700"
-            }`}
-          >
+          <p className="mb-6 leading-relaxed text-[var(--v2-muted)]">
             {experience.description}
           </p>
 
           {experience.keyResponsibilities &&
             experience.keyResponsibilities.length > 0 && (
               <div className="mb-6">
-                <h4
-                  className={`text-md font-semibold mb-3 ${
-                    isDark ? "text-white" : "text-slate-900"
-                  }`}
-                >
-                  Key Responsibilities
+                <h4 className="mb-3 text-base font-semibold text-[var(--v2-text)]">
+                  Key responsibilities
                 </h4>
                 <ul className="space-y-2">
                   {experience.keyResponsibilities.map((responsibility, idx) => (
                     <li key={idx} className="flex gap-2">
                       <CheckCircle
-                        className={`w-5 h-5 flex-shrink-0 mt-0.5 ${
-                          isDark ? "text-green-500" : "text-green-600"
-                        }`}
+                        className="mt-0.5 h-5 w-5 flex-shrink-0 text-[var(--v2-acid)]"
+                        aria-hidden="true"
                       />
-                      <span
-                        className={`${
-                          isDark ? "text-slate-300" : "text-slate-700"
-                        }`}
-                      >
+                      <span className="text-[var(--v2-muted)]">
                         {responsibility}
                       </span>
                     </li>

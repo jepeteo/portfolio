@@ -7,7 +7,6 @@ interface StatItem {
   icon: React.ElementType
   label: string
   value: string
-  color: string
   tooltip?: string
 }
 
@@ -18,157 +17,78 @@ interface ExperienceStatsProps {
 
 export const ExperienceStatsComponent: React.FC<ExperienceStatsProps> = ({
   stats,
-  isDark,
 }) => {
   const statItems: StatItem[] = [
     {
       icon: Activity,
       label: "Total Experience",
       value: `${stats.totalYears} Years`,
-      color: "from-blue-500 to-cyan-500",
     },
     {
       icon: Briefcase,
       label: "Projects Delivered",
       value: `${stats.totalProjects}+`,
-      color: "from-green-500 to-emerald-500",
     },
     {
       icon: Users,
       label: "Clients Served",
       value: `${stats.totalClients}+`,
-      color: "from-purple-500 to-violet-500",
     },
     {
       icon: Code,
       label: "Technical Skills",
       value: "20+",
-      color: "from-orange-500 to-red-500",
       tooltip:
         "WordPress, Laravel, React, Python, PHP, MySQL, Server Administration, and more",
     },
   ]
 
+  const Card = ({ item }: { item: StatItem }) => (
+    <div className="group rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-6 transition-transform duration-300 hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+      <div className="mb-4 inline-flex rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] p-3 text-[var(--v2-acid)]">
+        <item.icon className="h-6 w-6" aria-hidden="true" />
+      </div>
+      <div className="font-display text-3xl font-bold tracking-tight text-[var(--v2-text)]">
+        {item.value}
+      </div>
+      <div className="mt-2 text-sm font-medium text-[var(--v2-muted)]">
+        {item.label}
+      </div>
+    </div>
+  )
+
   return (
     <div className="mb-12">
-      
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      <div className="mb-6 grid grid-cols-2 gap-6 lg:grid-cols-4">
         {statItems.map((item, index) =>
           item.tooltip ? (
             <Tooltip key={index} content={item.tooltip}>
-              <div
-                className={`relative group rounded-2xl overflow-hidden p-6 transition-all duration-300 transform-gpu hover:translate-y-[-5px] ${
-                  isDark
-                    ? "bg-slate-800/50 border border-slate-700/50"
-                    : "bg-white/70 border border-slate-200/50"
-                } backdrop-blur-sm`}
-              >
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
-                />
-
-                <div className="relative">
-                  <div
-                    className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${item.color} text-white mb-4`}
-                  >
-                    <item.icon className="w-6 h-6" />
-                  </div>
-
-                  <div
-                    className={`text-3xl font-bold mb-2 ${
-                      isDark ? "text-white" : "text-slate-900"
-                    }`}
-                  >
-                    {item.value}
-                  </div>
-
-                  <div
-                    className={`text-sm font-medium ${
-                      isDark ? "text-slate-400" : "text-slate-600"
-                    }`}
-                  >
-                    {item.label}
-                  </div>
-                </div>
-              </div>
+              <Card item={item} />
             </Tooltip>
           ) : (
-            <div
-              key={index}
-              className={`relative group rounded-2xl overflow-hidden p-6 transition-all duration-300 transform-gpu hover:translate-y-[-5px] ${
-                isDark
-                  ? "bg-slate-800/50 border border-slate-700/50"
-                  : "bg-white/70 border border-slate-200/50"
-              } backdrop-blur-sm`}
-            >
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
-              />
-
-              <div className="relative">
-                <div
-                  className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${item.color} text-white mb-4`}
-                >
-                  <item.icon className="w-6 h-6" />
-                </div>
-
-                <div
-                  className={`text-3xl font-bold mb-2 ${
-                    isDark ? "text-white" : "text-slate-900"
-                  }`}
-                >
-                  {item.value}
-                </div>
-
-                <div
-                  className={`text-sm font-medium ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}
-                >
-                  {item.label}
-                </div>
-              </div>
-            </div>
+            <Card key={index} item={item} />
           )
         )}
       </div>
 
-      <div
-        className={`rounded-xl p-5 ${
-          isDark
-            ? "bg-slate-800/30 border border-slate-700/30"
-            : "bg-white/50 border border-slate-200/30"
-        }`}
-      >
+      <div className="rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-5">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
           <div className="mb-4 md:mb-0">
-            <div
-              className={`text-sm font-medium mb-1 ${
-                isDark ? "text-slate-400" : "text-slate-600"
-              }`}
-            >
-              Experience Breakdown
+            <div className="mb-1 font-mono text-xs font-bold uppercase tracking-[0.08em] text-[var(--v2-soft)]">
+              Experience breakdown
             </div>
-            <div
-              className={`text-lg font-bold ${
-                isDark ? "text-white" : "text-slate-900"
-              }`}
-            >
-              {stats.employmentYears}+ years employment • {stats.freelanceYears}
-              + years freelance
+            <div className="text-lg font-bold text-[var(--v2-text)]">
+              {stats.employmentYears}+ years employment • {stats.freelanceYears}+
+              years freelance
             </div>
           </div>
 
-          <div
-            className={`text-sm ${
-              isDark ? "text-slate-400" : "text-slate-600"
-            }`}
-          >
-            <div className="flex items-center gap-2 mb-1">
-              <Activity className="w-4 h-4" />
+          <div className="text-sm text-[var(--v2-muted)]">
+            <div className="flex items-center gap-2">
+              <Activity className="h-4 w-4" aria-hidden="true" />
               <span>
-                Freelancing began {new Date(2011, 0).getFullYear()} and
-                continues alongside employment
+                Freelancing began {new Date(2011, 0).getFullYear()} and continues
+                alongside employment
               </span>
             </div>
           </div>

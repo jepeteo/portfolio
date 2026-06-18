@@ -13,7 +13,7 @@ const getVercelConfig = (): VercelConfig => {
   const isVercel =
     typeof window !== "undefined" &&
     (window.location.hostname.includes("vercel.app") ||
-      window.location.hostname === "theodorosmentis.com" ||
+      window.location.hostname.endsWith("theodorosmentis.com") ||
       process.env.VERCEL === "1")
 
   const analyticsEnabled = process.env.VITE_VERCEL_ANALYTICS_ENABLED === "true"

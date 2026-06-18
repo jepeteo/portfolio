@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useTheme } from "../../context/ThemeContext"
+import { v2PrimaryButton, v2SecondaryButton } from "../ui/v2Styles"
 
 type EmergencyHelpCTAProps = {
   title?: string
@@ -19,52 +19,26 @@ const EmergencyHelpCTA: React.FC<EmergencyHelpCTAProps> = ({
   secondaryLabel,
   secondaryHref,
 }) => {
-  const { isDark } = useTheme()
-
   return (
     <section
-      className={`rounded-2xl border p-8 md:p-10 text-center ${
-        isDark
-          ? "bg-slate-800/50 border-slate-700"
-          : "bg-slate-50 border-slate-200"
-      }`}
       aria-labelledby="emergency-cta-heading"
+      className="relative overflow-hidden rounded-[2rem] border border-[var(--v2-line-strong)] bg-[radial-gradient(circle_at_15%_20%,rgb(from_var(--v2-brand)_r_g_b/0.18),transparent_40%),radial-gradient(circle_at_85%_80%,rgb(from_var(--v2-acid)_r_g_b/0.14),transparent_44%),var(--v2-panel)] p-8 text-center shadow-[var(--v2-shadow)] md:p-10"
     >
       <h2
         id="emergency-cta-heading"
-        className={`text-2xl md:text-3xl font-bold mb-4 ${
-          isDark ? "text-white" : "text-slate-900"
-        }`}
+        className="m-0 font-display text-[clamp(1.8rem,4vw,2.75rem)] font-bold leading-tight tracking-tight text-[var(--v2-text)] [text-wrap:balance]"
       >
         {title}
       </h2>
-      <p
-        className={`max-w-2xl mx-auto mb-8 text-lg ${
-          isDark ? "text-slate-300" : "text-slate-600"
-        }`}
-      >
+      <p className="mx-auto mt-4 mb-8 max-w-2xl text-lg text-[var(--v2-muted)]">
         {description}
       </p>
-      <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Link
-          to={primaryHref}
-          className={`inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-white transition-all ${
-            isDark
-              ? "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400"
-              : "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600"
-          }`}
-        >
+      <div className="flex flex-col justify-center gap-3 sm:flex-row">
+        <Link to={primaryHref} className={v2PrimaryButton}>
           {primaryLabel}
         </Link>
         {secondaryLabel && secondaryHref && (
-          <Link
-            to={secondaryHref}
-            className={`inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold border transition-colors ${
-              isDark
-                ? "border-slate-600 text-slate-200 hover:border-blue-500"
-                : "border-slate-300 text-slate-700 hover:border-blue-500"
-            }`}
-          >
+          <Link to={secondaryHref} className={v2SecondaryButton}>
             {secondaryLabel}
           </Link>
         )}

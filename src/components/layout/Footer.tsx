@@ -1,11 +1,9 @@
 import React, { memo, useCallback } from "react"
-import { useTheme } from "../../context/ThemeContext"
 import { Github, Linkedin, Mail, Heart, ArrowUp } from "lucide-react"
 import { footerLinks } from "../../config/navigation"
 import { useAppNavigation } from "../../hooks/useAppNavigation"
 
 const Footer: React.FC = memo(() => {
-  const { isDark } = useTheme()
   const { handleNavigation } = useAppNavigation()
 
   const currentYear = new Date().getFullYear()
@@ -15,19 +13,16 @@ const Footer: React.FC = memo(() => {
       icon: Github,
       label: "GitHub",
       href: "https://github.com/jepeteo",
-      hoverColor: "hover:text-purple-400",
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
       href: "https://www.linkedin.com/in/thmentis/",
-      hoverColor: "hover:text-blue-400",
     },
     {
       icon: Mail,
       label: "Email",
-      href: "mailto:th.mentis@gmail.com",
-      hoverColor: "hover:text-green-400",
+      href: "mailto:contact@theodorosmentis.com",
     },
   ]
 
@@ -44,42 +39,18 @@ const Footer: React.FC = memo(() => {
   }
 
   return (
-    <footer className="relative overflow-hidden border-t border-slate-200/80 bg-white/70 backdrop-blur-sm dark:border-slate-700/80 dark:bg-slate-900/70">
-      <div className="absolute inset-0">
-        <div
-          className={`absolute inset-0 ${
-            isDark
-              ? "bg-[linear-gradient(to_right,rgba(148,163,184,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.03)_1px,transparent_1px)]"
-              : "bg-[linear-gradient(to_right,rgba(71,85,105,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(71,85,105,0.03)_1px,transparent_1px)]"
-          } bg-[size:30px_30px]`}
-        />
-      </div>
-
-      <div className="container relative py-4">
+    <footer className="v2-grid-bg relative overflow-hidden border-t border-[var(--v2-line)] bg-[var(--v2-panel)]">
+      <div className="container relative z-10 py-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           <div className="text-center md:text-left">
-            <h3
-              className={`text-2xl font-bold mb-2 ${
-                isDark ? "text-white" : "text-slate-900"
-              }`}
-            >
-              <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 bg-clip-text text-transparent">
-                Theodoros Mentis
-              </span>
+            <h3 className="mb-2 font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">
+              Theodoros Mentis
             </h3>
-            <p
-              className={`text-sm ${
-                isDark ? "text-slate-400" : "text-slate-600"
-              }`}
-            >
+            <p className="text-sm text-[var(--v2-muted)]">
               Senior Full Stack Developer
             </p>
-            <p
-              className={`text-xs mt-1 ${
-                isDark ? "text-slate-500" : "text-slate-500"
-              }`}
-            >
-              Crafting digital experiences with passion
+            <p className="mt-1 text-xs text-[var(--v2-soft)]">
+              Fixing, improving and building business websites
             </p>
           </div>
 
@@ -90,11 +61,7 @@ const Footer: React.FC = memo(() => {
                   key={link.href}
                   type="button"
                   onClick={(e) => handleFooterNav(e, link)}
-                  className={`text-sm font-medium transition-all hover:scale-105 cursor-pointer ${
-                    isDark
-                      ? "text-slate-400 hover:text-white"
-                      : "text-slate-600 hover:text-slate-900"
-                  }`}
+                  className="cursor-pointer text-sm font-medium text-[var(--v2-muted)] transition-colors hover:text-[var(--v2-acid)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
                 >
                   {link.text}
                 </button>
@@ -103,18 +70,14 @@ const Footer: React.FC = memo(() => {
           </div>
 
           <div className="text-center md:text-right">
-            <div className="flex justify-center md:justify-end gap-4 mb-4">
+            <div className="mb-4 flex justify-center gap-4 md:justify-end">
               {socialLinks.map((social, index) => (
                 <a
                   key={index}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:scale-110 ${
-                    isDark
-                      ? "bg-slate-800 text-slate-400 hover:bg-slate-700"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                  } ${social.hoverColor}`}
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-muted)] transition-all hover:bg-[var(--v2-acid)] hover:text-[var(--v2-acid-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
@@ -125,51 +88,27 @@ const Footer: React.FC = memo(() => {
             <button
               type="button"
               onClick={scrollToTop}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105 ${
-                isDark
-                  ? "bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
-              }`}
+              className="inline-flex items-center gap-2 rounded-lg border border-[var(--v2-line)] bg-[var(--v2-panel-2)] px-4 py-2 text-sm font-medium text-[var(--v2-muted)] transition-colors hover:border-[var(--v2-acid)]/40 hover:text-[var(--v2-text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
               aria-label="Back to top"
             >
               <ArrowUp className="w-4 h-4" />
-              Back to Top
+              Back to top
             </button>
           </div>
         </div>
 
-        <div
-          className={`my-4 h-px ${isDark ? "bg-slate-800" : "bg-slate-200"}`}
-        />
+        <div className="my-4 h-px bg-[var(--v2-line)]" />
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div
-            className={`text-sm ${
-              isDark ? "text-slate-500" : "text-slate-500"
-            }`}
-          >
+          <div className="text-sm text-[var(--v2-soft)]">
             © {currentYear} Theodoros Mentis. All rights reserved.
           </div>
 
-          <div
-            className={`flex items-center gap-1 text-sm ${
-              isDark ? "text-slate-500" : "text-slate-500"
-            }`}
-          >
+          <div className="flex items-center gap-1 text-sm text-[var(--v2-soft)]">
             Made with
-            <Heart
-              className={`w-4 h-4 mx-1 ${
-                isDark ? "text-red-400" : "text-red-500"
-              }`}
-            />
-            using React & TypeScript
+            <Heart className="mx-1 h-4 w-4 text-red-500" />
+            using React &amp; TypeScript
           </div>
-        </div>
-
-        <div className="mt-6 text-center">
-          <p className="text-xs text-slate-500 dark:text-slate-500">
-            Built with React & TypeScript
-          </p>
         </div>
       </div>
     </footer>

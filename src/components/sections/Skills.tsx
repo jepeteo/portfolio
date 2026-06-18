@@ -43,7 +43,7 @@ const generateSkillsSchema = (skillCategories: SkillCategoryData[]) => {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "@id": "https://theodorosmentis.com/#skills",
+    "@id": "https://www.theodorosmentis.com/#skills",
     name: "Technical Skills & Expertise",
     description:
       "Professional technical skills and technologies mastered by Theodoros Mentis",
@@ -54,7 +54,7 @@ const generateSkillsSchema = (skillCategories: SkillCategoryData[]) => {
         position: index + 1,
         item: {
           "@type": "DefinedTerm",
-          "@id": `https://theodorosmentis.com/#skill-${skill.name
+          "@id": `https://www.theodorosmentis.com/#skill-${skill.name
             .toLowerCase()
             .replace(/\s+/g, "-")}`,
           name: skill.name,
@@ -66,7 +66,7 @@ const generateSkillsSchema = (skillCategories: SkillCategoryData[]) => {
           },
           about: {
             "@type": "Person",
-            "@id": "https://theodorosmentis.com/#person",
+            "@id": "https://www.theodorosmentis.com/#person",
             name: "Theodoros Mentis",
             knowsAbout: skill.name,
           },
@@ -234,24 +234,16 @@ const Skills: React.FC = () => {
           </div>
 
           <div className="lg:hidden">
-            <div
-              className={`p-4 rounded-xl mb-6 text-white relative overflow-hidden`}
-              style={{
-                background: `linear-gradient(135deg, ${currentCategory.gradient
-                  .replace("from-", "")
-                  .replace(" via-", ", ")
-                  .replace(" to-", ", ")})`,
-              }}
-            >
+            <div className="relative mb-6 overflow-hidden rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-4">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm flex-shrink-0">
-                  <currentCategory.icon className="w-6 h-6" />
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-acid)]">
+                  <currentCategory.icon className="h-6 w-6" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="text-lg font-bold truncate">
+                  <h3 className="truncate text-lg font-bold tracking-tight text-[var(--v2-text)]">
                     {currentCategory.title}
                   </h3>
-                  <p className="text-sm opacity-90 truncate">
+                  <p className="truncate text-sm text-[var(--v2-muted)]">
                     {currentCategory.subtitle}
                   </p>
                 </div>

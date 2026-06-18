@@ -1,12 +1,13 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useEnhancedSEO, SEOUtils } from "../utils/enhancedSEO"
-import { site } from "../config/site"
+import { useEnhancedSEO } from "../utils/enhancedSEO"
+import { routeMeta, absoluteUrl } from "../config/routeMeta.js"
 import FeaturedServices from "../components/services/FeaturedServices"
 import ServiceCategorySection from "../components/services/ServiceCategorySection"
 import EmergencyHelpCTA from "../components/services/EmergencyHelpCTA"
-import SectionShell from "../components/ui/SectionShell"
-import SurfaceCard from "../components/ui/SurfaceCard"
+import V2PageHero from "../components/ui/V2PageHero"
+import V2SectionHead from "../components/ui/V2SectionHead"
+import { v2PrimaryButton, v2SecondaryButton, v2Panel } from "../components/ui/v2Styles"
 import { serviceCategories } from "../content/services"
 
 const howIWorkSteps = [
@@ -27,89 +28,54 @@ const howIWorkSteps = [
   },
 ]
 
+const meta = routeMeta["/services"]
+
 const ServicesPage: React.FC = () => {
-  const canonical = `${site.url}/services`
-  const description =
-    "Practical web development, WordPress, WooCommerce, technical SEO, and website support for small businesses and agencies."
+  const canonical = absoluteUrl(meta.canonicalPath)
 
   useEnhancedSEO({
-    title: SEOUtils.generateTitle(
-      "Practical Web Development, WordPress, SEO and Technical Support"
-    ),
-    description,
+    title: meta.title,
+    description: meta.description,
     canonical,
     ogUrl: canonical,
-    ogType: "website",
+    ogType: meta.ogType,
     structuredData: {
       "@context": "https://schema.org",
-      "@type": "OfferCatalog",
-      name: "Web Development and Technical Support Services",
-      url: canonical,
-      provider: {
-        "@type": "Person",
-        name: site.name,
-        url: site.url,
-      },
-      itemListElement: serviceCategories.flatMap((category) =>
-        category.services.map((service) => ({
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: service.title,
-            description: service.shortDescription,
-          },
-          ...(service.priceLabel && {
-            priceSpecification: {
-              "@type": "PriceSpecification",
-              priceCurrency: "EUR",
-              description: service.priceLabel,
-            },
-          }),
-        }))
-      ),
+      "@graph": meta.jsonLd,
     },
   })
 
   return (
     <div>
-      <SectionShell
+      <V2PageHero
         id="services-hero"
         eyebrow="Services"
-        title="Practical Web Development, WordPress, SEO and Technical Support"
+        title="Practical web development, WordPress, SEO and technical support."
         subtitle="I help small businesses, agencies, and independent professionals fix website problems, improve performance, launch better pages, and build reliable digital systems."
-        decoration="gradient-orb"
-        className="!pb-12"
       >
-        <div className="flex flex-col gap-4 sm:flex-row">
-          <Link
-            to="/?type=not-sure#contact"
-            className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 font-semibold text-white transition-all hover:from-blue-700 hover:to-blue-600"
-          >
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <Link to="/?type=not-sure#contact" className={v2PrimaryButton}>
             Request a quote
           </Link>
           <Link
             to="/services/emergency-website-help"
-            className="inline-flex items-center justify-center rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition-colors hover:border-blue-500 hover:text-blue-700 dark:border-slate-600 dark:text-slate-200 dark:hover:border-blue-500"
+            className={v2SecondaryButton}
           >
             View emergency help
           </Link>
         </div>
-      </SectionShell>
+      </V2PageHero>
 
-      <div className="container mx-auto max-w-6xl space-y-20 px-6 pb-20">
+      <div className="container mx-auto max-w-6xl space-y-20 px-6 py-16 md:py-20">
         <FeaturedServices />
 
         <section aria-labelledby="all-services-heading">
-          <h2
-            id="all-services-heading"
-            className="mb-3 text-2xl font-bold text-slate-900 dark:text-white md:text-3xl"
-          >
-            Full Service Catalog
-          </h2>
-          <p className="mb-8 max-w-2xl text-lg text-slate-600 dark:text-slate-300">
-            Browse by category. Each service is scoped clearly so you know what
-            you are asking for before we start.
-          </p>
+          <V2SectionHead
+            titleId="all-services-heading"
+            label="Full catalog"
+            title="Browse every service by category."
+            copy="Each service is scoped clearly so you know exactly what you are asking for before we start."
+          />
           <div className="space-y-4">
             {serviceCategories.map((category, index) => (
               <ServiceCategorySection
@@ -122,48 +88,50 @@ const ServicesPage: React.FC = () => {
         </section>
 
         <section aria-labelledby="how-i-work-heading">
-          <h2
-            id="how-i-work-heading"
-            className="mb-8 text-2xl font-bold text-slate-900 dark:text-white md:text-3xl"
-          >
-            How I Work
-          </h2>
-          <div className="grid gap-6 md:grid-cols-3">
+          <V2SectionHead
+            titleId="how-i-work-heading"
+            label="How I work"
+            title="Clear scope before any code."
+          />
+          <ol className="grid gap-4 md:grid-cols-3">
             {howIWorkSteps.map((step, index) => (
-              <SurfaceCard key={step.title} className="p-6">
-                <p className="mb-2 text-sm font-semibold text-blue-500">
-                  Step {index + 1}
-                </p>
-                <h3 className="mb-2 text-lg font-semibold text-slate-900 dark:text-white">
+              <li key={step.title} className={`${v2Panel} p-6`}>
+                <span
+                  className="font-mono text-xs font-black tracking-[0.08em] text-[var(--v2-acid)]"
+                  aria-hidden="true"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mb-2 mt-6 text-lg font-bold tracking-tight text-[var(--v2-text)]">
                   {step.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                <p className="text-sm leading-relaxed text-[var(--v2-muted)]">
                   {step.description}
                 </p>
-              </SurfaceCard>
+              </li>
             ))}
-          </div>
+          </ol>
         </section>
 
         <section aria-labelledby="related-proof-heading">
-          <SurfaceCard className="p-8">
+          <div className={`${v2Panel} p-8`}>
             <h2
               id="related-proof-heading"
-              className="mb-4 text-2xl font-bold text-slate-900 dark:text-white md:text-3xl"
+              className="m-0 font-display text-2xl font-bold tracking-tight text-[var(--v2-text)] md:text-3xl"
             >
-              Proof and Related Projects
+              Proof and related projects
             </h2>
-            <p className="mb-6 max-w-2xl text-lg text-slate-600 dark:text-slate-300">
+            <p className="mt-3 mb-6 max-w-2xl text-lg text-[var(--v2-muted)]">
               See how these services show up in real client work across WordPress,
               Next.js, and internal tools.
             </p>
             <Link
               to="/#projects"
-              className="inline-flex font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+              className="inline-flex rounded-sm font-bold text-[var(--v2-brand)] transition-transform hover:translate-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-x-0"
             >
               View portfolio projects →
             </Link>
-          </SurfaceCard>
+          </div>
         </section>
 
         <EmergencyHelpCTA

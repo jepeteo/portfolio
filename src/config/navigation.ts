@@ -4,26 +4,24 @@ export type NavLinkKind = "hash" | "route"
 
 export type AppNavigationLink = NavigationLink & {
   kind: NavLinkKind
+  /** When set, the link is rendered as a stand-out CTA rather than a plain nav item. */
+  cta?: "primary" | "secondary"
 }
 
+// Order mirrors the on-page section order. Section anchors come first, then the
+// "Services" page and "Contact" are surfaced as call-to-action buttons.
 export const navLinks: AppNavigationLink[] = [
   { href: "#top", text: "Home", ariaLabel: "Navigate to home section", kind: "hash" },
   {
-    href: "/services",
-    text: "Services",
-    ariaLabel: "Navigate to services page",
-    kind: "route",
+    href: "#projects",
+    text: "Projects",
+    ariaLabel: "Navigate to projects section",
+    kind: "hash",
   },
   {
     href: "#skills",
     text: "Skills",
     ariaLabel: "Navigate to skills section",
-    kind: "hash",
-  },
-  {
-    href: "#projects",
-    text: "Projects",
-    ariaLabel: "Navigate to projects section",
     kind: "hash",
   },
   {
@@ -45,10 +43,18 @@ export const navLinks: AppNavigationLink[] = [
     kind: "hash",
   },
   {
+    href: "/services",
+    text: "Services",
+    ariaLabel: "Navigate to services page",
+    kind: "route",
+    cta: "secondary",
+  },
+  {
     href: "#contact",
     text: "Contact",
     ariaLabel: "Navigate to contact section",
     kind: "hash",
+    cta: "primary",
   },
 ]
 
@@ -64,11 +70,10 @@ export const footerLinks: AppNavigationLink[] = [
 
 export const sectionOrder = [
   "top",
-  "buyer-intent",
   "proof",
   "fast-help",
-  "skills",
   "projects",
+  "skills",
   "experience",
   "certificates",
   "about",

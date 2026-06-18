@@ -1,11 +1,11 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useEnhancedSEO, SEOUtils } from "../utils/enhancedSEO"
-import { site } from "../config/site"
+import { useEnhancedSEO } from "../utils/enhancedSEO"
+import { routeMeta, absoluteUrl } from "../config/routeMeta.js"
 import EmergencyHelpCTA from "../components/services/EmergencyHelpCTA"
-import SectionShell from "../components/ui/SectionShell"
-import SurfaceCard from "../components/ui/SurfaceCard"
-import StatBlock from "../components/ui/StatBlock"
+import V2PageHero from "../components/ui/V2PageHero"
+import V2SectionHead from "../components/ui/V2SectionHead"
+import { v2Panel } from "../components/ui/v2Styles"
 import ServiceCard from "../components/services/ServiceCard"
 import { emergencyServices } from "../content/services"
 
@@ -45,140 +45,125 @@ const trustStats = [
   { value: "Fixed quote", label: "Before work starts" },
 ]
 
+const meta = routeMeta["/services/emergency-website-help"]
+
 const EmergencyHelpPage: React.FC = () => {
-  const canonical = `${site.url}/services/emergency-website-help`
-  const description =
-    "Fast help for WordPress errors, broken forms, WooCommerce checkout issues, DNS problems, email setup, SSL errors, and urgent website problems."
+  const canonical = absoluteUrl(meta.canonicalPath)
 
   useEnhancedSEO({
-    title: SEOUtils.generateTitle("Emergency Website Help"),
-    description,
+    title: meta.title,
+    description: meta.description,
     canonical,
     ogUrl: canonical,
-    ogType: "website",
+    ogType: meta.ogType,
     structuredData: {
       "@context": "https://schema.org",
-      "@type": "Service",
-      name: "Emergency Website Help",
-      description,
-      url: canonical,
-      provider: {
-        "@type": "Person",
-        name: site.name,
-        url: site.url,
-      },
-      areaServed: "Worldwide",
-      serviceType: "Emergency website support",
+      "@graph": meta.jsonLd,
     },
   })
 
   return (
     <div>
-      <SectionShell
+      <V2PageHero
         id="emergency-hero"
-        eyebrow="Emergency Support"
-        title="Emergency Website Help"
-        subtitle="Website broken or losing enquiries? I can help diagnose and fix urgent website, WordPress, WooCommerce, DNS, email, SSL, and performance issues."
-        variant="muted"
-        decoration="grid"
-        className="!pb-12"
+        eyebrow="Emergency support"
+        title="Website broken or losing enquiries?"
+        subtitle="I can help diagnose and fix urgent website, WordPress, WooCommerce, DNS, email, SSL, and performance issues — fast turnaround when available, depending on scope."
       >
-        <div className="grid gap-4 md:grid-cols-3">
-          {trustStats.map((stat, index) => (
-            <StatBlock
-              key={stat.label}
-              value={stat.value}
-              label={stat.label}
-              index={index}
-              animate={false}
-            />
+        <dl className="grid gap-4 sm:grid-cols-3">
+          {trustStats.map((stat) => (
+            <div key={stat.label} className={`${v2Panel} p-5`}>
+              <dt className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--v2-soft)]">
+                {stat.label}
+              </dt>
+              <dd className="m-0 mt-1.5 text-2xl font-bold tracking-tight text-[var(--v2-text)]">
+                {stat.value}
+              </dd>
+            </div>
           ))}
-        </div>
-      </SectionShell>
+        </dl>
+      </V2PageHero>
 
-      <div className="container mx-auto max-w-6xl space-y-16 px-6 pb-20">
+      <div className="container mx-auto max-w-6xl space-y-16 px-6 py-16 md:py-20">
         <section aria-labelledby="common-problems-heading">
-          <h2
-            id="common-problems-heading"
-            className="mb-6 text-2xl font-bold text-slate-900 dark:text-white md:text-3xl"
-          >
-            Common Problems I Can Help With
-          </h2>
-          <ul className="grid gap-3 sm:grid-cols-2">
+          <V2SectionHead
+            titleId="common-problems-heading"
+            label="Symptoms"
+            title="Common problems I can help with."
+          />
+          <ul className="flex flex-wrap gap-2.5">
             {commonProblems.map((problem) => (
-              <li key={problem}>
-                <SurfaceCard className="px-4 py-3 text-sm text-slate-700 dark:text-slate-200">
-                  {problem}
-                </SurfaceCard>
+              <li
+                key={problem}
+                className="rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel)] px-4 py-2 text-sm font-medium text-[var(--v2-muted)]"
+              >
+                {problem}
               </li>
             ))}
           </ul>
         </section>
 
         <section aria-labelledby="process-heading">
-          <h2
-            id="process-heading"
-            className="mb-6 text-2xl font-bold text-slate-900 dark:text-white md:text-3xl"
-          >
-            How the Emergency Process Works
-          </h2>
-          <ol className="space-y-4">
+          <V2SectionHead
+            titleId="process-heading"
+            label="Process"
+            title="How the emergency process works."
+          />
+          <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {processSteps.map((step, index) => (
-              <li key={step}>
-                <SurfaceCard className="flex gap-4 p-4">
-                  <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700 dark:bg-blue-500/20 dark:text-blue-300">
-                    {index + 1}
-                  </span>
-                  <p className="pt-1 text-slate-700 dark:text-slate-200">
-                    {step}
-                  </p>
-                </SurfaceCard>
+              <li
+                key={step}
+                className={`${v2Panel} flex gap-4 p-5`}
+              >
+                <span
+                  className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-[var(--v2-line)] font-mono text-sm font-black text-[var(--v2-acid)]"
+                  aria-hidden="true"
+                >
+                  {index + 1}
+                </span>
+                <p className="m-0 pt-1 text-sm text-[var(--v2-muted)]">{step}</p>
               </li>
             ))}
           </ol>
         </section>
 
         <section aria-labelledby="starting-prices-heading">
-          <h2
-            id="starting-prices-heading"
-            className="mb-6 text-2xl font-bold text-slate-900 dark:text-white md:text-3xl"
-          >
-            Starting Prices
-          </h2>
+          <V2SectionHead
+            titleId="starting-prices-heading"
+            label="Pricing"
+            title="Starting prices."
+            copy="Final pricing depends on scope — I confirm a fixed quote before any work begins."
+          />
           <div className="grid gap-4 md:grid-cols-2">
             {emergencyServices.map((service, index) => (
               <ServiceCard key={service.id} service={service} index={index} />
             ))}
           </div>
-          <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
-            Final pricing depends on scope. I confirm a fixed quote before work
-            begins.
-          </p>
         </section>
 
         <section aria-labelledby="what-i-need-heading">
-          <SurfaceCard className="p-8">
+          <div className={`${v2Panel} p-8`}>
             <h2
               id="what-i-need-heading"
-              className="mb-6 text-2xl font-bold text-slate-900 dark:text-white md:text-3xl"
+              className="m-0 mb-6 font-display text-2xl font-bold tracking-tight text-[var(--v2-text)] md:text-3xl"
             >
-              What I Need From You
+              What I need from you
             </h2>
             <ul className="space-y-3">
               {whatINeed.map((item) => (
                 <li
                   key={item}
-                  className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300"
+                  className="flex items-center gap-3 text-sm text-[var(--v2-muted)]"
                 >
                   <span
-                    className="h-2 w-2 rounded-full bg-blue-500 dark:bg-blue-400"
+                    className="h-2 w-2 flex-none rounded-full bg-[var(--v2-acid)]"
                     aria-hidden="true"
                   />
                   {item}
                 </li>
               ))}
             </ul>
-          </SurfaceCard>
+          </div>
         </section>
 
         <EmergencyHelpCTA />
@@ -186,7 +171,7 @@ const EmergencyHelpPage: React.FC = () => {
         <p className="text-center">
           <Link
             to="/services"
-            className="text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+            className="rounded-sm text-sm font-bold text-[var(--v2-brand)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)]"
           >
             View full service catalog →
           </Link>
