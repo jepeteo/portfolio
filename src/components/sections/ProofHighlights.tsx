@@ -1,12 +1,13 @@
 import React from "react"
 import V2SectionHead from "../ui/V2SectionHead"
+import { MotionSection } from "../motion"
 
 const cardBase =
   "relative overflow-hidden rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-6 shadow-[0_18px_55px_-20px_rgba(0,0,0,0.35)] md:p-7"
 
 const ProofHighlights: React.FC = () => {
   return (
-    <section
+    <MotionSection
       id="proof"
       aria-labelledby="proof-heading"
       className="relative py-20 md:py-24"
@@ -84,7 +85,7 @@ const ProofHighlights: React.FC = () => {
           </article>
         </div>
       </div>
-    </section>
+    </MotionSection>
   )
 }
 

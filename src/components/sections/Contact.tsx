@@ -29,47 +29,12 @@ import {
 import { useToast } from "../ui/Toast"
 import SectionShell from "../ui/SectionShell"
 import ContactRequestFields from "../services/ContactRequestFields"
+import DiagnosticSummary from "./contact/DiagnosticSummary"
 import { site } from "../../config/site"
 import {
   requestTypeOptions,
   type RequestType,
 } from "../../content/services"
-import {
-  generateContactSchema,
-} from "../../content/schemas/contactSchema"
-
-const ContactMethodSchema: React.FC<{
-  method: {
-    icon: React.ComponentType<{ className?: string }>
-    label: string
-    value: string
-    href?: string
-  }
-}> = ({ method }) => {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "ContactPoint",
-    contactType: method.label.toLowerCase(),
-    ...(method.label === "Email" && { email: method.value }),
-    ...(method.label === "Location" && {
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: site.location.city,
-        addressRegion: site.location.region,
-        addressCountry: site.location.country,
-      },
-    }),
-  }
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(schema, null, 2),
-      }}
-    />
-  )
-}
 
 // Enhanced Form Field Component with inline validation
 interface FormFieldProps {
@@ -509,14 +474,6 @@ const Contact: React.FC = memo(() => {
 
   return (
     <>
-      {/* SEO Schema for Contact */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateContactSchema(), null, 2),
-        }}
-      />
-
       <SectionShell
         ref={targetRef}
         id="contact"
@@ -570,7 +527,6 @@ const Contact: React.FC = memo(() => {
 
                   return (
                     <React.Fragment key={index}>
-                      <ContactMethodSchema method={item} />
                       {item.href ? (
                         <a href={item.href} className={cardClassName}>
                           {cardContent}
@@ -749,6 +705,8 @@ const Contact: React.FC = memo(() => {
                     }
                   }}
                 />
+
+                <DiagnosticSummary requestType={formData.requestType || ""} />
 
                 <FormField
                   id="message"

@@ -71,8 +71,12 @@ export const footerLinks: AppNavigationLink[] = [
 export const sectionOrder = [
   "top",
   "proof",
+  "system-map",
   "fast-help",
+  "featured-case-studies",
   "projects",
+  "messy-to-stable",
+  "process",
   "skills",
   "experience",
   "certificates",

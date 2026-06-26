@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { site } from "../config/site"
-import { routeMeta } from "../config/routeMeta.js"
+import { routeMeta, OG_IMAGE, TWITTER_SITE } from "../config/routeMeta.js"
 
 export interface EnhancedSEOConfig {
   title?: string
@@ -280,10 +280,10 @@ class SEOManager {
         "@type": "Person",
         "@id": "https://www.theodorosmentis.com/#person",
         name: "Theodoros Mentis",
-        jobTitle: "Senior Full Stack Developer",
+        jobTitle: "Web Developer",
         sameAs: [
           "https://github.com/jepeteo",
-          "https://linkedin.com/in/theodorosmentis",
+          "https://www.linkedin.com/in/theodorosmentis/",
         ],
       },
       dateCreated: "2010",
@@ -298,7 +298,7 @@ class SEOManager {
         "@id": `https://www.theodorosmentis.com/#project-${index}`,
         name: project.name,
         description: project.description,
-        url: project.url || `https://www.theodorosmentis.com/#project-${index}`,
+        ...(project.url ? { url: project.url } : {}),
         applicationCategory: this.mapProjectTypeToCategory(project.type),
         programmingLanguage: project.technologies,
         dateCreated: project.dateCreated || currentYear.toString(),
@@ -376,7 +376,7 @@ class SEOManager {
           description: project.description,
           applicationCategory: "Web Application",
           programmingLanguage: project.technologies,
-          ...(project.liveUrl && { url: project.liveUrl }),
+          ...(project.liveUrl ? { url: project.liveUrl } : {}),
           ...(project.githubUrl && {
             codeRepository: project.githubUrl,
             sameAs: [project.githubUrl],
@@ -510,10 +510,11 @@ export const defaultSEOConfig: EnhancedSEOConfig = {
   ogTitle: routeMeta["/"].title,
   ogDescription: routeMeta["/"].description,
   ogUrl: `${site.url}/`,
-  ogImage: `${site.url}${site.ogImage}`,
-  ogType: "profile",
-  ogSiteName: `${site.name} Portfolio`,
+  ogImage: OG_IMAGE,
+  ogType: "website",
+  ogSiteName: site.name,
   twitterCard: "summary_large_image",
+  twitterSite: TWITTER_SITE,
   twitterCreator: site.twitterCreator,
   robots: "index,follow,max-image-preview:large",
   language: site.locale,

@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { AlertTriangle, ArrowRight } from "lucide-react"
+import { MotionSection } from "../motion"
 
 const issues = [
   "WordPress critical errors",
@@ -12,7 +13,7 @@ const issues = [
 
 const EmergencyCTA: React.FC = () => {
   return (
-    <section
+    <MotionSection
       aria-labelledby="emergency-heading"
       className="relative py-12 md:py-16"
     >
@@ -66,7 +67,7 @@ const EmergencyCTA: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
+    </MotionSection>
   )
 }
 

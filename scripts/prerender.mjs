@@ -1,13 +1,7 @@
 // Lightweight static prerender for known SPA routes.
 //
-// After `vite build`, this copies dist/index.html into per-route index.html
-// files (e.g. dist/services/index.html) with route-specific <title>, meta
-// description, canonical, Open Graph / Twitter tags, and JSON-LD injected.
-//
-// Why this works on Vercel: static files take precedence over the SPA rewrite
-// in vercel.json, so a direct request / crawler hit on /services is served the
-// prerendered HTML with correct metadata, while client-side navigation still
-// uses the React router. No headless browser, no extra dependencies.
+// After `vite build`, overwrites dist/index.html for "/" and writes per-route
+// index.html files with route-specific metadata, JSON-LD, and crawlable body HTML.
 
 import fs from "node:fs"
 import path from "node:path"
@@ -17,6 +11,8 @@ import {
   prerenderRoutes,
   absoluteUrl,
   OG_IMAGE,
+  TWITTER_SITE,
+  buildRouteJsonLd,
 } from "../src/config/routeMeta.js"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -39,7 +35,10 @@ function escapeText(value) {
 }
 
 function replaceTitle(html, title) {
-  return html.replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeText(title)}</title>`)
+  return html.replace(
+    /<title>[\s\S]*?<\/title>/,
+    `<title>${escapeText(title)}</title>`
+  )
 }
 
 function replaceMetaName(html, name, content) {
@@ -60,18 +59,25 @@ function replaceCanonical(html, href) {
   return re.test(html) ? html.replace(re, tag) : html
 }
 
-function injectJsonLd(html, jsonLdList) {
-  if (!jsonLdList || jsonLdList.length === 0) return html
-  const scripts = jsonLdList
-    .map(
-      (data) =>
-        `    <script type="application/ld+json">\n${JSON.stringify(data, null, 2)}\n    </script>`
-    )
-    .join("\n")
-  return html.replace(/<\/head>/, `${scripts}\n  </head>`)
+function injectJsonLd(html, graph) {
+  const script = `    <script type="application/ld+json">\n${JSON.stringify(graph, null, 2)}\n    </script>`
+  const existing = /<script type="application\/ld\+json">[\s\S]*?<\/script>\s*/
+  if (existing.test(html)) {
+    return html.replace(existing, `${script}\n`)
+  }
+  return html.replace(/<\/head>/, `${script}\n  </head>`)
 }
 
-function buildRouteHtml(template, meta) {
+function injectCrawlableBody(html, crawlableHtml) {
+  if (!crawlableHtml) return html
+  return html.replace(
+    /<div id="root"><\/div>/,
+    `<div id="root">${crawlableHtml}</div>`
+  )
+}
+
+function buildRouteHtml(template, route) {
+  const meta = routeMeta[route]
   const canonical = absoluteUrl(meta.canonicalPath)
   let html = template
   html = replaceTitle(html, meta.title)
@@ -85,13 +91,17 @@ function buildRouteHtml(template, meta) {
   html = replaceMetaName(html, "twitter:title", meta.title)
   html = replaceMetaName(html, "twitter:description", meta.description)
   html = replaceMetaName(html, "twitter:image", OG_IMAGE)
-  html = injectJsonLd(html, meta.jsonLd)
+  html = replaceMetaName(html, "twitter:site", TWITTER_SITE)
+  html = injectJsonLd(html, buildRouteJsonLd(route))
+  html = injectCrawlableBody(html, meta.crawlableHtml)
   return html
 }
 
 function main() {
   if (!fs.existsSync(templatePath)) {
-    console.error(`prerender: dist/index.html not found at ${templatePath}. Run \`vite build\` first.`)
+    console.error(
+      `prerender: dist/index.html not found at ${templatePath}. Run \`vite build\` first.`
+    )
     process.exit(1)
   }
 
@@ -105,7 +115,14 @@ function main() {
       process.exit(1)
     }
 
-    const html = buildRouteHtml(template, meta)
+    const html = buildRouteHtml(template, route)
+
+    if (route === "/") {
+      fs.writeFileSync(templatePath, html, "utf8")
+      written.push("index.html")
+      continue
+    }
+
     const outDir = path.join(distDir, route.replace(/^\//, ""))
     fs.mkdirSync(outDir, { recursive: true })
     const outFile = path.join(outDir, "index.html")

@@ -1,9 +1,11 @@
 import React, { useState, useMemo, memo, useCallback, useEffect } from "react"
+import { motion } from "framer-motion"
 import { useTheme } from "../../../context/ThemeContext"
+import { MotionCard } from "../../motion"
+import useMotionConfig from "../../../hooks/useMotionConfig"
 import useIntersectionObserver from "../../../hooks/useIntersectionObserver"
 import { useProjectImage } from "../../../hooks/useProjectImage"
 import { wordpressProjects } from "../../../content/projects"
-import { generateWordPressProjectSchema } from "../../../content/schemas/projectsSchema"
 import { Project } from "../../../types"
 import { BlurImage } from "../../system/loading/LoadingStates"
 import ProjectCardOverlay from "./ProjectCardOverlay"
@@ -19,17 +21,9 @@ import {
   Filter,
 } from "lucide-react"
 
-const ProjectSchema: React.FC<{ project: Project }> = ({ project }) => (
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{
-      __html: JSON.stringify(generateWordPressProjectSchema(project), null, 2),
-    }}
-  />
-)
-
 const WordPressProjectGrid = memo(() => {
   const { isDark } = useTheme()
+  const { stagger } = useMotionConfig()
   const [projectType, setProjectType] = useState<string | null>(null)
   const [selectedTech, setSelectedTech] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
@@ -296,21 +290,27 @@ const WordPressProjectGrid = memo(() => {
       })
 
       return (
-        <div
-          ref={cardRef}
-          className={`relative group transition-all duration-500 transform hover:-translate-y-0.5 hover:scale-[1.01] ${
-            isCardVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        <MotionCard
+          index={index}
+          className={`relative group ${
+            isCardVisible ? "" : ""
           }`}
-          style={{ animationDelay: `${index * 100}ms` }}
         >
+          <div ref={cardRef}>
           {project.prFeatured && (
-            <div className="absolute top-4 right-4 z-10 flex items-center gap-2 rounded-full bg-[var(--v2-acid)] px-3 py-2 text-sm font-bold text-[var(--v2-acid-ink)] shadow-lg">
+            <motion.span
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: stagger(index, 0.08) }}
+              className="absolute top-4 right-4 z-10 flex items-center gap-2 rounded-full bg-[var(--v2-acid)] px-3 py-2 text-sm font-bold text-[var(--v2-acid-ink)] shadow-lg"
+            >
               <Star className="w-4 h-4" />
               Featured
-            </div>
+            </motion.span>
           )}
 
-          <div className="h-full overflow-hidden rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] transition-all duration-500 hover:border-[var(--v2-acid)]/40">
+          <div className="h-full overflow-hidden rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] transition-all duration-500 hover:border-[var(--v2-acid)]/40 hover:shadow-[var(--v2-shadow)] hover:ring-1 hover:ring-[var(--v2-acid)]/20 motion-reduce:transition-none">
             <div className="relative w-full h-64 overflow-hidden">
               {shouldLoadImage && !hasGlobalImageError && !hasError ? (
                 <>
@@ -404,7 +404,8 @@ const WordPressProjectGrid = memo(() => {
               )}
             </div>
           </div>
-        </div>
+          </div>
+        </MotionCard>
       )
     },
     (prevProps, nextProps) => {
@@ -530,15 +531,13 @@ const WordPressProjectGrid = memo(() => {
                 (p) => p.prName === project.prName
               )
               return (
-                <React.Fragment key={project.prName}>
-                  <ProjectSchema project={project} />
-                  <ProjectCard
-                    project={project}
-                    index={index}
-                    isDark={isDark}
-                    globalIndex={globalIndex}
-                  />
-                </React.Fragment>
+                <ProjectCard
+                  key={project.prName}
+                  project={project}
+                  index={index}
+                  isDark={isDark}
+                  globalIndex={globalIndex}
+                />
               )
             })}
           </div>

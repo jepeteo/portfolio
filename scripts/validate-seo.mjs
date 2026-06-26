@@ -1,53 +1,40 @@
-// Validates SEO build artifacts: sitemap.xml, robots.txt, and (when present)
-// the prerendered route HTML in dist/. Fails the build on inconsistencies.
+// Validates SEO build artifacts: sitemap.xml, robots.txt, and prerendered HTML.
 
 import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import {
   SITE_URL,
+  OG_IMAGE,
   routeMeta,
   prerenderRoutes,
   absoluteUrl,
 } from "../src/config/routeMeta.js"
+import { homeFaq } from "../src/content/homeFaq.js"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = path.resolve(__dirname, "..")
 const errors = []
 
-const requiredSitemapUrls = [
-  `${SITE_URL}/`,
-  `${SITE_URL}/services`,
-  `${SITE_URL}/services/emergency-website-help`,
-]
-
 function validateSitemap() {
   const file = path.join(root, "public", "sitemap.xml")
   const xml = fs.readFileSync(file, "utf8")
-
-  // Basic well-formedness: balanced core tags.
-  const pairs = [
-    ["<urlset", "</urlset>"],
-    ["<url>", "</url>"],
-    ["<loc>", "</loc>"],
-  ]
-  for (const [open, close] of pairs) {
-    const opens = (xml.match(new RegExp(open.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length
-    const closes = (xml.match(new RegExp(close.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length
-    if (opens !== closes) {
-      errors.push(`sitemap.xml: unbalanced ${open} (${opens}) vs ${close} (${closes})`)
-    }
-  }
 
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim())
 
   for (const loc of locs) {
     if (loc.includes("#")) errors.push(`sitemap.xml: hash fragment URL not allowed: ${loc}`)
-    if (!loc.startsWith(SITE_URL)) errors.push(`sitemap.xml: URL does not use canonical host: ${loc}`)
+    if (!loc.startsWith(SITE_URL)) {
+      errors.push(`sitemap.xml: URL does not use canonical host: ${loc}`)
+    }
   }
 
-  for (const required of requiredSitemapUrls) {
-    if (!locs.includes(required)) errors.push(`sitemap.xml: missing required URL: ${required}`)
+  for (const route of prerenderRoutes) {
+    const expected =
+      route === "/" ? `${SITE_URL}/` : `${SITE_URL}${route}`
+    if (!locs.includes(expected)) {
+      errors.push(`sitemap.xml: missing required URL: ${expected}`)
+    }
   }
 }
 
@@ -63,6 +50,29 @@ function validateRobots() {
   }
 }
 
+function validateRouteMeta() {
+  for (const route of prerenderRoutes) {
+    const meta = routeMeta[route]
+    if (!meta) {
+      errors.push(`routeMeta: missing entry for prerender route ${route}`)
+      continue
+    }
+    if (meta.description.length > 160) {
+      errors.push(
+        `routeMeta: ${route} description too long (${meta.description.length} chars)`
+      )
+    }
+  }
+}
+
+function validateIndexHtmlBaseline() {
+  const file = path.join(root, "index.html")
+  const html = fs.readFileSync(file, "utf8")
+  if (!html.includes(OG_IMAGE)) {
+    errors.push(`index.html: og:image does not reference OG_IMAGE (${OG_IMAGE})`)
+  }
+}
+
 function validatePrerender() {
   const distDir = path.join(root, "dist")
   if (!fs.existsSync(distDir)) {
@@ -72,27 +82,65 @@ function validatePrerender() {
 
   for (const route of prerenderRoutes) {
     const meta = routeMeta[route]
-    const file = path.join(distDir, route.replace(/^\//, ""), "index.html")
+    const file =
+      route === "/"
+        ? path.join(distDir, "index.html")
+        : path.join(distDir, route.replace(/^\//, ""), "index.html")
+
     if (!fs.existsSync(file)) {
       errors.push(`prerender: expected file missing: ${path.relative(root, file)}`)
       continue
     }
+
     const html = fs.readFileSync(file, "utf8")
     const canonical = absoluteUrl(meta.canonicalPath)
+
     if (!html.includes(`<link rel="canonical" href="${canonical}"`)) {
       errors.push(`prerender: ${route} missing canonical ${canonical}`)
     }
+
     const titleMatch = html.match(/<title>([\s\S]*?)<\/title>/)
     const expectedTitle = meta.title.replace(/&/g, "&amp;")
     if (!titleMatch || titleMatch[1].trim() !== expectedTitle) {
-      errors.push(`prerender: ${route} title mismatch (got "${titleMatch ? titleMatch[1].trim() : "none"}")`)
+      errors.push(
+        `prerender: ${route} title mismatch (got "${titleMatch ? titleMatch[1].trim() : "none"}")`
+      )
     }
-    if (!html.includes('"@type": "BreadcrumbList"')) {
-      errors.push(`prerender: ${route} missing BreadcrumbList JSON-LD`)
+
+    const jsonLdCount = (html.match(/type="application\/ld\+json"/g) || []).length
+    if (jsonLdCount !== 1) {
+      errors.push(
+        `prerender: ${route} expected 1 JSON-LD script in head, found ${jsonLdCount}`
+      )
+    }
+
+    if (route === "/") {
+      if (!html.includes('id="static-crawl-fallback"')) {
+        errors.push("prerender: home missing static-crawl-fallback article")
+      }
+      if (!html.includes("<h1>")) {
+        errors.push("prerender: home missing crawlable h1")
+      }
+      for (const item of homeFaq) {
+        if (!html.includes(item.question)) {
+          errors.push(`prerender: home FAQ schema/HTML missing question: ${item.question}`)
+        }
+      }
+      if (!html.includes('"@type": "FAQPage"')) {
+        errors.push("prerender: home missing FAQPage JSON-LD")
+      }
+    }
+
+    if (route.startsWith("/services") && route !== "/services") {
+      if (!html.includes('"@type": "BreadcrumbList"')) {
+        errors.push(`prerender: ${route} missing BreadcrumbList JSON-LD`)
+      }
     }
   }
 }
 
+validateRouteMeta()
+validateIndexHtmlBaseline()
 validateSitemap()
 validateRobots()
 validatePrerender()

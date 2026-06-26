@@ -2,8 +2,12 @@ import React, { Suspense } from "react"
 import Hero from "../components/sections/Hero"
 import ErrorBoundary from "../components/system/ErrorBoundary"
 import ProofHighlights from "../components/sections/ProofHighlights"
+import SystemMapSection from "../components/sections/SystemMapSection"
 import FastHelpSection from "../components/services/FastHelpSection"
+import FeaturedCaseStudies from "../components/sections/FeaturedCaseStudies"
+import MessyToStableSection from "../components/sections/MessyToStableSection"
 import ProcessSection from "../components/sections/ProcessSection"
+import HomeFAQ from "../components/sections/HomeFAQ"
 import EmergencyCTA from "../components/sections/EmergencyCTA"
 import {
   LoadingSpinner,
@@ -18,11 +22,9 @@ import {
 import {
   useEnhancedSEO,
   defaultSEOConfig,
-  seoManager,
 } from "../utils/enhancedSEO"
 import useServiceWorker from "../hooks/useServiceWorker"
 import { useTheme } from "../context/ThemeContext"
-import { site, sitePersonSchema } from "../config/site"
 
 const Skills = createLazyComponent(
   () => import("../components/sections/Skills"),
@@ -116,18 +118,14 @@ const HomePage: React.FC = () => {
   }, [isDark])
 
   React.useEffect(() => {
-    seoManager.optimizeCorewWebVitals()
-  }, [])
-
-  React.useEffect(() => {
     const disposers: Array<() => void> = []
 
-    const proofSection = document.getElementById("proof")
-    if (proofSection) {
+    const featuredSection = document.getElementById("featured-case-studies")
+    if (featuredSection) {
       const dispose = ComponentPreloader.preloadOnIntersection(
         "projects",
         () => import("../components/sections/Projects")
-      )(proofSection)
+      )(featuredSection)
       if (dispose) disposers.push(dispose)
     }
 
@@ -165,39 +163,15 @@ const HomePage: React.FC = () => {
     return () => disposers.forEach((fn) => fn())
   }, [])
 
-  useEnhancedSEO({
-    ...defaultSEOConfig,
-    structuredData: {
-      ...sitePersonSchema,
-      hasCredential: [
-        {
-          "@type": "EducationalOccupationalCredential",
-          name: "18+ Years Professional Web Development Experience",
-        },
-        {
-          "@type": "EducationalOccupationalCredential",
-          name: "WordPress Expert Developer",
-        },
-        {
-          "@type": "EducationalOccupationalCredential",
-          name: "React Specialist",
-        },
-      ],
-      owns: [
-        {
-          "@type": "CreativeWork",
-          "@id": `${site.url}/#portfolio`,
-          name: "Professional Portfolio",
-        },
-      ],
-    },
-  })
+  useEnhancedSEO(defaultSEOConfig)
 
   return (
     <>
       <Hero />
       <ProofHighlights />
+      <SystemMapSection />
       <FastHelpSection />
+      <FeaturedCaseStudies />
 
       <ErrorBoundary componentName="Projects">
         <Suspense fallback={<ProjectsLoader />}>
@@ -205,7 +179,9 @@ const HomePage: React.FC = () => {
         </Suspense>
       </ErrorBoundary>
 
+      <MessyToStableSection />
       <ProcessSection />
+      <HomeFAQ />
       <EmergencyCTA />
 
       <ErrorBoundary componentName="Skills">

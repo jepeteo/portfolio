@@ -27,138 +27,6 @@ import {
   Minus,
 } from "lucide-react"
 
-// Schema.org structured data for certificates
-const generateCertificatesSchema = (certificates: ModernCertificate[]) => {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "@id": "https://www.theodorosmentis.com/#certificates",
-    name: "Professional Certifications & Credentials",
-    description:
-      "Educational and professional certifications earned by Theodoros Mentis",
-    numberOfItems: certificates.length,
-    itemListElement: certificates.map((certificate, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      item: {
-        "@type": "EducationalOccupationalCredential",
-        "@id": `https://www.theodorosmentis.com/#certificate-${certificate.id}`,
-        name: certificate.name,
-        description: certificate.description,
-        dateCreated: certificate.issueDate,
-        url: certificate.credentialUrl,
-        credentialCategory: mapCategoryToCredentialCategory(
-          certificate.category || "Technology"
-        ),
-        educationalLevel: "Professional Development",
-        competencyRequired: certificate.skills,
-        recognizedBy: {
-          "@type": "Organization",
-          name: certificate.issuer,
-          url: getIssuerUrl(certificate.issuer),
-        },
-        about: certificate.skills?.map((skill: string) => ({
-          "@type": "DefinedTerm",
-          name: skill,
-          inDefinedTermSet: {
-            "@type": "DefinedTermSet",
-            name: certificate.category,
-          },
-        })),
-        credentialSubject: {
-          "@type": "Person",
-          "@id": "https://www.theodorosmentis.com/#person",
-          name: "Theodoros Mentis",
-          hasCredential: certificate.name,
-        },
-      },
-    })),
-  }
-}
-
-// Individual certificate schema component
-const CertificateSchema: React.FC<{ certificate: ModernCertificate }> = ({
-  certificate,
-}) => {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "EducationalOccupationalCredential",
-    "@id": `https://www.theodorosmentis.com/#credential-${certificate.id}`,
-    name: certificate.name,
-    description: certificate.description,
-    dateCreated: certificate.issueDate,
-    url: certificate.credentialUrl,
-    credentialCategory: mapCategoryToCredentialCategory(
-      certificate.category || "Technology"
-    ),
-    educationalLevel: "Professional Development",
-    competencyRequired: certificate.skills,
-    recognizedBy: {
-      "@type": "Organization",
-      name: certificate.issuer,
-      url: getIssuerUrl(certificate.issuer),
-    },
-    teaches: certificate.skills?.map((skill: string) => ({
-      "@type": "DefinedTerm",
-      name: skill,
-    })),
-    credentialSubject: {
-      "@type": "Person",
-      "@id": "https://www.theodorosmentis.com/#person",
-      name: "Theodoros Mentis",
-      jobTitle: "Senior Full Stack Developer",
-    },
-    isPartOf: {
-      "@type": "CreativeWork",
-      "@id": "https://www.theodorosmentis.com/#portfolio",
-      name: "Theodoros Mentis Professional Portfolio",
-    },
-  }
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(schema, null, 2),
-      }}
-    />
-  )
-}
-
-// Helper functions
-const mapCategoryToCredentialCategory = (category: string): string => {
-  const mapping: Record<string, string> = {
-    "AI & Machine Learning": "Technology",
-    "Frontend Development": "Technology",
-    "Backend Development": "Technology",
-    "Programming Fundamentals": "Technology",
-    "Digital Marketing": "Marketing",
-    "Security & Compliance": "Security",
-    "CMS Development": "Technology",
-    "DevOps & Infrastructure": "Technology",
-    "Database Management": "Technology",
-    "Performance & Optimization": "Technology",
-    "E-commerce": "Business",
-    "Productivity Tools": "Technology",
-  }
-  return mapping[category] || "Technology"
-}
-
-const getIssuerUrl = (issuer: string): string => {
-  const mapping: Record<string, string> = {
-    "LinkedIn Learning": "https://www.linkedin.com/learning/",
-    Coursera: "https://www.coursera.org/",
-    Udemy: "https://www.udemy.com/",
-    Microsoft: "https://docs.microsoft.com/en-us/learn/",
-    Google: "https://developers.google.com/training/",
-    "Amazon Web Services": "https://aws.amazon.com/training/",
-  }
-  return (
-    mapping[issuer] ||
-    `https://www.${issuer.toLowerCase().replace(/\s+/g, "")}.com/`
-  )
-}
-
 const categoryIcons: Record<
   string,
   React.ComponentType<{ className?: string }>
@@ -283,18 +151,6 @@ const Certificates: React.FC = memo(() => {
 
   return (
     <>
-      {/* SEO Schema for Certificates */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            generateCertificatesSchema(validCertificates),
-            null,
-            2
-          ),
-        }}
-      />
-
       <SectionShell
         ref={targetRef}
         id="certificates"
@@ -397,7 +253,6 @@ const Certificates: React.FC = memo(() => {
 
                   return (
                     <React.Fragment key={certificate.id}>
-                      <CertificateSchema certificate={certificate} />
                       <div
                         className="group relative overflow-hidden rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--v2-acid)]/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                         style={{ animationDelay: `${index * 100}ms` }}

@@ -7,6 +7,12 @@ export type ServiceItem = {
   bestFor?: string
   featured?: boolean
   emergency?: boolean
+  matrixCommand?: string
+  matrixDetail?: {
+    typicalProblem: string
+    whatICheck: string
+    whatToSend: string
+  }
 }
 
 export type ServiceCategory = {
@@ -653,3 +659,74 @@ export const mapServiceIdToRequestType = (serviceId: string): RequestType => {
   }
   return mapping[serviceId] ?? "not-sure"
 }
+
+export const fastHelpMatrixDetails: Record<
+  (typeof fastHelpServiceIds)[number],
+  Pick<ServiceItem, "matrixCommand" | "matrixDetail">
+> = {
+  "wordpress-emergency-fix": {
+    matrixCommand: "/fix broken contact form",
+    matrixDetail: {
+      typicalProblem:
+        "Forms stop sending, white screen after update, or admin login fails.",
+      whatICheck:
+        "Plugin conflicts, PHP errors, mail routing, and recent changes.",
+      whatToSend: "Site URL, symptoms, and when it started.",
+    },
+  },
+  "woocommerce-checkout-fix": {
+    matrixCommand: "/debug WooCommerce checkout",
+    matrixDetail: {
+      typicalProblem:
+        "Checkout errors, payment methods missing, or orders not completing.",
+      whatICheck:
+        "Checkout flow, gateways, shipping rules, and theme/plugin conflicts.",
+      whatToSend: "Store URL, payment method, and screenshots if possible.",
+    },
+  },
+  "email-dns-outlook-fix": {
+    matrixCommand: "/repair DNS or Outlook email",
+    matrixDetail: {
+      typicalProblem:
+        "Mail bounces, Outlook won't send, or DNS changes broke delivery.",
+      whatICheck: "SPF, DKIM, DMARC, MX records, and provider settings.",
+      whatToSend: "Domain, email provider, and what fails (send/receive).",
+    },
+  },
+  "website-speed-mini-fix": {
+    matrixCommand: "/speed-up slow WordPress site",
+    matrixDetail: {
+      typicalProblem:
+        "Pages load slowly, poor mobile scores, or heavy plugin stack.",
+      whatICheck:
+        "Caching, images, plugin weight, hosting limits, and Core Web Vitals.",
+      whatToSend: "URL, slow pages if known, and hosting provider.",
+    },
+  },
+  "technical-seo-audit": {
+    matrixCommand: "/audit SEO migration risk",
+    matrixDetail: {
+      typicalProblem:
+        "Redirects broken after migration, metadata missing, or rankings dropped.",
+      whatICheck: "Redirects, sitemaps, schema, crawl issues, and indexation.",
+      whatToSend: "URL, migration timeline, and Search Console access if available.",
+    },
+  },
+  "one-page-landing-page": {
+    matrixCommand: "/build one-page landing page",
+    matrixDetail: {
+      typicalProblem:
+        "Need a focused page for a campaign, offer, or service launch.",
+      whatICheck: "Goal, content, mobile layout, forms, and performance basics.",
+      whatToSend: "Brief, brand assets, reference sites, and deadline.",
+    },
+  },
+}
+
+export const getFastHelpServiceWithMatrix = (): ServiceItem[] =>
+  getFastHelpServices().map((service) => ({
+    ...service,
+    ...(fastHelpMatrixDetails[
+      service.id as (typeof fastHelpServiceIds)[number]
+    ] ?? {}),
+  }))

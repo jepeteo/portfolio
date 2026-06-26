@@ -1,15 +1,15 @@
 /* TEAM */
 Developer: Theodoros Mentis
-Contact: th.mentis@gmail.com
-Site: https://theodorosmentis.com
-Twitter: @theodorosmentis
+Contact: contact@theodorosmentis.com
+Site: https://www.theodorosmentis.com
+Twitter: @jepeteo
 GitHub: github.com/jepeteo
 LinkedIn: linkedin.com/in/theodorosmentis
 Location: Berlin, Germany
 From: Greece
 
 /* SITE */
-Last update: 2025/12/23
+Last update: 2026/06/26
 Standards: HTML5, CSS3, ES2020+
 Language: English
 Doctype: HTML5
@@ -27,4 +27,3 @@ Framer Motion Team
 Vercel Team
 PostHog Team
 Lucide Icons
-GitHub Copilot

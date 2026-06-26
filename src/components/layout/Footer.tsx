@@ -17,7 +17,7 @@ const Footer: React.FC = memo(() => {
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "https://www.linkedin.com/in/thmentis/",
+      href: "https://www.linkedin.com/in/theodorosmentis/",
     },
     {
       icon: Mail,

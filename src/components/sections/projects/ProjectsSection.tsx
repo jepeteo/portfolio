@@ -4,14 +4,6 @@ import ProjectTabBar from "./ProjectTabBar"
 import WordPressProjectGrid from "./WordPressProjectGrid"
 import WebProjectGrid from "./WebProjectGrid"
 import { projectTabFromSearch, type ProjectTab } from "../../../config/navigation"
-import {
-  generateWebProjectsSchema,
-  generateWordPressProjectsSchema,
-} from "../../../content/schemas/projectsSchema"
-import {
-  getWebProjectsForTab,
-  wordpressProjects,
-} from "../../../content/projects"
 
 const getInitialTab = (): ProjectTab => {
   if (typeof window === "undefined") return "wordpress"
@@ -73,24 +65,8 @@ const ProjectsSection: React.FC = () => {
     }
   }, [])
 
-  const schemaPayload =
-    activeTab === "wordpress"
-      ? generateWordPressProjectsSchema(wordpressProjects)
-      : generateWebProjectsSchema(
-          activeTab === "client"
-            ? getWebProjectsForTab("client")
-            : getWebProjectsForTab("personal")
-        )
-
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schemaPayload, null, 2),
-        }}
-      />
-      <SectionShell
+    <SectionShell
         id="projects"
         eyebrow="Portfolio"
         title="Projects"
@@ -112,7 +88,6 @@ const ProjectsSection: React.FC = () => {
           )}
         </div>
       </SectionShell>
-    </>
   )
 }
 

@@ -24,10 +24,7 @@ const Layout: React.FC = () => {
     <div className="min-h-screen transition-colors duration-300 text-slate-900 dark:text-slate-100">
       <ScrollToTop />
       <SkipLink href="#main-content" />
-      <PortfolioSchema
-        includePersonSchema={false}
-        includeOrganizationSchema={true}
-      />
+      <PortfolioSchema />
       <Suspense fallback={<div className="h-16" />}>
         <Header />
       </Suspense>

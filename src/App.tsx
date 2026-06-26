@@ -28,6 +28,11 @@ const EmergencyHelpPage = createLazyComponent(
   {}
 )
 
+const ServiceLandingPage = createLazyComponent(
+  () => import("./pages/ServiceLandingPage"),
+  {}
+)
+
 if (process.env.NODE_ENV === "development") {
   import("./utils/schemaTesting")
 }
@@ -54,6 +59,14 @@ const App: React.FC = () => {
                   element={
                     <Suspense fallback={null}>
                       <EmergencyHelpPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="services/:serviceSlug"
+                  element={
+                    <Suspense fallback={null}>
+                      <ServiceLandingPage />
                     </Suspense>
                   }
                 />

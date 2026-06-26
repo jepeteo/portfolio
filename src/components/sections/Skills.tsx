@@ -1,330 +1,53 @@
-import React, { useState, useCallback } from "react"
-import { useTheme } from "../../context/ThemeContext"
+import React, { useCallback } from "react"
 import useIntersectionObserver from "../../hooks/useIntersectionObserver"
-import useSkillsData from "../../hooks/useSkillsData"
-import usePerformanceMonitor from "../../hooks/usePerformanceMonitor"
 import SectionShell from "../ui/SectionShell"
-import CategoryCard from "./skills/CategoryCard"
-import CategoryHeader from "./skills/CategoryHeader"
-import SkillCard from "./skills/SkillCard"
-import SkillsStats from "./skills/SkillsStats"
 import SkillsCallToAction from "./skills/SkillsCallToAction"
-
-// Local type definitions for schema
-type SkillData = {
-  name: string
-  level: number
-  experience: string
-  experienceYears: number
-  icon: string
-  trend: "up" | "stable" | "down"
-  description: string
-  mastery: string
-}
-
-type SkillCategoryData = {
-  title: string
-  subtitle: string
-  icon: React.ComponentType<{ className?: string }>
-  gradient: string
-  description: string
-  skills: SkillData[]
-}
-
-// Schema.org structured data for skills
-const generateSkillsSchema = (skillCategories: SkillCategoryData[]) => {
-  const allSkills = skillCategories.flatMap((category: SkillCategoryData) =>
-    category.skills.map((skill: SkillData) => ({
-      ...skill,
-      category: category.title,
-    }))
-  )
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "@id": "https://www.theodorosmentis.com/#skills",
-    name: "Technical Skills & Expertise",
-    description:
-      "Professional technical skills and technologies mastered by Theodoros Mentis",
-    numberOfItems: allSkills.length,
-    itemListElement: allSkills.map(
-      (skill: SkillData & { category: string }, index: number) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        item: {
-          "@type": "DefinedTerm",
-          "@id": `https://www.theodorosmentis.com/#skill-${skill.name
-            .toLowerCase()
-            .replace(/\s+/g, "-")}`,
-          name: skill.name,
-          description: skill.description,
-          inDefinedTermSet: {
-            "@type": "DefinedTermSet",
-            name: skill.category,
-            description: `${skill.category} technologies and skills`,
-          },
-          about: {
-            "@type": "Person",
-            "@id": "https://www.theodorosmentis.com/#person",
-            name: "Theodoros Mentis",
-            knowsAbout: skill.name,
-          },
-          additionalProperty: [
-            {
-              "@type": "PropertyValue",
-              name: "Proficiency Level",
-              value: `${skill.level}%`,
-            },
-            {
-              "@type": "PropertyValue",
-              name: "Experience Years",
-              value: skill.experienceYears,
-            },
-            {
-              "@type": "PropertyValue",
-              name: "Mastery Level",
-              value: skill.mastery,
-            },
-            {
-              "@type": "PropertyValue",
-              name: "Skill Trend",
-              value: skill.trend,
-            },
-          ],
-        },
-      })
-    ),
-  }
-}
+import SkillsLayerCard from "./skills/SkillsLayerCard"
+import { skillsLayers } from "../../content/skillsLayers"
+import { MotionSection } from "../motion"
 
 const Skills: React.FC = () => {
-  const { isDark } = useTheme()
   const { targetRef, isVisible } = useIntersectionObserver<HTMLDivElement>({
     threshold: 0.1,
     rootMargin: "50px",
   })
 
-  const { getPerformanceReport } = usePerformanceMonitor("Skills")
-
-  const [activeCategory, setActiveCategory] = useState<string>("languages")
-  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
-
-  const { skillCategories, stats } = useSkillsData()
-
-  const renderCount = React.useRef(0)
-  React.useEffect(() => {
-    renderCount.current += 1
-    if (
-      process.env.NODE_ENV === "development" &&
-      renderCount.current % 10 === 0 &&
-      renderCount.current > 0
-    ) {
-      getPerformanceReport()
-    }
-  })
-
   const scrollToProjects = useCallback(() => {
-    const projectsSection = document.getElementById("projects")
-    if (projectsSection) {
-      const headerOffset = 80
-      const elementPosition = projectsSection.offsetTop
-      const offsetPosition = elementPosition - headerOffset
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      })
-    }
+    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
   }, [])
 
   const scrollToContact = useCallback(() => {
-    const contactSection = document.getElementById("contact")
-    if (contactSection) {
-      const headerOffset = 80
-      const elementPosition = contactSection.offsetTop
-      const offsetPosition = elementPosition - headerOffset
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      })
-    }
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
   }, [])
 
-  const currentCategory =
-    skillCategories[activeCategory as keyof typeof skillCategories]
-
   return (
-    <>
-      {/* SEO Schema for Skills */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            generateSkillsSchema(Object.values(skillCategories)),
-            null,
-            2
-          ),
-        }}
-      />
-
-      <SectionShell
+    <SectionShell
         ref={targetRef}
         id="skills"
         variant="muted"
-        eyebrow="My Technical Journey"
-        title="Technologies I Love"
-        subtitle="Every technology I've learned has shaped how I think and create. Here's my personal journey through the tools and languages that have become part of my story as a developer."
+        eyebrow="Stack depth"
+        title="Skills across the full stack."
+        subtitle="Structured by layer — from interfaces users touch to infrastructure and stability work that keeps production safe."
         className={`transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-          <div className="lg:hidden mb-8">
-            <SkillsStats
-              totalSkills={stats.totalSkills}
-              masteredSkills={stats.masteredSkills}
-              proficientSkills={stats.proficientSkills}
-              compact={true}
+        <MotionSection as="div" className="space-y-4">
+          {skillsLayers.map((layer, index) => (
+            <SkillsLayerCard
+              key={layer.id}
+              layer={layer}
+              index={index}
+              zIndex={skillsLayers.length - index}
             />
-          </div>
+          ))}
+        </MotionSection>
 
-          <div className="lg:hidden mb-8">
-            <div className="text-center mb-6">
-              <h3
-                className={`text-xl font-bold mb-2 ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
-              >
-                Explore My Skills
-              </h3>
-              <p
-                className={`text-sm ${
-                  isDark ? "text-slate-400" : "text-slate-600"
-                }`}
-              >
-                Tap a category to explore skills
-              </p>
-            </div>
-
-            <div className="flex gap-2 overflow-x-auto py-2 px-4 -mx-4 scrollbar-hide">
-              {Object.entries(skillCategories).map(([key, category]) => (
-                <CategoryCard
-                  key={key}
-                  categoryKey={key}
-                  category={category}
-                  isActive={activeCategory === key}
-                  onClick={setActiveCategory}
-                  mobile={true}
-                />
-              ))}
-            </div>
-
-            <div className="text-center mt-3">
-              <p
-                className={`text-xs flex items-center justify-center gap-2 ${
-                  isDark ? "text-slate-500" : "text-slate-400"
-                }`}
-              >
-                <span>←</span>
-                <span>Slide to see more skill categories</span>
-                <span>→</span>
-              </p>
-            </div>
-          </div>
-
-          <div className="lg:hidden">
-            <div className="relative mb-6 overflow-hidden rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-4">
-              <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-acid)]">
-                  <currentCategory.icon className="h-6 w-6" />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="truncate text-lg font-bold tracking-tight text-[var(--v2-text)]">
-                    {currentCategory.title}
-                  </h3>
-                  <p className="truncate text-sm text-[var(--v2-muted)]">
-                    {currentCategory.subtitle}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {currentCategory.skills.map((skill, index) => (
-                <SkillCard
-                  key={skill.name}
-                  skill={skill}
-                  index={index}
-                  isVisible={isVisible}
-                  hoveredSkill={hoveredSkill}
-                  onHover={setHoveredSkill}
-                  mobile={true}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="hidden lg:grid lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-1 space-y-6">
-              <div className="text-left mb-8">
-                <h3
-                  className={`text-2xl font-bold mb-2 ${
-                    isDark ? "text-white" : "text-slate-900"
-                  }`}
-                >
-                  Explore My Skills
-                </h3>
-                <p
-                  className={`text-sm ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}
-                >
-                  Click on any category to dive deeper into my experience
-                </p>
-              </div>
-
-              {Object.entries(skillCategories).map(([key, category]) => (
-                <CategoryCard
-                  key={key}
-                  categoryKey={key}
-                  category={category}
-                  isActive={activeCategory === key}
-                  onClick={setActiveCategory}
-                />
-              ))}
-
-              <SkillsStats
-                totalSkills={stats.totalSkills}
-                masteredSkills={stats.masteredSkills}
-                proficientSkills={stats.proficientSkills}
-              />
-            </div>
-
-            <div className="lg:col-span-2">
-              <CategoryHeader category={currentCategory} />
-
-              <div className="grid md:grid-cols-2 gap-6">
-                {currentCategory.skills.map((skill, index) => (
-                  <SkillCard
-                    key={skill.name}
-                    skill={skill}
-                    index={index}
-                    isVisible={isVisible}
-                    hoveredSkill={hoveredSkill}
-                    onHover={setHoveredSkill}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <SkillsCallToAction
-            onScrollToProjects={scrollToProjects}
-            onScrollToContact={scrollToContact}
-          />
+        <SkillsCallToAction
+          onScrollToProjects={scrollToProjects}
+          onScrollToContact={scrollToContact}
+        />
       </SectionShell>
-    </>
   )
 }
 
