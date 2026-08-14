@@ -80,9 +80,10 @@ export const fintechLearning = FINTECH_LEARNING_IDS.map((id) =>
   certificatesById.get(id)
 )
   .filter(
-    (cert): cert is NonNullable<typeof cert> =>
-      Boolean(cert?.credentialUrl) &&
-      !cert.id.startsWith("unity-")
+    (
+      cert
+    ): cert is NonNullable<ReturnType<typeof certificatesById.get>> =>
+      Boolean(cert && cert.credentialUrl && !cert.id.startsWith("unity-"))
   )
   .slice(0, 8)
 

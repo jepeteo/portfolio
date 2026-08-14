@@ -13,7 +13,7 @@ export type MotionCardProps = {
 
 const MotionCard: React.FC<MotionCardProps> = ({
   index = 0,
-  staggerBase = 0.08,
+  staggerBase = 0.05,
   enableHover = true,
   className,
   children,

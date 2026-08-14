@@ -91,9 +91,9 @@ const Hero: React.FC = memo(() => {
     prefersReducedMotion
       ? {}
       : {
-          initial: { opacity: 0, y: 16 },
+          initial: { opacity: 0, y: 12 },
           animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.45, delay: stagger(index, 0.07) },
+          transition: { duration: 0.35, delay: stagger(index) },
         }
 
   return (

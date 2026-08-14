@@ -4,6 +4,7 @@ import { motion, useScroll, useSpring } from "framer-motion"
 import { cn, typography } from "../../utils/styles"
 import { site } from "../../config/site"
 import Nav from "./Nav"
+import useReducedMotion from "../../hooks/useReducedMotion"
 
 interface HeaderProps {
   className?: string
@@ -12,8 +13,8 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = useState(false)
   const navigate = useNavigate()
+  const prefersReducedMotion = useReducedMotion()
 
-  // Use framer-motion's useScroll for better performance
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -28,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
     }
 
     window.addEventListener("scroll", handleScroll)
-    handleScroll() // Set initial state
+    handleScroll()
 
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -47,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
       )}
       initial={false}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+      transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: "easeOut" }}
       role="banner"
       style={{
         position: "sticky",
@@ -66,8 +67,8 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
         <motion.a
           href="/"
           className="flex items-center gap-4 cursor-pointer group"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={prefersReducedMotion ? undefined : { scale: 1.02 }}
+          whileTap={prefersReducedMotion ? undefined : { scale: 0.98 }}
           transition={{ duration: 0.2 }}
           onClick={(e) => {
             e.preventDefault()
@@ -77,10 +78,10 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
           title="Go to homepage"
         >
           <motion.div
-            className="block" // Show title on all screen sizes
-            initial={{ opacity: 0, x: -20 }}
+            className="block"
+            initial={false}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ duration: 0 }}
           >
             <div
               className={`font-display font-bold leading-tight tracking-tight text-[var(--v2-text)] transition-colors duration-200 group-hover:text-[var(--v2-acid)] ${
@@ -105,9 +106,9 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
         </motion.a>
 
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={false}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ duration: 0 }}
           className="flex items-center"
         >
           <Nav />
@@ -115,14 +116,16 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
       </div>
       <motion.div
         className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--v2-line-strong)] to-transparent"
-        initial={{ opacity: 0, scaleX: 0 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, scaleX: 0 }}
         animate={{ opacity: 1, scaleX: 1 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
+        transition={{
+          delay: 0,
+          duration: prefersReducedMotion ? 0 : 0.3,
+        }}
       />
-      {/* Smooth scroll progress indicator */}
       <motion.div
         className="absolute bottom-0 left-0 h-0.5 origin-left bg-[var(--v2-acid)]"
-        style={{ scaleX }}
+        style={prefersReducedMotion ? { scaleX: scrollYProgress } : { scaleX }}
       />
     </motion.header>
   )
