@@ -2,7 +2,7 @@ import React, { memo, useState, useEffect, useRef } from "react"
 import useIntersectionObserver from "../../hooks/useIntersectionObserver"
 import { BlurImage } from "../system/loading/LoadingStates"
 import SectionShell from "../ui/SectionShell"
-import { v2PrimaryButton, v2SecondaryButton } from "../ui/v2Styles"
+import { v2PrimaryButton } from "../ui/v2Styles"
 import { cn } from "../../utils/styles"
 import {
   User,
@@ -12,7 +12,6 @@ import {
   Heart,
   Download,
   Mail,
-  ExternalLink,
   Target,
   Zap,
   Users,
@@ -21,7 +20,6 @@ import {
   Database,
   Globe,
   CheckCircle,
-  ArrowRight,
   Github,
 } from "lucide-react"
 
@@ -137,19 +135,11 @@ const Bio: React.FC = () => {
   >("about")
 
   const bioContent = {
-    intro: `I am a ${site.title} with ${site.stats.yearsExperienceLabel} years of experience in creating 
-    scalable web solutions and managing complex server environments. Originally from Greece, 
-    I'm now based in Berlin, Germany, where I continue to craft exceptional digital experiences. 
-    My expertise spans from front-end development with modern frameworks to back-end architecture 
-    and database optimization.`,
+    intro: `I am a ${site.title} with ${site.stats.yearsExperienceLabel} years of end-to-end ownership across WordPress, WooCommerce, React, PHP, databases, and Linux hosting. Originally from Greece, I now work from Berlin: diagnosing production issues, repairing what broke, and building systems that stay maintainable.`,
 
-    passion: `What drives me is the opportunity to transform creative visions into digital reality 
-    through collaborative development. I specialize in WordPress development, React applications, 
-    and full-stack solutions that deliver exceptional user experiences.`,
+    passion: `The work that matters is the unglamorous layer: DNS, SSL, email, performance, technical SEO, and the last mile of a site that has to take enquiries or orders. I take a problem from the browser to the server and leave a clear record of what changed.`,
 
-    current: `Currently, I focus on building modern web applications using cutting-edge technologies 
-    while maintaining a strong foundation in proven solutions. I'm passionate about performance 
-    optimization, security best practices, and creating maintainable codebases.`,
+    current: `Today that production problem-solving still sits at the centre of the practice. In parallel I am moving toward automation, financial technology, and more structured engineering environments, documenting the work as that experience grows.`,
   }
 
   const stats = [
@@ -176,78 +166,57 @@ const Bio: React.FC = () => {
 
   const expertise = [
     {
-      category: "Frontend Development",
-      icon: Monitor,
-      skills: [
-        "React",
-        "TypeScript",
-        "Next.js",
-        "Vue.js",
-        "Tailwind CSS",
-        "Modern CSS",
-      ],
-    },
-    {
-      category: "Backend Development",
-      icon: Server,
-      skills: [
-        "Node.js",
-        "PHP",
-        "Python",
-        "RESTful APIs",
-        "GraphQL",
-        "Microservices",
-      ],
-    },
-    {
-      category: "Database & DevOps",
-      icon: Database,
-      skills: [
-        "MySQL",
-        "PostgreSQL",
-        "MongoDB",
-        "Docker",
-        "AWS",
-        "Linux Administration",
-      ],
-    },
-    {
-      category: "CMS & E-commerce",
+      category: "WordPress and WooCommerce",
       icon: Globe,
       skills: [
         "WordPress",
         "WooCommerce",
-        "Custom Themes",
-        "Plugin Development",
-        "Shopify",
+        "Custom themes",
+        "Custom plugins",
+        "Migrations",
       ],
+    },
+    {
+      category: "Applications",
+      icon: Monitor,
+      skills: ["React", "TypeScript", "Next.js", "Tailwind CSS"],
+    },
+    {
+      category: "PHP, data and servers",
+      icon: Server,
+      skills: ["PHP", "MySQL", "MariaDB", "Linux", "Apache", "Nginx"],
+    },
+    {
+      category: "Production operations",
+      icon: Database,
+      skills: ["DNS", "SSL", "Email", "Technical SEO", "Performance"],
     },
   ]
 
   const approach = [
     {
       icon: Target,
-      title: "User-Centered Design",
+      title: "End-to-end ownership",
       description:
-        "Every solution starts with understanding the user's needs and creating intuitive experiences.",
+        "One person from the first symptom to the live fix: browser, WordPress, database, DNS, and hosting.",
     },
     {
       icon: Zap,
-      title: "Performance First",
+      title: "Production troubleshooting",
       description:
-        "I prioritize speed, efficiency, and scalability in every line of code I write.",
+        "Broken forms, failed checkouts, email that never arrives, and slow sites get diagnosed before anything is rebuilt.",
     },
     {
       icon: CheckCircle,
-      title: "Quality Assurance",
+      title: "Clear scope before access",
       description:
-        "Rigorous testing and code review processes ensure reliable, maintainable solutions.",
+        "A fixed quote and a written plan come before production credentials change hands.",
     },
     {
       icon: Heart,
-      title: "Continuous Learning",
+      title: "Building toward financial systems",
       description:
-        "Staying current with emerging technologies and industry best practices.",
+        "The commercial work today is websites and infrastructure. The next chapter is automation and fintech, documented as it becomes real.",
     },
   ]
 
@@ -370,11 +339,6 @@ const Bio: React.FC = () => {
             </div>
 
             <div className="space-y-3">
-              <Link to="/contact" className={cn(v2PrimaryButton, "w-full")}>
-                <Mail className="h-4 w-4" />
-                Get in touch
-              </Link>
-
               <div className="grid grid-cols-2 gap-3">
                 <button onClick={downloadResume} className={compactSecondary}>
                   <Download className="h-4 w-4" />
@@ -428,13 +392,6 @@ const Bio: React.FC = () => {
                         {bioContent.current}
                       </p>
                     </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-4 pt-6">
-                    <Link to="/projects" className={v2SecondaryButton}>
-                      View my work
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
                   </div>
                 </div>
               )}
@@ -518,11 +475,6 @@ const Bio: React.FC = () => {
               <Link to="/contact" className={v2PrimaryButton}>
                 <Mail className="h-5 w-5" />
                 Start a conversation
-              </Link>
-
-              <Link to="/projects" className={v2SecondaryButton}>
-                <ExternalLink className="h-5 w-5" />
-                View portfolio
               </Link>
             </div>
           </div>

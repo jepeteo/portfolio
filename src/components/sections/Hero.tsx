@@ -38,10 +38,10 @@ const HeroDiagnosticConsole: React.FC = () => (
         <span>portfolio://service-console</span>
       </div>
 
-      <div className="p-6">
-        <div className="mb-5 flex items-center gap-4">
+      <div className="p-5">
+        <div className="mb-4 flex items-center gap-3">
           <span
-            className="grid h-16 w-16 flex-none place-items-center rounded-2xl border border-[var(--v2-line-strong)] bg-[var(--v2-panel-2)] font-mono text-xl font-black text-[var(--v2-acid)]"
+            className="grid h-12 w-12 flex-none place-items-center rounded-2xl border border-[var(--v2-line-strong)] bg-[var(--v2-panel-2)] font-mono text-lg font-black text-[var(--v2-acid)]"
             aria-hidden="true"
           >
             TM
@@ -61,7 +61,7 @@ const HeroDiagnosticConsole: React.FC = () => (
           {signals.map((s) => (
             <div
               key={s.label}
-              className="rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 p-3.5"
+              className="rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 p-3"
             >
               <dt className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--v2-soft)]">
                 {s.label}
@@ -75,7 +75,7 @@ const HeroDiagnosticConsole: React.FC = () => (
 
         <AnimatedTerminal
           lines={terminalLines}
-          className="mt-4 overflow-hidden rounded-2xl border border-[var(--v2-line)] bg-[#020617] p-4 font-mono text-xs leading-relaxed text-[#d9f99d]"
+          className="mt-3 overflow-hidden rounded-2xl border border-[var(--v2-line)] bg-[#020617] p-3 font-mono text-xs leading-relaxed text-[#d9f99d]"
           ariaLabel="How a typical engagement starts"
         />
       </div>
@@ -100,7 +100,7 @@ const Hero: React.FC = memo(() => {
     <section
       id="top"
       aria-labelledby="hero-heading"
-      className="v2-grid-bg relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-24"
+      className="v2-grid-bg relative overflow-hidden pt-20 pb-12 md:pt-24 md:pb-16"
     >
       <HeroSystemNodes />
 
@@ -151,27 +151,21 @@ const Hero: React.FC = memo(() => {
 
             <motion.div
               {...fadeIn(3)}
-              className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+              className="mt-8 flex flex-col gap-3 md:flex-row md:flex-nowrap"
             >
               <Link
                 to="/services"
-                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[var(--v2-acid)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-acid-ink)] shadow-[0_18px_48px_-12px_var(--v2-acid)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_56px_-10px_var(--v2-acid)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                className="inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-full bg-[var(--v2-acid)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-acid-ink)] shadow-[0_18px_48px_-12px_var(--v2-acid)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_56px_-10px_var(--v2-acid)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 <Wrench className="h-4 w-4" aria-hidden="true" />
                 I need help with a website
               </Link>
               <Link
                 to="/engineering"
-                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-text)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--v2-shadow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                className="inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-text)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--v2-shadow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 Explore my engineering portfolio
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex min-h-[52px] items-center justify-center px-2 py-3.5 font-bold tracking-tight text-[var(--v2-muted)] underline-offset-4 hover:text-[var(--v2-acid)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
-              >
-                Contact
               </Link>
             </motion.div>
           </div>

@@ -70,7 +70,7 @@ export const evidenceLayers: Array<SkillsLayer & { evidence: SkillEvidenceLevel 
     evidence:
       layer.id === "wordpress" || layer.id === "backend"
         ? "core-production"
-        : layer.id === "frontend"
+        : layer.id === "frontend" || layer.id === "growth"
           ? "extensive"
           : "working",
   }))

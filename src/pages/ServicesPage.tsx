@@ -78,7 +78,7 @@ const ServicesPage: React.FC = () => {
             copy="Pick a path, then open the category you need. Prices stay on each service. Emergency help is always one click away."
           />
           <div className="space-y-12">
-            {servicePaths.map((path, pathIndex) => (
+            {servicePaths.map((path) => (
               <section
                 key={path.id}
                 id={path.id}
@@ -119,11 +119,10 @@ const ServicesPage: React.FC = () => {
                   </aside>
                 ) : null}
                 <div className="space-y-4">
-                  {categoriesForPath(path.id).map((category, index) => (
+                  {categoriesForPath(path.id).map((category) => (
                     <ServiceCategorySection
                       key={category.id}
                       category={category}
-                      defaultOpen={pathIndex === 0 && index === 0}
                     />
                   ))}
                 </div>

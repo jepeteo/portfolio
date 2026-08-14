@@ -22,6 +22,9 @@ describe("Hero CTA accessibility", () => {
 
     expect(requestCta).toHaveAttribute("href", "/services")
     expect(engineeringCta).toHaveAttribute("href", "/engineering")
+    expect(
+      screen.queryByRole("link", { name: /^contact$/i })
+    ).not.toBeInTheDocument()
   })
 
   it("renders a single H1", () => {
