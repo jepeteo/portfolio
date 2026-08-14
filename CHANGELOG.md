@@ -19,10 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project archive cards reuse verified screenshots when they exist. The performance dashboard is development-only and no longer overlaps mobile conversion actions.
 - SPA and prerender share one JSON-LD graph (WebSite, Person, ProfessionalService plus a small route node). Hydration reuses the prerendered script instead of appending a second one.
 - Featured homepage cards no longer create a 12px horizontal overflow at 320px. Missing case-study screenshots stay out of the layout until the file loads.
+- Stoney Holiday Lets now uses a live 1280x720 homepage screenshot at `public/images/projects/stoneyholidaylets.webp`.
 
 ### Confirmed still outstanding
 
-- Stoney Holiday Lets screenshot (`public/images/projects/stoneyholidaylets.webp`) is not in the repo yet.
 - MTX Clinic App remains confidential: no public URL or screens.
 - LinkedIn headline and CV PDF still need a manual pass against `src/config/site.ts`.
 

@@ -39,7 +39,7 @@ Career claims (`18+` / `390+` / `172+`) live in [`src/config/site.ts`](src/confi
 
 These still need a human check before calling the public site finished:
 
-- **Stoney Holiday Lets screenshot.** Add [`public/images/projects/stoneyholidaylets.webp`](public/images/projects/stoneyholidaylets.webp). The case study already points at that path and stays text-first until the file exists. Do not invent or download a stand-in.
+- **Stoney Holiday Lets screenshot.** Live homepage capture is in [`public/images/projects/stoneyholidaylets.webp`](public/images/projects/stoneyholidaylets.webp) (1280x720, taken from https://www.stoneyholidaylets.co.uk/). Replace it if you want a different crop or a later redesign.
 - **MTX Clinic App.** Keep screens and the live URL private until a public URL is explicitly allowed.
 - **LinkedIn.** Align the public headline with Senior Full-Stack Engineer and the career counts in `src/config/site.ts`. Do not invent banking roles there.
 - **CV.** The PDF at [`public/cv/Theodoros-Mentis-CV.pdf`](public/cv/Theodoros-Mentis-CV.pdf) could not be text-extracted during the identity baseline. Re-read titles, dates, and the fintech line against the live site before publishing.

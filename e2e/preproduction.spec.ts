@@ -48,7 +48,7 @@ test("case studies stay evidence-honest", async ({ page }) => {
 
   await page.goto("/projects/stoney-holiday-lets")
   await expect(page.locator("h1")).toContainText(/Stoney Holiday Lets/i)
-  await expect(page.locator("img[alt*='Stoney']")).toHaveCount(0)
+  await expect(page.locator("img[alt*='Stoney']")).toBeVisible()
 
   await page.goto("/projects/technical-rescue")
   await expect(page).toHaveURL(/\/services#rescue/)
