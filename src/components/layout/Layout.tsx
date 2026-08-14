@@ -2,7 +2,6 @@ import React, { Suspense, lazy } from "react"
 import { Outlet } from "react-router-dom"
 import Footer from "./Footer"
 import HashRedirect from "../system/HashRedirect"
-import PortfolioSchema from "../seo/PortfolioSchema"
 import { SkipLink } from "../accessibility/SkipLink"
 import ScrollToTop from "../system/ScrollToTop"
 import { createLazyComponent } from "../../utils/performanceOptimization"
@@ -26,7 +25,6 @@ const Layout: React.FC = () => {
       <ScrollToTop />
       <HashRedirect />
       <SkipLink href="#main-content" />
-      <PortfolioSchema />
       <Suspense fallback={<div className="h-16" />}>
         <Header />
       </Suspense>

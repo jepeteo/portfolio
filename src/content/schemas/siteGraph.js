@@ -41,7 +41,7 @@ const person = {
   ],
   jobTitle: "Senior Full-Stack Engineer",
   description:
-    "Freelance web developer helping businesses fix, improve and build WordPress, WooCommerce and React sites. Based in Berlin, remote across Europe.",
+    "Senior full-stack engineer who builds and rescues reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation — Berlin-based, expanding into fintech.",
   email: SITE_EMAIL,
   nationality: "Greek",
   address: {
@@ -56,9 +56,9 @@ const website = {
   "@type": "WebSite",
   "@id": WEBSITE_ID,
   url: `${SITE_URL}/`,
-  name: `${SITE_NAME} — Web Development & Technical Support`,
+  name: `${SITE_NAME} — Senior Full-Stack Engineer`,
   description:
-    "Practical web development, WordPress, WooCommerce, technical SEO, and urgent website fixes for small businesses and agencies.",
+    "I build and rescue reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation — Berlin-based, expanding into fintech.",
   inLanguage: "en-US",
   publisher: { "@id": PERSON_ID },
 }
