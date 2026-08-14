@@ -13,8 +13,8 @@ const CertificationsPage: React.FC = () => {
       <V2PageHero
         id="certifications-hero"
         eyebrow="Certifications"
-        title="Public credentials, kept in full."
-        subtitle={`${total} certificates across the stored categories. Search, filter, and paginate the archive. Nothing is dropped to make the homepage shorter.`}
+        title="Verified learning, kept in one growing archive."
+        subtitle={`Explore ${total} credentials across engineering, delivery, AI, security and emerging financial technology.`}
       />
       <CertificationsArchive />
     </div>

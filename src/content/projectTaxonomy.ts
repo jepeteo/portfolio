@@ -25,6 +25,23 @@ export type ProjectWorkType =
   | "integration"
   | "migration"
   | "automation"
+  | "maintenance"
+  | "audit"
+
+const TAXONOMY_LABELS: Record<string, string> = {
+  wordpress: "WordPress",
+  "e-commerce": "E-commerce",
+  "open-source": "Open source",
+  "web-app": "Web app",
+  "full-stack": "Full-Stack",
+}
+
+export const projectTaxonomyLabel = (value: string) =>
+  TAXONOMY_LABELS[value] ??
+  value
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ")
 
 export type ProjectSource = "wordpress" | "web" | "react"
 
@@ -87,6 +104,8 @@ export const workTypeFromTags = (tags?: string | string[]): ProjectWorkType => {
   if (joined.includes("migration")) return "migration"
   if (joined.includes("integration")) return "integration"
   if (joined.includes("automation")) return "automation"
+  if (joined.includes("maintenance")) return "maintenance"
+  if (joined.includes("audit")) return "audit"
   return "build"
 }
 

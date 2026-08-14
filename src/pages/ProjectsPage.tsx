@@ -4,10 +4,13 @@ import V2PageHero from "../components/ui/V2PageHero"
 import ProjectsArchive from "../components/sections/projects/ProjectsArchive"
 import { useRoutePageMeta } from "../hooks/useRoutePageMeta"
 import { featuredCaseStudies } from "../content/caseStudies"
+import { allNormalizedProjects } from "../content/projectTaxonomy"
+import { site } from "../config/site"
 import { v2Panel } from "../components/ui/v2Styles"
 
 const ProjectsPage: React.FC = () => {
   useRoutePageMeta("/projects")
+  const publicCount = allNormalizedProjects().length
 
   return (
     <div>
@@ -15,11 +18,12 @@ const ProjectsPage: React.FC = () => {
         id="projects-hero"
         eyebrow="Projects"
         title="Client delivery, WordPress, and product work in one archive."
-        subtitle="Filter by ownership, domain, and work type together, not as mutually exclusive WordPress / Client / Personal tabs."
+        subtitle="Explore selected client delivery, product work and technical experiments by domain, role and technology."
       />
       <p className="container mx-auto max-w-6xl px-6 pb-8 text-sm text-[var(--v2-muted)]">
-        Historical delivery windows are not a promise for new work. Current
-        quotes are scoped per job before production access changes hands.
+        {site.stats.projectCountLabel} is the total number of projects
+        delivered. {publicCount} are currently documented in this public
+        archive.
       </p>
       <section className="container mx-auto max-w-6xl px-6 pb-10">
         <h2 className="mb-4 font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">

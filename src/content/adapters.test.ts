@@ -10,6 +10,7 @@ import {
   domainFromWordPressType,
   engineeringProjects,
   ownershipFromEmployer,
+  projectTaxonomyLabel,
   workTypeFromTags,
 } from "./projectTaxonomy"
 import {
@@ -54,7 +55,7 @@ describe("experience model", () => {
     }
 
     expect(periodsOverlap(freelance, employed)).toBe(true)
-    expect(freelanceOverlapNote.toLowerCase()).toContain("parallel")
+    expect(freelanceOverlapNote.toLowerCase()).toContain("alongside")
   })
 })
 
@@ -65,6 +66,8 @@ describe("project taxonomy", () => {
     expect(domainFromWordPressType("E-Shop")).toBe("e-commerce")
     expect(workTypeFromTags("From scratch")).toBe("build")
     expect(workTypeFromTags("Redesign")).toBe("redesign")
+    expect(workTypeFromTags("Maintenance")).toBe("maintenance")
+    expect(workTypeFromTags("Technical audit")).toBe("audit")
   })
 
   it("keeps the full archive and isolates engineering work", () => {
@@ -77,6 +80,9 @@ describe("project taxonomy", () => {
     expect(all.some((project) => project.engineering)).toBe(true)
     expect(engineering.every((project) => project.engineering)).toBe(true)
     expect(all.some((project) => project.domain === "fintech")).toBe(false)
+    expect(projectTaxonomyLabel("wordpress")).toBe("WordPress")
+    expect(projectTaxonomyLabel("e-commerce")).toBe("E-commerce")
+    expect(projectTaxonomyLabel("open-source")).toBe("Open source")
   })
 })
 

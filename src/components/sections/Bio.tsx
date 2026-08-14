@@ -166,7 +166,7 @@ const Bio: React.FC = () => {
       color: "green",
     },
     {
-      label: "Happy Clients",
+      label: "Clients Served",
       value: site.stats.clientCountLabel,
       icon: Users,
       color: "purple",

@@ -15,8 +15,8 @@ const EngineeringDirection: React.FC = () => (
       <V2SectionHead
         titleId="engineering-direction-heading"
         label="Direction"
-        title="Expanding into fintech without rewriting the past."
-        copy="The commercial offer today is website rescue, WordPress/WooCommerce, and reliable infrastructure. In parallel I am building toward financial systems, automation, and more structured engineering environments."
+        title="Building toward financial systems."
+        copy="I am applying years of production problem-solving to automation, financial technology and more structured engineering environments. I document the work as that experience grows."
       />
       <Link to="/engineering" className={v2SecondaryButton}>
         Open the engineering archive

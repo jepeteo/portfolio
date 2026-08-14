@@ -436,7 +436,7 @@ export class SEOUtils {
     pageName: string,
     siteName = "Theodoros Mentis"
   ): string {
-    return `${pageName} | ${siteName} - Senior Full Stack Developer`
+    return `${pageName} | ${siteName} - ${site.title}`
   }
 
   static generateDescription(content: string, maxLength = 160): string {

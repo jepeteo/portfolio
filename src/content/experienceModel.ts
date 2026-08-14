@@ -85,7 +85,7 @@ export const periodsOverlap = (
 }
 
 export const freelanceOverlapNote =
-  "Freelance practice has run in parallel with employment since 2011. Overlapping dates are concurrent work, not a data error."
+  "Freelance practice has run alongside employment since 2011."
 
 export const normalizeJob = (job: Job): NormalizedJob => {
   const id = jobIdFor(job)

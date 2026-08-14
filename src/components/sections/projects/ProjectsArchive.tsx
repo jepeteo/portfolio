@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom"
 import {
   allNormalizedProjects,
   engineeringProjects,
+  projectTaxonomyLabel,
   publicProjectDescription,
 } from "../../../content/projectTaxonomy"
 import {
@@ -23,11 +24,7 @@ type ProjectsArchiveProps = {
   engineeringOnly?: boolean
 }
 
-const labelize = (value: string) =>
-  value
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ")
+const labelize = projectTaxonomyLabel
 
 const ProjectsArchive: React.FC<ProjectsArchiveProps> = ({
   engineeringOnly = false,
@@ -213,7 +210,7 @@ const ProjectsArchive: React.FC<ProjectsArchiveProps> = ({
 
       {result.items.length === 0 ? (
         <p className={`${v2Panel} p-8 text-center text-[var(--v2-muted)]`}>
-          No projects match these filters. The full archive stays in the dataset.
+          No projects match these filters.
         </p>
       ) : (
         <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

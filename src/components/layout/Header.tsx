@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion, useScroll, useSpring } from "framer-motion"
 import { cn, typography } from "../../utils/styles"
+import { site } from "../../config/site"
 import Nav from "./Nav"
 
 interface HeaderProps {
@@ -98,7 +99,7 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
                 "text-xs lg:text-sm"
               )}
             >
-              Full Stack Developer • WordPress Expert
+              {site.title} • WordPress & Systems
             </p>
           </motion.div>
         </motion.a>
