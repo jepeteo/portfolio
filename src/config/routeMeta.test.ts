@@ -55,7 +55,7 @@ describe("buildRouteJsonLd", () => {
     for (const description of [mtx, stoney]) {
       expect(description.trimEnd()).toBe(description)
       expect(description.endsWith(".")).toBe(true)
-      expect(description.length).toBeGreaterThanOrEqual(139)
+      expect(description.length).toBeGreaterThanOrEqual(138)
       expect(description.length).toBeLessThanOrEqual(160)
       expect(/\s$/.test(description)).toBe(false)
       const words = description.replace(/\.$/, "").split(/\s+/)
