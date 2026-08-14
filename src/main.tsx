@@ -7,7 +7,17 @@ import "/src/index.css"
 const posthogKey = import.meta.env.VITE_PUBLIC_POSTHOG_KEY
 const posthogHost =
   import.meta.env.VITE_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com"
-const posthogEnabled = import.meta.env.VITE_ENABLE_POSTHOG === "true"
+
+const isLocalHost = (hostname: string) =>
+  hostname === "localhost" ||
+  hostname === "127.0.0.1" ||
+  hostname === "[::1]"
+
+const posthogEnabled =
+  import.meta.env.VITE_ENABLE_POSTHOG === "true" &&
+  !import.meta.env.DEV &&
+  typeof window !== "undefined" &&
+  !isLocalHost(window.location.hostname)
 
 // Deferred PostHog wrapper - loads analytics after page is interactive
 const DeferredPostHogProvider = React.lazy(() =>
@@ -18,12 +28,9 @@ const DeferredPostHogProvider = React.lazy(() =>
         options={{
           api_host: posthogHost,
           capture_pageview: false,
-          disable_session_recording: import.meta.env.DEV,
+          disable_session_recording: true,
           loaded: () => {
-            // PostHog is now loaded and ready
-            if (import.meta.env.DEV) {
-              console.log("PostHog loaded (deferred)")
-            }
+            // Production-only path; no console noise in local/dev.
           },
         }}
       >

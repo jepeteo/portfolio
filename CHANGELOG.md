@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Homepage certifications preview is an 8-item cross-disciplinary selection. All 69 credentials remain on /certifications.
 - Page and section reveals complete in about 350ms. Header navigation no longer fades in over a long delay.
 - Contact form sets `aria-invalid` only when a field has a validation error. Valid or untouched fields omit the attribute.
+- Analytics (PostHog, Vercel Analytics / Speed Insights) stay off in local DEV. Unknown SPA paths keep client `noindex` because the Vercel rewrite serves `index.html` for all routes.
 
 ### Confirmed still outstanding
 

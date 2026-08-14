@@ -440,7 +440,9 @@ class ProductionMonitor {
         batch_timestamp: data.timestamp,
       })
     } catch (error) {
-      console.error("Failed to send analytics to PostHog:", error)
+      if (import.meta.env.DEV) {
+        console.error("Failed to send analytics to PostHog:", error)
+      }
       throw new Error("PostHog analytics failed")
     }
   }
