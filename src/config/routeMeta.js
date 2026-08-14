@@ -47,14 +47,14 @@ const homeCrawlableHtml = `<article id="static-crawl-fallback" aria-label="Page 
   <nav aria-label="Primary links">
     <a href="/services">Services</a>
     <a href="/services/emergency-website-help">Emergency help</a>
-    <a href="#contact">Contact</a>
+    <a href="/contact">Contact</a>
   </nav>
 </article>`
 
 const servicesCrawlableHtml = `<article id="static-crawl-fallback" aria-label="Page summary">
   <h1>Practical web development, WordPress, SEO and technical support.</h1>
   <p>WordPress, WooCommerce, technical SEO, email/DNS, landing pages, audits and ongoing website support for small businesses and agencies.</p>
-  <nav aria-label="Primary links"><a href="/">Home</a><a href="#contact">Contact</a></nav>
+  <nav aria-label="Primary links"><a href="/">Home</a><a href="/contact">Contact</a></nav>
 </article>`
 
 const emergencyCrawlableHtml = `<article id="static-crawl-fallback" aria-label="Page summary">
@@ -204,6 +204,139 @@ export const routeMeta = {
           name: "Email, DNS and Outlook Fix",
           path: "/services/email-dns-outlook-fix",
         },
+      ]),
+    ],
+  },
+  "/projects": {
+    title: "Projects and Case Studies | Theodoros Mentis",
+    description:
+      "Client websites, WordPress and WooCommerce work, React apps, and technical rescues. Archive of delivered projects with filters and case studies.",
+    canonicalPath: "/projects",
+    ogType: "website",
+    crawlableHtml: `<article id="static-crawl-fallback" aria-label="Page summary">
+  <h1>Projects and case studies.</h1>
+  <p>WordPress, WooCommerce, React, and technical rescue work for businesses and agencies.</p>
+  <nav aria-label="Primary links"><a href="/">Home</a><a href="/engineering">Engineering</a></nav>
+</article>`,
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Projects", path: "/projects" },
+      ]),
+    ],
+  },
+  "/projects/mtx-clinic-app": {
+    title: "MTX Clinic App | Theodoros Mentis",
+    description:
+      "React internal clinic application for appointments, client records, and day-to-day workflows.",
+    canonicalPath: "/projects/mtx-clinic-app",
+    ogType: "article",
+    crawlableHtml: `<article id="static-crawl-fallback"><h1>MTX Clinic App</h1><p>Internal React clinic application.</p></article>`,
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Projects", path: "/projects" },
+        { name: "MTX Clinic App", path: "/projects/mtx-clinic-app" },
+      ]),
+    ],
+  },
+  "/projects/stoney-holiday-lets": {
+    title: "Stoney Holiday Lets | Theodoros Mentis",
+    description:
+      "WordPress holiday-let site for The Lodge and The Nook with booking CTAs and technical SEO foundations.",
+    canonicalPath: "/projects/stoney-holiday-lets",
+    ogType: "article",
+    crawlableHtml: `<article id="static-crawl-fallback"><h1>Stoney Holiday Lets</h1><p>WordPress holiday-let website.</p></article>`,
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Projects", path: "/projects" },
+        { name: "Stoney Holiday Lets", path: "/projects/stoney-holiday-lets" },
+      ]),
+    ],
+  },
+  "/projects/technical-rescue": {
+    title: "DNS, email and SEO rescue | Theodoros Mentis",
+    description:
+      "Post-migration repair of broken forms, DNS records, email delivery, and SEO redirects.",
+    canonicalPath: "/projects/technical-rescue",
+    ogType: "article",
+    crawlableHtml: `<article id="static-crawl-fallback"><h1>DNS, email and SEO rescue</h1><p>Technical rescue after a website migration.</p></article>`,
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Projects", path: "/projects" },
+        { name: "Technical rescue", path: "/projects/technical-rescue" },
+      ]),
+    ],
+  },
+  "/engineering": {
+    title: "Engineering and Labs | Theodoros Mentis",
+    description:
+      "React and TypeScript applications, internal tools, and technical experiments — separate from client WordPress delivery.",
+    canonicalPath: "/engineering",
+    ogType: "website",
+    crawlableHtml: `<article id="static-crawl-fallback"><h1>Engineering</h1><p>Applications, tools, and technical experiments.</p></article>`,
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Engineering", path: "/engineering" },
+      ]),
+    ],
+  },
+  "/experience": {
+    title: "Experience | Theodoros Mentis",
+    description:
+      "Professional timeline: freelance web development alongside employment in WordPress, WooCommerce, infrastructure, and server administration.",
+    canonicalPath: "/experience",
+    ogType: "profile",
+    crawlableHtml: `<article id="static-crawl-fallback"><h1>Experience</h1><p>Freelance and employment timeline.</p></article>`,
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Experience", path: "/experience" },
+      ]),
+    ],
+  },
+  "/certifications": {
+    title: "Certifications | Theodoros Mentis",
+    description:
+      "Verified professional certificates across frontend, backend, AI, project management, security, and related topics.",
+    canonicalPath: "/certifications",
+    ogType: "website",
+    crawlableHtml: `<article id="static-crawl-fallback"><h1>Certifications</h1><p>Complete public certificate archive.</p></article>`,
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Certifications", path: "/certifications" },
+      ]),
+    ],
+  },
+  "/about": {
+    title: "About | Theodoros Mentis",
+    description:
+      "Senior full-stack engineer based in Berlin. WordPress, WooCommerce, React, infrastructure, and a transition into fintech.",
+    canonicalPath: "/about",
+    ogType: "profile",
+    crawlableHtml: `<article id="static-crawl-fallback"><h1>About Theodoros Mentis</h1><p>Berlin-based senior full-stack engineer.</p></article>`,
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "About", path: "/about" },
+      ]),
+    ],
+  },
+  "/contact": {
+    title: "Contact | Theodoros Mentis",
+    description:
+      "Request a quote or emergency website help. Name, email, and a short description of the problem is enough to start.",
+    canonicalPath: "/contact",
+    ogType: "website",
+    crawlableHtml: `<article id="static-crawl-fallback"><h1>Contact</h1><p>Request a quote or emergency website help.</p></article>`,
+    jsonLd: [
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Contact", path: "/contact" },
       ]),
     ],
   },

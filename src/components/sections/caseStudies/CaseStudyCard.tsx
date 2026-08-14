@@ -63,7 +63,12 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study, index }) => {
           </div>
 
           <h3 className="text-xl font-bold tracking-tight text-[var(--v2-text)]">
-            {study.title}
+            <a
+              href={`/projects/${study.id}`}
+              className="hover:text-[var(--v2-acid)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
+            >
+              {study.title}
+            </a>
           </h3>
 
           <dl className="mt-4 space-y-3 text-sm">

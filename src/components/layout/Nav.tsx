@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react"
+import { Link } from "react-router-dom"
 import { motion, AnimatePresence, PanInfo } from "framer-motion"
 import { useTheme } from "../../context/ThemeContext"
 import { Icon, icons } from "../ui/icons/Icons"
@@ -13,7 +14,7 @@ interface NavProps {
 
 const Nav: React.FC<NavProps> = ({ className }) => {
   const { toggleTheme, isDark } = useTheme()
-  const { navLinks: links, handleNavigation, isLinkActive } = useAppNavigation()
+  const { navLinks: links, isLinkActive } = useAppNavigation()
   const [isOpen, setIsOpen] = useState(false)
 
   const triggerHaptic = useCallback(() => {
@@ -41,15 +42,10 @@ const Nav: React.FC<NavProps> = ({ className }) => {
     [closeMenu, triggerHaptic]
   )
 
-  const handleNavClick = useCallback(
-    (e: React.MouseEvent, link: AppNavigationLink) => {
-      e.preventDefault()
-      triggerHaptic()
-      closeMenu()
-      handleNavigation(link)
-    },
-    [closeMenu, handleNavigation, triggerHaptic]
-  )
+  const handleNavClick = useCallback(() => {
+    triggerHaptic()
+    closeMenu()
+  }, [closeMenu, triggerHaptic])
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -83,40 +79,39 @@ const Nav: React.FC<NavProps> = ({ className }) => {
           ? "bg-[var(--v2-acid)] text-[var(--v2-acid-ink)] focus-visible:ring-[var(--v2-acid)]"
           : "border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] text-[var(--v2-text)] hover:border-[var(--v2-acid)]/50 focus-visible:ring-[var(--v2-brand)]"
       return (
-        <motion.button
+        <Link
+          to={link.href}
           className={cn(
             ctaBase,
             ctaVariant,
             isMobile ? "min-h-[44px] w-full px-5 py-3 text-base" : "px-4 py-2 text-sm",
             isActive && "ring-2 ring-[var(--v2-acid)] ring-offset-2 ring-offset-[var(--v2-surface)]"
           )}
-          onClick={(e) => handleNavClick(e, link)}
-          whileTap={{ scale: 0.98 }}
+          onClick={handleNavClick}
           aria-label={link.ariaLabel}
           aria-current={isActive ? "page" : undefined}
         >
           {link.text}
-        </motion.button>
+        </Link>
       )
     }
 
     return (
-      <motion.button
+      <Link
+        to={link.href}
         className={cn(
           "relative rounded-xl transition-all duration-200",
           "hover:bg-[var(--v2-panel-2)]/60 active:scale-[0.98]",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)]",
           isMobile
-            ? "w-full text-left justify-start px-5 py-4 min-h-[44px]"
-            : "px-4 py-2",
+            ? "block w-full text-left justify-start px-5 py-4 min-h-[44px]"
+            : "inline-block px-3 py-2",
           isActive
             ? "text-[var(--v2-acid)] font-semibold"
             : "text-[var(--v2-muted)] hover:text-[var(--v2-text)]",
           isMobile && isActive && "bg-[var(--v2-acid)]/10"
         )}
-        onClick={(e) => handleNavClick(e, link)}
-        whileHover={{ scale: isMobile ? 1 : 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        onClick={handleNavClick}
         aria-label={link.ariaLabel}
         aria-current={isActive ? "page" : undefined}
       >
@@ -148,7 +143,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
         >
           {link.text}
         </span>
-      </motion.button>
+      </Link>
     )
   }
 
@@ -159,7 +154,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
       aria-label="Main navigation"
     >
       <div className="flex items-center gap-4">
-        <ul className="hidden lg:flex items-center gap-2">
+        <ul className="hidden xl:flex items-center gap-1">
           {links.map((link) => (
             <li key={link.href}>
               <NavLink link={link} isActive={isLinkActive(link)} />
@@ -199,7 +194,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
           size="sm"
           onClick={toggleMenu}
           className={cn(
-            "lg:hidden p-3 rounded-xl transition-all duration-200",
+            "xl:hidden p-3 rounded-xl transition-all duration-200",
             "hover:bg-surface-elevated active:scale-95",
             "min-w-[44px] min-h-[44px]",
             "relative overflow-hidden"
@@ -232,7 +227,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
         {isOpen && (
           <>
             <motion.div
-              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm xl:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -244,7 +239,7 @@ const Nav: React.FC<NavProps> = ({ className }) => {
             <motion.div
               id="mobile-menu"
               className={cn(
-                "fixed top-20 right-4 left-4 z-50 lg:hidden",
+                "fixed top-20 right-4 left-4 z-50 xl:hidden",
                 "overflow-hidden rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] shadow-2xl"
               )}
               initial={{ opacity: 0, y: -20, scale: 0.95 }}

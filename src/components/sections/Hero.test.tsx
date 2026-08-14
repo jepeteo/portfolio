@@ -18,7 +18,7 @@ describe("Hero CTA accessibility", () => {
     })
     const servicesCta = screen.getByRole("link", { name: /browse services/i })
 
-    expect(requestCta).toHaveAttribute("href", "#contact")
+    expect(requestCta).toHaveAttribute("href", "/contact")
     expect(servicesCta).toHaveAttribute("href", "/services")
   })
 

@@ -58,7 +58,7 @@ const EmergencyCTA: React.FC = () => {
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <a
-                href="#contact"
+                href="/contact"
                 className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] px-6 py-3.5 text-center font-bold tracking-tight text-[var(--v2-text)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 Describe the problem

@@ -42,7 +42,7 @@ const ServiceLandingPage: React.FC = () => {
     .map((id) => getServiceById(id))
     .filter((item): item is NonNullable<typeof item> => item !== undefined)
 
-  const contactHref = `/?type=${landing.requestType}#contact`
+  const contactHref = `/contact?type=${landing.requestType}`
 
   return (
     <div>

@@ -153,7 +153,7 @@ const Hero: React.FC = memo(() => {
               className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
             >
               <a
-                href="#contact"
+                href="/contact"
                 className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[var(--v2-acid)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-acid-ink)] shadow-[0_18px_48px_-12px_var(--v2-acid)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_56px_-10px_var(--v2-acid)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 <Wrench className="h-4 w-4" aria-hidden="true" />

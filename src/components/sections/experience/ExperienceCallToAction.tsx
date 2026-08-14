@@ -22,7 +22,7 @@ export const ExperienceCallToAction: React.FC<
       </p>
 
       <div className="flex flex-col justify-center gap-3 sm:flex-row">
-        <a href="#contact" className={v2PrimaryButton}>
+        <a href="/contact" className={v2PrimaryButton}>
           <Mail className="h-5 w-5" aria-hidden="true" />
           Start a project
         </a>

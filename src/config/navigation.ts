@@ -8,40 +8,8 @@ export type AppNavigationLink = NavigationLink & {
   cta?: "primary" | "secondary"
 }
 
-// Order mirrors the on-page section order. Section anchors come first, then the
-// "Services" page and "Contact" are surfaced as call-to-action buttons.
 export const navLinks: AppNavigationLink[] = [
-  { href: "#top", text: "Home", ariaLabel: "Navigate to home section", kind: "hash" },
-  {
-    href: "#projects",
-    text: "Projects",
-    ariaLabel: "Navigate to projects section",
-    kind: "hash",
-  },
-  {
-    href: "#skills",
-    text: "Skills",
-    ariaLabel: "Navigate to skills section",
-    kind: "hash",
-  },
-  {
-    href: "#experience",
-    text: "Experience",
-    ariaLabel: "Navigate to experience section",
-    kind: "hash",
-  },
-  {
-    href: "#certificates",
-    text: "Certificates",
-    ariaLabel: "Navigate to certificates section",
-    kind: "hash",
-  },
-  {
-    href: "#about",
-    text: "About",
-    ariaLabel: "Navigate to about section",
-    kind: "hash",
-  },
+  { href: "/", text: "Home", ariaLabel: "Navigate to home", kind: "route" },
   {
     href: "/services",
     text: "Services",
@@ -50,16 +18,46 @@ export const navLinks: AppNavigationLink[] = [
     cta: "secondary",
   },
   {
-    href: "#contact",
+    href: "/projects",
+    text: "Projects",
+    ariaLabel: "Navigate to projects page",
+    kind: "route",
+  },
+  {
+    href: "/engineering",
+    text: "Engineering",
+    ariaLabel: "Navigate to engineering page",
+    kind: "route",
+  },
+  {
+    href: "/experience",
+    text: "Experience",
+    ariaLabel: "Navigate to experience page",
+    kind: "route",
+  },
+  {
+    href: "/certifications",
+    text: "Certifications",
+    ariaLabel: "Navigate to certifications page",
+    kind: "route",
+  },
+  {
+    href: "/contact",
     text: "Contact",
-    ariaLabel: "Navigate to contact section",
-    kind: "hash",
+    ariaLabel: "Navigate to contact page",
+    kind: "route",
     cta: "primary",
   },
 ]
 
 export const footerLinks: AppNavigationLink[] = [
-  ...navLinks.filter((link) => link.href !== "#top"),
+  ...navLinks.filter((link) => link.href !== "/"),
+  {
+    href: "/about",
+    text: "About",
+    ariaLabel: "Navigate to about page",
+    kind: "route",
+  },
   {
     href: "/services/emergency-website-help",
     text: "Emergency Help",

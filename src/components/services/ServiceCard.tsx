@@ -19,7 +19,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   index = 0,
 }) => {
   const requestType = mapServiceIdToRequestType(service.id)
-  const contactHref = `/?type=${requestType}#contact`
+  const contactHref = `/contact?type=${requestType}`
   const landingPath = serviceLandingPath(service.id)
   const { stagger } = useMotionConfig()
 

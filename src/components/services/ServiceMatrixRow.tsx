@@ -18,7 +18,7 @@ const ServiceMatrixRow: React.FC<ServiceMatrixRowProps> = ({
   const prefersReducedMotion = useReducedMotion()
   const [expanded, setExpanded] = useState(false)
   const hasDetail = Boolean(service.matrixDetail)
-  const contactHref = `/?type=${mapServiceIdToRequestType(service.id)}#contact`
+  const contactHref = `/contact?type=${mapServiceIdToRequestType(service.id)}`
   const landingPath = serviceLandingPath(service.id)
 
   return (

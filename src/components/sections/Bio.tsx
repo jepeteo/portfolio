@@ -28,6 +28,7 @@ import {
 import profileImage from "../../assets/images/gteo.webp"
 import type { LucideIcon } from "lucide-react"
 import { site } from "../../config/site"
+import { Link } from "react-router-dom"
 
 interface StatItem {
   label: string
@@ -271,13 +272,6 @@ const Bio: React.FC = () => {
     </button>
   )
 
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    })
-  }
-
   const downloadResume = () => {
     const link = document.createElement("a")
     link.href = site.cvPath
@@ -373,13 +367,10 @@ const Bio: React.FC = () => {
             </div>
 
             <div className="space-y-3">
-              <button
-                onClick={() => scrollTo("contact")}
-                className={cn(v2PrimaryButton, "w-full")}
-              >
+              <Link to="/contact" className={cn(v2PrimaryButton, "w-full")}>
                 <Mail className="h-4 w-4" />
                 Get in touch
-              </button>
+              </Link>
 
               <div className="grid grid-cols-2 gap-3">
                 <button onClick={downloadResume} className={compactSecondary}>
@@ -437,13 +428,10 @@ const Bio: React.FC = () => {
                   </div>
 
                   <div className="flex flex-wrap gap-4 pt-6">
-                    <button
-                      onClick={() => scrollTo("projects")}
-                      className={v2SecondaryButton}
-                    >
+                    <Link to="/projects" className={v2SecondaryButton}>
                       View my work
                       <ArrowRight className="h-4 w-4" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               )}
@@ -524,21 +512,15 @@ const Bio: React.FC = () => {
             </p>
 
             <div className="flex flex-wrap justify-center gap-3">
-              <button
-                onClick={() => scrollTo("contact")}
-                className={v2PrimaryButton}
-              >
+              <Link to="/contact" className={v2PrimaryButton}>
                 <Mail className="h-5 w-5" />
                 Start a conversation
-              </button>
+              </Link>
 
-              <button
-                onClick={() => scrollTo("projects")}
-                className={v2SecondaryButton}
-              >
+              <Link to="/projects" className={v2SecondaryButton}>
                 <ExternalLink className="h-5 w-5" />
                 View portfolio
-              </button>
+              </Link>
             </div>
           </div>
         </div>
