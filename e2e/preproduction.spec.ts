@@ -27,6 +27,33 @@ test("production homepage exposes one small JSON-LD graph", async ({
   expect(html).not.toContain("Performance Dashboard")
 })
 
+test("contact form reaches the first viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto("/contact")
+  await expect(page.locator("#name")).toBeVisible()
+  const desktopTop = await page.locator("#name").evaluate((el) => {
+    return el.getBoundingClientRect().top
+  })
+  expect(desktopTop).toBeLessThan(900)
+
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto("/contact")
+  await expect(page.locator("#name")).toBeVisible()
+  const order = await page.evaluate(() => {
+    const name = document.getElementById("name")
+    const details = document.querySelector("aside details summary")
+    if (!name || !details) return null
+    return name.compareDocumentPosition(details) & Node.DOCUMENT_POSITION_FOLLOWING
+      ? "form-before-details"
+      : "details-before-form"
+  })
+  expect(order).toBe("form-before-details")
+  const mobileTop = await page.locator("#name").evaluate((el) => {
+    return el.getBoundingClientRect().top
+  })
+  expect(mobileTop).toBeLessThan(900)
+})
+
 test("contact required fields and certification year label are honest", async ({
   page,
 }) => {
