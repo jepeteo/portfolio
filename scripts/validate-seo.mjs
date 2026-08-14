@@ -114,6 +114,18 @@ function validatePrerender() {
       )
     }
 
+    if (!html.includes(`<meta name="description"`)) {
+      errors.push(`prerender: ${route} missing description meta`)
+    }
+
+    if (!html.includes(`property="og:title"`) || !html.includes(`property="og:image"`)) {
+      errors.push(`prerender: ${route} missing Open Graph title or image`)
+    }
+
+    if (meta.crawlableHtml && !html.includes("<h1>")) {
+      errors.push(`prerender: ${route} missing crawlable h1`)
+    }
+
     if (route === "/") {
       if (!html.includes('id="static-crawl-fallback"')) {
         errors.push("prerender: home missing static-crawl-fallback article")
@@ -124,6 +136,31 @@ function validatePrerender() {
       if (html.includes('"@type": "FAQPage"')) {
         errors.push("prerender: home should not include FAQPage JSON-LD")
       }
+      if (!html.includes('"@type": "WebSite"')) {
+        errors.push("prerender: home missing WebSite JSON-LD")
+      }
+      if (!html.includes('"@type": "Person"')) {
+        errors.push("prerender: home missing Person JSON-LD")
+      }
+      if (!html.includes('"@type": "ProfessionalService"')) {
+        errors.push("prerender: home missing ProfessionalService JSON-LD")
+      }
+    }
+
+    if (route === "/projects" && !html.includes('"@type": "ItemList"')) {
+      errors.push("prerender: /projects missing ItemList JSON-LD")
+    }
+
+    if (route === "/projects/mtx-clinic-app" && !html.includes('"@type": "SoftwareApplication"')) {
+      errors.push("prerender: MTX missing SoftwareApplication JSON-LD")
+    }
+
+    if (route === "/projects/stoney-holiday-lets" && !html.includes('"@type": "CreativeWork"')) {
+      errors.push("prerender: Stoney missing CreativeWork JSON-LD")
+    }
+
+    if (route === "/contact" && !html.includes('"@type": "ContactPage"')) {
+      errors.push("prerender: /contact missing ContactPage JSON-LD")
     }
 
     if (route === "/about") {

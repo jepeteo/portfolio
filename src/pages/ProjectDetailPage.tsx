@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom"
 import V2PageHero from "../components/ui/V2PageHero"
 import CaseStudyTemplate from "../components/sections/caseStudies/CaseStudyTemplate"
 import { useEnhancedSEO } from "../utils/enhancedSEO"
+import { buildProjectPageJsonLd, buildRouteJsonLd, routeMeta } from "../config/routeMeta.js"
 import { site } from "../config/site"
 import {
   allNormalizedProjects,
@@ -23,13 +24,22 @@ const ProjectDetailPage: React.FC = () => {
     study?.problem ??
     (project ? publicProjectDescription(project) : "") ??
     ""
+  const path = `/projects/${slug ?? ""}`
+  const structuredData = routeMeta[path]
+    ? buildRouteJsonLd(path)
+    : buildProjectPageJsonLd({
+        name: title,
+        description: description.slice(0, 200),
+        path,
+      })
 
   useEnhancedSEO({
     title: `${title} | ${site.name}`,
     description: description.slice(0, 155),
-    canonical: `${site.url}/projects/${slug ?? ""}`,
-    ogUrl: `${site.url}/projects/${slug ?? ""}`,
+    canonical: `${site.url}${path}`,
+    ogUrl: `${site.url}${path}`,
     ogType: "article",
+    structuredData,
   })
 
   if (!project && !study) {

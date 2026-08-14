@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useEnhancedSEO } from "../utils/enhancedSEO"
-import { routeMeta, absoluteUrl } from "../config/routeMeta.js"
+import { useRoutePageMeta } from "../hooks/useRoutePageMeta"
 import EmergencyHelpCTA from "../components/services/EmergencyHelpCTA"
 import V2PageHero from "../components/ui/V2PageHero"
 import V2SectionHead from "../components/ui/V2SectionHead"
@@ -46,22 +45,8 @@ const trustStats = [
   { value: "Fixed quote", label: "Before work starts" },
 ]
 
-const meta = routeMeta["/services/emergency-website-help"]
-
 const EmergencyHelpPage: React.FC = () => {
-  const canonical = absoluteUrl(meta.canonicalPath)
-
-  useEnhancedSEO({
-    title: meta.title,
-    description: meta.description,
-    canonical,
-    ogUrl: canonical,
-    ogType: meta.ogType,
-    structuredData: {
-      "@context": "https://schema.org",
-      "@graph": meta.jsonLd,
-    },
-  })
+  useRoutePageMeta("/services/emergency-website-help")
 
   return (
     <div>

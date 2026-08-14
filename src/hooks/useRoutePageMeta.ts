@@ -1,5 +1,5 @@
 import { useEnhancedSEO } from "../utils/enhancedSEO"
-import { absoluteUrl, routeMeta } from "../config/routeMeta.js"
+import { absoluteUrl, buildRouteJsonLd, routeMeta } from "../config/routeMeta.js"
 
 export const useRoutePageMeta = (path: string) => {
   const meta = routeMeta[path]
@@ -11,12 +11,7 @@ export const useRoutePageMeta = (path: string) => {
     canonical,
     ogUrl: canonical,
     ogType: meta?.ogType ?? "website",
-    structuredData: meta
-      ? {
-          "@context": "https://schema.org",
-          "@graph": meta.jsonLd,
-        }
-      : undefined,
+    structuredData: buildRouteJsonLd(path),
   })
 
   return meta

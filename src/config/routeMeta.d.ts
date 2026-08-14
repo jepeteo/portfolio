@@ -20,3 +20,8 @@ export const routeMeta: Record<string, RouteMeta>
 export const prerenderRoutes: string[]
 export function absoluteUrl(canonicalPath: string): string
 export function buildRouteJsonLd(route: string): Record<string, unknown>
+export function buildProjectPageJsonLd(input: {
+  name: string
+  description: string
+  path: string
+}): Record<string, unknown>

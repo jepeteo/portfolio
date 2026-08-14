@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useEnhancedSEO } from "../utils/enhancedSEO"
-import { routeMeta, absoluteUrl } from "../config/routeMeta.js"
+import { useRoutePageMeta } from "../hooks/useRoutePageMeta"
 import FeaturedServices from "../components/services/FeaturedServices"
 import ServiceCategorySection from "../components/services/ServiceCategorySection"
 import EmergencyHelpCTA from "../components/services/EmergencyHelpCTA"
@@ -29,22 +28,8 @@ const howIWorkSteps = [
   },
 ]
 
-const meta = routeMeta["/services"]
-
 const ServicesPage: React.FC = () => {
-  const canonical = absoluteUrl(meta.canonicalPath)
-
-  useEnhancedSEO({
-    title: meta.title,
-    description: meta.description,
-    canonical,
-    ogUrl: canonical,
-    ogType: meta.ogType,
-    structuredData: {
-      "@context": "https://schema.org",
-      "@graph": meta.jsonLd,
-    },
-  })
+  useRoutePageMeta("/services")
 
   return (
     <div>

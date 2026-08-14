@@ -1,7 +1,6 @@
 import React from "react"
 import { Link, Navigate, useParams } from "react-router-dom"
-import { useEnhancedSEO } from "../utils/enhancedSEO"
-import { routeMeta, absoluteUrl } from "../config/routeMeta.js"
+import { useRoutePageMeta } from "../hooks/useRoutePageMeta"
 import {
   getServiceLanding,
   getLandingService,
@@ -18,25 +17,12 @@ const ServiceLandingPage: React.FC = () => {
   const landing = serviceSlug ? getServiceLanding(serviceSlug) : undefined
   const service = serviceSlug ? getLandingService(serviceSlug) : undefined
 
+  const canonicalPath = landing ? `/services/${landing.slug}` : "/services"
+  useRoutePageMeta(canonicalPath)
+
   if (!landing || !service) {
     return <Navigate to="/services" replace />
   }
-
-  const canonicalPath = `/services/${landing.slug}`
-  const meta = routeMeta[canonicalPath]
-  const canonical = absoluteUrl(canonicalPath)
-
-  useEnhancedSEO({
-    title: meta.title,
-    description: meta.description,
-    canonical,
-    ogUrl: canonical,
-    ogType: meta.ogType,
-    structuredData: {
-      "@context": "https://schema.org",
-      "@graph": meta.jsonLd,
-    },
-  })
 
   const relatedServices = landing.relatedServiceIds
     .map((id) => getServiceById(id))

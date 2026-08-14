@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { site } from "../config/site"
-import { routeMeta, OG_IMAGE, TWITTER_SITE } from "../config/routeMeta.js"
+import { routeMeta, OG_IMAGE, TWITTER_SITE, buildRouteJsonLd } from "../config/routeMeta.js"
 
 export interface EnhancedSEOConfig {
   title?: string
@@ -43,7 +43,6 @@ class SEOManager {
   private static instance: SEOManager
   private metaTags: Map<string, HTMLMetaElement> = new Map()
   private linkTags: Map<string, HTMLLinkElement> = new Map()
-  private structuredDataScript: HTMLScriptElement | null = null
 
   static getInstance(): SEOManager {
     if (!SEOManager.instance) {
@@ -188,16 +187,19 @@ class SEOManager {
     this.linkTags.set(key, link)
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private setStructuredData(data: Record<string, any>): void {
-    if (this.structuredDataScript) {
-      document.head.removeChild(this.structuredDataScript)
-    }
+  private setStructuredData(data: Record<string, unknown>): void {
+    const existing = Array.from(
+      document.querySelectorAll('script[type="application/ld+json"]')
+    ) as HTMLScriptElement[]
 
-    this.structuredDataScript = document.createElement("script")
-    this.structuredDataScript.type = "application/ld+json"
-    this.structuredDataScript.textContent = JSON.stringify(data)
-    document.head.appendChild(this.structuredDataScript)
+    existing.slice(1).forEach((node) => node.remove())
+
+    const script = existing[0] ?? document.createElement("script")
+    script.type = "application/ld+json"
+    script.textContent = JSON.stringify(data)
+    if (!script.parentNode) {
+      document.head.appendChild(script)
+    }
   }
 
   private cleanup(): void {
@@ -515,4 +517,5 @@ export const defaultSEOConfig: EnhancedSEOConfig = {
   twitterCreator: site.twitterCreator,
   robots: "index,follow,max-image-preview:large",
   language: site.locale,
+  structuredData: buildRouteJsonLd("/"),
 }

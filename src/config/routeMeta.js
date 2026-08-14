@@ -35,7 +35,7 @@ function serviceJsonLd({ path, name, description, serviceType }) {
     name,
     description,
     url: `${SITE_URL}${path}`,
-    provider: { "@type": "Person", ...personRef, name: SITE_NAME },
+    provider: personRef,
     areaServed: { "@type": "Place", name: "Worldwide (remote)" },
     serviceType,
   }
@@ -92,7 +92,7 @@ export const routeMeta = {
         "@id": `${SITE_URL}/services#catalog`,
         name: "Web Development and Technical Support Services",
         url: `${SITE_URL}/services`,
-        provider: { "@type": "Person", ...personRef, name: SITE_NAME },
+        provider: personRef,
       },
       breadcrumb([
         { name: "Home", path: "/" },
@@ -219,6 +219,26 @@ export const routeMeta = {
   <nav aria-label="Primary links"><a href="/">Home</a><a href="/engineering">Engineering</a></nav>
 </article>`,
     jsonLd: [
+      {
+        "@type": "ItemList",
+        "@id": `${SITE_URL}/projects#list`,
+        name: "Featured case studies",
+        numberOfItems: 2,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "MTX Clinic App",
+            url: `${SITE_URL}/projects/mtx-clinic-app`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Stoney Holiday Lets",
+            url: `${SITE_URL}/projects/stoney-holiday-lets`,
+          },
+        ],
+      },
       breadcrumb([
         { name: "Home", path: "/" },
         { name: "Projects", path: "/projects" },
@@ -228,11 +248,19 @@ export const routeMeta = {
   "/projects/mtx-clinic-app": {
     title: "MTX Clinic App | Theodoros Mentis",
     description:
-      "React internal clinic application for appointments, client records, and day-to-day workflows.",
+      "Internal Next.js clinic application for appointments, client records, and day-to-day workflows.",
     canonicalPath: "/projects/mtx-clinic-app",
     ogType: "article",
-    crawlableHtml: `<article id="static-crawl-fallback"><h1>MTX Clinic App</h1><p>Internal React clinic application.</p></article>`,
+    crawlableHtml: `<article id="static-crawl-fallback"><h1>MTX Clinic App</h1><p>Internal clinic application. Screens and live URL are not public.</p></article>`,
     jsonLd: [
+      {
+        "@type": "SoftwareApplication",
+        "@id": `${SITE_URL}/projects/mtx-clinic-app#work`,
+        name: "MTX Clinic App",
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Web",
+        author: personRef,
+      },
       breadcrumb([
         { name: "Home", path: "/" },
         { name: "Projects", path: "/projects" },
@@ -248,6 +276,13 @@ export const routeMeta = {
     ogType: "article",
     crawlableHtml: `<article id="static-crawl-fallback"><h1>Stoney Holiday Lets</h1><p>WordPress holiday-let website.</p></article>`,
     jsonLd: [
+      {
+        "@type": "CreativeWork",
+        "@id": `${SITE_URL}/projects/stoney-holiday-lets#work`,
+        name: "Stoney Holiday Lets",
+        url: "https://www.stoneyholidaylets.co.uk/",
+        author: personRef,
+      },
       breadcrumb([
         { name: "Home", path: "/" },
         { name: "Projects", path: "/projects" },
@@ -263,6 +298,44 @@ export const routeMeta = {
     ogType: "website",
     crawlableHtml: `<article id="static-crawl-fallback"><h1>Engineering</h1><p>Applications, tools, and technical experiments.</p></article>`,
     jsonLd: [
+      {
+        "@type": "ItemList",
+        "@id": `${SITE_URL}/engineering#list`,
+        name: "Public engineering work",
+        numberOfItems: 5,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "MTX Clinic App",
+            url: `${SITE_URL}/projects/mtx-clinic-app`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "URL Shortener - Mikrouli.link",
+            url: `${SITE_URL}/projects/url-shortener`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "JepeNotes - React Notes App",
+            url: `${SITE_URL}/projects/notes-app`,
+          },
+          {
+            "@type": "ListItem",
+            position: 4,
+            name: "React Color Palette Generator",
+            url: `${SITE_URL}/projects/color-palette-generator`,
+          },
+          {
+            "@type": "ListItem",
+            position: 5,
+            name: "Personal Portfolio Website",
+            url: `${SITE_URL}/projects/portfolio-website`,
+          },
+        ],
+      },
       breadcrumb([
         { name: "Home", path: "/" },
         { name: "Engineering", path: "/engineering" },
@@ -277,6 +350,15 @@ export const routeMeta = {
     ogType: "profile",
     crawlableHtml: `<article id="static-crawl-fallback"><h1>Experience</h1><p>Freelance and employment timeline.</p></article>`,
     jsonLd: [
+      {
+        "@type": "Occupation",
+        "@id": `${SITE_URL}/experience#occupation`,
+        name: "Senior Full-Stack Engineer",
+        occupationLocation: {
+          "@type": "City",
+          name: "Berlin",
+        },
+      },
       breadcrumb([
         { name: "Home", path: "/" },
         { name: "Experience", path: "/experience" },
@@ -291,6 +373,14 @@ export const routeMeta = {
     ogType: "website",
     crawlableHtml: `<article id="static-crawl-fallback"><h1>Certifications</h1><p>Complete public certificate archive.</p></article>`,
     jsonLd: [
+      {
+        "@type": "ItemList",
+        "@id": `${SITE_URL}/certifications#list`,
+        name: "Public certifications",
+        numberOfItems: 69,
+        description:
+          "69 public credentials across engineering, delivery, AI, security and emerging financial technology.",
+      },
       breadcrumb([
         { name: "Home", path: "/" },
         { name: "Certifications", path: "/certifications" },
@@ -320,6 +410,13 @@ export const routeMeta = {
     ogType: "website",
     crawlableHtml: `<article id="static-crawl-fallback"><h1>Contact</h1><p>Request a quote or emergency website help.</p></article>`,
     jsonLd: [
+      {
+        "@type": "ContactPage",
+        "@id": `${SITE_URL}/contact#page`,
+        url: `${SITE_URL}/contact`,
+        name: "Contact Theodoros Mentis",
+        mainEntity: personRef,
+      },
       breadcrumb([
         { name: "Home", path: "/" },
         { name: "Contact", path: "/contact" },
@@ -351,6 +448,23 @@ export function buildRouteJsonLd(route) {
     "@graph": [
       ...siteGraph["@graph"],
       ...meta.jsonLd.map(stripContext),
+    ],
+  }
+}
+
+/** Archive project pages that are not in routeMeta still get a small CreativeWork node. */
+export function buildProjectPageJsonLd({ name, description, path }) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      ...siteGraph["@graph"],
+      {
+        "@type": "CreativeWork",
+        name,
+        description,
+        url: `${SITE_URL}${path}`,
+        author: personRef,
+      },
     ],
   }
 }
