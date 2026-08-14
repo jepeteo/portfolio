@@ -6,9 +6,10 @@ import useReducedMotion from "../../hooks/useReducedMotion"
 import useMotionConfig from "../../hooks/useMotionConfig"
 import { AnimatedTerminal, TiltCard } from "../motion"
 import HeroSystemNodes from "./HeroSystemNodes"
+import { site } from "../../config/site"
 
 const signals: { label: string; value: string }[] = [
-  { label: "Experience", value: "18+ yrs" },
+  { label: "Experience", value: `${site.stats.yearsExperienceLabel} yrs` },
   { label: "Mode", value: "Remote" },
   { label: "Best for", value: "Fixes" },
   { label: "Approach", value: "Clear" },
@@ -47,10 +48,10 @@ const HeroDiagnosticConsole: React.FC = () => (
           </span>
           <div className="min-w-0">
             <p className="m-0 text-lg font-bold tracking-tight text-[var(--v2-text)]">
-              Theodoros Mentis
+              {site.name}
             </p>
             <p className="m-0 text-sm text-[var(--v2-muted)]">
-              Senior full-stack developer — WordPress, WooCommerce, React,
+              {site.title} — WordPress, WooCommerce, React,
               technical SEO, hosting &amp; DNS.
             </p>
           </div>
@@ -118,10 +119,10 @@ const Hero: React.FC = memo(() => {
                   }`}
                   aria-hidden="true"
                 />
-                Available for selected work
+                {site.availability}
               </li>
               <li className="inline-flex items-center rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel)] px-3 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--v2-muted)]">
-                Berlin · Remote Europe
+                Berlin · {site.workMode}
               </li>
               <li className="inline-flex items-center rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel)] px-3 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--v2-muted)]">
                 WordPress · Woo · React · DNS

@@ -8,6 +8,7 @@ import V2SectionHead from "../components/ui/V2SectionHead"
 import { v2Panel } from "../components/ui/v2Styles"
 import ServiceCard from "../components/services/ServiceCard"
 import { emergencyServices } from "../content/services"
+import { site } from "../config/site"
 
 const commonProblems = [
   "WordPress critical errors",
@@ -40,7 +41,7 @@ const whatINeed = [
 ]
 
 const trustStats = [
-  { value: "18+", label: "Years experience" },
+  { value: site.stats.yearsExperienceLabel, label: "Years experience" },
   { value: "Same day", label: "Response when possible" },
   { value: "Fixed quote", label: "Before work starts" },
 ]

@@ -27,8 +27,7 @@ import {
 
 import profileImage from "../../assets/images/gteo.webp"
 import type { LucideIcon } from "lucide-react"
-
-const resumePDF = "./cv/Theodoros-Mentis-CV.pdf"
+import { site } from "../../config/site"
 
 interface StatItem {
   label: string
@@ -134,7 +133,7 @@ const Bio: React.FC = () => {
   >("about")
 
   const bioContent = {
-    intro: `I am a Senior Full-Stack Developer with 18+ years of experience in creating 
+    intro: `I am a ${site.title} with ${site.stats.yearsExperienceLabel} years of experience in creating 
     scalable web solutions and managing complex server environments. Originally from Greece, 
     I'm now based in Berlin, Germany, where I continue to craft exceptional digital experiences. 
     My expertise spans from front-end development with modern frameworks to back-end architecture 
@@ -150,9 +149,24 @@ const Bio: React.FC = () => {
   }
 
   const stats = [
-    { label: "Years Experience", value: "18+", icon: Calendar, color: "blue" },
-    { label: "Projects Delivered", value: "390+", icon: Code2, color: "green" },
-    { label: "Happy Clients", value: "172+", icon: Users, color: "purple" },
+    {
+      label: "Years Experience",
+      value: site.stats.yearsExperienceLabel,
+      icon: Calendar,
+      color: "blue",
+    },
+    {
+      label: "Projects Delivered",
+      value: site.stats.projectCountLabel,
+      icon: Code2,
+      color: "green",
+    },
+    {
+      label: "Happy Clients",
+      value: site.stats.clientCountLabel,
+      icon: Users,
+      color: "purple",
+    },
     { label: "Technologies", value: "20+", icon: Monitor, color: "orange" },
   ]
 
@@ -266,8 +280,8 @@ const Bio: React.FC = () => {
 
   const downloadResume = () => {
     const link = document.createElement("a")
-    link.href = resumePDF
-    link.download = "Theodoros_Mentis_CV.pdf"
+    link.href = site.cvPath
+    link.download = site.cvDownloadName
     link.target = "_blank"
 
     document.body.appendChild(link)
@@ -276,7 +290,7 @@ const Bio: React.FC = () => {
   }
 
   const openGitHub = () => {
-    window.open("https://github.com/jepeteo", "_blank")
+    window.open(site.social.github, "_blank", "noopener,noreferrer")
   }
 
   const compactSecondary =
@@ -289,7 +303,7 @@ const Bio: React.FC = () => {
       variant="muted"
       eyebrow="About me"
       title="The developer behind the work"
-      subtitle="18+ years fixing, improving and building web systems for real businesses."
+      subtitle={`${site.stats.yearsExperienceLabel} years fixing, improving and building web systems for real businesses.`}
       className={`transition-all duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
@@ -307,7 +321,7 @@ const Bio: React.FC = () => {
               <div className="relative mx-auto mb-4 flex h-32 w-32 items-center justify-center overflow-hidden rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)]">
                 <BlurImage
                   src={profileImage}
-                  alt="Theodoros Mentis - Senior Full-Stack Developer based in Berlin, Germany"
+                  alt={`${site.name} - ${site.title} based in ${site.location.label}`}
                   containerClassName="w-full h-full rounded-3xl"
                   className="rounded-3xl"
                   aspectRatio="square"
@@ -331,28 +345,28 @@ const Bio: React.FC = () => {
               </div>
 
               <h3 className="mb-2 font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">
-                Theodoros Mentis
+                {site.name}
               </h3>
               <p className="mb-4 text-lg text-[var(--v2-brand)]">
-                Senior Full-Stack Developer • React | WordPress | Berlin-based
+                {site.title} • React | WordPress | Berlin-based
               </p>
 
               <div className="mb-6 flex items-center justify-center gap-2 text-sm text-[var(--v2-muted)]">
                 <MapPin className="h-4 w-4" />
-                Berlin, Germany
+                {site.location.label}
               </div>
             </div>
 
             <div className="mb-8 grid grid-cols-2 gap-4">
               <div className="text-center">
                 <div className="font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">
-                  18+
+                  {site.stats.yearsExperienceLabel}
                 </div>
                 <div className="text-sm text-[var(--v2-muted)]">Years Exp.</div>
               </div>
               <div className="text-center">
                 <div className="font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">
-                  390+
+                  {site.stats.projectCountLabel}
                 </div>
                 <div className="text-sm text-[var(--v2-muted)]">Projects</div>
               </div>

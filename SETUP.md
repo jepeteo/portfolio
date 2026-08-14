@@ -175,7 +175,7 @@ portfolio/
 
 ## Need Help?
 
-- 📧 Email: th.mentis@gmail.com
+- 📧 Email: contact@theodorosmentis.com
 - 🐛 Issues: [GitHub Issues](https://github.com/jepeteo/portfolio/issues)
 - 📖 Docs: Check `README.md` for more details
 

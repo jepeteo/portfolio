@@ -1,4 +1,5 @@
 // Global JSON-LD entity graph — plain ESM for prerender + React imports.
+// Keep name, email, LinkedIn, and jobTitle in sync with src/config/site.ts.
 
 const SITE_URL = "https://www.theodorosmentis.com"
 const SITE_EMAIL = "contact@theodorosmentis.com"
@@ -38,7 +39,7 @@ const person = {
     "https://github.com/jepeteo",
     "https://www.linkedin.com/in/theodorosmentis/",
   ],
-  jobTitle: "Web Developer",
+  jobTitle: "Senior Full-Stack Engineer",
   description:
     "Freelance web developer helping businesses fix, improve and build WordPress, WooCommerce and React sites. Based in Berlin, remote across Europe.",
   email: SITE_EMAIL,

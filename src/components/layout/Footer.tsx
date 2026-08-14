@@ -2,6 +2,7 @@ import React, { memo, useCallback } from "react"
 import { Github, Linkedin, Mail, Heart, ArrowUp } from "lucide-react"
 import { footerLinks } from "../../config/navigation"
 import { useAppNavigation } from "../../hooks/useAppNavigation"
+import { site } from "../../config/site"
 
 const Footer: React.FC = memo(() => {
   const { handleNavigation } = useAppNavigation()
@@ -12,17 +13,17 @@ const Footer: React.FC = memo(() => {
     {
       icon: Github,
       label: "GitHub",
-      href: "https://github.com/jepeteo",
+      href: site.social.github,
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "https://www.linkedin.com/in/theodorosmentis/",
+      href: site.social.linkedin,
     },
     {
       icon: Mail,
       label: "Email",
-      href: "mailto:contact@theodorosmentis.com",
+      href: `mailto:${site.email}`,
     },
   ]
 
@@ -44,10 +45,10 @@ const Footer: React.FC = memo(() => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           <div className="text-center md:text-left">
             <h3 className="mb-2 font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">
-              Theodoros Mentis
+              {site.name}
             </h3>
             <p className="text-sm text-[var(--v2-muted)]">
-              Senior Full Stack Developer
+              {site.title}
             </p>
             <p className="mt-1 text-xs text-[var(--v2-soft)]">
               Fixing, improving and building business websites

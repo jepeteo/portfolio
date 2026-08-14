@@ -1,6 +1,7 @@
 import React from "react"
 import { Mail, Download } from "lucide-react"
 import { v2PrimaryButton, v2SecondaryButton } from "../../ui/v2Styles"
+import { site } from "../../../config/site"
 
 interface ExperienceCallToActionProps {
   isDark: boolean
@@ -27,7 +28,7 @@ export const ExperienceCallToAction: React.FC<
         </a>
 
         <a
-          href="/cv/Theodoros-Mentis-CV.pdf"
+          href={site.cvPath}
           target="_blank"
           rel="noopener noreferrer"
           className={v2SecondaryButton}

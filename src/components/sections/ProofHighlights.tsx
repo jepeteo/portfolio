@@ -1,6 +1,7 @@
 import React from "react"
 import V2SectionHead from "../ui/V2SectionHead"
 import { MotionSection } from "../motion"
+import { site } from "../../config/site"
 
 const cardBase =
   "relative overflow-hidden rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-6 shadow-[0_18px_55px_-20px_rgba(0,0,0,0.35)] md:p-7"
@@ -46,7 +47,7 @@ const ProofHighlights: React.FC = () => {
 
           <article className="relative overflow-hidden rounded-3xl border-0 bg-[var(--v2-acid)] p-6 text-[var(--v2-acid-ink)] shadow-[0_18px_55px_-20px_rgba(0,0,0,0.35)] md:p-7">
             <div className="font-display text-5xl font-black leading-none tracking-tight md:text-6xl">
-              18+
+              {site.stats.yearsExperienceLabel}
             </div>
             <h3 className="mt-3 text-xl font-bold leading-tight tracking-tight">
               Years building for real businesses.

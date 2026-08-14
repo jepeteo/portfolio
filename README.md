@@ -280,10 +280,10 @@ This is a personal portfolio project, but suggestions and feedback are welcome! 
 
 **Theodoros Mentis**
 
-- Email: [th.mentis@gmail.com](mailto:th.mentis@gmail.com)
-- Website: [theodorosmentis.com](https://theodorosmentis.com)
+- Email: [contact@theodorosmentis.com](mailto:contact@theodorosmentis.com)
+- Website: [theodorosmentis.com](https://www.theodorosmentis.com)
 - GitHub: [@jepeteo](https://github.com/jepeteo)
-- LinkedIn: [theodorosmentis](https://linkedin.com/in/theodorosmentis)
+- LinkedIn: [theodorosmentis](https://www.linkedin.com/in/theodorosmentis/)
 
 ## 📄 License
 

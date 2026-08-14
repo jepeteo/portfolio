@@ -273,18 +273,15 @@ class SEOManager {
       "@context": "https://schema.org",
       "@type": "CreativeWork",
       "@id": "https://www.theodorosmentis.com/#portfolio",
-      name: "Theodoros Mentis Portfolio",
+      name: `${site.name} Portfolio`,
       description:
         "Professional portfolio showcasing web development projects, applications, and technical expertise",
       creator: {
         "@type": "Person",
         "@id": "https://www.theodorosmentis.com/#person",
-        name: "Theodoros Mentis",
-        jobTitle: "Web Developer",
-        sameAs: [
-          "https://github.com/jepeteo",
-          "https://www.linkedin.com/in/theodorosmentis/",
-        ],
+        name: site.name,
+        jobTitle: site.title,
+        sameAs: [site.social.github, site.social.linkedin],
       },
       dateCreated: "2010",
       dateModified: currentYear.toString(),

@@ -1,9 +1,22 @@
 import { SITE_URL, SITE_EMAIL } from "./routeMeta.js"
 
+/**
+ * Canonical public identity. UI, schema, footer, and docs should import this
+ * instead of hardcoding name, counts, email, or profile URLs.
+ *
+ * Count map (do not mix these in copy):
+ * - Career claims below (18 / 390 / 172) match Bio + useExperienceData.
+ * - Listed WordPress archive: 122 records in src/assets/myProjects.json
+ * - Schema portfolioStats: 128 (WordPress + React showcase only)
+ * - Unused BuyerIntent copy: 120+ live client sites
+ * - Homepage FAQ still says "dozens" (fix when FAQ moves off home)
+ * - Jepeteo project blurb claims 20+ years / 1000+ clients — keep in JSON,
+ *   do not feature that sentence
+ */
 export const site = {
   name: "Theodoros Mentis",
   alternateName: "Theodore Mentis",
-  title: "Web Developer",
+  title: "Senior Full-Stack Engineer",
   email: SITE_EMAIL,
   url: SITE_URL,
   locale: "en-US",
@@ -21,6 +34,18 @@ export const site = {
   ogImageSocial: "/social-card.webp",
   personImage: "/images/teo-square.webp",
   twitterCreator: "@jepeteo",
+  availability: "Available for selected work",
+  workMode: "Remote Europe",
+  cvPath: "/cv/Theodoros-Mentis-CV.pdf",
+  cvDownloadName: "Theodoros_Mentis_CV.pdf",
+  stats: {
+    yearsExperience: 18,
+    yearsExperienceLabel: "18+",
+    projectCount: 390,
+    projectCountLabel: "390+",
+    clientCount: 172,
+    clientCountLabel: "172+",
+  },
   description:
     "Freelance web developer helping businesses fix, improve and build WordPress, WooCommerce and React sites. Based in Berlin, remote across Europe.",
   shortDescription:
