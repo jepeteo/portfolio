@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Dual-audience information architecture: homepage is a decision page; archives live on dedicated routes (`/projects`, `/engineering`, `/experience`, `/certifications`, `/about`, `/contact`).
+- Services grouped as Rescue / Improve / Build, with the emergency route unchanged.
+- Contact form requires name, email, and message; optional selectors are collapsed. EmailJS / `api/contact` is unchanged.
+- Certifications and projects use URL-backed search, filters, and pagination. All 69 certificates remain in the dataset.
+- Experience timeline states freelance overlap as concurrent work and uses identity stats from `src/config/site.ts`.
+- Skills are described by evidence of use, not percentage bars.
+- Homepage JSON-LD is WebSite + Person + ProfessionalService. FAQPage schema is only on `/about`. Per-page PortfolioSchema JSON-LD was removed from the layout.
+
+### Added
+
+- Hash redirects from legacy homepage anchors (`#projects`, `#faq`, `#contact`, …) to crawlable routes.
+- Real 404 page (no silent redirect to home).
+- [Content update notes](CONTENT.md) for adding certificates, banking roles, fintech roles, and projects.
+
 ## [0.3.1] - 2025-12-23
 
 ### Performance
