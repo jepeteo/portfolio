@@ -99,10 +99,10 @@ const EngineeringCatalog: React.FC = () => (
 
       <div className="mt-8">
         <h3 className="font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--v2-acid)]">
-          Future categories
+          {fintechPath.roadmapHeading}
         </h3>
         <p className="mt-2 text-sm text-[var(--v2-muted)]">
-          These are learning and documentation categories, not job titles.
+          {fintechPath.roadmapBody}
         </p>
         <ul className="mt-3 flex flex-wrap gap-2">
           {fintechPath.futureCategories.map((category) => (

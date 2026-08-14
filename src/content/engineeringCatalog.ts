@@ -62,26 +62,35 @@ export const engineeringGroups = engineeringTrackOrder
   }))
   .filter((group) => group.items.length > 0)
 
-const FINTECH_SKILLS = [
-  "c#",
-  "python",
-  "security",
-  "aws",
-  "sql",
-  "api",
-  ".net",
-]
+const FINTECH_LEARNING_IDS = [
+  "learning-csharp",
+  "csharp-types-control-flow",
+  "ethical-hacking-intro",
+  "gdpr-compliance",
+  "centos-linux",
+  "javascript-ai-react-openai",
+  "pm-foundations",
+] as const
 
-export const fintechLearning = normalizeCertificates()
-  .filter((cert) =>
-    cert.skills.some((skill) =>
-      FINTECH_SKILLS.some((needle) => skill.toLowerCase().includes(needle))
-    )
+const certificatesById = new Map(
+  normalizeCertificates().map((cert) => [cert.id, cert])
+)
+
+export const fintechLearning = FINTECH_LEARNING_IDS.map((id) =>
+  certificatesById.get(id)
+)
+  .filter(
+    (cert): cert is NonNullable<typeof cert> =>
+      Boolean(cert?.credentialUrl) &&
+      !cert.id.startsWith("unity-")
   )
-  .slice(0, 6)
+  .slice(0, 8)
 
 export const fintechPath = {
   title: "Fintech path",
   body: "I am applying years of production problem-solving to automation, financial technology and more structured engineering environments. I document the work as that experience grows.",
+  roadmapHeading: "Current learning roadmap",
+  roadmapBody:
+    "Focused learning and practical exploration supporting my move into financial systems and regulated engineering environments.",
   futureCategories: futureCertificateCategories,
 }

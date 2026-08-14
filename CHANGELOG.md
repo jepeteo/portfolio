@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Stoney Holiday Lets now uses a live 1280x720 homepage screenshot at `public/images/projects/stoneyholidaylets.webp`.
 - Contact page uses a compact hero and puts the form before supporting details so Name is in the first viewport.
 - Featured case studies use authored meta descriptions. Stoney Open Graph image is the live project screenshot.
+- Engineering fintech path uses a curated verified-learning set and a current learning roadmap, without implying employment.
 
 ### Confirmed still outstanding
 
