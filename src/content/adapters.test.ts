@@ -16,6 +16,7 @@ import {
 } from "./projectTaxonomy"
 import {
   certificateStats,
+  certificateHighlight,
   getFeaturedCertificates,
   normalizeCertificates,
 } from "./certificateModel"
@@ -102,6 +103,15 @@ describe("certificate model", () => {
 
     expect(stats.total).toBe(certificates.length)
     expect(certificates.length).toBeGreaterThanOrEqual(69)
+    expect(stats.currentYearCount).toBe(
+      certificates.filter(
+        (cert) => Number(cert.year) === new Date().getFullYear()
+      ).length
+    )
+    expect(stats.latestCredentialYear).toBeGreaterThanOrEqual(2025)
+    expect(certificateHighlight(stats).label.toLowerCase()).not.toContain(
+      "this year"
+    )
     expect(preview).toHaveLength(8)
     expect(certificates.every((cert) => cert.title && cert.issuer && cert.date)).toBe(
       true

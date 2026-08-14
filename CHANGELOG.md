@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Featured case studies are MTX Clinic App (confidential, text-first) and Stoney Holiday Lets. The DNS/email rescue example is a typical Services workflow, not a named client case study.
 - Engineering page shows a small curated set of verified technical work plus a Fintech path learning block. Marketing websites are no longer listed as engineering evidence.
 - Homepage hero keeps two conversion actions. About copy is specific to 18+ years of production work, with one closing CTA. Service catalog accordions start collapsed.
+- Certification stats use the current calendar year, or the latest credential year when the current year is empty. Contact required fields expose native required semantics, announced errors, and a correctly labelled Website URL helper.
 
 - Dual-audience information architecture: homepage is a decision page; archives live on dedicated routes (`/projects`, `/engineering`, `/experience`, `/certifications`, `/about`, `/contact`).
 - Services grouped as Rescue / Improve / Build, with the emergency route unchanged.

@@ -112,10 +112,29 @@ export const certificateStats = (
     byYear,
     byIssuer,
     totalSkills: allSkills.size,
-    recentCount: certificates.filter(
-      (cert) => Number(cert.year) >= currentYear - 1
+    currentYearCount: certificates.filter(
+      (cert) => Number(cert.year) === currentYear
     ).length,
+    latestCredentialYear: Object.keys(byYear)
+      .map(Number)
+      .filter((year) => !Number.isNaN(year))
+      .reduce((latest, year) => Math.max(latest, year), 0),
   }
 }
 
-export const normalizedCertificates = normalizeCertificates()
+export const certificateHighlight = (
+  stats: ReturnType<typeof certificateStats>
+) => {
+  if (stats.currentYearCount > 0) {
+    const year = new Date().getFullYear()
+    return {
+      value: String(stats.currentYearCount),
+      label: `Added in ${year}`,
+    }
+  }
+
+  return {
+    value: String(stats.byYear[String(stats.latestCredentialYear)] || 0),
+    label: `Added in ${stats.latestCredentialYear}`,
+  }
+}

@@ -27,7 +27,8 @@ export interface CertificateStats {
   byYear: Record<string, number>
   byIssuer: Record<string, number>
   totalSkills: number
-  recentCount: number
+  currentYearCount: number
+  latestCredentialYear: number
 }
 
 const toDisplayCertificate = (

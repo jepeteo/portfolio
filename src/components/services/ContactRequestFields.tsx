@@ -54,10 +54,10 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
         <div>
           <label htmlFor="websiteUrl" className={labelClass}>
             Website URL
-            <span className="ml-2 font-normal text-[var(--v2-soft)]">
-              include this for fixes, DNS, or SEO work
-            </span>
           </label>
+          <p id="websiteUrl-help" className="mb-2 mt-1 text-xs text-[var(--v2-soft)]">
+            Include this for fixes, DNS, or SEO work.
+          </p>
           <input
             type="url"
             id="websiteUrl"
@@ -73,7 +73,11 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
               websiteUrlError ? "border-red-500 focus:ring-red-500" : ""
             }`}
             aria-invalid={websiteUrlError ? true : undefined}
-            aria-describedby={websiteUrlError ? "websiteUrl-error" : undefined}
+            aria-describedby={
+              websiteUrlError
+                ? "websiteUrl-help websiteUrl-error"
+                : "websiteUrl-help"
+            }
           />
           {websiteUrlError && (
             <p

@@ -36,7 +36,14 @@ import {
   type RequestType,
 } from "../../content/services"
 
-// Enhanced Form Field Component with inline validation
+const fieldErrorOrder = ["name", "email", "websiteUrl", "message"] as const
+
+const focusFirstInvalidField = (fieldErrors: ContactFormErrors) => {
+  const firstId = fieldErrorOrder.find((id) => fieldErrors[id])
+  if (firstId) {
+    document.getElementById(firstId)?.focus()
+  }
+}
 interface FormFieldProps {
   id: string
   label: string
@@ -134,8 +141,9 @@ const FormField: React.FC<FormFieldProps> = ({
             disabled={disabled}
             maxLength={maxLength}
             autoComplete={autoComplete}
+            required
             aria-required="true"
-            aria-invalid={error ? "true" : undefined}
+            aria-invalid={error ? "true" : "false"}
             aria-describedby={error ? errorId : undefined}
           />
         ) : (
@@ -155,8 +163,9 @@ const FormField: React.FC<FormFieldProps> = ({
             disabled={disabled}
             maxLength={maxLength}
             autoComplete={autoComplete}
+            required
             aria-required="true"
-            aria-invalid={error ? "true" : undefined}
+            aria-invalid={error ? "true" : "false"}
             aria-describedby={error ? errorId : undefined}
           />
         )}
@@ -321,7 +330,7 @@ const Contact: React.FC = memo(() => {
     return typeLabel || "Website enquiry"
   }, [formData.requestType, formData.subject])
 
-  const validateForm = useCallback((): boolean => {
+  const validateForm = useCallback((): ContactFormErrors | null => {
     const secureData: SecureContactFormData = {
       ...formData,
       subject: resolvedSubject,
@@ -331,28 +340,35 @@ const Contact: React.FC = memo(() => {
     }
 
     if (detectBot(secureData)) {
-      setErrors({
+      const next = {
         general: "Please wait at least 3 seconds before submitting the form.",
-      })
-      return false
+      }
+      setErrors(next)
+      return next
     }
 
     const validationResult = validateContactFormSecure(secureData)
 
     if (!validationResult.isValid) {
       setErrors(validationResult.errors)
-      return false
+      return validationResult.errors
     }
 
     setErrors({})
-    return true
+    return null
   }, [formData, csrfToken, honeypot, startTime, resolvedSubject])
+
+  const errorSummary = Object.values(errors).filter(Boolean).join(" ")
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault()
 
-      if (!validateForm()) return
+      const fieldErrors = validateForm()
+      if (fieldErrors) {
+        focusFirstInvalidField(fieldErrors)
+        return
+      }
 
       const submissionTime = Date.now() - startTime
       if (submissionTime < 3000) {
@@ -600,6 +616,9 @@ const Contact: React.FC = memo(() => {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="sr-only" aria-live="polite" aria-atomic="true">
+                  {errorSummary}
+                </div>
                 {/* Form progress indicator */}
                 <div className="mb-6">
                   <div className="flex justify-between items-center mb-2">
@@ -719,9 +738,10 @@ const Contact: React.FC = memo(() => {
                   isDark={isDark}
                   isValid={fieldValidation.message}
                   rows={6}
+                  autoComplete="off"
                 />
 
-                <div style={{ display: "none" }} aria-hidden="true">
+                <div hidden aria-hidden="true">
                   <label htmlFor="website">Website</label>
                   <input
                     type="text"
