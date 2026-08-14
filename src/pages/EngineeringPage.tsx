@@ -1,6 +1,6 @@
 import React from "react"
 import V2PageHero from "../components/ui/V2PageHero"
-import ProjectsArchive from "../components/sections/projects/ProjectsArchive"
+import EngineeringCatalog from "../components/sections/EngineeringCatalog"
 import { useRoutePageMeta } from "../hooks/useRoutePageMeta"
 
 const EngineeringPage: React.FC = () => {
@@ -12,9 +12,9 @@ const EngineeringPage: React.FC = () => {
         id="engineering-hero"
         eyebrow="Engineering"
         title="Applications, tools, and technical experiments."
-        subtitle="React, TypeScript, internal tools, and self-hosted work, kept separate from client WordPress delivery so both audiences can find what they need."
+        subtitle="A smaller collection of verified technical work: internal applications, React and TypeScript tools, and public experiments."
       />
-      <ProjectsArchive engineeringOnly />
+      <EngineeringCatalog />
     </div>
   )
 }

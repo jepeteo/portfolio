@@ -45,6 +45,45 @@ export const projectTaxonomyLabel = (value: string) =>
 
 export type ProjectSource = "wordpress" | "web" | "react"
 
+export type EngineeringTrack =
+  | "applications"
+  | "internal-tools"
+  | "infrastructure"
+  | "automation"
+  | "open-source"
+  | "experiments"
+
+export const engineeringTrackOrder: EngineeringTrack[] = [
+  "applications",
+  "internal-tools",
+  "infrastructure",
+  "automation",
+  "open-source",
+  "experiments",
+]
+
+export const engineeringTrackLabels: Record<EngineeringTrack, string> = {
+  applications: "Applications",
+  "internal-tools": "Internal tools",
+  infrastructure: "Infrastructure",
+  automation: "Automation",
+  "open-source": "Open source",
+  experiments: "Experiments",
+}
+
+/**
+ * Public engineering tracks for repository records already approved to show.
+ * Unpublished C#, trading, and private infrastructure stay out of this map.
+ */
+export const publicEngineeringTracks: Partial<
+  Record<string, EngineeringTrack>
+> = {
+  "url-shortener": "applications",
+  "notes-app": "open-source",
+  "color-palette-generator": "experiments",
+  "portfolio-website": "open-source",
+}
+
 export type NormalizedProject = {
   id: string
   slug: string
@@ -61,6 +100,7 @@ export type NormalizedProject = {
   confidential: boolean
   source: ProjectSource
   engineering: boolean
+  engineeringTrack?: EngineeringTrack
   year?: string
   employerCode?: string
 }
@@ -151,7 +191,8 @@ export const normalizeWebProject = (project: WebProject): NormalizedProject => {
     featured: project.featured,
     confidential: false,
     source: "web",
-    engineering: project.type === "personal" || project.tech.includes("React"),
+    engineering: Boolean(publicEngineeringTracks[project.id]),
+    engineeringTrack: publicEngineeringTracks[project.id],
     year: project.year,
   }
 }
@@ -184,7 +225,8 @@ export const normalizeReactProject = (
   featured: project.id === "jepeteo" ? false : Boolean(project.featured),
   confidential: false,
   source: "react",
-  engineering: true,
+  engineering: Boolean(publicEngineeringTracks[project.id]),
+  engineeringTrack: publicEngineeringTracks[project.id],
   year: project.date,
 })
 

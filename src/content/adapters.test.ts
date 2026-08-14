@@ -11,6 +11,7 @@ import {
   engineeringProjects,
   ownershipFromEmployer,
   projectTaxonomyLabel,
+  publicEngineeringTracks,
   workTypeFromTags,
 } from "./projectTaxonomy"
 import {
@@ -80,6 +81,13 @@ describe("project taxonomy", () => {
     expect(all.some((project) => project.engineering)).toBe(true)
     expect(engineering.every((project) => project.engineering)).toBe(true)
     expect(all.some((project) => project.domain === "fintech")).toBe(false)
+    expect(all.find((project) => project.id === "mtx-studio")?.engineering).toBe(
+      false
+    )
+    expect(
+      engineering.every((project) => publicEngineeringTracks[project.id])
+    ).toBe(true)
+    expect(engineering.length).toBeLessThan(10)
     expect(projectTaxonomyLabel("wordpress")).toBe("WordPress")
     expect(projectTaxonomyLabel("e-commerce")).toBe("E-commerce")
     expect(projectTaxonomyLabel("open-source")).toBe("Open source")
