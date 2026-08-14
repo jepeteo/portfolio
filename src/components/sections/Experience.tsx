@@ -9,6 +9,7 @@ import { ExperienceCallToAction } from "./experience/ExperienceCallToAction"
 import { ExperienceSidebar } from "./experience/ExperienceSidebar"
 import SectionShell from "../ui/SectionShell"
 import { ExperienceDetails } from "./experience/ExperienceDetails"
+import { freelanceOverlapNote } from "../../content/experienceModel"
 import {
   Filter,
   Calendar,
@@ -82,14 +83,17 @@ const Experience: React.FC = () => {
         ref={targetRef}
         id="experience"
         variant="muted"
-        eyebrow="Professional Experience"
-        title="Career Journey"
-        subtitle={`${stats.totalYears} years of hands-on delivery across web development, server administration, and infrastructure support (${stats.employmentYears} years employment, ${stats.freelanceYears} years freelance), covering ${stats.totalProjects}+ projects and ${stats.totalClients}+ clients.`}
+        eyebrow="Timeline"
+        title="Roles and concurrent freelance practice."
+        subtitle={undefined}
         className={`transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
           <ExperienceStatsComponent stats={stats} isDark={isDark} />
+          <p className="mb-8 rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-5 text-[var(--v2-muted)]">
+            {freelanceOverlapNote}
+          </p>
 
           <div className="flex flex-col items-center gap-4 mb-8">
             <div className="flex items-center gap-3">

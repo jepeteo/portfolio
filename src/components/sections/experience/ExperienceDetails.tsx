@@ -8,6 +8,7 @@ import {
   CheckCircle,
 } from "lucide-react"
 import { TechExperience } from "../../../hooks/useExperienceData"
+import { freelanceOverlapNote } from "../../../content/experienceModel"
 import { cn } from "../../../utils/styles"
 
 interface ExperienceDetailsProps {
@@ -49,6 +50,13 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
             <span className="h-2 w-2 rounded-full bg-[var(--v2-brand-2)]" />
             <span className="text-xs font-semibold text-[var(--v2-brand-2)]">
               Freelance
+            </span>
+          </div>
+        )}
+        {experience.overlapsFreelance && !experience.isFreelance && (
+          <div className="flex items-center gap-2 rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel-2)] px-3 py-1">
+            <span className="text-xs font-semibold text-[var(--v2-muted)]">
+              Overlaps freelance
             </span>
           </div>
         )}
@@ -101,6 +109,11 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           <p className="mb-6 leading-relaxed text-[var(--v2-muted)]">
             {experience.description}
           </p>
+          {experience.overlapsFreelance && !experience.isFreelance ? (
+            <p className="mb-6 text-sm text-[var(--v2-soft)]">
+              {freelanceOverlapNote}
+            </p>
+          ) : null}
 
           {experience.keyResponsibilities &&
             experience.keyResponsibilities.length > 0 && (

@@ -1,5 +1,6 @@
 import { useMemo } from "react"
 import jobExperienceData from "../assets/jobExperience.json"
+import { site } from "../config/site"
 import {
   normalizeJobs,
   type NormalizedJob,
@@ -88,22 +89,12 @@ const transformToTechExperience = (): TechExperience[] => {
       return `${monthNames[month - 1]} ${year}`
     }
 
-    const extractMetrics = (achievements: string[] | undefined, years: number) => {
+    const extractMetrics = (achievements: string[] | undefined) => {
       const metrics: Record<string, string | number> = {}
       achievements?.forEach((achievement) => {
         if (achievement.includes("100+")) metrics.projects = 100
         if (achievement.includes("50+")) metrics.clients = 50
-        if (achievement.includes("99%")) metrics.uptime = "99.9%"
-        if (achievement.includes("65%")) metrics.impact = "+65% performance"
       })
-
-      if (!metrics.projects) {
-        metrics.projects = Math.max(years * 15, 5)
-      }
-      if (!metrics.clients && years > 1) {
-        metrics.clients = Math.max(years * 8, 3)
-      }
-
       return metrics
     }
 
@@ -135,7 +126,7 @@ const transformToTechExperience = (): TechExperience[] => {
               }`
             : `${months} month${months > 1 ? "s" : ""}`,
       },
-      metrics: extractMetrics(job.achievements, years),
+      metrics: extractMetrics(job.achievements),
       techStack: job.technologies || [],
       highlights: job.achievements?.slice(0, 3) || [],
       periodInfo,
@@ -211,16 +202,9 @@ const calculateExperienceStats = (
   const employmentYears = calculateEmploymentYears()
   const freelanceYears = calculateFreelanceYears()
 
-  const totalYears = Math.max(employmentYears, freelanceYears)
-
-  const totalProjects = experiences.reduce(
-    (sum, exp) => sum + (exp.metrics.projects || 0),
-    0
-  )
-  const totalClients = experiences.reduce(
-    (sum, exp) => sum + (exp.metrics.clients || 0),
-    0
-  )
+  const totalYears = site.stats.yearsExperience
+  const totalProjects = site.stats.projectCount
+  const totalClients = site.stats.clientCount
   const currentRoles = experiences.filter(
     (exp) => exp.status === "current"
   ).length

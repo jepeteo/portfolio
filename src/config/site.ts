@@ -9,7 +9,7 @@ import { SITE_URL, SITE_EMAIL } from "./routeMeta.js"
  * - Listed WordPress archive: 122 records in src/assets/myProjects.json
  * - Schema portfolioStats: 128 (WordPress + React showcase only)
  * - Unused BuyerIntent copy: 120+ live client sites
- * - About FAQ still says "dozens" (keep until FAQ copy is rewritten)
+ * - About FAQ uses the career stats below (18+ / 390+ / 172+)
  * - Jepeteo project blurb claims 20+ years / 1000+ clients — keep in JSON,
  *   do not feature that sentence
  */

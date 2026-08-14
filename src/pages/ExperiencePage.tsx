@@ -1,26 +1,24 @@
-import React, { Suspense } from "react"
-import ArchiveSectionPage from "./ArchiveSectionPage"
-import { createLazyComponent } from "../utils/performanceOptimization"
-import { ExperienceCardSkeleton } from "../components/system/loading/LoadingStates"
+import React from "react"
+import V2PageHero from "../components/ui/V2PageHero"
+import Experience from "../components/sections/Experience"
+import { useRoutePageMeta } from "../hooks/useRoutePageMeta"
+import { freelanceOverlapNote } from "../content/experienceModel"
+import { site } from "../config/site"
 
-const Experience = createLazyComponent(
-  () => import("../components/sections/Experience"),
-  {}
-)
+const ExperiencePage: React.FC = () => {
+  useRoutePageMeta("/experience")
 
-const ExperiencePage: React.FC = () => (
-  <ArchiveSectionPage path="/experience" heading="Experience">
-    <Suspense
-      fallback={
-        <div className="container space-y-6 py-20">
-          <ExperienceCardSkeleton />
-          <ExperienceCardSkeleton />
-        </div>
-      }
-    >
+  return (
+    <div>
+      <V2PageHero
+        id="experience-hero"
+        eyebrow="Experience"
+        title="Employment and freelance, in parallel."
+        subtitle={`${site.stats.yearsExperienceLabel} years across ${site.stats.projectCountLabel} projects and ${site.stats.clientCountLabel} clients. ${freelanceOverlapNote}`}
+      />
       <Experience />
-    </Suspense>
-  </ArchiveSectionPage>
-)
+    </div>
+  )
+}
 
 export default ExperiencePage

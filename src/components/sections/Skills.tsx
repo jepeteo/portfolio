@@ -1,9 +1,9 @@
-import React, { useCallback } from "react"
+import React from "react"
 import useIntersectionObserver from "../../hooks/useIntersectionObserver"
 import SectionShell from "../ui/SectionShell"
 import SkillsCallToAction from "./skills/SkillsCallToAction"
 import SkillsLayerCard from "./skills/SkillsLayerCard"
-import { skillsLayers } from "../../content/skillsLayers"
+import { evidenceLayers, evidenceLabel } from "../../content/skillsEvidence"
 import { MotionSection } from "../motion"
 
 const Skills: React.FC = () => {
@@ -12,14 +12,6 @@ const Skills: React.FC = () => {
     rootMargin: "50px",
   })
 
-  const scrollToProjects = useCallback(() => {
-    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
-  }, [])
-
-  const scrollToContact = useCallback(() => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
-  }, [])
-
   return (
     <SectionShell
         ref={targetRef}
@@ -27,26 +19,26 @@ const Skills: React.FC = () => {
         variant="muted"
         eyebrow="Stack depth"
         title="Skills across the full stack."
-        subtitle="Structured by layer — from interfaces users touch to infrastructure and stability work that keeps production safe."
+        subtitle="Grouped by how I use them in production — from interfaces people touch to infrastructure that keeps sites stable."
         className={`transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
         <MotionSection as="div" className="space-y-4">
-          {skillsLayers.map((layer, index) => (
+          {evidenceLayers.map((layer, index) => (
             <SkillsLayerCard
               key={layer.id}
-              layer={layer}
+              layer={{
+                ...layer,
+                subtitle: `${layer.subtitle} · ${evidenceLabel[layer.evidence]}`,
+              }}
               index={index}
-              zIndex={skillsLayers.length - index}
+              zIndex={evidenceLayers.length - index}
             />
           ))}
         </MotionSection>
 
-        <SkillsCallToAction
-          onScrollToProjects={scrollToProjects}
-          onScrollToContact={scrollToContact}
-        />
+        <SkillsCallToAction />
       </SectionShell>
   )
 }
