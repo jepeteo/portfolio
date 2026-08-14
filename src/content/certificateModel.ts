@@ -44,9 +44,18 @@ export const futureCertificateCategories: CertificateCategory[] = [
 
 /**
  * Homepage preview: explicit featured IDs, otherwise newest certificates.
- * Leave empty to use newest-first.
+ * Order here is the homepage card order.
  */
-export const featuredCertificateIds: string[] = []
+export const featuredCertificateIds: string[] = [
+  "nextjs-2022",
+  "learning-csharp",
+  "javascript-ai-react-openai",
+  "ethical-hacking-intro",
+  "centos-linux",
+  "pm-foundations",
+  "gdpr-compliance",
+  "typescript-essential",
+]
 
 export const HOMEPAGE_CERTIFICATE_PREVIEW_COUNT = 8
 
@@ -83,11 +92,18 @@ export const getFeaturedCertificates = (
   certificates: NormalizedCertificate[] = normalizeCertificates(),
   count = HOMEPAGE_CERTIFICATE_PREVIEW_COUNT
 ) => {
-  const featured = certificates.filter((cert) => cert.featured)
-  if (featured.length >= count) return featured.slice(0, count)
-  const featuredIds = new Set(featured.map((cert) => cert.id))
+  const byId = new Map(certificates.map((cert) => [cert.id, cert]))
+  const orderedFeatured = featuredCertificateIds
+    .map((id) => byId.get(id))
+    .filter((cert): cert is NormalizedCertificate => Boolean(cert))
+
+  if (orderedFeatured.length >= count) {
+    return orderedFeatured.slice(0, count)
+  }
+
+  const featuredIds = new Set(orderedFeatured.map((cert) => cert.id))
   const newest = certificates.filter((cert) => !featuredIds.has(cert.id))
-  return [...featured, ...newest].slice(0, count)
+  return [...orderedFeatured, ...newest].slice(0, count)
 }
 
 export const certificateStats = (

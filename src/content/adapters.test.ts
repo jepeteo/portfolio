@@ -16,8 +16,9 @@ import {
   workTypeFromTags,
 } from "./projectTaxonomy"
 import {
-  certificateStats,
   certificateHighlight,
+  certificateStats,
+  featuredCertificateIds,
   getFeaturedCertificates,
   normalizeCertificates,
 } from "./certificateModel"
@@ -128,6 +129,20 @@ describe("certificate model", () => {
         Object.prototype.hasOwnProperty.call(cert, "level")
       )
     ).toBe(false)
+  })
+
+  it("curates a cross-disciplinary homepage certificate selection", () => {
+    const preview = getFeaturedCertificates()
+    const previewIds = preview.map((cert) => cert.id)
+
+    expect(preview).toHaveLength(8)
+    expect(previewIds).toEqual(featuredCertificateIds.slice(0, 8))
+    expect(preview.every((cert) => Boolean(cert.credentialUrl))).toBe(true)
+    expect(
+      preview.filter((cert) => /project management/i.test(cert.title)).length
+    ).toBeLessThanOrEqual(1)
+    expect(preview.some((cert) => cert.id.startsWith("unity-"))).toBe(false)
+    expect(normalizeCertificates().length).toBeGreaterThanOrEqual(69)
   })
 })
 
