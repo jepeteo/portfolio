@@ -64,3 +64,30 @@ test("unknown routes render a real 404", async ({ page }) => {
   await page.goto("/this-page-does-not-exist")
   await expect(page.locator("h1")).toContainText(/not here/i)
 })
+
+test("in-app navigation starts at the top of the next page", async ({
+  page,
+}) => {
+  await page.goto("/services")
+  await page.locator("footer a[href='/projects']").click()
+  await expect(page).toHaveURL(/\/projects/)
+  await expect
+    .poll(async () => page.evaluate(() => window.scrollY))
+    .toBeLessThan(24)
+})
+
+test("services hash targets sit below the sticky header", async ({ page }) => {
+  for (const id of ["rescue", "improve", "build"]) {
+    await page.goto(`/services#${id}`)
+    const target = page.locator(`#${id}`)
+    await expect(target).toBeVisible()
+    await expect
+      .poll(async () => {
+        const header = await page.locator("header").boundingBox()
+        const box = await target.boundingBox()
+        if (!header || !box) return Number.POSITIVE_INFINITY
+        return Math.abs(box.y - header.height)
+      })
+      .toBeLessThan(96)
+  }
+})

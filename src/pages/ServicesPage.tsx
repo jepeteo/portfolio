@@ -82,7 +82,6 @@ const ServicesPage: React.FC = () => {
                 key={path.id}
                 id={path.id}
                 aria-labelledby={`${path.id}-heading`}
-                className="scroll-mt-28"
               >
                 <h3
                   id={`${path.id}-heading`}

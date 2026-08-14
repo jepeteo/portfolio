@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom"
 import Footer from "./Footer"
 import HashRedirect from "../system/HashRedirect"
 import { SkipLink } from "../accessibility/SkipLink"
-import ScrollToTop from "../system/ScrollToTop"
+import RouteScrollManager from "../system/RouteScrollManager"
 import { createLazyComponent } from "../../utils/performanceOptimization"
 
 const Header = lazy(() => import("./Header"))
@@ -22,7 +22,7 @@ const PerformanceDashboard = createLazyComponent(
 const Layout: React.FC = () => {
   return (
     <div className="min-h-screen transition-colors duration-300 text-slate-900 dark:text-slate-100">
-      <ScrollToTop />
+      <RouteScrollManager />
       <HashRedirect />
       <SkipLink href="#main-content" />
       <Suspense fallback={<div className="h-16" />}>
