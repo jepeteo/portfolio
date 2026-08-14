@@ -38,9 +38,11 @@ const fieldErrorOrder = ["name", "email", "websiteUrl", "message"] as const
 
 const focusFirstInvalidField = (fieldErrors: ContactFormErrors) => {
   const firstId = fieldErrorOrder.find((id) => fieldErrors[id])
-  if (firstId) {
+  if (!firstId) return
+  // Wait for React to flush aria-invalid / error text before focusing.
+  queueMicrotask(() => {
     document.getElementById(firstId)?.focus()
-  }
+  })
 }
 interface FormFieldProps {
   id: string
@@ -141,7 +143,7 @@ const FormField: React.FC<FormFieldProps> = ({
             autoComplete={autoComplete}
             required
             aria-required="true"
-            aria-invalid={error ? "true" : "false"}
+            aria-invalid={error ? true : undefined}
             aria-describedby={error ? errorId : undefined}
           />
         ) : (
@@ -163,7 +165,7 @@ const FormField: React.FC<FormFieldProps> = ({
             autoComplete={autoComplete}
             required
             aria-required="true"
-            aria-invalid={error ? "true" : "false"}
+            aria-invalid={error ? true : undefined}
             aria-describedby={error ? errorId : undefined}
           />
         )}

@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Engineering fintech path uses a curated verified-learning set and a current learning roadmap, without implying employment.
 - Homepage certifications preview is an 8-item cross-disciplinary selection. All 69 credentials remain on /certifications.
 - Page and section reveals complete in about 350ms. Header navigation no longer fades in over a long delay.
+- Contact form sets `aria-invalid` only when a field has a validation error. Valid or untouched fields omit the attribute.
 
 ### Confirmed still outstanding
 
