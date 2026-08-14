@@ -35,29 +35,22 @@ interface WebVitals {
 }
 
 const PerformanceDashboard: React.FC = () => {
-  const isDevelopment =
-    process.env.NODE_ENV === "development" &&
+  const enabled =
+    import.meta.env.DEV &&
+    typeof window !== "undefined" &&
     (window.location.hostname === "localhost" ||
       window.location.hostname === "127.0.0.1" ||
       window.location.hostname.includes("localhost"))
 
-  if (!isDevelopment) {
-    return null
-  }
-
   const [isVisible, setIsVisible] = useState(false)
   const [metrics, setMetrics] = useState<PerformanceMetrics | null>(null)
   const [webVitals, setWebVitals] = useState<WebVitals>({})
-  const [isOnline, setIsOnline] = useState(navigator.onLine)
+  const [isOnline, setIsOnline] = useState(
+    typeof navigator === "undefined" ? true : navigator.onLine
+  )
 
   useEffect(() => {
-    const isDevelopment =
-      process.env.NODE_ENV === "development" &&
-      (window.location.hostname === "localhost" ||
-        window.location.hostname === "127.0.0.1" ||
-        window.location.hostname.includes("localhost"))
-
-    if (!isDevelopment) return
+    if (!enabled) return
 
     const collectMetrics = () => {
       const bundleInfo = getBundleInfo()
@@ -184,20 +177,26 @@ const PerformanceDashboard: React.FC = () => {
     return "poor"
   }
 
+  if (!enabled) {
+    return null
+  }
+
   if (!isVisible) {
     return (
       <button
+        type="button"
         onClick={() => setIsVisible(true)}
-        className="fixed bottom-4 left-4 z-[9999] bg-blue-600 text-white px-3 py-2 rounded-lg text-sm shadow-lg hover:bg-blue-700 transition-colors"
+        className="fixed top-24 right-3 z-[9999] rounded-lg bg-blue-600 px-3 py-2 text-sm text-white shadow-lg transition-colors hover:bg-blue-700"
         style={{ fontSize: "12px" }}
+        aria-label="Open performance dashboard"
       >
-        📊 Perf
+        Perf
       </button>
     )
   }
 
   return (
-    <div className="fixed bottom-4 left-4 z-[9999] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-xl max-w-sm max-h-96 overflow-y-auto">
+    <div className="fixed top-24 right-3 z-[9999] max-h-96 max-w-sm overflow-y-auto rounded-lg border border-gray-300 bg-white shadow-xl dark:border-gray-600 dark:bg-gray-800">
       <div className="p-3 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
         <h3 className="font-semibold text-sm">Performance Dashboard</h3>
         <div className="flex items-center gap-2">
@@ -207,8 +206,10 @@ const PerformanceDashboard: React.FC = () => {
             }`}
           />
           <button
+            type="button"
             onClick={() => setIsVisible(false)}
-            className="text-gray-500 hover:text-gray-700 text-lg leading-none"
+            className="text-lg leading-none text-gray-500 hover:text-gray-700"
+            aria-label="Close performance dashboard"
           >
             ×
           </button>

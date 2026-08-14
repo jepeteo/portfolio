@@ -455,6 +455,14 @@ export const A11yChecker = {
     )
 
     interactiveElements.forEach((element, index) => {
+      if (
+        element.hasAttribute("hidden") ||
+        element.getAttribute("aria-hidden") === "true" ||
+        element.closest("[hidden], [aria-hidden='true']")
+      ) {
+        return
+      }
+
       const tabIndex = element.getAttribute("tabindex")
       if (tabIndex && parseInt(tabIndex) > 0) {
         issues.push(
@@ -464,7 +472,27 @@ export const A11yChecker = {
         )
       }
 
-      if (!element.hasAttribute("aria-label") && !element.textContent?.trim()) {
+      const labelledBy = element.getAttribute("aria-labelledby")
+      const labelledByText = labelledBy
+        ? labelledBy
+            .split(/\s+/)
+            .map((id) => document.getElementById(id)?.textContent?.trim())
+            .filter(Boolean)
+            .join(" ")
+        : ""
+      const labelText = Array.from(
+        (element as HTMLInputElement).labels ?? []
+      )
+        .map((label) => label.textContent?.trim())
+        .filter(Boolean)
+        .join(" ")
+      const accessibleName =
+        element.getAttribute("aria-label")?.trim() ||
+        labelledByText ||
+        labelText ||
+        element.textContent?.trim()
+
+      if (!accessibleName) {
         issues.push(`Interactive element ${index + 1} has no accessible name`)
       }
     })

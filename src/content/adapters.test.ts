@@ -12,6 +12,7 @@ import {
   ownershipFromEmployer,
   projectTaxonomyLabel,
   publicEngineeringTracks,
+  archiveImageSrc,
   workTypeFromTags,
 } from "./projectTaxonomy"
 import {
@@ -92,6 +93,12 @@ describe("project taxonomy", () => {
     expect(projectTaxonomyLabel("wordpress")).toBe("WordPress")
     expect(projectTaxonomyLabel("e-commerce")).toBe("E-commerce")
     expect(projectTaxonomyLabel("open-source")).toBe("Open source")
+    expect(archiveImageSrc({ id: "notes-app" })).toBe(
+      "/images/react-projects/jepenotes.webp"
+    )
+    expect(
+      archiveImageSrc({ id: "stoney", imageSlug: "stoneyholidaylets" })
+    ).toBe("/images/projects/stoneyholidaylets.webp")
   })
 })
 

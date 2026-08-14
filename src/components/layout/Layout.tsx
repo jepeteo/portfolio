@@ -14,10 +14,9 @@ const OfflineIndicator = lazy(() =>
   }))
 )
 
-const PerformanceDashboard = createLazyComponent(
-  () => import("../system/PerformanceDashboard"),
-  {}
-)
+const PerformanceDashboard = import.meta.env.DEV
+  ? createLazyComponent(() => import("../system/PerformanceDashboard"), {})
+  : null
 
 const Layout: React.FC = () => {
   return (
@@ -36,9 +35,11 @@ const Layout: React.FC = () => {
       <Suspense fallback={null}>
         <OfflineIndicator position="bottom" />
       </Suspense>
-      <Suspense fallback={null}>
-        <PerformanceDashboard />
-      </Suspense>
+      {PerformanceDashboard ? (
+        <Suspense fallback={null}>
+          <PerformanceDashboard />
+        </Suspense>
+      ) : null}
     </div>
   )
 }

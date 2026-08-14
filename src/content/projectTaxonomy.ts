@@ -43,6 +43,19 @@ export const projectTaxonomyLabel = (value: string) =>
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ")
 
+const REACT_ARCHIVE_IMAGES: Record<string, string> = {
+  "notes-app": "/images/react-projects/jepenotes.webp",
+  "color-palette-generator": "/images/react-projects/palettegenerator.webp",
+  "url-shortener": "/images/react-projects/url-shortener.webp",
+}
+
+export const archiveImageSrc = (
+  project: Pick<NormalizedProject, "id" | "imageSlug">
+) => {
+  if (project.imageSlug) return `/images/projects/${project.imageSlug}.webp`
+  return REACT_ARCHIVE_IMAGES[project.id]
+}
+
 export type ProjectSource = "wordpress" | "web" | "react"
 
 export type EngineeringTrack =

@@ -2,9 +2,11 @@ import React, { useMemo } from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import {
   allNormalizedProjects,
+  archiveImageSrc,
   engineeringProjects,
   projectTaxonomyLabel,
   publicProjectDescription,
+  type NormalizedProject,
 } from "../../../content/projectTaxonomy"
 import {
   applyProjectQuery,
@@ -25,6 +27,48 @@ type ProjectsArchiveProps = {
 }
 
 const labelize = projectTaxonomyLabel
+
+const ArchiveCard: React.FC<{ project: NormalizedProject }> = ({ project }) => {
+  const src = archiveImageSrc(project)
+  const [failed, setFailed] = React.useState(false)
+  const showImage = Boolean(src) && !failed
+
+  return (
+    <Link
+      to={`/projects/${project.slug}`}
+      className={`${v2Panel} flex h-full flex-col overflow-hidden transition-colors hover:border-[var(--v2-acid)]/40`}
+    >
+      {showImage ? (
+        <div className="aspect-video overflow-hidden bg-[var(--v2-panel-2)]">
+          <img
+            src={src}
+            alt={`${project.title} screenshot`}
+            width={1280}
+            height={720}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover object-top"
+            onError={() => setFailed(true)}
+          />
+        </div>
+      ) : null}
+      <div className="flex flex-1 flex-col p-6">
+        <p className="m-0 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--v2-soft)]">
+          {labelize(project.ownership)} · {labelize(project.workType)}
+        </p>
+        <h2 className="mt-2 text-lg font-bold tracking-tight text-[var(--v2-text)]">
+          {project.title}
+        </h2>
+        <p className="mt-2 line-clamp-3 flex-1 text-sm text-[var(--v2-muted)]">
+          {publicProjectDescription(project)}
+        </p>
+        <p className="mt-4 font-mono text-[11px] text-[var(--v2-soft)]">
+          {labelize(project.domain)} · {labelize(project.source)}
+        </p>
+      </div>
+    </Link>
+  )
+}
 
 const ProjectsArchive: React.FC<ProjectsArchiveProps> = ({
   engineeringOnly = false,
@@ -216,23 +260,7 @@ const ProjectsArchive: React.FC<ProjectsArchiveProps> = ({
         <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {result.items.map((project) => (
             <li key={`${project.source}-${project.id}`}>
-              <Link
-                to={`/projects/${project.slug}`}
-                className={`${v2Panel} flex h-full flex-col p-6 transition-colors hover:border-[var(--v2-acid)]/40`}
-              >
-                <p className="m-0 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--v2-soft)]">
-                  {labelize(project.ownership)} · {labelize(project.workType)}
-                </p>
-                <h2 className="mt-2 text-lg font-bold tracking-tight text-[var(--v2-text)]">
-                  {project.title}
-                </h2>
-                <p className="mt-2 line-clamp-3 flex-1 text-sm text-[var(--v2-muted)]">
-                  {publicProjectDescription(project)}
-                </p>
-                <p className="mt-4 font-mono text-[11px] text-[var(--v2-soft)]">
-                  {labelize(project.domain)} · {labelize(project.source)}
-                </p>
-              </Link>
+              <ArchiveCard project={project} />
             </li>
           ))}
         </ul>
