@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Featured homepage cards no longer create a 12px horizontal overflow at 320px. Missing case-study screenshots stay out of the layout until the file loads.
 - Stoney Holiday Lets now uses a live 1280x720 homepage screenshot at `public/images/projects/stoneyholidaylets.webp`.
 - Contact page uses a compact hero and puts the form before supporting details so Name is in the first viewport.
+- Featured case studies use authored meta descriptions. Stoney Open Graph image is the live project screenshot.
 
 ### Confirmed still outstanding
 

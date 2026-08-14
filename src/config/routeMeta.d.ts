@@ -12,6 +12,7 @@ export interface RouteMeta {
   description: string
   canonicalPath: string
   ogType: "website" | "article" | "profile"
+  ogImage?: string
   crawlableHtml?: string
   jsonLd: Record<string, unknown>[]
 }

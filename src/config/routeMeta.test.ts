@@ -37,10 +37,36 @@ describe("buildRouteJsonLd", () => {
   it("describes MTX as SoftwareApplication and Stoney as CreativeWork", () => {
     const mtx = graphOf("/projects/mtx-clinic-app")
     const stoney = graphOf("/projects/stoney-holiday-lets")
+    const mtxApp = mtx.find((node) => node["@type"] === "SoftwareApplication")
+    const stoneyWork = stoney.find((node) => node["@type"] === "CreativeWork")
 
-    expect(mtx.some((node) => node["@type"] === "SoftwareApplication")).toBe(true)
-    expect(stoney.some((node) => node["@type"] === "CreativeWork")).toBe(true)
+    expect(mtxApp).toBeTruthy()
+    expect(stoneyWork).toBeTruthy()
+    expect(mtxApp?.description).toContain("Private Next.js clinic")
+    expect(stoneyWork?.description).toContain("WordPress holiday-let website")
     expect(JSON.stringify(mtx).includes("AggregateRating")).toBe(false)
+  })
+
+  it("keeps authored featured descriptions complete and tidy", async () => {
+    const { routeMeta } = await import("./routeMeta.js")
+    const mtx = routeMeta["/projects/mtx-clinic-app"].description
+    const stoney = routeMeta["/projects/stoney-holiday-lets"].description
+
+    for (const description of [mtx, stoney]) {
+      expect(description.trimEnd()).toBe(description)
+      expect(description.endsWith(".")).toBe(true)
+      expect(description.length).toBeGreaterThanOrEqual(139)
+      expect(description.length).toBeLessThanOrEqual(160)
+      expect(/\s$/.test(description)).toBe(false)
+      const words = description.replace(/\.$/, "").split(/\s+/)
+      const lastWord = words[words.length - 1] ?? ""
+      expect(lastWord.length).toBeGreaterThan(1)
+      expect(/-$/.test(lastWord)).toBe(false)
+    }
+
+    expect(routeMeta["/projects/stoney-holiday-lets"].ogImage).toContain(
+      "stoneyholidaylets.webp"
+    )
   })
 
   it("keeps service landing graphs small and Person-unique", () => {

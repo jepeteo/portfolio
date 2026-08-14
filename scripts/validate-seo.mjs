@@ -151,12 +151,28 @@ function validatePrerender() {
       errors.push("prerender: /projects missing ItemList JSON-LD")
     }
 
-    if (route === "/projects/mtx-clinic-app" && !html.includes('"@type": "SoftwareApplication"')) {
-      errors.push("prerender: MTX missing SoftwareApplication JSON-LD")
+    if (route === "/projects/mtx-clinic-app") {
+      if (!html.includes('"@type": "SoftwareApplication"')) {
+        errors.push("prerender: MTX missing SoftwareApplication JSON-LD")
+      }
+      if (!html.includes("Private Next.js clinic operations application")) {
+        errors.push("prerender: MTX missing authored description")
+      }
+      if (!html.includes(OG_IMAGE)) {
+        errors.push("prerender: MTX should keep generic social-card OG image")
+      }
     }
 
-    if (route === "/projects/stoney-holiday-lets" && !html.includes('"@type": "CreativeWork"')) {
-      errors.push("prerender: Stoney missing CreativeWork JSON-LD")
+    if (route === "/projects/stoney-holiday-lets") {
+      if (!html.includes('"@type": "CreativeWork"')) {
+        errors.push("prerender: Stoney missing CreativeWork JSON-LD")
+      }
+      if (!html.includes("WordPress holiday-let website for The Lodge and The Nook")) {
+        errors.push("prerender: Stoney missing authored description")
+      }
+      if (!html.includes("/images/projects/stoneyholidaylets.webp")) {
+        errors.push("prerender: Stoney missing project OG image")
+      }
     }
 
     if (route === "/contact" && !html.includes('"@type": "ContactPage"')) {

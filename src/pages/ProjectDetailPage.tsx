@@ -20,25 +20,32 @@ const ProjectDetailPage: React.FC = () => {
   )
 
   const title = study?.title ?? project?.title ?? "Project"
-  const description =
-    study?.problem ??
-    (project ? publicProjectDescription(project) : "") ??
-    ""
   const path = `/projects/${slug ?? ""}`
-  const structuredData = routeMeta[path]
+  const route = routeMeta[path]
+  const archiveDescription = `${title} is listed in Theodoros Mentis's public project archive.`
+  const seoDescription = route?.description ?? archiveDescription
+  const bodyDescription = project
+    ? publicProjectDescription(project)
+    : archiveDescription
+  const structuredData = route
     ? buildRouteJsonLd(path)
     : buildProjectPageJsonLd({
         name: title,
-        description: description.slice(0, 200),
+        description: archiveDescription,
         path,
       })
+  const ogImage = route?.ogImage ?? `${site.url}/social-card.webp`
 
   useEnhancedSEO({
     title: `${title} | ${site.name}`,
-    description: description.slice(0, 155),
+    description: seoDescription,
     canonical: `${site.url}${path}`,
     ogUrl: `${site.url}${path}`,
     ogType: "article",
+    ogDescription: seoDescription,
+    ogImage,
+    twitterDescription: seoDescription,
+    twitterImage: ogImage,
     structuredData,
   })
 
@@ -63,7 +70,7 @@ const ProjectDetailPage: React.FC = () => {
         id="project-detail"
         eyebrow={study?.label ?? (project?.engineering ? "Engineering" : "Project")}
         title={title}
-        subtitle={study ? undefined : description}
+        subtitle={study ? undefined : bodyDescription}
       />
       <section className="container mx-auto max-w-3xl space-y-6 px-6 py-16">
         <nav aria-label="Breadcrumb" className="text-sm text-[var(--v2-muted)]">
@@ -87,7 +94,7 @@ const ProjectDetailPage: React.FC = () => {
           <CaseStudyTemplate study={study} />
         ) : (
           <>
-            <p className="text-lg text-[var(--v2-muted)]">{description}</p>
+            <p className="text-lg text-[var(--v2-muted)]">{bodyDescription}</p>
             <ul className="flex flex-wrap gap-2">
               {(project?.technologies ?? []).map((item) => (
                 <li

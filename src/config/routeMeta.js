@@ -248,7 +248,7 @@ export const routeMeta = {
   "/projects/mtx-clinic-app": {
     title: "MTX Clinic App | Theodoros Mentis",
     description:
-      "Internal Next.js clinic application for appointments, client records, and day-to-day workflows.",
+      "Private Next.js clinic operations application for appointments, client records and structured daily workflows, designed and built by Theodoros Mentis.",
     canonicalPath: "/projects/mtx-clinic-app",
     ogType: "article",
     crawlableHtml: `<article id="static-crawl-fallback"><h1>MTX Clinic App</h1><p>Internal clinic application. Screens and live URL are not public.</p></article>`,
@@ -257,6 +257,8 @@ export const routeMeta = {
         "@type": "SoftwareApplication",
         "@id": `${SITE_URL}/projects/mtx-clinic-app#work`,
         name: "MTX Clinic App",
+        description:
+          "Private Next.js clinic operations application for appointments, client records and structured daily workflows, designed and built by Theodoros Mentis.",
         applicationCategory: "BusinessApplication",
         operatingSystem: "Web",
         author: personRef,
@@ -271,15 +273,18 @@ export const routeMeta = {
   "/projects/stoney-holiday-lets": {
     title: "Stoney Holiday Lets | Theodoros Mentis",
     description:
-      "WordPress holiday-let site for The Lodge and The Nook with booking CTAs and technical SEO foundations.",
+      "WordPress holiday-let website for The Lodge and The Nook, with booking-focused structure, responsive design and technical SEO foundations.",
     canonicalPath: "/projects/stoney-holiday-lets",
     ogType: "article",
+    ogImage: `${SITE_URL}/images/projects/stoneyholidaylets.webp`,
     crawlableHtml: `<article id="static-crawl-fallback"><h1>Stoney Holiday Lets</h1><p>WordPress holiday-let website.</p></article>`,
     jsonLd: [
       {
         "@type": "CreativeWork",
         "@id": `${SITE_URL}/projects/stoney-holiday-lets#work`,
         name: "Stoney Holiday Lets",
+        description:
+          "WordPress holiday-let website for The Lodge and The Nook, with booking-focused structure, responsive design and technical SEO foundations.",
         url: "https://www.stoneyholidaylets.co.uk/",
         author: personRef,
       },

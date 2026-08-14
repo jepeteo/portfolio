@@ -79,6 +79,7 @@ function injectCrawlableBody(html, crawlableHtml) {
 function buildRouteHtml(template, route) {
   const meta = routeMeta[route]
   const canonical = absoluteUrl(meta.canonicalPath)
+  const ogImage = meta.ogImage || OG_IMAGE
   let html = template
   html = replaceTitle(html, meta.title)
   html = replaceMetaName(html, "description", meta.description)
@@ -87,10 +88,10 @@ function buildRouteHtml(template, route) {
   html = replaceMetaProperty(html, "og:description", meta.description)
   html = replaceMetaProperty(html, "og:url", canonical)
   html = replaceMetaProperty(html, "og:type", meta.ogType)
-  html = replaceMetaProperty(html, "og:image", OG_IMAGE)
+  html = replaceMetaProperty(html, "og:image", ogImage)
   html = replaceMetaName(html, "twitter:title", meta.title)
   html = replaceMetaName(html, "twitter:description", meta.description)
-  html = replaceMetaName(html, "twitter:image", OG_IMAGE)
+  html = replaceMetaName(html, "twitter:image", ogImage)
   html = replaceMetaName(html, "twitter:site", TWITTER_SITE)
   html = injectJsonLd(html, buildRouteJsonLd(route))
   html = injectCrawlableBody(html, meta.crawlableHtml)
