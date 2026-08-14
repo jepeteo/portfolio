@@ -34,7 +34,7 @@ const ProcessSection: React.FC = () => (
         titleId="process-heading"
         label="Process"
         title="A clear path from problem to delivery."
-        copy="What happens after you get in touch — designed to remove uncertainty before any money or production access changes hands."
+        copy="What happens after you get in touch. Designed to remove uncertainty before any money or production access changes hands."
       />
 
       <ProcessTimeline steps={steps} />

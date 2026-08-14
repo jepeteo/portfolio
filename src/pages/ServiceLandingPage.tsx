@@ -113,7 +113,7 @@ const ServiceLandingPage: React.FC = () => {
             titleId={`${landing.slug}-pricing-heading`}
             label="Pricing"
             title={service.title}
-            copy="Final pricing depends on scope — I confirm a fixed quote before any work begins."
+            copy="Final pricing depends on scope. I confirm a fixed quote before any work begins."
           />
           <ServiceCard service={service} index={0} />
         </section>

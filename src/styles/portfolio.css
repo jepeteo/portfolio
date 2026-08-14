@@ -51,7 +51,7 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Modern Card Styles — legacy; prefer SurfaceCard component */
+/* Modern Card Styles. Legacy; prefer SurfaceCard component */
 .modern-card {
     border-radius: var(--radius-xl);
     transition: all var(--duration-normal) cubic-bezier(0.4, 0, 0.2, 1);

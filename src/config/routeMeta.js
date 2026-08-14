@@ -1,6 +1,6 @@
 // Single source of truth for route-level SEO metadata.
 //
-// Plain ESM — imported by React (typed via routeMeta.d.ts) and prerender.mjs.
+// Plain ESM, imported by React (typed via routeMeta.d.ts) and prerender.mjs.
 
 import { faqPageSchema } from "../content/homeFaq.js"
 import { siteGraph } from "../content/schemas/siteGraph.js"
@@ -43,7 +43,7 @@ function serviceJsonLd({ path, name, description, serviceType }) {
 
 const homeCrawlableHtml = `<article id="static-crawl-fallback" aria-label="Page summary">
   <h1>I build and rescue reliable digital systems.</h1>
-  <p>Senior full-stack engineer with 18+ years across WordPress, WooCommerce, React, infrastructure and automation — now expanding into fintech.</p>
+  <p>Senior full-stack engineer with 18+ years across WordPress, WooCommerce, React, infrastructure and automation. Now expanding into fintech.</p>
   <nav aria-label="Primary links">
     <a href="/services">I need help with a website</a>
     <a href="/engineering">Explore my engineering portfolio</a>
@@ -71,7 +71,7 @@ export const routeMeta = {
     title:
       "Theodoros Mentis - Senior Full-Stack Engineer | WordPress, React, Fintech Path",
     description:
-      "I build and rescue reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation — Berlin-based, expanding into fintech.",
+      "I build and rescue reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation. Berlin-based, expanding into fintech.",
     canonicalPath: "/",
     ogType: "website",
     crawlableHtml: homeCrawlableHtml,
@@ -104,7 +104,7 @@ export const routeMeta = {
     title:
       "Emergency Website Help - Urgent WordPress & Web Fixes | Theodoros Mentis",
     description:
-      "Urgent WordPress, WooCommerce, DNS, email and SSL fixes. Broken forms, checkout errors and critical site issues — fixed quote before work starts.",
+      "Urgent WordPress, WooCommerce, DNS, email and SSL fixes. Broken forms, checkout errors and critical site issues. Fixed quote before work starts.",
     canonicalPath: "/services/emergency-website-help",
     ogType: "website",
     crawlableHtml: emergencyCrawlableHtml,
@@ -273,7 +273,7 @@ export const routeMeta = {
   "/engineering": {
     title: "Engineering and Labs | Theodoros Mentis",
     description:
-      "React and TypeScript applications, internal tools, and technical experiments — separate from client WordPress delivery.",
+      "React and TypeScript applications, internal tools, and technical experiments, separate from client WordPress delivery.",
     canonicalPath: "/engineering",
     ogType: "website",
     crawlableHtml: `<article id="static-crawl-fallback"><h1>Engineering</h1><p>Applications, tools, and technical experiments.</p></article>`,

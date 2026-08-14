@@ -14,7 +14,7 @@ const CertificationsPage: React.FC = () => {
         id="certifications-hero"
         eyebrow="Certifications"
         title="Public credentials, kept in full."
-        subtitle={`${total} certificates across the stored categories. Search, filter, and paginate the archive — nothing is dropped to make the homepage shorter.`}
+        subtitle={`${total} certificates across the stored categories. Search, filter, and paginate the archive. Nothing is dropped to make the homepage shorter.`}
       />
       <CertificationsArchive />
     </div>

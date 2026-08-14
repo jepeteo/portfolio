@@ -20,7 +20,7 @@ const FastHelpSection: React.FC = () => {
           titleId="fast-help-heading"
           label="Service matrix"
           title="What needs fixing?"
-          copy="Common, well-scoped work with starting prices. Pick the closest match — the contact form opens pre-filled so you can describe the rest."
+          copy="Common, well-scoped work with starting prices. Pick the closest match. The contact form opens pre-filled so you can describe the rest."
         />
 
         <ul className="grid gap-3">

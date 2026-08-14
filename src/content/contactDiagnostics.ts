@@ -42,7 +42,7 @@ export const contactDiagnostics: ContactDiagnostic[] = [
     title: "Email / DNS problem",
     whatToSend: [
       "Domain and email provider (Outlook, Google, etc.)",
-      "What fails — send, receive, or both",
+      "What fails: send, receive, or both",
       "Recent DNS or hosting changes",
     ],
     whatYouGet: [

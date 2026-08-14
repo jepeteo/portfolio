@@ -10,7 +10,7 @@ const FeaturedServices: React.FC = () => {
         titleId="featured-services-heading"
         label="Featured"
         title="High-demand services I deliver regularly."
-        copy="Practical, well-scoped work for businesses and agencies — each with a clear starting price."
+        copy="Practical, well-scoped work for businesses and agencies, each with a clear starting price."
       />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {featuredServices.map((service, index) => (

@@ -3,7 +3,7 @@ import { usePortfolioSchema } from "../../hooks/usePortfolioSchema"
 import { seoManager } from "../../utils/enhancedSEO"
 import { SchemaValidator } from "../../utils/schemaValidator"
 
-/** Runtime portfolio JSON-LD — CreativeWork + ItemList only; global entities live in siteGraph. */
+/** Runtime portfolio JSON-LD. CreativeWork + ItemList only; global entities live in siteGraph. */
 export const PortfolioSchema: React.FC = () => {
   const { portfolioProjects, reactProjects } = usePortfolioSchema()
 

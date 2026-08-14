@@ -69,7 +69,7 @@ const DiagnosticSummary: React.FC<DiagnosticSummaryProps> = ({
           </div>
 
           <p className="mt-4 text-xs text-[var(--v2-soft)]">
-            Send your URL, describe symptoms, mention any deadline — I reply with
+            Send your URL, describe symptoms, mention any deadline. I reply with
             scope, access needs, and a clear quote before production changes.
           </p>
         </motion.aside>

@@ -35,7 +35,7 @@ export const featuredCaseStudies: CaseStudy[] = [
     title: "MTX Clinic App",
     label: "Web App",
     problem:
-      "Clinic operations needed a practical internal app for appointments, client records, and day-to-day workflows — without fragile spreadsheets or disconnected tools.",
+      "Clinic operations needed a practical internal app for appointments, client records, and day-to-day workflows, without fragile spreadsheets or disconnected tools.",
     approach:
       "Built a React-based clinic application with structured UI, role-aware views, and workflows matched to how the team actually works on site.",
     outcome:
@@ -52,7 +52,7 @@ export const featuredCaseStudies: CaseStudy[] = [
     title: "Stoney Holiday Lets",
     label: "WordPress",
     problem:
-      "Holiday let business needed a trustworthy booking-focused site for The Lodge and The Nook — clear property info, direct enquiries, and a polished countryside brand.",
+      "Holiday let business needed a trustworthy booking-focused site for The Lodge and The Nook, with clear property info, direct enquiries, and a polished countryside brand.",
     approach:
       "Delivered a WordPress site with property-led structure, mobile-first layout, booking CTAs, and technical SEO foundations for local search.",
     outcome:

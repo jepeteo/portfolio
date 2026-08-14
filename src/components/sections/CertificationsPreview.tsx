@@ -24,7 +24,7 @@ const CertificationsPreview: React.FC = () => {
           titleId="certificates-preview-heading"
           label="Certifications"
           title={`${total} public certificates.`}
-          copy="Featured and recent credentials. Every certificate stays on the dedicated archive — never dropped from the homepage by deletion."
+          copy="Featured and recent credentials. Every certificate stays on the dedicated archive, never dropped from the homepage by deletion."
         />
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {preview.map((cert) => (

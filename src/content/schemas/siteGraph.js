@@ -1,4 +1,4 @@
-// Global JSON-LD entity graph — plain ESM for prerender + React imports.
+// Global JSON-LD entity graph. Plain ESM for prerender + React imports.
 // Keep name, email, LinkedIn, and jobTitle in sync with src/config/site.ts.
 
 const SITE_URL = "https://www.theodorosmentis.com"
@@ -41,7 +41,7 @@ const person = {
   ],
   jobTitle: "Senior Full-Stack Engineer",
   description:
-    "Senior full-stack engineer who builds and rescues reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation — Berlin-based, expanding into fintech.",
+    "Senior full-stack engineer who builds and rescues reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation. Berlin-based, expanding into fintech.",
   email: SITE_EMAIL,
   nationality: "Greek",
   address: {
@@ -56,9 +56,9 @@ const website = {
   "@type": "WebSite",
   "@id": WEBSITE_ID,
   url: `${SITE_URL}/`,
-  name: `${SITE_NAME} — Senior Full-Stack Engineer`,
+  name: `${SITE_NAME}: Senior Full-Stack Engineer`,
   description:
-    "I build and rescue reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation — Berlin-based, expanding into fintech.",
+    "I build and rescue reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation. Berlin-based, expanding into fintech.",
   inLanguage: "en-US",
   publisher: { "@id": PERSON_ID },
 }
@@ -66,7 +66,7 @@ const website = {
 const professionalService = {
   "@type": "ProfessionalService",
   "@id": SERVICE_ID,
-  name: `${SITE_NAME} — Web Development & Technical Support`,
+  name: `${SITE_NAME}: Web Development & Technical Support`,
   url: `${SITE_URL}/services`,
   image: OG_IMAGE,
   email: SITE_EMAIL,

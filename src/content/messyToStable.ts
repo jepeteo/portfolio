@@ -1,7 +1,7 @@
 export const messyToStableContent = {
   title: "From messy to stable.",
   subtitle:
-    "The kind of transformation clients get when problems are diagnosed properly — not patched blindly.",
+    "The kind of transformation clients get when problems are diagnosed properly, not patched blindly.",
   beforeTitle: "Before",
   afterTitle: "After",
   beforeItems: [

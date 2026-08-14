@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Public copy no longer uses em dashes. Sentences use periods, commas, or "to" instead.
+
 - Dual-audience information architecture: homepage is a decision page; archives live on dedicated routes (`/projects`, `/engineering`, `/experience`, `/certifications`, `/about`, `/contact`).
 - Services grouped as Rescue / Improve / Build, with the emergency route unchanged.
 - Contact form requires name, email, and message; optional selectors are collapsed. EmailJS / `api/contact` is unchanged.

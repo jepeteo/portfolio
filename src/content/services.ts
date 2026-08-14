@@ -653,7 +653,7 @@ export const budgetOptions = [
   { value: "700-plus", label: "€700+" },
   { value: "monthly-support", label: "Monthly support" },
   { value: "not-sure", label: "Not sure yet" },
-  { value: "under-150", label: "€80–€150" },
+  { value: "under-150", label: "€80 to €150" },
 ] as const
 
 export type RequestType = (typeof requestTypeOptions)[number]["value"]

@@ -37,7 +37,7 @@ const ExperiencePreview: React.FC = () => {
               className="rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-6"
             >
               <p className="m-0 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--v2-soft)]">
-                {job.from} — {job.to ?? "Present"}
+                {job.from} to {job.to ?? "Present"}
               </p>
               <h3 className="mt-2 font-display text-xl font-bold tracking-tight text-[var(--v2-text)]">
                 {job.title}

@@ -18,7 +18,7 @@ const ContactCTA: React.FC = () => (
         id="contact-cta-heading"
         className="mt-3 font-display text-[clamp(2rem,5vw,3.25rem)] font-bold tracking-tight text-[var(--v2-text)]"
       >
-        Tell me what broke — or what you want to build.
+        Tell me what broke, or what you want to build.
       </h2>
       <p className="mx-auto mt-4 max-w-2xl text-lg text-[var(--v2-muted)]">
         Name, email, and a short description is enough. I reply with a fixed

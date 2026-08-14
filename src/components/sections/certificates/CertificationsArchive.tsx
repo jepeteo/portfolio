@@ -179,7 +179,7 @@ const CertificationsArchive: React.FC = () => {
       {result.items.length === 0 ? (
         <p className={`${v2Panel} p-8 text-center text-[var(--v2-muted)]`}>
           No certificates match these filters. Clear a filter to see more of the
-          archive — every credential stays in the dataset.
+          archive. Every credential stays in the dataset.
         </p>
       ) : (
         <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

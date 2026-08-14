@@ -29,7 +29,7 @@ const SystemMapSection: React.FC = () => {
           titleId="system-map-heading"
           label="Systems map"
           title="One developer across the parts that usually break."
-          copy="Frontend, WordPress, hosting, DNS, email, SEO, and performance — connected so problems get traced to the right layer."
+          copy="Frontend, WordPress, hosting, DNS, email, SEO, and performance, connected so problems get traced to the right layer."
         />
 
         <div className="mx-auto max-w-4xl">

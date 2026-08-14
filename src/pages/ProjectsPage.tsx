@@ -15,7 +15,7 @@ const ProjectsPage: React.FC = () => {
         id="projects-hero"
         eyebrow="Projects"
         title="Client delivery, WordPress, and product work in one archive."
-        subtitle="Filter by ownership, domain, and work type together — not as mutually exclusive WordPress / Client / Personal tabs."
+        subtitle="Filter by ownership, domain, and work type together, not as mutually exclusive WordPress / Client / Personal tabs."
       />
       <p className="container mx-auto max-w-6xl px-6 pb-8 text-sm text-[var(--v2-muted)]">
         Historical delivery windows are not a promise for new work. Current

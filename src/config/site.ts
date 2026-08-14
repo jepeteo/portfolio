@@ -10,7 +10,7 @@ import { SITE_URL, SITE_EMAIL } from "./routeMeta.js"
  * - Schema portfolioStats: 128 (WordPress + React showcase only)
  * - Unused BuyerIntent copy: 120+ live client sites
  * - About FAQ uses the career stats below (18+ / 390+ / 172+)
- * - Jepeteo project blurb claims 20+ years / 1000+ clients — keep in JSON,
+ * - Jepeteo project blurb claims 20+ years / 1000+ clients. Keep in JSON,
  *   do not feature that sentence
  */
 export const site = {
@@ -47,9 +47,9 @@ export const site = {
     clientCountLabel: "172+",
   },
   description:
-    "Senior full-stack engineer who builds and rescues reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation — Berlin-based, expanding into fintech.",
+    "Senior full-stack engineer who builds and rescues reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation. Berlin-based, expanding into fintech.",
   shortDescription:
-    "I build and rescue reliable digital systems — WordPress, WooCommerce, React, infrastructure, and automation.",
+    "I build and rescue reliable digital systems: WordPress, WooCommerce, React, infrastructure, and automation.",
   keywords: [
     "web developer",
     "wordpress developer",

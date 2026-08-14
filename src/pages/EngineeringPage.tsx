@@ -12,7 +12,7 @@ const EngineeringPage: React.FC = () => {
         id="engineering-hero"
         eyebrow="Engineering"
         title="Applications, tools, and technical experiments."
-        subtitle="React, TypeScript, internal tools, and self-hosted work — kept separate from client WordPress delivery so both audiences can find what they need."
+        subtitle="React, TypeScript, internal tools, and self-hosted work, kept separate from client WordPress delivery so both audiences can find what they need."
       />
       <ProjectsArchive engineeringOnly />
     </div>

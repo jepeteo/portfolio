@@ -51,7 +51,7 @@ const HeroDiagnosticConsole: React.FC = () => (
               {site.name}
             </p>
             <p className="m-0 text-sm text-[var(--v2-muted)]">
-              {site.title} — WordPress, WooCommerce, React,
+              {site.title}: WordPress, WooCommerce, React,
               technical SEO, hosting &amp; DNS.
             </p>
           </div>
@@ -145,8 +145,8 @@ const Hero: React.FC = memo(() => {
               className="mt-7 max-w-xl text-lg text-[var(--v2-muted)] md:text-xl"
             >
               {site.title} with {site.stats.yearsExperienceLabel} years across
-              WordPress, WooCommerce, React, infrastructure and automation —
-              now expanding into fintech.
+              WordPress, WooCommerce, React, infrastructure and automation.
+              Now expanding into fintech.
             </motion.p>
 
             <motion.div

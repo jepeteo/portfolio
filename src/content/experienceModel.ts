@@ -38,7 +38,7 @@ const inferEmploymentType = (job: Job): EmploymentType =>
   (job.company === "Freelancer" ? "freelance" : "full-time")
 
 /**
- * Defensible enrichments only — derived from existing job text, not invented roles.
+ * Defensible enrichments only, derived from existing job text, not invented roles.
  * Future bank/fintech jobs can set these fields directly on the JSON object.
  */
 const jobEnrichments: Record<

@@ -21,7 +21,7 @@ export const serviceLandings: ServiceLanding[] = [
     eyebrow: "Technical SEO",
     heroTitle: "Technical SEO audit for sites that need to rank and stay indexed.",
     heroSubtitle:
-      "A practical review of metadata, redirects, indexation, sitemaps, schema, and migration risks — with clear next steps, not a generic checklist PDF.",
+      "A practical review of metadata, redirects, indexation, sitemaps, schema, and migration risks, with clear next steps, not a generic checklist PDF.",
     symptoms: [
       "Rankings dropped after a redesign or migration",
       "Broken or missing redirects",
@@ -55,7 +55,7 @@ export const serviceLandings: ServiceLanding[] = [
     eyebrow: "WooCommerce",
     heroTitle: "WooCommerce checkout broken? Let's get orders flowing again.",
     heroSubtitle:
-      "Focused help for checkout errors, payment display issues, validation bugs, and order flow problems — scoped clearly before work starts.",
+      "Focused help for checkout errors, payment display issues, validation bugs, and order flow problems, scoped clearly before work starts.",
     symptoms: [
       "Checkout page errors or white screen",
       "Payment methods not showing",

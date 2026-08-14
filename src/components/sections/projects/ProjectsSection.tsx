@@ -70,7 +70,7 @@ const ProjectsSection: React.FC = () => {
         id="projects"
         eyebrow="Portfolio"
         title="Projects"
-        subtitle="WordPress client work, modern web apps, and personal builds — organized so you can browse by what matters to you."
+        subtitle="WordPress client work, modern web apps, and personal builds, organized so you can browse by what matters to you."
         variant="default"
         decoration="gradient-orb"
       >

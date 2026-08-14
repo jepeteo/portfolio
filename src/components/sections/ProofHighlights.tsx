@@ -25,7 +25,7 @@ const ProofHighlights: React.FC = () => {
           titleId="proof-heading"
           label="Proof"
           title="Full-stack range, one owner."
-          copy="Frontend, WordPress, hosting, DNS, email and technical SEO in one practical workflow — Berlin-based, remote across Europe."
+          copy="Frontend, WordPress, hosting, DNS, email and technical SEO in one practical workflow. Berlin-based, remote across Europe."
         />
 
         <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

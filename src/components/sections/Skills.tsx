@@ -19,7 +19,7 @@ const Skills: React.FC = () => {
         variant="muted"
         eyebrow="Stack depth"
         title="Skills across the full stack."
-        subtitle="Grouped by how I use them in production — from interfaces people touch to infrastructure that keeps sites stable."
+        subtitle="Grouped by how I use them in production, from interfaces people touch to infrastructure that keeps sites stable."
         className={`transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}

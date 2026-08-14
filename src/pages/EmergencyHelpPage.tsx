@@ -69,7 +69,7 @@ const EmergencyHelpPage: React.FC = () => {
         id="emergency-hero"
         eyebrow="Emergency support"
         title="Website broken or losing enquiries?"
-        subtitle="I can help diagnose and fix urgent website, WordPress, WooCommerce, DNS, email, SSL, and performance issues — fast turnaround when available, depending on scope."
+        subtitle="I can help diagnose and fix urgent website, WordPress, WooCommerce, DNS, email, SSL, and performance issues. Fast turnaround when available, depending on scope."
       >
         <dl className="grid gap-4 sm:grid-cols-3">
           {trustStats.map((stat) => (
@@ -133,7 +133,7 @@ const EmergencyHelpPage: React.FC = () => {
             titleId="starting-prices-heading"
             label="Pricing"
             title="Starting prices."
-            copy="Final pricing depends on scope — I confirm a fixed quote before any work begins."
+            copy="Final pricing depends on scope. I confirm a fixed quote before any work begins."
           />
           <div className="grid gap-4 md:grid-cols-2">
             {emergencyServices.map((service, index) => (

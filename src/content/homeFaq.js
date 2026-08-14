@@ -9,7 +9,7 @@ export const homeFaq = [
   {
     question: "How many projects has Theodoros Mentis completed?",
     answer:
-      "18+ years of professional web work across 390+ projects and 172+ clients — WordPress builds, WooCommerce stores, React applications, and production support.",
+      "18+ years of professional web work across 390+ projects and 172+ clients: WordPress builds, WooCommerce stores, React applications, and production support.",
   },
   {
     question: "What types of projects does Theodoros Mentis work on?",

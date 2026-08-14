@@ -20,7 +20,7 @@ const AboutPage: React.FC = () => {
       <V2PageHero
         id="about-hero"
         eyebrow="About"
-        title={`${site.name} — ${site.title}.`}
+        title={`${site.name}, ${site.title}.`}
         subtitle={`${site.location.label}. ${site.stats.yearsExperienceLabel} years building and rescuing digital systems, now expanding into fintech.`}
       />
       <Suspense

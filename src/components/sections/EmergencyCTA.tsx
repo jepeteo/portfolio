@@ -33,7 +33,7 @@ const EmergencyCTA: React.FC = () => {
               </h2>
               <p className="mt-4 max-w-xl text-[var(--v2-muted)]">
                 If something is down or costing you leads, I can help diagnose and
-                fix it — fast turnaround when available, depending on scope. No
+                fix it. Fast turnaround when available, depending on scope. No
                 guesswork, no surprise invoices.
               </p>
 
