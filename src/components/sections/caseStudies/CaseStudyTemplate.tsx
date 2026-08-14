@@ -1,7 +1,9 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import type { CaseStudy } from "../../../content/caseStudies"
+import { adjacentCaseStudies } from "../../../content/caseStudies"
 import { v2SecondaryButton } from "../../ui/v2Styles"
+import CaseStudyMedia from "./CaseStudyMedia"
 
 type CaseStudyTemplateProps = {
   study: CaseStudy
@@ -10,6 +12,8 @@ type CaseStudyTemplateProps = {
 const sectionsFor = (study: CaseStudy) => {
   const seen = new Set<string>()
   return [
+    { title: "Project type", body: study.projectType },
+    { title: "Status", body: study.status },
     { title: "Context", body: study.context },
     { title: "Problem", body: study.problem },
     { title: "Responsibility", body: study.responsibility },
@@ -28,9 +32,12 @@ const sectionsFor = (study: CaseStudy) => {
 
 const CaseStudyTemplate: React.FC<CaseStudyTemplateProps> = ({ study }) => {
   const sections = sectionsFor(study)
+  const { previous, next } = adjacentCaseStudies(study.id)
 
   return (
     <article className="space-y-8">
+      <CaseStudyMedia study={study} eager variant="standalone" />
+
       {sections.map((section) => (
         <section key={section.title}>
           <h2 className="m-0 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--v2-acid)]">
@@ -78,7 +85,7 @@ const CaseStudyTemplate: React.FC<CaseStudyTemplateProps> = ({ study }) => {
         </section>
       ) : null}
 
-      {study.url ? (
+      {study.url && !study.confidential ? (
         <a
           href={study.url}
           className={v2SecondaryButton}
@@ -87,6 +94,32 @@ const CaseStudyTemplate: React.FC<CaseStudyTemplateProps> = ({ study }) => {
         >
           Visit live site
         </a>
+      ) : null}
+
+      {previous || next ? (
+        <nav
+          aria-label="Related case studies"
+          className="flex flex-wrap justify-between gap-4 border-t border-[var(--v2-line)] pt-6"
+        >
+          {previous ? (
+            <Link
+              to={`/projects/${previous.id}`}
+              className="text-sm font-bold text-[var(--v2-muted)] hover:text-[var(--v2-text)]"
+            >
+              Previous: {previous.title}
+            </Link>
+          ) : (
+            <span />
+          )}
+          {next ? (
+            <Link
+              to={`/projects/${next.id}`}
+              className="text-sm font-bold text-[var(--v2-muted)] hover:text-[var(--v2-text)]"
+            >
+              Next: {next.title}
+            </Link>
+          ) : null}
+        </nav>
       ) : null}
     </article>
   )

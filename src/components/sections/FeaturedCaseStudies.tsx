@@ -22,7 +22,7 @@ const FeaturedCaseStudies: React.FC = () => (
         copy="Selected work shown by problem, implementation and practical outcome."
       />
 
-      <div className="grid gap-8 lg:grid-cols-3">
+      <div className="grid gap-8 md:grid-cols-2">
         {featuredCaseStudies.map((study, index) => (
           <MotionCard key={study.id} index={index} className="group h-full">
             <CaseStudyCard study={study} index={index} />

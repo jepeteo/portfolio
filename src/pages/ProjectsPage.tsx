@@ -29,7 +29,7 @@ const ProjectsPage: React.FC = () => {
         <h2 className="mb-4 font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]">
           Featured case studies
         </h2>
-        <ul className="grid gap-4 md:grid-cols-3">
+        <ul className="grid gap-4 md:grid-cols-2">
           {featuredCaseStudies.map((study) => (
             <li key={study.id}>
               <Link to={`/projects/${study.id}`} className={`${v2Panel} block p-5`}>

@@ -255,21 +255,6 @@ export const routeMeta = {
       ]),
     ],
   },
-  "/projects/technical-rescue": {
-    title: "DNS, email and SEO rescue | Theodoros Mentis",
-    description:
-      "Post-migration repair of broken forms, DNS records, email delivery, and SEO redirects.",
-    canonicalPath: "/projects/technical-rescue",
-    ogType: "article",
-    crawlableHtml: `<article id="static-crawl-fallback"><h1>DNS, email and SEO rescue</h1><p>Technical rescue after a website migration.</p></article>`,
-    jsonLd: [
-      breadcrumb([
-        { name: "Home", path: "/" },
-        { name: "Projects", path: "/projects" },
-        { name: "Technical rescue", path: "/projects/technical-rescue" },
-      ]),
-    ],
-  },
   "/engineering": {
     title: "Engineering and Labs | Theodoros Mentis",
     description:

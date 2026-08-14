@@ -56,6 +56,23 @@ const ProjectDetailPage: React.FC = () => {
         subtitle={study ? undefined : description}
       />
       <section className="container mx-auto max-w-3xl space-y-6 px-6 py-16">
+        <nav aria-label="Breadcrumb" className="text-sm text-[var(--v2-muted)]">
+          <ol className="m-0 flex flex-wrap gap-2 p-0">
+            <li>
+              <Link to="/" className="hover:text-[var(--v2-text)]">
+                Home
+              </Link>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li>
+              <Link to="/projects" className="hover:text-[var(--v2-text)]">
+                Projects
+              </Link>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li className="text-[var(--v2-text)]">{title}</li>
+          </ol>
+        </nav>
         {study ? (
           <CaseStudyTemplate study={study} />
         ) : (

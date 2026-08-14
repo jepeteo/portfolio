@@ -1,6 +1,13 @@
 {
     "cleanUrls": true,
     "trailingSlash": false,
+    "redirects": [
+        {
+            "source": "/projects/technical-rescue",
+            "destination": "/services#rescue",
+            "permanent": true
+        }
+    ],
     "rewrites": [
         {
             "source": "/((?!api/|sw\\.js$).*)",

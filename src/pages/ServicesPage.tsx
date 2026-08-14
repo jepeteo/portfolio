@@ -8,6 +8,7 @@ import EmergencyHelpCTA from "../components/services/EmergencyHelpCTA"
 import V2PageHero from "../components/ui/V2PageHero"
 import V2SectionHead from "../components/ui/V2SectionHead"
 import { v2PrimaryButton, v2SecondaryButton, v2Panel } from "../components/ui/v2Styles"
+import { typicalRescueEngagement } from "../content/caseStudies"
 import { servicePaths, categoriesForPath } from "../content/services"
 
 const howIWorkSteps = [
@@ -92,6 +93,31 @@ const ServicesPage: React.FC = () => {
                 <p className="mt-2 mb-6 max-w-3xl text-[var(--v2-muted)]">
                   {path.intro}
                 </p>
+                {path.id === "rescue" ? (
+                  <aside
+                    className={`${v2Panel} mb-6 p-6`}
+                    aria-labelledby="typical-rescue-heading"
+                  >
+                    <p className="m-0 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--v2-acid)]">
+                      {typicalRescueEngagement.label}
+                    </p>
+                    <h4
+                      id="typical-rescue-heading"
+                      className="mt-2 font-display text-xl font-bold tracking-tight text-[var(--v2-text)]"
+                    >
+                      {typicalRescueEngagement.title}
+                    </h4>
+                    <p className="mt-3 text-sm text-[var(--v2-muted)]">
+                      {typicalRescueEngagement.problem}
+                    </p>
+                    <p className="mt-2 text-sm text-[var(--v2-muted)]">
+                      {typicalRescueEngagement.approach}
+                    </p>
+                    <p className="mt-3 text-xs text-[var(--v2-soft)]">
+                      {typicalRescueEngagement.note}
+                    </p>
+                  </aside>
+                ) : null}
                 <div className="space-y-4">
                   {categoriesForPath(path.id).map((category, index) => (
                     <ServiceCategorySection

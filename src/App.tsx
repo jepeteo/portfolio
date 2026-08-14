@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from "react"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import ErrorBoundary from "./components/system/ErrorBoundary"
 import Layout from "./components/layout/Layout"
 import HomePage from "./pages/HomePage"
@@ -81,6 +81,10 @@ const App: React.FC = () => {
                       <ProjectsPage />
                     </Page>
                   }
+                />
+                <Route
+                  path="projects/technical-rescue"
+                  element={<Navigate to="/services#rescue" replace />}
                 />
                 <Route
                   path="projects/:slug"
