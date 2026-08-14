@@ -9,7 +9,7 @@ import { SITE_URL, SITE_EMAIL } from "./routeMeta.js"
  * - Listed WordPress archive: 122 records in src/assets/myProjects.json
  * - Schema portfolioStats: 128 (WordPress + React showcase only)
  * - Unused BuyerIntent copy: 120+ live client sites
- * - Homepage FAQ still says "dozens" (fix when FAQ moves off home)
+ * - About FAQ still says "dozens" (keep until FAQ copy is rewritten)
  * - Jepeteo project blurb claims 20+ years / 1000+ clients — keep in JSON,
  *   do not feature that sentence
  */
@@ -47,9 +47,9 @@ export const site = {
     clientCountLabel: "172+",
   },
   description:
-    "Freelance web developer helping businesses fix, improve and build WordPress, WooCommerce and React sites. Based in Berlin, remote across Europe.",
+    "Senior full-stack engineer who builds and rescues reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation — Berlin-based, expanding into fintech.",
   shortDescription:
-    "I fix, improve and build business websites — WordPress, WooCommerce, React, technical SEO, DNS and email support.",
+    "I build and rescue reliable digital systems — WordPress, WooCommerce, React, infrastructure, and automation.",
   keywords: [
     "web developer",
     "wordpress developer",

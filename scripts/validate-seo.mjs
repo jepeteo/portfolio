@@ -121,13 +121,19 @@ function validatePrerender() {
       if (!html.includes("<h1>")) {
         errors.push("prerender: home missing crawlable h1")
       }
+      if (html.includes('"@type": "FAQPage"')) {
+        errors.push("prerender: home should not include FAQPage JSON-LD")
+      }
+    }
+
+    if (route === "/about") {
       for (const item of homeFaq) {
         if (!html.includes(item.question)) {
-          errors.push(`prerender: home FAQ schema/HTML missing question: ${item.question}`)
+          errors.push(`prerender: about FAQ schema/HTML missing question: ${item.question}`)
         }
       }
       if (!html.includes('"@type": "FAQPage"')) {
-        errors.push("prerender: home missing FAQPage JSON-LD")
+        errors.push("prerender: about missing FAQPage JSON-LD")
       }
     }
 

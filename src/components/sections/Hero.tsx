@@ -134,9 +134,9 @@ const Hero: React.FC = memo(() => {
               id="hero-heading"
               className="font-display text-[clamp(2.6rem,7vw,5.25rem)] font-extrabold leading-[0.95] tracking-tight text-[var(--v2-text)] [text-wrap:balance]"
             >
-              Practical web systems for businesses that{" "}
+              I build and rescue{" "}
               <span className="bg-[linear-gradient(120deg,var(--v2-brand),var(--v2-brand-2)_55%,var(--v2-acid))] bg-clip-text text-transparent">
-                can&apos;t afford broken websites.
+                reliable digital systems.
               </span>
             </motion.h1>
 
@@ -144,27 +144,34 @@ const Hero: React.FC = memo(() => {
               {...fadeIn(2)}
               className="mt-7 max-w-xl text-lg text-[var(--v2-muted)] md:text-xl"
             >
-              I help small businesses and agencies fix, improve and ship websites
-              with clear scope, clean implementation and no technical theatre.
+              {site.title} with {site.stats.yearsExperienceLabel} years across
+              WordPress, WooCommerce, React, infrastructure and automation —
+              now expanding into fintech.
             </motion.p>
 
             <motion.div
               {...fadeIn(3)}
               className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
             >
-              <a
-                href="/contact"
+              <Link
+                to="/services"
                 className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[var(--v2-acid)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-acid-ink)] shadow-[0_18px_48px_-12px_var(--v2-acid)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_56px_-10px_var(--v2-acid)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 <Wrench className="h-4 w-4" aria-hidden="true" />
-                Request a fix or quote
-              </a>
+                I need help with a website
+              </Link>
               <Link
-                to="/services"
+                to="/engineering"
                 className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-text)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--v2-shadow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
-                Browse services
+                Explore my engineering portfolio
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link
+                to="/contact"
+                className="inline-flex min-h-[52px] items-center justify-center px-2 py-3.5 font-bold tracking-tight text-[var(--v2-muted)] underline-offset-4 hover:text-[var(--v2-acid)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
+              >
+                Contact
               </Link>
             </motion.div>
           </div>

@@ -48,7 +48,7 @@ const StatsCard = memo(
     stat: StatItem
     index: number
   }) => {
-    const [displayValue, setDisplayValue] = useState("0")
+    const [displayValue, setDisplayValue] = useState(stat.value)
     const [hasAnimated, setHasAnimated] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
     const cardRef = useRef<HTMLDivElement>(null)
@@ -109,7 +109,10 @@ const StatsCard = memo(
           <IconComponent className="h-8 w-8" />
         </div>
         <div className="mb-2 text-[var(--v2-text)]">
-          <span className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+          <span
+            className="font-display text-2xl font-bold tracking-tight md:text-3xl"
+            aria-label={`${stat.value} ${stat.label}`}
+          >
             {displayValue}
           </span>
         </div>

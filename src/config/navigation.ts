@@ -69,17 +69,13 @@ export const footerLinks: AppNavigationLink[] = [
 export const sectionOrder = [
   "top",
   "proof",
-  "system-map",
-  "fast-help",
+  "service-paths",
   "featured-case-studies",
-  "projects",
-  "messy-to-stable",
+  "engineering-direction",
   "process",
-  "skills",
-  "experience",
-  "certificates",
-  "about",
-  "contact",
+  "experience-preview",
+  "certificates-preview",
+  "contact-cta",
 ] as const
 
 export type ProjectTab = "wordpress" | "client" | "personal"

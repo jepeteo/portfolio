@@ -42,11 +42,11 @@ function serviceJsonLd({ path, name, description, serviceType }) {
 }
 
 const homeCrawlableHtml = `<article id="static-crawl-fallback" aria-label="Page summary">
-  <h1>Practical web systems for businesses that can't afford broken websites.</h1>
-  <p>I help small businesses and agencies fix, improve and ship websites with clear scope, clean implementation and no technical theatre.</p>
+  <h1>I build and rescue reliable digital systems.</h1>
+  <p>Senior full-stack engineer with 18+ years across WordPress, WooCommerce, React, infrastructure and automation — now expanding into fintech.</p>
   <nav aria-label="Primary links">
-    <a href="/services">Services</a>
-    <a href="/services/emergency-website-help">Emergency help</a>
+    <a href="/services">I need help with a website</a>
+    <a href="/engineering">Explore my engineering portfolio</a>
     <a href="/contact">Contact</a>
   </nav>
 </article>`
@@ -69,13 +69,13 @@ const emergencyCrawlableHtml = `<article id="static-crawl-fallback" aria-label="
 export const routeMeta = {
   "/": {
     title:
-      "Theodoros Mentis - Web Developer Who Fixes, Improves & Builds Business Websites",
+      "Theodoros Mentis - Senior Full-Stack Engineer | WordPress, React, Fintech Path",
     description:
-      "I fix and build business websites that work. WordPress, WooCommerce, React, technical SEO, DNS and email support for small businesses and agencies.",
+      "I build and rescue reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation — Berlin-based, expanding into fintech.",
     canonicalPath: "/",
     ogType: "website",
     crawlableHtml: homeCrawlableHtml,
-    jsonLd: [faqPageSchema()],
+    jsonLd: [],
   },
   "/services": {
     title:
@@ -320,6 +320,7 @@ export const routeMeta = {
     ogType: "profile",
     crawlableHtml: `<article id="static-crawl-fallback"><h1>About Theodoros Mentis</h1><p>Berlin-based senior full-stack engineer.</p></article>`,
     jsonLd: [
+      faqPageSchema(),
       breadcrumb([
         { name: "Home", path: "/" },
         { name: "About", path: "/about" },

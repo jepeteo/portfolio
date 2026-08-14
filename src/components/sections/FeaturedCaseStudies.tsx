@@ -1,9 +1,11 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import { ArrowRight } from "lucide-react"
 import V2SectionHead from "../ui/V2SectionHead"
 import { MotionCard, MotionSection } from "../motion"
 import { featuredCaseStudies } from "../../content/caseStudies"
 import CaseStudyCard from "./caseStudies/CaseStudyCard"
+import { v2SecondaryButton } from "../ui/v2Styles"
 
 const FeaturedCaseStudies: React.FC = () => (
   <MotionSection
@@ -15,7 +17,7 @@ const FeaturedCaseStudies: React.FC = () => (
       <V2SectionHead
         layout="stacked"
         titleId="featured-case-studies-heading"
-        label="Proof"
+        label="Work"
         title="Featured case studies"
         copy="Selected work shown by problem, implementation and practical outcome."
       />
@@ -29,13 +31,10 @@ const FeaturedCaseStudies: React.FC = () => (
       </div>
 
       <div className="mt-10 text-center">
-        <a
-          href="/projects"
-          className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] px-6 py-3 font-bold tracking-tight text-[var(--v2-text)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
-        >
+        <Link to="/projects" className={v2SecondaryButton}>
           Browse full project grid
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </a>
+        </Link>
       </div>
     </div>
   </MotionSection>
