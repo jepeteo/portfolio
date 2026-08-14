@@ -137,20 +137,32 @@ export const normalizeWebProject = (project: WebProject): NormalizedProject => {
   }
 }
 
+export const publicProjectDescription = (
+  project: Pick<NormalizedProject, "id" | "description">
+) => {
+  if (project.id === "jepeteo") {
+    return "Remote IT support, web development, and digital consulting site."
+  }
+  return project.description
+}
+
 export const normalizeReactProject = (
   project: ReactShowcaseProject
 ): NormalizedProject => ({
   id: project.id,
   slug: project.id,
   title: project.title,
-  description: project.description,
+  description: publicProjectDescription({
+    id: project.id,
+    description: project.description,
+  }),
   url: project.liveUrl,
   githubUrl: project.githubUrl,
   ownership: project.githubUrl ? "open-source" : "personal",
   domain: "web-app",
   technologies: project.technologies,
   workType: "build",
-  featured: Boolean(project.featured),
+  featured: project.id === "jepeteo" ? false : Boolean(project.featured),
   confidential: false,
   source: "react",
   engineering: true,

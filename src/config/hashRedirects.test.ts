@@ -12,6 +12,12 @@ describe("hash redirects", () => {
       "/contact?type=not-sure"
     )
     expect(resolveHashRedirect("/", "#faq")).toBe("/about#faq")
+    expect(resolveHashRedirect("/", "#projects?tab=client")).toBe(
+      "/projects?ownership=client"
+    )
+    expect(resolveHashRedirect("/", "#projects?tab=wordpress")).toBe(
+      "/projects?source=wordpress"
+    )
   })
 
   it("leaves home and unknown hashes alone", () => {
