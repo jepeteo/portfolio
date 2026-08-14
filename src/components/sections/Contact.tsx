@@ -254,7 +254,6 @@ const Contact: React.FC = memo(() => {
     return {
       name: formData.name.length >= 2 && formData.name.length <= 50,
       email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email),
-      subject: formData.subject.length >= 3 && formData.subject.length <= 100,
       message: formData.message.length >= 10 && formData.message.length <= 2000,
     }
   }, [formData])
@@ -314,9 +313,18 @@ const Contact: React.FC = memo(() => {
     setTouchedFields((prev) => new Set(prev).add(fieldName))
   }, [])
 
+  const resolvedSubject = useMemo(() => {
+    if (formData.subject.trim().length >= 3) return formData.subject.trim()
+    const typeLabel = requestTypeOptions.find(
+      (option) => option.value === formData.requestType
+    )?.label
+    return typeLabel || "Website enquiry"
+  }, [formData.requestType, formData.subject])
+
   const validateForm = useCallback((): boolean => {
     const secureData: SecureContactFormData = {
       ...formData,
+      subject: resolvedSubject,
       csrfToken,
       timestamp: startTime,
       honeypot,
@@ -338,7 +346,7 @@ const Contact: React.FC = memo(() => {
 
     setErrors({})
     return true
-  }, [formData, csrfToken, honeypot, startTime])
+  }, [formData, csrfToken, honeypot, startTime, resolvedSubject])
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -363,6 +371,7 @@ const Contact: React.FC = memo(() => {
 
         const secureData: SecureContactFormData = {
           ...formData,
+          subject: resolvedSubject,
           csrfToken: token,
           timestamp: startTime, // Use the form's start time for bot detection
           honeypot,
@@ -442,6 +451,7 @@ const Contact: React.FC = memo(() => {
       fetchCsrfToken,
       addToast,
       honeypot,
+      resolvedSubject,
     ]
   )
 
@@ -478,9 +488,9 @@ const Contact: React.FC = memo(() => {
         ref={targetRef}
         id="contact"
         variant="default"
-        eyebrow="Start here"
-        title="Tell me what you need fixed or built."
-        subtitle="Send the website URL, the problem and your deadline. You'll get a clear next step and a fixed quote — no long questionnaire before we've spoken."
+        eyebrow="Form"
+        title="Send a message."
+        subtitle="Name, email, and a short description is enough. Optional details stay collapsed."
         className={`transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
@@ -603,7 +613,7 @@ const Contact: React.FC = memo(() => {
                           : "text-[var(--v2-muted)]"
                       }`}
                     >
-                      {Object.values(fieldValidation).filter(Boolean).length}/4
+                      {Object.values(fieldValidation).filter(Boolean).length}/3
                       fields complete
                     </span>
                   </div>
@@ -615,7 +625,7 @@ const Contact: React.FC = memo(() => {
                         width: `${
                           (Object.values(fieldValidation).filter(Boolean)
                             .length /
-                            4) *
+                            3) *
                           100
                         }%`,
                       }}
@@ -661,26 +671,6 @@ const Contact: React.FC = memo(() => {
                   autoComplete="email"
                 />
 
-                <FormField
-                  id="subject"
-                  label="Subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  onBlur={() => handleFieldBlur("subject")}
-                  error={
-                    touchedFields.has("subject") &&
-                    !fieldValidation.subject &&
-                    formData.subject.length > 0
-                      ? "Subject must be 3-100 characters"
-                      : errors.subject
-                  }
-                  placeholder="Project inquiry, collaboration, etc."
-                  maxLength={100}
-                  disabled={isSubmitting}
-                  isDark={isDark}
-                  isValid={fieldValidation.subject}
-                />
-
                 <ContactRequestFields
                   requestType={formData.requestType || ""}
                   urgency={formData.urgency || ""}
@@ -688,6 +678,7 @@ const Contact: React.FC = memo(() => {
                   websiteUrl={formData.websiteUrl || ""}
                   websiteUrlError={errors.websiteUrl}
                   disabled={isSubmitting}
+                  defaultOpen={Boolean(searchParams.get("type"))}
                   onRequestTypeChange={(value) =>
                     setFormData((prev) => ({ ...prev, requestType: value }))
                   }

@@ -8,7 +8,7 @@ import EmergencyHelpCTA from "../components/services/EmergencyHelpCTA"
 import V2PageHero from "../components/ui/V2PageHero"
 import V2SectionHead from "../components/ui/V2SectionHead"
 import { v2PrimaryButton, v2SecondaryButton, v2Panel } from "../components/ui/v2Styles"
-import { serviceCategories } from "../content/services"
+import { servicePaths, categoriesForPath } from "../content/services"
 
 const howIWorkSteps = [
   {
@@ -73,16 +73,36 @@ const ServicesPage: React.FC = () => {
           <V2SectionHead
             titleId="all-services-heading"
             label="Full catalog"
-            title="Browse every service by category."
-            copy="Each service is scoped clearly so you know exactly what you are asking for before we start."
+            title="Rescue, improve, or build."
+            copy="Pick a path, then open the category you need. Prices stay on each service. Emergency help is always one click away."
           />
-          <div className="space-y-4">
-            {serviceCategories.map((category, index) => (
-              <ServiceCategorySection
-                key={category.id}
-                category={category}
-                defaultOpen={index === 0}
-              />
+          <div className="space-y-12">
+            {servicePaths.map((path, pathIndex) => (
+              <section
+                key={path.id}
+                id={path.id}
+                aria-labelledby={`${path.id}-heading`}
+                className="scroll-mt-28"
+              >
+                <h3
+                  id={`${path.id}-heading`}
+                  className="font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]"
+                >
+                  {path.title}
+                </h3>
+                <p className="mt-2 mb-6 max-w-3xl text-[var(--v2-muted)]">
+                  {path.intro}
+                </p>
+                <div className="space-y-4">
+                  {categoriesForPath(path.id).map((category, index) => (
+                    <ServiceCategorySection
+                      key={category.id}
+                      category={category}
+                      defaultOpen={pathIndex === 0 && index === 0}
+                    />
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
         </section>

@@ -555,6 +555,48 @@ export const serviceCategories: ServiceCategory[] = [
   },
 ]
 
+export const servicePaths = [
+  {
+    id: "rescue",
+    title: "Rescue",
+    intro:
+      "Emergencies, broken WordPress/WooCommerce, DNS, SSL, and email. Fast diagnosis with a fixed quote before production work.",
+    categoryIds: [
+      "emergency-website-support",
+      "wordpress-woocommerce",
+      "email-dns-domains",
+    ],
+  },
+  {
+    id: "improve",
+    title: "Improve",
+    intro:
+      "Performance, technical SEO, accessibility, audits, and hardening for sites that already exist.",
+    categoryIds: ["speed-technical-seo", "audits-reports"],
+  },
+  {
+    id: "build",
+    title: "Build and maintain",
+    intro:
+      "Landing pages, business sites, e-commerce, internal tools, maintenance plans, and agency overflow.",
+    categoryIds: [
+      "landing-pages-business-websites",
+      "ecommerce-product-websites",
+      "internal-tools-automations",
+      "maintenance-support",
+      "agency-support",
+    ],
+  },
+] as const
+
+export const categoriesForPath = (pathId: string) => {
+  const path = servicePaths.find((item) => item.id === pathId)
+  if (!path) return []
+  return path.categoryIds
+    .map((id) => serviceCategories.find((category) => category.id === id))
+    .filter((category): category is ServiceCategory => Boolean(category))
+}
+
 export const fastHelpServiceIds = [
   "wordpress-emergency-fix",
   "woocommerce-checkout-fix",
@@ -606,12 +648,12 @@ export const urgencyOptions = [
 ] as const
 
 export const budgetOptions = [
-  { value: "under-150", label: "Under €150" },
   { value: "150-300", label: "€150 to €300" },
   { value: "300-700", label: "€300 to €700" },
   { value: "700-plus", label: "€700+" },
   { value: "monthly-support", label: "Monthly support" },
   { value: "not-sure", label: "Not sure yet" },
+  { value: "under-150", label: "€80–€150" },
 ] as const
 
 export type RequestType = (typeof requestTypeOptions)[number]["value"]

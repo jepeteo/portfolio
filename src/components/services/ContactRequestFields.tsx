@@ -12,6 +12,7 @@ type ContactRequestFieldsProps = {
   websiteUrl: string
   websiteUrlError?: string
   disabled?: boolean
+  defaultOpen?: boolean
   onRequestTypeChange: (value: string) => void
   onUrgencyChange: (value: string) => void
   onBudgetChange: (value: string) => void
@@ -30,82 +31,32 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
   websiteUrl,
   websiteUrlError,
   disabled,
+  defaultOpen = false,
   onRequestTypeChange,
   onUrgencyChange,
   onBudgetChange,
   onWebsiteUrlChange,
 }) => {
+  const [isOpen, setIsOpen] = React.useState(defaultOpen)
+
   return (
-    <div className="space-y-6">
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div>
-          <label htmlFor="requestType" className={labelClass}>
-            Request type
-          </label>
-          <select
-            id="requestType"
-            name="requestType"
-            value={requestType}
-            onChange={(e) => onRequestTypeChange(e.target.value)}
-            disabled={disabled}
-            className={selectClass}
-          >
-            <option value="">Select request type (optional)</option>
-            {requestTypeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="urgency" className={labelClass}>
-            Urgency
-          </label>
-          <select
-            id="urgency"
-            name="urgency"
-            value={urgency}
-            onChange={(e) => onUrgencyChange(e.target.value)}
-            disabled={disabled}
-            className={selectClass}
-          >
-            <option value="">Select urgency (optional)</option>
-            {urgencyOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div>
-          <label htmlFor="budget" className={labelClass}>
-            Budget range
-          </label>
-          <select
-            id="budget"
-            name="budget"
-            value={budget}
-            onChange={(e) => onBudgetChange(e.target.value)}
-            disabled={disabled}
-            className={selectClass}
-          >
-            <option value="">Select budget (optional)</option>
-            {budgetOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
+    <details
+      className="rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/40 p-4"
+      open={isOpen}
+      onToggle={(event) =>
+        setIsOpen((event.currentTarget as HTMLDetailsElement).open)
+      }
+    >
+      <summary className="cursor-pointer font-bold text-[var(--v2-text)]">
+        Optional details
+      </summary>
+      <div className="mt-6 space-y-6">
         <div>
           <label htmlFor="websiteUrl" className={labelClass}>
             Website URL
+            <span className="ml-2 font-normal text-[var(--v2-soft)]">
+              include this for fixes, DNS, or SEO work
+            </span>
           </label>
           <input
             type="url"
@@ -134,8 +85,73 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
             </p>
           )}
         </div>
+
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label htmlFor="requestType" className={labelClass}>
+              Request type
+            </label>
+            <select
+              id="requestType"
+              name="requestType"
+              value={requestType}
+              onChange={(e) => onRequestTypeChange(e.target.value)}
+              disabled={disabled}
+              className={selectClass}
+            >
+              <option value="">Select request type (optional)</option>
+              {requestTypeOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="urgency" className={labelClass}>
+              Urgency
+            </label>
+            <select
+              id="urgency"
+              name="urgency"
+              value={urgency}
+              onChange={(e) => onUrgencyChange(e.target.value)}
+              disabled={disabled}
+              className={selectClass}
+            >
+              <option value="">Select urgency (optional)</option>
+              {urgencyOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="budget" className={labelClass}>
+            Budget range
+          </label>
+          <select
+            id="budget"
+            name="budget"
+            value={budget}
+            onChange={(e) => onBudgetChange(e.target.value)}
+            disabled={disabled}
+            className={selectClass}
+          >
+            <option value="">Select budget (optional)</option>
+            {budgetOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
-    </div>
+    </details>
   )
 }
 
