@@ -17,6 +17,12 @@ export type CaseStudy = {
   githubUrl?: string
   imageSlug?: string
   sourceProjectId?: string
+  context?: string
+  responsibility?: string
+  constraints?: string
+  solution?: string
+  technicalContribution?: string
+  relatedServiceIds?: string[]
 }
 
 /**
@@ -35,6 +41,9 @@ export const featuredCaseStudies: CaseStudy[] = [
     outcome:
       "A maintainable internal tool the clinic can rely on daily, with clear screens and a codebase that can grow as requirements change.",
     stack: ["React", "TypeScript", "Tailwind", "Internal dashboard"],
+    solution:
+      "Built a React-based clinic application with structured UI, role-aware views, and workflows matched to how the team actually works on site.",
+    responsibility: "Design and implementation of the internal clinic application.",
     // TODO: Confirm public URL if the app should be linked from the portfolio
     sourceProjectId: "mtx-clinic-app",
   },
@@ -49,6 +58,9 @@ export const featuredCaseStudies: CaseStudy[] = [
     outcome:
       "Live site presenting both properties clearly, supporting direct bookings and giving the business a stable platform to maintain.",
     stack: ["WordPress", "PHP", "Responsive UI", "Technical SEO"],
+    solution:
+      "Delivered a WordPress site with property-led structure, mobile-first layout, booking CTAs, and technical SEO foundations for local search.",
+    responsibility: "WordPress implementation, structure, and technical SEO foundations.",
     url: "https://www.stoneyholidaylets.co.uk/",
     imageSlug: "stoneyholidaylets",
     sourceProjectId: "stoney-holiday-lets",
@@ -64,6 +76,9 @@ export const featuredCaseStudies: CaseStudy[] = [
     outcome:
       "Working contact flow, correct email delivery, clean redirects, and a plain-English summary the client could hand to their team.",
     stack: ["DNS", "Email", "Technical SEO", "WordPress", "Cloudflare"],
+    solution:
+      "Audited DNS/SPF/DKIM/DMARC, repaired mail routing, fixed redirect chains and metadata, and documented every change before touching production.",
+    responsibility: "Diagnosis and repair of DNS, email, and SEO after migration.",
     // TODO: Add real project URL and image when available
   },
 ]

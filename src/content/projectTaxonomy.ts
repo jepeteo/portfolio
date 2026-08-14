@@ -1,0 +1,172 @@
+import { wordpressProjects, webProjects, reactShowcaseProjects } from "./projects"
+import type { Project } from "../types"
+import type { ReactShowcaseProject, WebProject } from "./projects"
+
+export type ProjectOwnership = "client" | "personal" | "employer" | "open-source"
+
+export type ProjectDomain =
+  | "e-commerce"
+  | "travel"
+  | "sports"
+  | "business"
+  | "fintech"
+  | "infrastructure"
+  | "gaming"
+  | "portfolio"
+  | "web-app"
+  | "tool"
+  | "productivity"
+  | "other"
+
+export type ProjectWorkType =
+  | "build"
+  | "redesign"
+  | "rescue"
+  | "integration"
+  | "migration"
+  | "automation"
+
+export type ProjectSource = "wordpress" | "web" | "react"
+
+export type NormalizedProject = {
+  id: string
+  slug: string
+  title: string
+  description: string
+  url?: string
+  githubUrl?: string
+  imageSlug?: string
+  ownership: ProjectOwnership
+  domain: ProjectDomain
+  technologies: string[]
+  workType: ProjectWorkType
+  featured: boolean
+  confidential: boolean
+  source: ProjectSource
+  engineering: boolean
+  year?: string
+  employerCode?: string
+}
+
+const EMPLOYER_CODES = new Set(["gron", "gtouch", "glbt"])
+
+const categoryToDomain: Record<string, ProjectDomain> = {
+  Business: "business",
+  Gaming: "gaming",
+  Portfolio: "portfolio",
+  "Web App": "web-app",
+  Tool: "tool",
+  Productivity: "productivity",
+  Fintech: "fintech",
+  Infrastructure: "infrastructure",
+  Travel: "travel",
+  Sports: "sports",
+  "E-commerce": "e-commerce",
+}
+
+export const ownershipFromEmployer = (
+  employer?: string
+): ProjectOwnership => {
+  if (!employer) return "client"
+  if (employer === "fl") return "client"
+  if (EMPLOYER_CODES.has(employer)) return "employer"
+  return "client"
+}
+
+export const domainFromWordPressType = (prType?: string): ProjectDomain => {
+  const type = prType?.toLowerCase() ?? ""
+  if (type.includes("e-shop") || type.includes("e-commerce")) return "e-commerce"
+  return "business"
+}
+
+export const workTypeFromTags = (tags?: string | string[]): ProjectWorkType => {
+  const list = Array.isArray(tags) ? tags : tags ? [tags] : []
+  const joined = list.join(" ").toLowerCase()
+  if (joined.includes("redesign")) return "redesign"
+  if (joined.includes("rescue") || joined.includes("fix")) return "rescue"
+  if (joined.includes("migration")) return "migration"
+  if (joined.includes("integration")) return "integration"
+  if (joined.includes("automation")) return "automation"
+  return "build"
+}
+
+export const normalizeWordPressProject = (
+  project: Project
+): NormalizedProject => ({
+  id: project.id,
+  slug: project.id,
+  title: project.prName,
+  description: project.prDescription,
+  url: project.prUrl,
+  imageSlug: project.prImageSlug,
+  ownership: ownershipFromEmployer(project.prEmployer),
+  domain: domainFromWordPressType(project.prType),
+  technologies: project.tech ?? [],
+  workType: workTypeFromTags(project.prTags),
+  featured: Boolean(project.prFeatured),
+  confidential: false,
+  source: "wordpress",
+  engineering: false,
+  employerCode: project.prEmployer,
+})
+
+export const normalizeWebProject = (project: WebProject): NormalizedProject => {
+  const ownership: ProjectOwnership =
+    project.type === "personal"
+      ? project.githubUrl
+        ? "open-source"
+        : "personal"
+      : "client"
+
+  return {
+    id: project.id,
+    slug: project.id,
+    title: project.title,
+    description: project.description,
+    url: project.url,
+    githubUrl: project.githubUrl,
+    ownership,
+    domain: categoryToDomain[project.category] ?? "other",
+    technologies: project.tech,
+    workType: "build",
+    featured: project.featured,
+    confidential: false,
+    source: "web",
+    engineering: project.type === "personal" || project.tech.includes("React"),
+    year: project.year,
+  }
+}
+
+export const normalizeReactProject = (
+  project: ReactShowcaseProject
+): NormalizedProject => ({
+  id: project.id,
+  slug: project.id,
+  title: project.title,
+  description: project.description,
+  url: project.liveUrl,
+  githubUrl: project.githubUrl,
+  ownership: project.githubUrl ? "open-source" : "personal",
+  domain: "web-app",
+  technologies: project.technologies,
+  workType: "build",
+  featured: Boolean(project.featured),
+  confidential: false,
+  source: "react",
+  engineering: true,
+  year: project.date,
+})
+
+export const allNormalizedProjects = (): NormalizedProject[] => {
+  const wordpress = wordpressProjects.map(normalizeWordPressProject)
+  const web = webProjects.map(normalizeWebProject)
+  const webIds = new Set(web.map((project) => project.id))
+  const react = reactShowcaseProjects
+    .filter((project) => !webIds.has(project.id))
+    .map(normalizeReactProject)
+
+  return [...wordpress, ...web, ...react]
+}
+
+export const engineeringProjects = () =>
+  allNormalizedProjects().filter((project) => project.engineering)

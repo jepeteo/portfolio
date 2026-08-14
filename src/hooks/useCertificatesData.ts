@@ -1,7 +1,12 @@
 import { useMemo } from "react"
-import myCertificates from "../assets/myCertificates.json"
+import {
+  certificateStats,
+  getFeaturedCertificates,
+  normalizeCertificates,
+  type NormalizedCertificate,
+} from "../content/certificateModel"
 
-export interface ModernCertificate {
+export type ModernCertificate = {
   id: string
   title: string
   issuer: string
@@ -11,10 +16,9 @@ export interface ModernCertificate {
   description?: string
   category: string
   skills?: string[]
-  level?: "Beginner" | "Intermediate" | "Advanced" | "Expert"
-  type?: "Certificate" | "Certification" | "Course" | "Degree"
-  duration?: string
   verified?: boolean
+  featured?: boolean
+  year?: string
 }
 
 export interface CertificateStats {
@@ -24,65 +28,33 @@ export interface CertificateStats {
   byIssuer: Record<string, number>
   totalSkills: number
   recentCount: number
-}
-const transformCertificates = (): ModernCertificate[] => {
-  return myCertificates
-    .filter((cert) => {
-      return cert.name && cert.issuer && cert.issueDate && cert.category
-    })
-    .map((cert, index) => ({
-      id: cert.id || `cert-${index}`,
-      title: cert.name,
-      issuer: cert.issuer,
-      date: cert.issueDate,
-      credentialId: cert.id,
-      credentialUrl: cert.credentialUrl,
-      description: cert.description || "",
-      category: cert.category,
-      skills: cert.skills || [],
-      level: "Intermediate" as const,
-      type: "Certificate" as const,
-      duration: "",
-      verified: !!cert.credentialUrl,
-    }))
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-}
-const calculateCertificateStats = (
-  certificates: ModernCertificate[]
-): CertificateStats => {
-  const byCategory: Record<string, number> = {}
-  const byYear: Record<string, number> = {}
-  const byIssuer: Record<string, number> = {}
-  const allSkills = new Set<string>()
-  const currentYear = new Date().getFullYear()
-
-  certificates.forEach((cert) => {
-    byCategory[cert.category] = (byCategory[cert.category] || 0) + 1
-    const year = new Date(cert.date).getFullYear().toString()
-    byYear[year] = (byYear[year] || 0) + 1
-    byIssuer[cert.issuer] = (byIssuer[cert.issuer] || 0) + 1
-    cert.skills?.forEach((skill) => allSkills.add(skill))
-  })
-  const recentCount = certificates.filter((cert) => {
-    const certYear = new Date(cert.date).getFullYear()
-    return certYear >= currentYear - 1
-  }).length
-
-  return {
-    total: certificates.length,
-    byCategory,
-    byYear,
-    byIssuer,
-    totalSkills: allSkills.size,
-    recentCount,
-  }
 }
 
+const toDisplayCertificate = (
+  cert: NormalizedCertificate
+): ModernCertificate => ({
+  id: cert.id,
+  title: cert.title,
+  issuer: cert.issuer,
+  date: cert.date,
+  credentialId: cert.id,
+  credentialUrl: cert.credentialUrl,
+  description: cert.description,
+  category: cert.category,
+  skills: cert.skills,
+  verified: cert.verified,
+  featured: cert.featured,
+  year: cert.year,
+})
+
 export const useCertificatesData = () => {
-  const certificates = useMemo(() => transformCertificates(), [])
+  const certificates = useMemo(
+    () => normalizeCertificates().map(toDisplayCertificate),
+    []
+  )
   const stats = useMemo(
-    () => calculateCertificateStats(certificates),
-    [certificates]
+    () => certificateStats(normalizeCertificates()),
+    []
   )
 
   const categories = useMemo(
@@ -100,8 +72,8 @@ export const useCertificatesData = () => {
   )
 
   const recentCertificates = useMemo(
-    () => certificates.slice(0, 6),
-    [certificates]
+    () => getFeaturedCertificates().map(toDisplayCertificate),
+    []
   )
 
   const getCertificatesByCategory = useMemo(
