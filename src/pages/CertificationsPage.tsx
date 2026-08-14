@@ -1,25 +1,24 @@
-import React, { Suspense } from "react"
-import ArchiveSectionPage from "./ArchiveSectionPage"
-import { createLazyComponent } from "../utils/performanceOptimization"
-import { LoadingSpinner } from "../components/system/loading/LoadingStates"
+import React from "react"
+import V2PageHero from "../components/ui/V2PageHero"
+import CertificationsArchive from "../components/sections/certificates/CertificationsArchive"
+import { useRoutePageMeta } from "../hooks/useRoutePageMeta"
+import { certificateStats } from "../content/certificateModel"
 
-const Certificates = createLazyComponent(
-  () => import("../components/sections/Certificates"),
-  {}
-)
+const CertificationsPage: React.FC = () => {
+  useRoutePageMeta("/certifications")
+  const total = certificateStats().total
 
-const CertificationsPage: React.FC = () => (
-  <ArchiveSectionPage path="/certifications" heading="Certifications">
-    <Suspense
-      fallback={
-        <div className="flex min-h-[200px] items-center justify-center py-16">
-          <LoadingSpinner size="lg" className="text-primary" />
-        </div>
-      }
-    >
-      <Certificates />
-    </Suspense>
-  </ArchiveSectionPage>
-)
+  return (
+    <div>
+      <V2PageHero
+        id="certifications-hero"
+        eyebrow="Certifications"
+        title="Public credentials, kept in full."
+        subtitle={`${total} certificates across the stored categories. Search, filter, and paginate the archive — nothing is dropped to make the homepage shorter.`}
+      />
+      <CertificationsArchive />
+    </div>
+  )
+}
 
 export default CertificationsPage
