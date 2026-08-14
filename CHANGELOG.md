@@ -18,6 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Certification stats use the current calendar year, or the latest credential year when the current year is empty. Contact required fields expose native required semantics, announced errors, and a correctly labelled Website URL helper.
 - Project archive cards reuse verified screenshots when they exist. The performance dashboard is development-only and no longer overlaps mobile conversion actions.
 - SPA and prerender share one JSON-LD graph (WebSite, Person, ProfessionalService plus a small route node). Hydration reuses the prerendered script instead of appending a second one.
+- Featured homepage cards no longer create a 12px horizontal overflow at 320px. Missing case-study screenshots stay out of the layout until the file loads.
+
+### Confirmed still outstanding
+
+- Stoney Holiday Lets screenshot (`public/images/projects/stoneyholidaylets.webp`) is not in the repo yet.
+- MTX Clinic App remains confidential: no public URL or screens.
+- LinkedIn headline and CV PDF still need a manual pass against `src/config/site.ts`.
 
 - Dual-audience information architecture: homepage is a decision page; archives live on dedicated routes (`/projects`, `/engineering`, `/experience`, `/certifications`, `/about`, `/contact`).
 - Services grouped as Rescue / Improve / Build, with the emergency route unchanged.

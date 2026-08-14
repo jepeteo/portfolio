@@ -14,27 +14,40 @@ const CaseStudyMedia: React.FC<CaseStudyMediaProps> = ({
   variant = "embedded",
 }) => {
   const src = projectImageSrc(study.imageSlug)
-  const [failed, setFailed] = useState(false)
+  const [status, setStatus] = useState<"pending" | "ready" | "failed">(
+    src ? "pending" : "failed"
+  )
   const frameClass =
     variant === "standalone"
       ? "rounded-3xl border border-[var(--v2-line)]"
       : "border-b border-[var(--v2-line)]"
 
-  if (src && !failed) {
+  if (src && status !== "failed") {
+    const image = (
+      <img
+        src={src}
+        alt={`${study.title} website screenshot`}
+        width={1280}
+        height={720}
+        loading={eager ? "eager" : "lazy"}
+        decoding="async"
+        className={
+          status === "ready"
+            ? "h-full w-full object-cover object-top"
+            : "hidden"
+        }
+        onLoad={() => setStatus("ready")}
+        onError={() => setStatus("failed")}
+      />
+    )
+
+    if (status !== "ready") return image
+
     return (
       <div
         className={`relative aspect-video overflow-hidden bg-[var(--v2-panel-2)] ${frameClass}`}
       >
-        <img
-          src={src}
-          alt={`${study.title} website screenshot`}
-          width={1280}
-          height={720}
-          loading={eager ? "eager" : "lazy"}
-          decoding="async"
-          className="h-full w-full object-cover object-top"
-          onError={() => setFailed(true)}
-        />
+        {image}
       </div>
     )
   }

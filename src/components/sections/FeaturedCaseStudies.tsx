@@ -11,7 +11,7 @@ const FeaturedCaseStudies: React.FC = () => (
   <MotionSection
     id="featured-case-studies"
     aria-labelledby="featured-case-studies-heading"
-    className="v2-grid-bg relative py-20 md:py-24"
+    className="v2-grid-bg relative overflow-x-hidden py-20 md:py-24"
   >
     <div className="container relative z-10 mx-auto max-w-6xl px-6">
       <V2SectionHead
@@ -22,9 +22,9 @@ const FeaturedCaseStudies: React.FC = () => (
         copy="Selected work shown by problem, implementation and practical outcome."
       />
 
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid min-w-0 gap-8 md:grid-cols-2">
         {featuredCaseStudies.map((study, index) => (
-          <MotionCard key={study.id} index={index} className="group h-full">
+          <MotionCard key={study.id} index={index} className="group h-full min-w-0">
             <CaseStudyCard study={study} index={index} />
           </MotionCard>
         ))}
