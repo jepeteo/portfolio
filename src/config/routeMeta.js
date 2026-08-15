@@ -68,8 +68,7 @@ const emergencyCrawlableHtml = `<article id="static-crawl-fallback" aria-label="
  */
 export const routeMeta = {
   "/": {
-    title:
-      "Theodoros Mentis - Senior Full-Stack Engineer | WordPress, React, Fintech Path",
+    title: "Theodoros Mentis | Senior Full-Stack Engineer",
     description:
       "I build and rescue reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation. Berlin-based, expanding into fintech.",
     canonicalPath: "/",
@@ -78,8 +77,7 @@ export const routeMeta = {
     jsonLd: [],
   },
   "/services": {
-    title:
-      "Web Development, WordPress, SEO & Technical Support Services | Theodoros Mentis",
+    title: "Web Development & WordPress Services | Theodoros Mentis",
     description:
       "WordPress, WooCommerce, technical SEO, email/DNS, landing pages, audits and ongoing website support for small businesses and agencies.",
     canonicalPath: "/services",
@@ -101,8 +99,7 @@ export const routeMeta = {
     ],
   },
   "/services/emergency-website-help": {
-    title:
-      "Emergency Website Help - Urgent WordPress & Web Fixes | Theodoros Mentis",
+    title: "Emergency WordPress Help | Theodoros Mentis",
     description:
       "Urgent WordPress, WooCommerce, DNS, email and SSL fixes. Broken forms, checkout errors and critical site issues. Fixed quote before work starts.",
     canonicalPath: "/services/emergency-website-help",
