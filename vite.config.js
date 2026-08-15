@@ -1,10 +1,11 @@
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import path from "path"
+import { previewNotFoundPlugin } from "./vite.previewNotFound.js"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), previewNotFoundPlugin()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -13,6 +14,17 @@ export default defineConfig({
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json"]
   },
   build: {
+    modulePreload: {
+      resolveDependencies: (_filename, deps) =>
+        deps.filter(
+          (dep) =>
+            !dep.includes("framer-motion") &&
+            !dep.includes("ProofHighlights") &&
+            !dep.includes("FeaturedCaseStudies") &&
+            !dep.includes("MotionSection") &&
+            !dep.includes("MotionCard")
+        ),
+    },
     // Enhanced build optimization for 2025
     target: 'es2020',
     cssCodeSplit: true,
@@ -20,18 +32,36 @@ export default defineConfig({
     minify: 'esbuild',
     rollupOptions: {
       output: {
-        // Enhanced chunk splitting strategy
-        manualChunks: {
-          // Core React chunks
-          'react-vendor': ['react', 'react-dom'],
-          'framer-motion': ['framer-motion'],
+        // Keep react/jsx-runtime in react-vendor. Listing only package names in
+        // manualChunks can park jsx-runtime inside framer-motion, which forces
+        // every route to download motion before the app can render.
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return
 
-          // UI library chunks
-          'ui-vendor': ['lucide-react'],
+          if (
+            id.includes("framer-motion") ||
+            id.includes("/motion/") ||
+            id.includes("\\motion\\")
+          ) {
+            return "framer-motion"
+          }
 
-          // Utils and smaller dependencies
-          'utils': ['react-typed'],
+          if (
+            id.includes("react-dom") ||
+            id.includes("/react/") ||
+            id.includes("\\react\\") ||
+            id.includes("scheduler")
+          ) {
+            return "react-vendor"
+          }
 
+          if (id.includes("lucide-react")) {
+            return "ui-vendor"
+          }
+
+          if (id.includes("react-typed")) {
+            return "utils"
+          }
         },
         // Optimize chunk file names
         chunkFileNames: (chunkInfo) => {

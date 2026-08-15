@@ -24,13 +24,6 @@ export const generateWordPressProjectsSchema = (projects: Project[]) => ({
         url: site.url,
       },
       about: project.prType,
-      ...(project.prFeatured && {
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: "5",
-          bestRating: "5",
-        },
-      }),
     },
   })),
 })
@@ -54,13 +47,6 @@ export const generateWordPressProjectSchema = (project: Project) => ({
     url: project.prUrl,
     category: project.prType,
   },
-  ...(project.prFeatured && {
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5",
-      bestRating: "5",
-    },
-  }),
 })
 
 export const generateWebProjectsSchema = (projects: WebProject[]) => ({

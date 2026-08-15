@@ -31,10 +31,10 @@ export const generateContactSchema = () => ({
 export const generateContactPageSchema = () => ({
   "@context": "https://schema.org",
   "@type": "ContactPage",
-  "@id": `${site.url}/#contact`,
+  "@id": `${site.url}/contact`,
   name: `Contact ${site.name}`,
   description: `Get in touch with ${site.name} for web development projects and consultations.`,
-  url: `${site.url}/#contact`,
+  url: `${site.url}/contact`,
   mainEntity: {
     "@type": "Person",
     name: site.name,

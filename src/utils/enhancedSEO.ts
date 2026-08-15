@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { site } from "../config/site"
-import { routeMeta } from "../config/routeMeta.js"
+import { routeMeta, OG_IMAGE, TWITTER_SITE, buildRouteJsonLd } from "../config/routeMeta.js"
 
 export interface EnhancedSEOConfig {
   title?: string
@@ -43,7 +43,6 @@ class SEOManager {
   private static instance: SEOManager
   private metaTags: Map<string, HTMLMetaElement> = new Map()
   private linkTags: Map<string, HTMLLinkElement> = new Map()
-  private structuredDataScript: HTMLScriptElement | null = null
 
   static getInstance(): SEOManager {
     if (!SEOManager.instance) {
@@ -188,16 +187,19 @@ class SEOManager {
     this.linkTags.set(key, link)
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private setStructuredData(data: Record<string, any>): void {
-    if (this.structuredDataScript) {
-      document.head.removeChild(this.structuredDataScript)
-    }
+  private setStructuredData(data: Record<string, unknown>): void {
+    const existing = Array.from(
+      document.querySelectorAll('script[type="application/ld+json"]')
+    ) as HTMLScriptElement[]
 
-    this.structuredDataScript = document.createElement("script")
-    this.structuredDataScript.type = "application/ld+json"
-    this.structuredDataScript.textContent = JSON.stringify(data)
-    document.head.appendChild(this.structuredDataScript)
+    existing.slice(1).forEach((node) => node.remove())
+
+    const script = existing[0] ?? document.createElement("script")
+    script.type = "application/ld+json"
+    script.textContent = JSON.stringify(data)
+    if (!script.parentNode) {
+      document.head.appendChild(script)
+    }
   }
 
   private cleanup(): void {
@@ -273,18 +275,15 @@ class SEOManager {
       "@context": "https://schema.org",
       "@type": "CreativeWork",
       "@id": "https://www.theodorosmentis.com/#portfolio",
-      name: "Theodoros Mentis Portfolio",
+      name: `${site.name} Portfolio`,
       description:
         "Professional portfolio showcasing web development projects, applications, and technical expertise",
       creator: {
         "@type": "Person",
         "@id": "https://www.theodorosmentis.com/#person",
-        name: "Theodoros Mentis",
-        jobTitle: "Senior Full Stack Developer",
-        sameAs: [
-          "https://github.com/jepeteo",
-          "https://linkedin.com/in/theodorosmentis",
-        ],
+        name: site.name,
+        jobTitle: site.title,
+        sameAs: [site.social.github, site.social.linkedin],
       },
       dateCreated: "2010",
       dateModified: currentYear.toString(),
@@ -298,7 +297,7 @@ class SEOManager {
         "@id": `https://www.theodorosmentis.com/#project-${index}`,
         name: project.name,
         description: project.description,
-        url: project.url || `https://www.theodorosmentis.com/#project-${index}`,
+        ...(project.url ? { url: project.url } : {}),
         applicationCategory: this.mapProjectTypeToCategory(project.type),
         programmingLanguage: project.technologies,
         dateCreated: project.dateCreated || currentYear.toString(),
@@ -376,7 +375,7 @@ class SEOManager {
           description: project.description,
           applicationCategory: "Web Application",
           programmingLanguage: project.technologies,
-          ...(project.liveUrl && { url: project.liveUrl }),
+          ...(project.liveUrl ? { url: project.liveUrl } : {}),
           ...(project.githubUrl && {
             codeRepository: project.githubUrl,
             sameAs: [project.githubUrl],
@@ -439,7 +438,7 @@ export class SEOUtils {
     pageName: string,
     siteName = "Theodoros Mentis"
   ): string {
-    return `${pageName} | ${siteName} - Senior Full Stack Developer`
+    return `${pageName} | ${siteName} - ${site.title}`
   }
 
   static generateDescription(content: string, maxLength = 160): string {
@@ -510,11 +509,13 @@ export const defaultSEOConfig: EnhancedSEOConfig = {
   ogTitle: routeMeta["/"].title,
   ogDescription: routeMeta["/"].description,
   ogUrl: `${site.url}/`,
-  ogImage: `${site.url}${site.ogImage}`,
-  ogType: "profile",
-  ogSiteName: `${site.name} Portfolio`,
+  ogImage: OG_IMAGE,
+  ogType: "website",
+  ogSiteName: site.name,
   twitterCard: "summary_large_image",
+  twitterSite: TWITTER_SITE,
   twitterCreator: site.twitterCreator,
   robots: "index,follow,max-image-preview:large",
   language: site.locale,
+  structuredData: buildRouteJsonLd("/"),
 }

@@ -1,5 +1,10 @@
 import { useMemo } from "react"
 import jobExperienceData from "../assets/jobExperience.json"
+import { site } from "../config/site"
+import {
+  normalizeJobs,
+  type NormalizedJob,
+} from "../content/experienceModel"
 
 export interface Experience {
   title: string
@@ -17,6 +22,11 @@ export interface TechExperience extends Experience {
   id: string
   status: "current" | "completed"
   isFreelance: boolean
+  employmentType: NormalizedJob["employmentType"]
+  workMode: NormalizedJob["workMode"]
+  financialDomains: NormalizedJob["financialDomains"]
+  featured: boolean
+  overlapsFreelance: boolean
   duration: {
     years: number
     months: number
@@ -48,12 +58,14 @@ export interface ExperienceStats {
 }
 
 const transformToTechExperience = (): TechExperience[] => {
-  return jobExperienceData.map((job, index) => {
-    const isCurrent = job.to === "Present"
+  const normalized = normalizeJobs(jobExperienceData)
+
+  return normalized.map((job) => {
+    const isCurrent = job.current
     const [fromMonth, fromYear] = job.from.split("-").map((n) => parseInt(n))
     const [toMonth, toYear] = isCurrent
       ? [new Date().getMonth() + 1, new Date().getFullYear()]
-      : job.to.split("-").map((n) => parseInt(n))
+      : (job.to ?? "").split("-").map((n) => parseInt(n))
 
     const totalMonths = (toYear - fromYear) * 12 + (toMonth - fromMonth)
     const years = Math.floor(totalMonths / 12)
@@ -77,22 +89,12 @@ const transformToTechExperience = (): TechExperience[] => {
       return `${monthNames[month - 1]} ${year}`
     }
 
-    const extractMetrics = (job: Experience, years: number) => {
+    const extractMetrics = (achievements: string[] | undefined) => {
       const metrics: Record<string, string | number> = {}
-      job.achievements?.forEach((achievement) => {
+      achievements?.forEach((achievement) => {
         if (achievement.includes("100+")) metrics.projects = 100
         if (achievement.includes("50+")) metrics.clients = 50
-        if (achievement.includes("99%")) metrics.uptime = "99.9%"
-        if (achievement.includes("65%")) metrics.impact = "+65% performance"
       })
-
-      if (!metrics.projects) {
-        metrics.projects = Math.max(years * 15, 5)
-      }
-      if (!metrics.clients && years > 1) {
-        metrics.clients = Math.max(years * 8, 3)
-      }
-
       return metrics
     }
 
@@ -104,9 +106,16 @@ const transformToTechExperience = (): TechExperience[] => {
 
     return {
       ...job,
-      id: `exp-${index}`,
+      id: job.id,
+      location: job.location ?? "",
+      to: job.to ?? "Present",
       status: isCurrent ? "current" : "completed",
-      isFreelance: job.company === "Freelancer",
+      isFreelance: job.employmentType === "freelance",
+      employmentType: job.employmentType,
+      workMode: job.workMode,
+      financialDomains: job.financialDomains,
+      featured: job.featured ?? false,
+      overlapsFreelance: job.overlapsFreelance,
       duration: {
         years,
         months,
@@ -117,7 +126,7 @@ const transformToTechExperience = (): TechExperience[] => {
               }`
             : `${months} month${months > 1 ? "s" : ""}`,
       },
-      metrics: extractMetrics(job, years),
+      metrics: extractMetrics(job.achievements),
       techStack: job.technologies || [],
       highlights: job.achievements?.slice(0, 3) || [],
       periodInfo,
@@ -193,16 +202,9 @@ const calculateExperienceStats = (
   const employmentYears = calculateEmploymentYears()
   const freelanceYears = calculateFreelanceYears()
 
-  const totalYears = Math.max(employmentYears, freelanceYears)
-
-  const totalProjects = experiences.reduce(
-    (sum, exp) => sum + (exp.metrics.projects || 0),
-    0
-  )
-  const totalClients = experiences.reduce(
-    (sum, exp) => sum + (exp.metrics.clients || 0),
-    0
-  )
+  const totalYears = site.stats.yearsExperience
+  const totalProjects = site.stats.projectCount
+  const totalClients = site.stats.clientCount
   const currentRoles = experiences.filter(
     (exp) => exp.status === "current"
   ).length

@@ -1,14 +1,14 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useEnhancedSEO } from "../utils/enhancedSEO"
-import { routeMeta, absoluteUrl } from "../config/routeMeta.js"
+import { useRoutePageMeta } from "../hooks/useRoutePageMeta"
 import FeaturedServices from "../components/services/FeaturedServices"
 import ServiceCategorySection from "../components/services/ServiceCategorySection"
 import EmergencyHelpCTA from "../components/services/EmergencyHelpCTA"
 import V2PageHero from "../components/ui/V2PageHero"
 import V2SectionHead from "../components/ui/V2SectionHead"
 import { v2PrimaryButton, v2SecondaryButton, v2Panel } from "../components/ui/v2Styles"
-import { serviceCategories } from "../content/services"
+import { typicalRescueEngagement } from "../content/caseStudies"
+import { servicePaths, categoriesForPath } from "../content/services"
 
 const howIWorkSteps = [
   {
@@ -28,22 +28,8 @@ const howIWorkSteps = [
   },
 ]
 
-const meta = routeMeta["/services"]
-
 const ServicesPage: React.FC = () => {
-  const canonical = absoluteUrl(meta.canonicalPath)
-
-  useEnhancedSEO({
-    title: meta.title,
-    description: meta.description,
-    canonical,
-    ogUrl: canonical,
-    ogType: meta.ogType,
-    structuredData: {
-      "@context": "https://schema.org",
-      "@graph": meta.jsonLd,
-    },
-  })
+  useRoutePageMeta("/services")
 
   return (
     <div>
@@ -54,7 +40,7 @@ const ServicesPage: React.FC = () => {
         subtitle="I help small businesses, agencies, and independent professionals fix website problems, improve performance, launch better pages, and build reliable digital systems."
       >
         <div className="flex flex-col gap-3 sm:flex-row">
-          <Link to="/?type=not-sure#contact" className={v2PrimaryButton}>
+          <Link to="/contact?type=not-sure" className={v2PrimaryButton}>
             Request a quote
           </Link>
           <Link
@@ -73,16 +59,59 @@ const ServicesPage: React.FC = () => {
           <V2SectionHead
             titleId="all-services-heading"
             label="Full catalog"
-            title="Browse every service by category."
-            copy="Each service is scoped clearly so you know exactly what you are asking for before we start."
+            title="Rescue, improve, or build."
+            copy="Pick a path, then open the category you need. Prices stay on each service. Emergency help is always one click away."
           />
-          <div className="space-y-4">
-            {serviceCategories.map((category, index) => (
-              <ServiceCategorySection
-                key={category.id}
-                category={category}
-                defaultOpen={index === 0}
-              />
+          <div className="space-y-12">
+            {servicePaths.map((path) => (
+              <section
+                key={path.id}
+                id={path.id}
+                aria-labelledby={`${path.id}-heading`}
+              >
+                <h3
+                  id={`${path.id}-heading`}
+                  className="font-display text-2xl font-bold tracking-tight text-[var(--v2-text)]"
+                >
+                  {path.title}
+                </h3>
+                <p className="mt-2 mb-6 max-w-3xl text-[var(--v2-muted)]">
+                  {path.intro}
+                </p>
+                {path.id === "rescue" ? (
+                  <aside
+                    className={`${v2Panel} mb-6 p-6`}
+                    aria-labelledby="typical-rescue-heading"
+                  >
+                    <p className="m-0 font-mono text-[11px] uppercase tracking-[0.08em] text-[var(--v2-acid)]">
+                      {typicalRescueEngagement.label}
+                    </p>
+                    <h4
+                      id="typical-rescue-heading"
+                      className="mt-2 font-display text-xl font-bold tracking-tight text-[var(--v2-text)]"
+                    >
+                      {typicalRescueEngagement.title}
+                    </h4>
+                    <p className="mt-3 text-sm text-[var(--v2-muted)]">
+                      {typicalRescueEngagement.problem}
+                    </p>
+                    <p className="mt-2 text-sm text-[var(--v2-muted)]">
+                      {typicalRescueEngagement.approach}
+                    </p>
+                    <p className="mt-3 text-xs text-[var(--v2-soft)]">
+                      {typicalRescueEngagement.note}
+                    </p>
+                  </aside>
+                ) : null}
+                <div className="space-y-4">
+                  {categoriesForPath(path.id).map((category) => (
+                    <ServiceCategorySection
+                      key={category.id}
+                      category={category}
+                    />
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
         </section>
@@ -126,7 +155,7 @@ const ServicesPage: React.FC = () => {
               Next.js, and internal tools.
             </p>
             <Link
-              to="/#projects"
+              to="/projects"
               className="inline-flex rounded-sm font-bold text-[var(--v2-brand)] transition-transform hover:translate-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-x-0"
             >
               View portfolio projects →
@@ -138,7 +167,7 @@ const ServicesPage: React.FC = () => {
           title="Ready to discuss a project?"
           description="Tell me what you need, your timeline, and your website URL. I will reply with a clear scope and quote."
           primaryLabel="Request a quote"
-          primaryHref="/?type=not-sure#contact"
+          primaryHref="/contact?type=not-sure"
           secondaryLabel="Emergency help"
           secondaryHref="/services/emergency-website-help"
         />

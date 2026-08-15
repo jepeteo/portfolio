@@ -1,7 +1,6 @@
 import React, { memo, useState, useCallback, useMemo, useEffect } from "react"
 import { useSearchParams } from "react-router-dom"
 import { useTheme } from "../../context/ThemeContext"
-import useIntersectionObserver from "../../hooks/useIntersectionObserver"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Mail,
@@ -27,51 +26,21 @@ import {
   detectBot,
 } from "../../utils/secureContactValidation"
 import { useToast } from "../ui/Toast"
-import SectionShell from "../ui/SectionShell"
 import ContactRequestFields from "../services/ContactRequestFields"
+import DiagnosticSummary from "./contact/DiagnosticSummary"
 import { site } from "../../config/site"
 import {
   requestTypeOptions,
   type RequestType,
 } from "../../content/services"
-import {
-  generateContactSchema,
-} from "../../content/schemas/contactSchema"
 
-const ContactMethodSchema: React.FC<{
-  method: {
-    icon: React.ComponentType<{ className?: string }>
-    label: string
-    value: string
-    href?: string
-  }
-}> = ({ method }) => {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "ContactPoint",
-    contactType: method.label.toLowerCase(),
-    ...(method.label === "Email" && { email: method.value }),
-    ...(method.label === "Location" && {
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: site.location.city,
-        addressRegion: site.location.region,
-        addressCountry: site.location.country,
-      },
-    }),
-  }
+const fieldErrorOrder = ["name", "email", "websiteUrl", "message"] as const
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(schema, null, 2),
-      }}
-    />
-  )
+const focusFirstInvalidField = (fieldErrors: ContactFormErrors) => {
+  const firstId = fieldErrorOrder.find((id) => fieldErrors[id])
+  if (!firstId) return
+  document.getElementById(firstId)?.focus()
 }
-
-// Enhanced Form Field Component with inline validation
 interface FormFieldProps {
   id: string
   label: string
@@ -169,8 +138,9 @@ const FormField: React.FC<FormFieldProps> = ({
             disabled={disabled}
             maxLength={maxLength}
             autoComplete={autoComplete}
+            required
             aria-required="true"
-            aria-invalid={error ? "true" : undefined}
+            aria-invalid={error ? true : undefined}
             aria-describedby={error ? errorId : undefined}
           />
         ) : (
@@ -190,8 +160,9 @@ const FormField: React.FC<FormFieldProps> = ({
             disabled={disabled}
             maxLength={maxLength}
             autoComplete={autoComplete}
+            required
             aria-required="true"
-            aria-invalid={error ? "true" : undefined}
+            aria-invalid={error ? true : undefined}
             aria-describedby={error ? errorId : undefined}
           />
         )}
@@ -240,10 +211,6 @@ const FormField: React.FC<FormFieldProps> = ({
 const Contact: React.FC = memo(() => {
   const { isDark } = useTheme()
   const { addToast } = useToast()
-  const { targetRef, isVisible } = useIntersectionObserver<HTMLDivElement>({
-    threshold: 0.1,
-    rootMargin: "50px",
-  })
 
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
@@ -278,6 +245,16 @@ const Contact: React.FC = memo(() => {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle")
+  const pendingFocusRef = React.useRef(false)
+
+  useEffect(() => {
+    if (!pendingFocusRef.current) return
+    if (!Object.keys(errors).some((key) => Boolean(errors[key as keyof ContactFormErrors]))) {
+      return
+    }
+    pendingFocusRef.current = false
+    focusFirstInvalidField(errors)
+  }, [errors])
 
   const [csrfToken, setCsrfToken] = useState("")
   const [honeypot, setHoneypot] = useState("")
@@ -289,7 +266,6 @@ const Contact: React.FC = memo(() => {
     return {
       name: formData.name.length >= 2 && formData.name.length <= 50,
       email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email),
-      subject: formData.subject.length >= 3 && formData.subject.length <= 100,
       message: formData.message.length >= 10 && formData.message.length <= 2000,
     }
   }, [formData])
@@ -349,37 +325,53 @@ const Contact: React.FC = memo(() => {
     setTouchedFields((prev) => new Set(prev).add(fieldName))
   }, [])
 
-  const validateForm = useCallback((): boolean => {
+  const resolvedSubject = useMemo(() => {
+    if (formData.subject.trim().length >= 3) return formData.subject.trim()
+    const typeLabel = requestTypeOptions.find(
+      (option) => option.value === formData.requestType
+    )?.label
+    return typeLabel || "Website enquiry"
+  }, [formData.requestType, formData.subject])
+
+  const validateForm = useCallback((): ContactFormErrors | null => {
     const secureData: SecureContactFormData = {
       ...formData,
+      subject: resolvedSubject,
       csrfToken,
       timestamp: startTime,
       honeypot,
     }
 
     if (detectBot(secureData)) {
-      setErrors({
+      const next = {
         general: "Please wait at least 3 seconds before submitting the form.",
-      })
-      return false
+      }
+      setErrors(next)
+      return next
     }
 
     const validationResult = validateContactFormSecure(secureData)
 
     if (!validationResult.isValid) {
       setErrors(validationResult.errors)
-      return false
+      return validationResult.errors
     }
 
     setErrors({})
-    return true
-  }, [formData, csrfToken, honeypot, startTime])
+    return null
+  }, [formData, csrfToken, honeypot, startTime, resolvedSubject])
+
+  const errorSummary = Object.values(errors).filter(Boolean).join(" ")
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault()
 
-      if (!validateForm()) return
+      const fieldErrors = validateForm()
+      if (fieldErrors) {
+        pendingFocusRef.current = true
+        return
+      }
 
       const submissionTime = Date.now() - startTime
       if (submissionTime < 3000) {
@@ -398,6 +390,7 @@ const Contact: React.FC = memo(() => {
 
         const secureData: SecureContactFormData = {
           ...formData,
+          subject: resolvedSubject,
           csrfToken: token,
           timestamp: startTime, // Use the form's start time for bot detection
           honeypot,
@@ -477,6 +470,7 @@ const Contact: React.FC = memo(() => {
       fetchCsrfToken,
       addToast,
       honeypot,
+      resolvedSubject,
     ]
   )
 
@@ -507,317 +501,305 @@ const Contact: React.FC = memo(() => {
     },
   ]
 
-  return (
-    <>
-      {/* SEO Schema for Contact */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateContactSchema(), null, 2),
-        }}
-      />
+  const supportingContent = (
+    <div className="space-y-8">
+      <div>
+        <h3 className="mb-4 text-xl font-semibold tracking-tight text-[var(--v2-text)] md:text-2xl">
+          What to include
+        </h3>
+        <p className="m-0 text-base text-[var(--v2-muted)] md:text-lg">
+          A link to the site, a short description of what is broken or what you
+          want to build, and your timeline. Whether you are a business owner, an
+          agency needing extra capacity, or a team looking to hire, I will get
+          back to you with practical next steps.
+        </p>
+      </div>
 
-      <SectionShell
-        ref={targetRef}
-        id="contact"
-        variant="default"
-        eyebrow="Start here"
-        title="Tell me what you need fixed or built."
-        subtitle="Send the website URL, the problem and your deadline. You'll get a clear next step and a fixed quote — no long questionnaire before we've spoken."
-        className={`transition-all duration-1000 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-      >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="space-y-8">
-              <div>
-                <h3 className="mb-6 text-2xl font-semibold tracking-tight text-[var(--v2-text)]">
-                  What to include
-                </h3>
+      <div className="space-y-4">
+        {contactInfo.map((item, index) => {
+          const cardClassName = `flex items-center gap-4 rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-4 transition-all ${
+            item.href
+              ? "hover:-translate-y-0.5 hover:border-[var(--v2-acid)]/40 motion-reduce:hover:translate-y-0"
+              : ""
+          }`
 
-                <p className="mb-8 text-lg text-[var(--v2-muted)]">
-                  A link to the site, a short description of what's broken or
-                  what you want to build, and your timeline. Whether you're a
-                  business owner, an agency needing extra capacity, or a team
-                  looking to hire, I'll get back to you with practical next
-                  steps.
-                </p>
+          const cardContent = (
+            <>
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-acid)]">
+                <item.icon className="w-6 h-6" />
               </div>
-
-              <div className="space-y-4">
-                {contactInfo.map((item, index) => {
-                  const cardClassName = `flex items-center gap-4 rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-4 transition-all ${
-                    item.href
-                      ? "hover:-translate-y-0.5 hover:border-[var(--v2-acid)]/40 motion-reduce:hover:translate-y-0"
-                      : ""
-                  }`
-
-                  const cardContent = (
-                    <>
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-acid)]">
-                        <item.icon className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <div className="text-sm font-medium text-[var(--v2-soft)]">
-                          {item.label}
-                        </div>
-                        <div className="font-semibold text-[var(--v2-text)]">
-                          {item.value}
-                        </div>
-                      </div>
-                    </>
-                  )
-
-                  return (
-                    <React.Fragment key={index}>
-                      <ContactMethodSchema method={item} />
-                      {item.href ? (
-                        <a href={item.href} className={cardClassName}>
-                          {cardContent}
-                        </a>
-                      ) : (
-                        <div className={cardClassName}>{cardContent}</div>
-                      )}
-                    </React.Fragment>
-                  )
-                })}
-              </div>
-
               <div>
-                <h4 className="mb-4 text-lg font-semibold tracking-tight text-[var(--v2-text)]">
-                  Follow me
-                </h4>
-
-                <div className="flex gap-4">
-                  {socialLinks.map((social, index) => (
-                    <a
-                      key={index}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-muted)] transition-all hover:bg-[var(--v2-acid)] hover:text-[var(--v2-acid-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
-                      aria-label={social.label}
-                    >
-                      <social.icon className="w-5 h-5" />
-                    </a>
-                  ))}
+                <div className="text-sm font-medium text-[var(--v2-soft)]">
+                  {item.label}
+                </div>
+                <div className="font-semibold text-[var(--v2-text)]">
+                  {item.value}
                 </div>
               </div>
-            </div>
+            </>
+          )
 
-            <div className="rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-8">
-              {submitStatus === "success" && (
-                <div
-                  role="status"
-                  aria-live="polite"
-                  className="mb-6 flex items-center gap-3 rounded-xl border border-[var(--v2-ok)]/30 bg-[var(--v2-ok)]/15 p-4 text-[var(--v2-ok)]"
-                >
-                  <CheckCircle className="w-5 h-5" aria-hidden="true" />
-                  <span>
-                    Message sent successfully! I'll get back to you soon.
+          return (
+            <React.Fragment key={index}>
+              {item.href ? (
+                <a href={item.href} className={cardClassName}>
+                  {cardContent}
+                </a>
+              ) : (
+                <div className={cardClassName}>{cardContent}</div>
+              )}
+            </React.Fragment>
+          )
+        })}
+      </div>
+
+      <div>
+        <h4 className="mb-4 text-lg font-semibold tracking-tight text-[var(--v2-text)]">
+          Follow me
+        </h4>
+        <div className="flex gap-4">
+          {socialLinks.map((social, index) => (
+            <a
+              key={index}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-muted)] transition-all hover:bg-[var(--v2-acid)] hover:text-[var(--v2-acid-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
+              aria-label={social.label}
+            >
+              <social.icon className="w-5 h-5" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+
+  return (
+    <section id="contact" className="py-8 md:py-10">
+      <div className="container mx-auto max-w-6xl px-6">
+        <header className="mb-6 md:mb-8">
+          <p className="m-0 font-mono text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--v2-acid)]">
+            Form
+          </p>
+          <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-[var(--v2-text)] md:text-3xl">
+            Send a message.
+          </h2>
+          <p className="mt-2 max-w-2xl text-base text-[var(--v2-muted)]">
+            Name, email, and a short description is enough. Optional details
+            stay collapsed.
+          </p>
+        </header>
+
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+          <div className="rounded-3xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-6 md:p-8">
+            {submitStatus === "success" && (
+              <div
+                role="status"
+                aria-live="polite"
+                className="mb-6 flex items-center gap-3 rounded-xl border border-[var(--v2-ok)]/30 bg-[var(--v2-ok)]/15 p-4 text-[var(--v2-ok)]"
+              >
+                <CheckCircle className="w-5 h-5" aria-hidden="true" />
+                <span>
+                  Message sent successfully! I'll get back to you soon.
+                </span>
+              </div>
+            )}
+
+            {submitStatus === "error" && (
+              <div
+                role="alert"
+                className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
+                  isDark
+                    ? "bg-red-500/20 text-red-300 border border-red-500/30"
+                    : "bg-red-100 text-red-700 border border-red-200"
+                }`}
+              >
+                <AlertCircle className="w-5 h-5" aria-hidden="true" />
+                <span>Failed to send message. Please try again.</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="sr-only" aria-live="polite" aria-atomic="true">
+                {errorSummary}
+              </div>
+              <div className="mb-6">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm font-medium text-[var(--v2-muted)]">
+                    Form progress
+                  </span>
+                  <span
+                    className={`text-sm font-medium ${
+                      isFormValid
+                        ? "text-[var(--v2-acid)]"
+                        : "text-[var(--v2-muted)]"
+                    }`}
+                  >
+                    {Object.values(fieldValidation).filter(Boolean).length}/3
+                    fields complete
                   </span>
                 </div>
-              )}
-
-              {submitStatus === "error" && (
-                <div
-                  role="alert"
-                  className={`flex items-center gap-3 p-4 mb-6 rounded-xl ${
-                    isDark
-                      ? "bg-red-500/20 text-red-300 border border-red-500/30"
-                      : "bg-red-100 text-red-700 border border-red-200"
-                  }`}
-                >
-                  <AlertCircle className="w-5 h-5" aria-hidden="true" />
-                  <span>Failed to send message. Please try again.</span>
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Form progress indicator */}
-                <div className="mb-6">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-[var(--v2-muted)]">
-                      Form progress
-                    </span>
-                    <span
-                      className={`text-sm font-medium ${
-                        isFormValid
-                          ? "text-[var(--v2-acid)]"
-                          : "text-[var(--v2-muted)]"
-                      }`}
-                    >
-                      {Object.values(fieldValidation).filter(Boolean).length}/4
-                      fields complete
-                    </span>
-                  </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-[var(--v2-line)]">
-                    <motion.div
-                      className="h-full rounded-full bg-[var(--v2-acid)]"
-                      initial={{ width: 0 }}
-                      animate={{
-                        width: `${
-                          (Object.values(fieldValidation).filter(Boolean)
-                            .length /
-                            4) *
-                          100
-                        }%`,
-                      }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                    />
-                  </div>
-                </div>
-
-                <FormField
-                  id="name"
-                  label="Name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  onBlur={() => handleFieldBlur("name")}
-                  error={
-                    touchedFields.has("name") &&
-                    !fieldValidation.name &&
-                    formData.name.length > 0
-                      ? "Name must be 2-50 characters"
-                      : errors.name
-                  }
-                  placeholder="Your full name"
-                  maxLength={50}
-                  disabled={isSubmitting}
-                  isDark={isDark}
-                  isValid={fieldValidation.name}
-                  autoComplete="name"
-                />
-
-                <FormField
-                  id="email"
-                  label="Email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  onBlur={handleEmailBlur}
-                  error={errors.email}
-                  placeholder="your.email@example.com"
-                  maxLength={254}
-                  disabled={isSubmitting}
-                  isDark={isDark}
-                  isValid={fieldValidation.email}
-                  autoComplete="email"
-                />
-
-                <FormField
-                  id="subject"
-                  label="Subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  onBlur={() => handleFieldBlur("subject")}
-                  error={
-                    touchedFields.has("subject") &&
-                    !fieldValidation.subject &&
-                    formData.subject.length > 0
-                      ? "Subject must be 3-100 characters"
-                      : errors.subject
-                  }
-                  placeholder="Project inquiry, collaboration, etc."
-                  maxLength={100}
-                  disabled={isSubmitting}
-                  isDark={isDark}
-                  isValid={fieldValidation.subject}
-                />
-
-                <ContactRequestFields
-                  requestType={formData.requestType || ""}
-                  urgency={formData.urgency || ""}
-                  budget={formData.budget || ""}
-                  websiteUrl={formData.websiteUrl || ""}
-                  websiteUrlError={errors.websiteUrl}
-                  disabled={isSubmitting}
-                  onRequestTypeChange={(value) =>
-                    setFormData((prev) => ({ ...prev, requestType: value }))
-                  }
-                  onUrgencyChange={(value) =>
-                    setFormData((prev) => ({ ...prev, urgency: value }))
-                  }
-                  onBudgetChange={(value) =>
-                    setFormData((prev) => ({ ...prev, budget: value }))
-                  }
-                  onWebsiteUrlChange={(value) => {
-                    const sanitized = sanitizeTextInput(value)
-                    setFormData((prev) => ({ ...prev, websiteUrl: sanitized }))
-                    if (errors.websiteUrl) {
-                      setErrors((prev) => ({ ...prev, websiteUrl: undefined }))
-                    }
-                  }}
-                />
-
-                <FormField
-                  id="message"
-                  label="Message"
-                  type="textarea"
-                  value={formData.message}
-                  onChange={handleChange}
-                  onBlur={() => handleFieldBlur("message")}
-                  error={
-                    touchedFields.has("message") &&
-                    !fieldValidation.message &&
-                    formData.message.length > 0
-                      ? "Message must be 10-2000 characters"
-                      : errors.message
-                  }
-                  placeholder="Describe the issue, goals, timeline, or anything else that helps me understand your request."
-                  maxLength={2000}
-                  disabled={isSubmitting}
-                  isDark={isDark}
-                  isValid={fieldValidation.message}
-                  rows={6}
-                />
-
-                <div style={{ display: "none" }} aria-hidden="true">
-                  <label htmlFor="website">Website</label>
-                  <input
-                    type="text"
-                    id="website"
-                    name="website"
-                    value={honeypot}
-                    onChange={(e) => setHoneypot(e.target.value)}
-                    tabIndex={-1}
-                    autoComplete="off"
+                <div className="h-2 overflow-hidden rounded-full bg-[var(--v2-line)]">
+                  <motion.div
+                    className="h-full rounded-full bg-[var(--v2-acid)]"
+                    initial={{ width: 0 }}
+                    animate={{
+                      width: `${
+                        (Object.values(fieldValidation).filter(Boolean).length /
+                          3) *
+                        100
+                      }%`,
+                    }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                   />
                 </div>
+              </div>
 
-                {errors.general && (
-                  <div
-                    role="alert"
-                    className="p-4 rounded-xl bg-red-50 border border-red-200 dark:bg-red-500/10 dark:border-red-500/30"
-                  >
-                    <p className="text-sm text-red-700 dark:text-red-300">
-                      {errors.general}
-                    </p>
-                  </div>
-                )}
+              <FormField
+                id="name"
+                label="Name"
+                value={formData.name}
+                onChange={handleChange}
+                onBlur={() => handleFieldBlur("name")}
+                error={
+                  touchedFields.has("name") &&
+                  !fieldValidation.name &&
+                  formData.name.length > 0
+                    ? "Name must be 2-50 characters"
+                    : errors.name
+                }
+                placeholder="Your full name"
+                maxLength={50}
+                disabled={isSubmitting}
+                isDark={isDark}
+                isValid={fieldValidation.name}
+                autoComplete="name"
+              />
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="flex w-full items-center justify-center gap-3 rounded-full bg-[var(--v2-acid)] px-8 py-4 font-bold tracking-tight text-[var(--v2-acid-ink)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              <FormField
+                id="email"
+                label="Email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                onBlur={handleEmailBlur}
+                error={errors.email}
+                placeholder="your.email@example.com"
+                maxLength={254}
+                disabled={isSubmitting}
+                isDark={isDark}
+                isValid={fieldValidation.email}
+                autoComplete="email"
+              />
+
+              <ContactRequestFields
+                requestType={formData.requestType || ""}
+                urgency={formData.urgency || ""}
+                budget={formData.budget || ""}
+                websiteUrl={formData.websiteUrl || ""}
+                websiteUrlError={errors.websiteUrl}
+                disabled={isSubmitting}
+                defaultOpen={Boolean(searchParams.get("type"))}
+                onRequestTypeChange={(value) =>
+                  setFormData((prev) => ({ ...prev, requestType: value }))
+                }
+                onUrgencyChange={(value) =>
+                  setFormData((prev) => ({ ...prev, urgency: value }))
+                }
+                onBudgetChange={(value) =>
+                  setFormData((prev) => ({ ...prev, budget: value }))
+                }
+                onWebsiteUrlChange={(value) => {
+                  const sanitized = sanitizeTextInput(value)
+                  setFormData((prev) => ({ ...prev, websiteUrl: sanitized }))
+                  if (errors.websiteUrl) {
+                    setErrors((prev) => ({ ...prev, websiteUrl: undefined }))
+                  }
+                }}
+              />
+
+              <DiagnosticSummary requestType={formData.requestType || ""} />
+
+              <FormField
+                id="message"
+                label="Message"
+                type="textarea"
+                value={formData.message}
+                onChange={handleChange}
+                onBlur={() => handleFieldBlur("message")}
+                error={
+                  touchedFields.has("message") &&
+                  !fieldValidation.message &&
+                  formData.message.length > 0
+                    ? "Message must be 10-2000 characters"
+                    : errors.message
+                }
+                placeholder="Describe the issue, goals, timeline, or anything else that helps me understand your request."
+                maxLength={2000}
+                disabled={isSubmitting}
+                isDark={isDark}
+                isValid={fieldValidation.message}
+                rows={6}
+                autoComplete="off"
+              />
+
+              <div hidden aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input
+                  type="text"
+                  id="website"
+                  name="website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+
+              {errors.general && (
+                <div
+                  role="alert"
+                  className="p-4 rounded-xl bg-red-50 border border-red-200 dark:bg-red-500/10 dark:border-red-500/30"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <div className="h-5 w-5 animate-spin rounded-full border-2 border-current/30 border-t-current" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="h-5 w-5" />
-                      Send project request
-                    </>
-                  )}
-                </button>
-              </form>
-            </div>
+                  <p className="text-sm text-red-700 dark:text-red-300">
+                    {errors.general}
+                  </p>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex w-full items-center justify-center gap-3 rounded-full bg-[var(--v2-acid)] px-8 py-4 font-bold tracking-tight text-[var(--v2-acid-ink)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-current/30 border-t-current" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-5 w-5" />
+                    Send project request
+                  </>
+                )}
+              </button>
+            </form>
           </div>
-      </SectionShell>
-    </>
+
+          <aside className="min-w-0">
+            <div className="hidden lg:block">{supportingContent}</div>
+            <details className="rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-4 lg:hidden">
+              <summary className="cursor-pointer font-bold text-[var(--v2-text)]">
+                Contact details
+              </summary>
+              <div className="mt-6">{supportingContent}</div>
+            </details>
+          </aside>
+        </div>
+      </div>
+    </section>
   )
 })
 

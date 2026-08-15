@@ -14,12 +14,17 @@ describe("Hero CTA accessibility", () => {
     )
 
     const requestCta = screen.getByRole("link", {
-      name: /request a fix or quote/i,
+      name: /i need help with a website/i,
     })
-    const servicesCta = screen.getByRole("link", { name: /browse services/i })
+    const engineeringCta = screen.getByRole("link", {
+      name: /explore my engineering portfolio/i,
+    })
 
-    expect(requestCta).toHaveAttribute("href", "#contact")
-    expect(servicesCta).toHaveAttribute("href", "/services")
+    expect(requestCta).toHaveAttribute("href", "/services")
+    expect(engineeringCta).toHaveAttribute("href", "/engineering")
+    expect(
+      screen.queryByRole("link", { name: /^contact$/i })
+    ).not.toBeInTheDocument()
   })
 
   it("renders a single H1", () => {

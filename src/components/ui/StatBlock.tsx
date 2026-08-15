@@ -34,7 +34,10 @@ const StatBlock: React.FC<StatBlockProps> = ({
       viewport={{ once: true, margin: "-40px" }}
     >
       <SurfaceCard className={cn("p-6 text-center", className)}>
-        <p className="mb-2 font-display text-3xl font-bold tracking-tight text-[var(--v2-text)] md:text-4xl">
+        <p
+          className="mb-2 font-display text-3xl font-bold tracking-tight text-[var(--v2-text)] md:text-4xl"
+          aria-label={`${value} ${label}`}
+        >
           {animate ? displayValue : value}
         </p>
         <p className="text-sm text-[var(--v2-muted)] md:text-base">{label}</p>

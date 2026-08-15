@@ -1,13 +1,13 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useEnhancedSEO } from "../utils/enhancedSEO"
-import { routeMeta, absoluteUrl } from "../config/routeMeta.js"
+import { useRoutePageMeta } from "../hooks/useRoutePageMeta"
 import EmergencyHelpCTA from "../components/services/EmergencyHelpCTA"
 import V2PageHero from "../components/ui/V2PageHero"
 import V2SectionHead from "../components/ui/V2SectionHead"
 import { v2Panel } from "../components/ui/v2Styles"
 import ServiceCard from "../components/services/ServiceCard"
 import { emergencyServices } from "../content/services"
+import { site } from "../config/site"
 
 const commonProblems = [
   "WordPress critical errors",
@@ -40,27 +40,13 @@ const whatINeed = [
 ]
 
 const trustStats = [
-  { value: "18+", label: "Years experience" },
+  { value: site.stats.yearsExperienceLabel, label: "Years experience" },
   { value: "Same day", label: "Response when possible" },
   { value: "Fixed quote", label: "Before work starts" },
 ]
 
-const meta = routeMeta["/services/emergency-website-help"]
-
 const EmergencyHelpPage: React.FC = () => {
-  const canonical = absoluteUrl(meta.canonicalPath)
-
-  useEnhancedSEO({
-    title: meta.title,
-    description: meta.description,
-    canonical,
-    ogUrl: canonical,
-    ogType: meta.ogType,
-    structuredData: {
-      "@context": "https://schema.org",
-      "@graph": meta.jsonLd,
-    },
-  })
+  useRoutePageMeta("/services/emergency-website-help")
 
   return (
     <div>
@@ -68,7 +54,7 @@ const EmergencyHelpPage: React.FC = () => {
         id="emergency-hero"
         eyebrow="Emergency support"
         title="Website broken or losing enquiries?"
-        subtitle="I can help diagnose and fix urgent website, WordPress, WooCommerce, DNS, email, SSL, and performance issues — fast turnaround when available, depending on scope."
+        subtitle="I can help diagnose and fix urgent website, WordPress, WooCommerce, DNS, email, SSL, and performance issues. Fast turnaround when available, depending on scope."
       >
         <dl className="grid gap-4 sm:grid-cols-3">
           {trustStats.map((stat) => (
@@ -132,7 +118,7 @@ const EmergencyHelpPage: React.FC = () => {
             titleId="starting-prices-heading"
             label="Pricing"
             title="Starting prices."
-            copy="Final pricing depends on scope — I confirm a fixed quote before any work begins."
+            copy="Final pricing depends on scope. I confirm a fixed quote before any work begins."
           />
           <div className="grid gap-4 md:grid-cols-2">
             {emergencyServices.map((service, index) => (

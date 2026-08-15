@@ -1,6 +1,8 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import { Mail, Download } from "lucide-react"
 import { v2PrimaryButton, v2SecondaryButton } from "../../ui/v2Styles"
+import { site } from "../../../config/site"
 
 interface ExperienceCallToActionProps {
   isDark: boolean
@@ -21,13 +23,13 @@ export const ExperienceCallToAction: React.FC<
       </p>
 
       <div className="flex flex-col justify-center gap-3 sm:flex-row">
-        <a href="#contact" className={v2PrimaryButton}>
+        <Link to="/contact" className={v2PrimaryButton}>
           <Mail className="h-5 w-5" aria-hidden="true" />
           Start a project
-        </a>
+        </Link>
 
         <a
-          href="/cv/Theodoros-Mentis-CV.pdf"
+          href={site.cvPath}
           target="_blank"
           rel="noopener noreferrer"
           className={v2SecondaryButton}

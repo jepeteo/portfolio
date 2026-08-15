@@ -1,4 +1,49 @@
+export type EmploymentType =
+  | "freelance"
+  | "full-time"
+  | "contract"
+  | "part-time"
+
+export type WorkMode = "remote" | "hybrid" | "on-site"
+
+export type ConfidentialityLevel = "public" | "internal" | "confidential"
+
+export type FinancialDomain =
+  | "payments"
+  | "banking"
+  | "fintech"
+  | "risk"
+  | "compliance"
+  | "trading"
+
+export type CertificateCategory =
+  | "Project Management"
+  | "AI & Machine Learning"
+  | "Game Development"
+  | "Programming Fundamentals"
+  | "Frontend Development"
+  | "CMS Development"
+  | "DevOps & Tools"
+  | "Backend Development"
+  | "E-commerce"
+  | "Digital Marketing"
+  | "Performance & Optimization"
+  | "Security & Compliance"
+  | "Productivity Tools"
+  | "DevOps & Infrastructure"
+  | "Database Management"
+  | "Science & Education"
+  | "Fintech and Banking"
+  | "Payments"
+  | "Risk and Compliance"
+  | "Financial Crime / AML / KYC"
+  | "Cybersecurity"
+  | "Cloud and DevOps"
+  | "WordPress and CMS"
+  | "General Professional Development"
+
 export interface Job {
+  id?: string
   title: string
   company: string
   from: string
@@ -6,6 +51,18 @@ export interface Job {
   description: string
   location?: string
   technologies?: string[]
+  keyResponsibilities?: string[]
+  achievements?: string[]
+  employmentType?: EmploymentType
+  workMode?: WorkMode
+  industry?: string
+  sector?: string
+  financialDomains?: FinancialDomain[]
+  complianceDomains?: string[]
+  confidentiality?: ConfidentialityLevel
+  featured?: boolean
+  relatedProjectIds?: string[]
+  relatedCertificateIds?: string[]
 }
 
 export interface Project {

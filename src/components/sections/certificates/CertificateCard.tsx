@@ -55,10 +55,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
               </span>
             </div>
           </div>
-
-          <div className="rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/70 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--v2-muted)]">
-            {certificate.level || "Intermediate"}
-          </div>
         </div>
 
         {certificate.verified && (
@@ -113,17 +109,6 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
                 </h4>
                 <p className="font-mono text-sm text-[var(--v2-soft)]">
                   {certificate.credentialId}
-                </p>
-              </div>
-            )}
-
-            {certificate.duration && (
-              <div>
-                <h4 className="mb-2 text-sm font-semibold text-[var(--v2-muted)]">
-                  Duration
-                </h4>
-                <p className="text-sm text-[var(--v2-soft)]">
-                  {certificate.duration}
                 </p>
               </div>
             )}

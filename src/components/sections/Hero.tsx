@@ -1,10 +1,14 @@
 import React, { memo } from "react"
 import { Link } from "react-router-dom"
-import { ArrowRight, Wrench } from "lucide-react"
-import { useReducedMotion } from "../../utils/accessibilityOptimization"
+import useReducedMotion from "../../hooks/useReducedMotion"
+import { useAdoptedLcpHeading } from "../../hooks/useAdoptedLcpHeading"
+import AnimatedTerminal from "../motion/AnimatedTerminal"
+import TiltCard from "../motion/TiltCard"
+import HeroSystemNodes from "./HeroSystemNodes"
+import { site } from "../../config/site"
 
 const signals: { label: string; value: string }[] = [
-  { label: "Experience", value: "18+ yrs" },
+  { label: "Experience", value: `${site.stats.yearsExperienceLabel} yrs` },
   { label: "Mode", value: "Remote" },
   { label: "Best for", value: "Fixes" },
   { label: "Approach", value: "Clear" },
@@ -18,23 +22,116 @@ const terminalLines = [
   { text: "→ fixed quote before work starts" },
 ]
 
-/**
- * Service-led hero with a "diagnostic console" panel.
- * Replaces the previous generic developer hero. LCP is the H1 text (no large
- * hero image), keeping first paint fast.
- */
+const heroHeadingClassName =
+  "font-display text-[clamp(2.6rem,7vw,5.25rem)] font-extrabold leading-[0.95] tracking-tight text-[var(--v2-text)] [text-wrap:balance]"
+
+const IconWrench: React.FC = () => (
+  <svg
+    className="h-4 w-4"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+  </svg>
+)
+
+const IconArrowRight: React.FC = () => (
+  <svg
+    className="h-4 w-4"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M5 12h14" />
+    <path d="m12 5 7 7-7 7" />
+  </svg>
+)
+const HeroDiagnosticConsole: React.FC = () => (
+  <TiltCard className="group h-full" enableGlow>
+    <aside
+      aria-label="At a glance"
+      className="hero-console-shimmer relative h-full overflow-hidden rounded-3xl border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] shadow-[var(--v2-shadow)] backdrop-blur-sm"
+    >
+      <div className="flex items-center justify-between gap-3 border-b border-[var(--v2-line)] px-5 py-4 font-mono text-xs text-[var(--v2-soft)]">
+        <span className="flex gap-1.5" aria-hidden="true">
+          <span className="h-2.5 w-2.5 rounded-full bg-[var(--v2-soft)]/70" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[var(--v2-soft)]/70" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[var(--v2-soft)]/70" />
+        </span>
+        <span>portfolio://service-console</span>
+      </div>
+
+      <div className="p-5">
+        <div className="mb-4 flex items-center gap-3">
+          <span
+            className="grid h-12 w-12 flex-none place-items-center rounded-2xl border border-[var(--v2-line-strong)] bg-[var(--v2-panel-2)] font-mono text-lg font-black text-[var(--v2-acid)]"
+            aria-hidden="true"
+          >
+            TM
+          </span>
+          <div className="min-w-0">
+            <p className="m-0 text-lg font-bold tracking-tight text-[var(--v2-text)]">
+              {site.name}
+            </p>
+            <p className="m-0 text-sm text-[var(--v2-muted)]">
+              {site.title}: WordPress, WooCommerce, React,
+              technical SEO, hosting &amp; DNS.
+            </p>
+          </div>
+        </div>
+
+        <dl className="grid grid-cols-2 gap-3">
+          {signals.map((s) => (
+            <div
+              key={s.label}
+              className="rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 p-3"
+            >
+              <dt className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--v2-soft)]">
+                {s.label}
+              </dt>
+              <dd className="m-0 mt-1.5 text-xl font-bold tracking-tight text-[var(--v2-text)]">
+                {s.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <AnimatedTerminal
+          lines={terminalLines}
+          className="mt-3 overflow-hidden rounded-2xl border border-[var(--v2-line)] bg-[#020617] p-3 font-mono text-xs leading-relaxed text-[#d9f99d]"
+          ariaLabel="How a typical engagement starts"
+        />
+      </div>
+    </aside>
+  </TiltCard>
+)
+
 const Hero: React.FC = memo(() => {
   const prefersReducedMotion = useReducedMotion()
+  const { slotRef, renderReactHeading } = useAdoptedLcpHeading(
+    "hero-heading",
+    heroHeadingClassName
+  )
 
   return (
     <section
       id="top"
       aria-labelledby="hero-heading"
-      className="v2-grid-bg relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-24"
+      className="v2-grid-bg relative overflow-hidden pt-20 pb-12 md:pt-24 md:pb-16"
     >
+      <HeroSystemNodes />
+
       <div className="container relative z-10">
         <div className="grid items-stretch gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-          {/* Left: message */}
           <div className="min-w-0">
             <ul
               className="mb-7 flex flex-wrap gap-2"
@@ -47,113 +144,53 @@ const Hero: React.FC = memo(() => {
                   }`}
                   aria-hidden="true"
                 />
-                Available for selected work
+                {site.availability}
               </li>
               <li className="inline-flex items-center rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel)] px-3 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--v2-muted)]">
-                Berlin · Remote Europe
+                Berlin · {site.workMode}
               </li>
               <li className="inline-flex items-center rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel)] px-3 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--v2-muted)]">
                 WordPress · Woo · React · DNS
               </li>
             </ul>
 
-            <h1
-              id="hero-heading"
-              className="font-display text-[clamp(2.6rem,7vw,5.25rem)] font-extrabold leading-[0.95] tracking-tight text-[var(--v2-text)] [text-wrap:balance]"
-            >
-              Practical web systems for businesses that{" "}
-              <span className="bg-[linear-gradient(120deg,var(--v2-brand),var(--v2-brand-2)_55%,var(--v2-acid))] bg-clip-text text-transparent">
-                can&apos;t afford broken websites.
-              </span>
-            </h1>
+            <div ref={slotRef} />
+            {renderReactHeading ? (
+              <h1 id="hero-heading" className={heroHeadingClassName}>
+                I build and rescue{" "}
+                <span className="bg-[linear-gradient(120deg,var(--v2-brand),var(--v2-brand-2)_55%,var(--v2-acid))] bg-clip-text text-transparent">
+                  reliable digital systems.
+                </span>
+              </h1>
+            ) : null}
 
             <p className="mt-7 max-w-xl text-lg text-[var(--v2-muted)] md:text-xl">
-              I help small businesses and agencies fix, improve and ship websites
-              with clear scope, clean implementation and no technical theatre.
+              {site.title} with {site.stats.yearsExperienceLabel} years across
+              WordPress, WooCommerce, React, infrastructure and automation.
+              Now expanding into fintech.
             </p>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <a
-                href="#contact"
-                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[var(--v2-acid)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-acid-ink)] shadow-[0_18px_48px_-12px_var(--v2-acid)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
-              >
-                <Wrench className="h-4 w-4" aria-hidden="true" />
-                Request a fix or quote
-              </a>
+            <div className="mt-8 flex flex-col gap-3 md:flex-row md:flex-nowrap">
               <Link
                 to="/services"
-                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-text)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                className="inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-full bg-[var(--v2-acid)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-acid-ink)] shadow-[0_18px_48px_-12px_var(--v2-acid)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_56px_-10px_var(--v2-acid)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
-                Browse services
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                <IconWrench />
+                I need help with a website
+              </Link>
+              <Link
+                to="/engineering"
+                className="inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-text)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--v2-shadow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              >
+                Explore my engineering portfolio
+                <IconArrowRight />
               </Link>
             </div>
           </div>
 
-          {/* Right: diagnostic console */}
-          <aside
-            aria-label="At a glance"
-            className="relative overflow-hidden rounded-3xl border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] shadow-[var(--v2-shadow)] backdrop-blur-sm"
-          >
-            <div className="flex items-center justify-between gap-3 border-b border-[var(--v2-line)] px-5 py-4 font-mono text-xs text-[var(--v2-soft)]">
-              <span className="flex gap-1.5" aria-hidden="true">
-                <span className="h-2.5 w-2.5 rounded-full bg-[var(--v2-soft)]/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[var(--v2-soft)]/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[var(--v2-soft)]/70" />
-              </span>
-              <span>portfolio://service-console</span>
-            </div>
-
-            <div className="p-6">
-              <div className="mb-5 flex items-center gap-4">
-                <span
-                  className="grid h-16 w-16 flex-none place-items-center rounded-2xl border border-[var(--v2-line-strong)] bg-[var(--v2-panel-2)] font-mono text-xl font-black text-[var(--v2-acid)]"
-                  aria-hidden="true"
-                >
-                  TM
-                </span>
-                <div className="min-w-0">
-                  <p className="m-0 text-lg font-bold tracking-tight text-[var(--v2-text)]">
-                    Theodoros Mentis
-                  </p>
-                  <p className="m-0 text-sm text-[var(--v2-muted)]">
-                    Senior full-stack developer — WordPress, WooCommerce, React,
-                    technical SEO, hosting &amp; DNS.
-                  </p>
-                </div>
-              </div>
-
-              <dl className="grid grid-cols-2 gap-3">
-                {signals.map((s) => (
-                  <div
-                    key={s.label}
-                    className="rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 p-3.5"
-                  >
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--v2-soft)]">
-                      {s.label}
-                    </dt>
-                    <dd className="m-0 mt-1.5 text-xl font-bold tracking-tight text-[var(--v2-text)]">
-                      {s.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-
-              <div
-                className="mt-4 overflow-hidden rounded-2xl border border-[var(--v2-line)] bg-[#020617] p-4 font-mono text-xs leading-relaxed text-[#d9f99d]"
-                aria-label="How a typical engagement starts"
-              >
-                {terminalLines.map((line, i) => (
-                  <div key={i}>
-                    {line.prompt && (
-                      <span className="text-[#7dd3fc]">{line.prompt} </span>
-                    )}
-                    {line.text}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </aside>
+          <div className="min-w-0">
+            <HeroDiagnosticConsole />
+          </div>
         </div>
       </div>
     </section>

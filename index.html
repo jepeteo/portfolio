@@ -6,7 +6,6 @@
 
     <!-- Critical CSS for above-the-fold content -->
     <style>
-      /* Prevent FOUC and set initial theme */
       :root {
         --bg-primary: #0f172a;
         --text-primary: #f8fafc;
@@ -29,7 +28,6 @@
         display: flex;
         flex-direction: column;
       }
-      /* Loading placeholder */
       .loading-placeholder {
         display: flex;
         align-items: center;
@@ -40,27 +38,11 @@
 
     <meta
       name="description"
-      content="I fix, improve and build business websites that need to work. WordPress, WooCommerce, React, technical SEO, performance, DNS and email support for small businesses and agencies."
-    />
-    <meta
-      name="keywords"
-      content="theodoros mentis, web developer, wordpress developer, woocommerce support, technical seo, website speed, react developer, dns email support, emergency website help"
+      content="I build and rescue reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation. Berlin-based, expanding into fintech."
     />
     <meta name="author" content="Theodoros Mentis" />
     <meta name="robots" content="index, follow" />
-
-    <!-- Language and Region Meta Tags -->
     <meta name="language" content="en" />
-    <meta http-equiv="content-language" content="en" />
-    <meta name="geo.region" content="DE-BE" />
-    <meta name="geo.placename" content="Berlin, Germany" />
-    <meta name="geo.position" content="52.520008;13.404954" />
-    <meta name="ICBM" content="52.520008, 13.404954" />
-
-    <!-- Additional SEO Meta Tags -->
-    <meta name="rating" content="general" />
-    <meta name="revisit-after" content="7 days" />
-    <meta name="distribution" content="global" />
 
     <!-- Google Search Console Verification -->
     <meta
@@ -71,11 +53,11 @@
     <!-- Open Graph Meta Tags -->
     <meta
       property="og:title"
-      content="Theodoros Mentis - Web Developer Who Fixes, Improves & Builds Business Websites"
+      content="Theodoros Mentis | Senior Full-Stack Engineer"
     />
     <meta
       property="og:description"
-      content="Practical web systems for businesses that cannot afford broken websites. WordPress, WooCommerce, React, technical SEO, performance, DNS and email support."
+      content="I build and rescue reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation. Berlin-based, expanding into fintech."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.theodorosmentis.com/" />
@@ -89,30 +71,27 @@
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@jepeteo" />
+    <meta name="twitter:creator" content="@jepeteo" />
     <meta
       name="twitter:title"
-      content="Theodoros Mentis - Web Developer Who Fixes, Improves & Builds Business Websites"
+      content="Theodoros Mentis | Senior Full-Stack Engineer"
     />
     <meta
       name="twitter:description"
-      content="Practical web systems for businesses that cannot afford broken websites. WordPress, WooCommerce, React, technical SEO, DNS and email support."
+      content="I build and rescue reliable digital systems. WordPress, WooCommerce, React, infrastructure and automation. Berlin-based, expanding into fintech."
     />
     <meta
       name="twitter:image"
       content="https://www.theodorosmentis.com/social-card.webp"
     />
 
-    <!-- LinkedIn Meta Tags -->
-    <meta property="article:author" content="Theodoros Mentis" />
-    <meta property="profile:first_name" content="Theodoros" />
-    <meta property="profile:last_name" content="Mentis" />
-    <meta property="profile:username" content="theodorosmentis" />
-
     <!-- Favicon & PWA -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
     <link rel="mask-icon" href="/favicon.png" color="#1f2937" />
+    <link rel="manifest" href="/manifest.json" />
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://www.theodorosmentis.com/" />
@@ -120,99 +99,28 @@
     <!-- Sitemap -->
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
-    <!-- Theme color for mobile browsers -->
     <meta name="theme-color" content="#1f2937" />
     <meta name="msapplication-TileColor" content="#1f2937" />
 
-    <!-- Performance hints -->
     <link rel="dns-prefetch" href="//eu.i.posthog.com" />
 
-    <title>Theodoros Mentis - Web Developer Who Fixes, Improves & Builds Business Websites</title>
+    <link
+      rel="preload"
+      href="/fonts/space-grotesk-latin-700-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/inter-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
-    <!-- Enhanced Structured Data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "WebSite",
-            "@id": "https://www.theodorosmentis.com/#website",
-            "url": "https://www.theodorosmentis.com/",
-            "name": "Theodoros Mentis - Senior Full Stack Developer",
-            "description": "Professional portfolio showcasing expertise in WordPress, React, and modern web development",
-            "inLanguage": "en-US"
-          },
-          {
-            "@type": "Person",
-            "@id": "https://www.theodorosmentis.com/#person",
-            "name": "Theodoros Mentis",
-            "url": "https://www.theodorosmentis.com/",
-            "image": {
-              "@type": "ImageObject",
-              "url": "https://www.theodorosmentis.com/images/teo-square.webp",
-              "width": 800,
-              "height": 800
-            },
-            "sameAs": [
-              "https://github.com/jepeteo",
-              "https://linkedin.com/in/theodorosmentis"
-            ],
-            "jobTitle": "Senior Full-Stack Developer",
-            "description": "Experienced developer with 18+ years creating seamless web experiences with WordPress, React, and modern web technologies. Based in Berlin, Germany.",
-            "email": "contact@theodorosmentis.com",
-            "nationality": "Greek",
-            "address": {
-              "@type": "PostalAddress",
-              "addressCountry": "DE",
-              "addressLocality": "Berlin"
-            },
-            "knowsAbout": [
-              "WordPress Development",
-              "React",
-              "TypeScript",
-              "PHP",
-              "JavaScript",
-              "Web Development",
-              "Full Stack Development"
-            ]
-          },
-          {
-            "@type": "ProfessionalService",
-            "@id": "https://www.theodorosmentis.com/#service",
-            "name": "Theodoros Mentis - Web Development & Technical Support",
-            "url": "https://www.theodorosmentis.com/services",
-            "image": "https://www.theodorosmentis.com/social-card.webp",
-            "email": "contact@theodorosmentis.com",
-            "priceRange": "€€",
-            "provider": {
-              "@id": "https://www.theodorosmentis.com/#person"
-            },
-            "areaServed": {
-              "@type": "Place",
-              "name": "Worldwide (remote)"
-            },
-            "address": {
-              "@type": "PostalAddress",
-              "addressCountry": "DE",
-              "addressLocality": "Berlin"
-            },
-            "serviceType": [
-              "WordPress development",
-              "WooCommerce support",
-              "Website speed optimization",
-              "Technical SEO",
-              "Email, DNS and domain support",
-              "Website maintenance"
-            ]
-          }
-        ]
-      }
-    </script>
+    <title>Theodoros Mentis | Senior Full-Stack Engineer</title>
 
-    <!-- Additional Links -->
-    <link rel="author" href="/humans.txt" />
-    <link rel="me" href="https://github.com/jepeteo" />
-    <link rel="me" href="https://linkedin.com/in/theodorosmentis" />
   </head>
   <body>
     <div id="root"></div>

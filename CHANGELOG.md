@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Public copy no longer uses em dashes. Sentences use periods, commas, or "to" instead.
+- Visitor-facing copy no longer explains redesign decisions. Identity is consistently Senior Full-Stack Engineer. Public archive size is distinguished from 390+ delivered projects.
+- SPA route changes start at the top, restore back/forward scroll, and align hash targets below the sticky header.
+- Featured case studies are MTX Clinic App (confidential, text-first) and Stoney Holiday Lets. The DNS/email rescue example is a typical Services workflow, not a named client case study.
+- Engineering page shows a small curated set of verified technical work plus a Fintech path learning block. Marketing websites are no longer listed as engineering evidence.
+- Homepage hero keeps two conversion actions. About copy is specific to 18+ years of production work, with one closing CTA. Service catalog accordions start collapsed.
+- Certification stats use the current calendar year, or the latest credential year when the current year is empty. Contact required fields expose native required semantics, announced errors, and a correctly labelled Website URL helper.
+- Project archive cards reuse verified screenshots when they exist. The performance dashboard is development-only and no longer overlaps mobile conversion actions.
+- SPA and prerender share one JSON-LD graph (WebSite, Person, ProfessionalService plus a small route node). Hydration reuses the prerendered script instead of appending a second one.
+- Featured homepage cards no longer create a 12px horizontal overflow at 320px. Missing case-study screenshots stay out of the layout until the file loads.
+- Stoney Holiday Lets now uses a live 1280x720 homepage screenshot at `public/images/projects/stoneyholidaylets.webp`.
+- Contact page uses a compact hero and puts the form before supporting details so Name is in the first viewport.
+- Featured case studies use authored meta descriptions. Stoney Open Graph image is the live project screenshot.
+- Engineering fintech path uses a curated verified-learning set and a current learning roadmap, without implying employment.
+- Homepage certifications preview is an 8-item cross-disciplinary selection. All 69 credentials remain on /certifications.
+- Page and section reveals complete in about 350ms. Header navigation no longer fades in over a long delay.
+- Contact form sets `aria-invalid` only when a field has a validation error. Valid or untouched fields omit the attribute.
+- Analytics (PostHog, Vercel Analytics / Speed Insights) stay off in local DEV and localhost previews.
+- Unknown URLs now serve `dist/404.html` with HTTP 404 and `noindex,follow` before JavaScript. Valid archive project pages are prerendered as static shells.
+- Homepage H1 paints without framer-motion. Below-fold homepage sections load after the first idle/frame so they do not compete with LCP.
+- Critical Inter 400 / Space Grotesk 700 faces are served once from `/fonts` (preloaded) instead of duplicating fontsource copies.
+- Fixed Vite `manualChunks` so `react/jsx-runtime` stays in `react-vendor` instead of the framer-motion chunk (which previously forced motion on every route before paint).
+- Prerendered LCP heading shells sit outside `#root` and are adopted into the React tree as the same DOM node so hydration does not reset LCP.
+- Oversized project screenshots are recompressed with responsive `-480` / `-768` WebP variants.
+- Public LinkedIn profile URL is `https://www.linkedin.com/in/thmentis/`.
+
+### Confirmed still outstanding
+
+- MTX Clinic App remains confidential: no public URL or screens.
+- LinkedIn headline and CV PDF still need a manual pass against `src/config/site.ts`.
+
+- Dual-audience information architecture: homepage is a decision page; archives live on dedicated routes (`/projects`, `/engineering`, `/experience`, `/certifications`, `/about`, `/contact`).
+- Services grouped as Rescue / Improve / Build, with the emergency route unchanged.
+- Contact form requires name, email, and message; optional selectors are collapsed. EmailJS / `api/contact` is unchanged.
+- Certifications and projects use URL-backed search, filters, and pagination. All 69 certificates remain in the dataset.
+- Experience timeline states freelance overlap as concurrent work and uses identity stats from `src/config/site.ts`.
+- Skills are described by evidence of use, not percentage bars.
+- Homepage JSON-LD is WebSite + Person + ProfessionalService. FAQPage schema is only on `/about`. Per-page PortfolioSchema JSON-LD was removed from the layout.
+
+### Added
+
+- Hash redirects from legacy homepage anchors (`#projects`, `#faq`, `#contact`, …) to crawlable routes.
+- Real 404 page (no silent redirect to home).
+- [Content update notes](CONTENT.md) for adding certificates, banking roles, fintech roles, and projects.
+
 ## [0.3.1] - 2025-12-23
 
 ### Performance

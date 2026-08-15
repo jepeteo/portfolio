@@ -7,6 +7,12 @@ export type ServiceItem = {
   bestFor?: string
   featured?: boolean
   emergency?: boolean
+  matrixCommand?: string
+  matrixDetail?: {
+    typicalProblem: string
+    whatICheck: string
+    whatToSend: string
+  }
 }
 
 export type ServiceCategory = {
@@ -549,6 +555,48 @@ export const serviceCategories: ServiceCategory[] = [
   },
 ]
 
+export const servicePaths = [
+  {
+    id: "rescue",
+    title: "Rescue",
+    intro:
+      "Emergencies, broken WordPress/WooCommerce, DNS, SSL, and email. Fast diagnosis with a fixed quote before production work.",
+    categoryIds: [
+      "emergency-website-support",
+      "wordpress-woocommerce",
+      "email-dns-domains",
+    ],
+  },
+  {
+    id: "improve",
+    title: "Improve",
+    intro:
+      "Performance, technical SEO, accessibility, audits, and hardening for sites that already exist.",
+    categoryIds: ["speed-technical-seo", "audits-reports"],
+  },
+  {
+    id: "build",
+    title: "Build and maintain",
+    intro:
+      "Landing pages, business sites, e-commerce, internal tools, maintenance plans, and agency overflow.",
+    categoryIds: [
+      "landing-pages-business-websites",
+      "ecommerce-product-websites",
+      "internal-tools-automations",
+      "maintenance-support",
+      "agency-support",
+    ],
+  },
+] as const
+
+export const categoriesForPath = (pathId: string) => {
+  const path = servicePaths.find((item) => item.id === pathId)
+  if (!path) return []
+  return path.categoryIds
+    .map((id) => serviceCategories.find((category) => category.id === id))
+    .filter((category): category is ServiceCategory => Boolean(category))
+}
+
 export const fastHelpServiceIds = [
   "wordpress-emergency-fix",
   "woocommerce-checkout-fix",
@@ -600,7 +648,7 @@ export const urgencyOptions = [
 ] as const
 
 export const budgetOptions = [
-  { value: "under-150", label: "Under €150" },
+  { value: "under-150", label: "€80 to €150" },
   { value: "150-300", label: "€150 to €300" },
   { value: "300-700", label: "€300 to €700" },
   { value: "700-plus", label: "€700+" },
@@ -653,3 +701,74 @@ export const mapServiceIdToRequestType = (serviceId: string): RequestType => {
   }
   return mapping[serviceId] ?? "not-sure"
 }
+
+export const fastHelpMatrixDetails: Record<
+  (typeof fastHelpServiceIds)[number],
+  Pick<ServiceItem, "matrixCommand" | "matrixDetail">
+> = {
+  "wordpress-emergency-fix": {
+    matrixCommand: "/fix broken contact form",
+    matrixDetail: {
+      typicalProblem:
+        "Forms stop sending, white screen after update, or admin login fails.",
+      whatICheck:
+        "Plugin conflicts, PHP errors, mail routing, and recent changes.",
+      whatToSend: "Site URL, symptoms, and when it started.",
+    },
+  },
+  "woocommerce-checkout-fix": {
+    matrixCommand: "/debug WooCommerce checkout",
+    matrixDetail: {
+      typicalProblem:
+        "Checkout errors, payment methods missing, or orders not completing.",
+      whatICheck:
+        "Checkout flow, gateways, shipping rules, and theme/plugin conflicts.",
+      whatToSend: "Store URL, payment method, and screenshots if possible.",
+    },
+  },
+  "email-dns-outlook-fix": {
+    matrixCommand: "/repair DNS or Outlook email",
+    matrixDetail: {
+      typicalProblem:
+        "Mail bounces, Outlook won't send, or DNS changes broke delivery.",
+      whatICheck: "SPF, DKIM, DMARC, MX records, and provider settings.",
+      whatToSend: "Domain, email provider, and what fails (send/receive).",
+    },
+  },
+  "website-speed-mini-fix": {
+    matrixCommand: "/speed-up slow WordPress site",
+    matrixDetail: {
+      typicalProblem:
+        "Pages load slowly, poor mobile scores, or heavy plugin stack.",
+      whatICheck:
+        "Caching, images, plugin weight, hosting limits, and Core Web Vitals.",
+      whatToSend: "URL, slow pages if known, and hosting provider.",
+    },
+  },
+  "technical-seo-audit": {
+    matrixCommand: "/audit SEO migration risk",
+    matrixDetail: {
+      typicalProblem:
+        "Redirects broken after migration, metadata missing, or rankings dropped.",
+      whatICheck: "Redirects, sitemaps, schema, crawl issues, and indexation.",
+      whatToSend: "URL, migration timeline, and Search Console access if available.",
+    },
+  },
+  "one-page-landing-page": {
+    matrixCommand: "/build one-page landing page",
+    matrixDetail: {
+      typicalProblem:
+        "Need a focused page for a campaign, offer, or service launch.",
+      whatICheck: "Goal, content, mobile layout, forms, and performance basics.",
+      whatToSend: "Brief, brand assets, reference sites, and deadline.",
+    },
+  },
+}
+
+export const getFastHelpServiceWithMatrix = (): ServiceItem[] =>
+  getFastHelpServices().map((service) => ({
+    ...service,
+    ...(fastHelpMatrixDetails[
+      service.id as (typeof fastHelpServiceIds)[number]
+    ] ?? {}),
+  }))

@@ -1,13 +1,8 @@
-// Lightweight static prerender for known SPA routes.
+// Lightweight static prerender for known SPA routes + real HTTP 404 page.
 //
-// After `vite build`, this copies dist/index.html into per-route index.html
-// files (e.g. dist/services/index.html) with route-specific <title>, meta
-// description, canonical, Open Graph / Twitter tags, and JSON-LD injected.
-//
-// Why this works on Vercel: static files take precedence over the SPA rewrite
-// in vercel.json, so a direct request / crawler hit on /services is served the
-// prerendered HTML with correct metadata, while client-side navigation still
-// uses the React router. No headless browser, no extra dependencies.
+// After `vite build`, writes per-route index.html files and dist/404.html.
+// Valid archive project slugs also get shells so Vercel can drop the SPA
+// catch-all rewrite and return a genuine 404 for unknown URLs.
 
 import fs from "node:fs"
 import path from "node:path"
@@ -17,7 +12,13 @@ import {
   prerenderRoutes,
   absoluteUrl,
   OG_IMAGE,
+  TWITTER_SITE,
+  SITE_URL,
+  SITE_NAME,
+  buildRouteJsonLd,
+  buildProjectPageJsonLd,
 } from "../src/config/routeMeta.js"
+import { listPublicProjectPages } from "./listPublicProjectPages.mjs"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const distDir = path.resolve(__dirname, "..", "dist")
@@ -39,7 +40,10 @@ function escapeText(value) {
 }
 
 function replaceTitle(html, title) {
-  return html.replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeText(title)}</title>`)
+  return html.replace(
+    /<title>[\s\S]*?<\/title>/,
+    `<title>${escapeText(title)}</title>`
+  )
 }
 
 function replaceMetaName(html, name, content) {
@@ -60,38 +64,131 @@ function replaceCanonical(html, href) {
   return re.test(html) ? html.replace(re, tag) : html
 }
 
-function injectJsonLd(html, jsonLdList) {
-  if (!jsonLdList || jsonLdList.length === 0) return html
-  const scripts = jsonLdList
-    .map(
-      (data) =>
-        `    <script type="application/ld+json">\n${JSON.stringify(data, null, 2)}\n    </script>`
-    )
-    .join("\n")
-  return html.replace(/<\/head>/, `${scripts}\n  </head>`)
+function injectJsonLd(html, graph) {
+  const script = `    <script type="application/ld+json">\n${JSON.stringify(graph, null, 2)}\n    </script>`
+  const existing = /<script type="application\/ld\+json">[\s\S]*?<\/script>\s*/
+  if (existing.test(html)) {
+    return html.replace(existing, `${script}\n`)
+  }
+  return html.replace(/<\/head>/, `${script}\n  </head>`)
 }
 
-function buildRouteHtml(template, meta) {
+function injectCrawlableBody(html, crawlableHtml) {
+  if (!crawlableHtml) return html
+  // Keep crawlable LCP content OUTSIDE #root so createRoot does not destroy the
+  // heading node on mount. React adopts the same <h1> via useAdoptedLcpHeading.
+  return html.replace(
+    /<div id="root">[\s\S]*?<\/div>(\s*)<\/body>/,
+    `${crawlableHtml}\n    <div id="root"></div>$1</body>`
+  )
+}
+
+function applyPageMeta(html, {
+  title,
+  description,
+  canonical,
+  ogType = "website",
+  ogImage = OG_IMAGE,
+  robots = "index, follow",
+  crawlableHtml,
+  jsonLd,
+}) {
+  let next = html
+  next = replaceTitle(next, title)
+  next = replaceMetaName(next, "description", description)
+  next = replaceMetaName(next, "robots", robots)
+  next = replaceCanonical(next, canonical)
+  next = replaceMetaProperty(next, "og:title", title)
+  next = replaceMetaProperty(next, "og:description", description)
+  next = replaceMetaProperty(next, "og:url", canonical)
+  next = replaceMetaProperty(next, "og:type", ogType)
+  next = replaceMetaProperty(next, "og:image", ogImage)
+  next = replaceMetaName(next, "twitter:title", title)
+  next = replaceMetaName(next, "twitter:description", description)
+  next = replaceMetaName(next, "twitter:image", ogImage)
+  next = replaceMetaName(next, "twitter:site", TWITTER_SITE)
+  if (jsonLd) next = injectJsonLd(next, jsonLd)
+  next = injectCrawlableBody(next, crawlableHtml)
+  return next
+}
+
+function buildRouteHtml(template, route) {
+  const meta = routeMeta[route]
   const canonical = absoluteUrl(meta.canonicalPath)
-  let html = template
-  html = replaceTitle(html, meta.title)
-  html = replaceMetaName(html, "description", meta.description)
-  html = replaceCanonical(html, canonical)
-  html = replaceMetaProperty(html, "og:title", meta.title)
-  html = replaceMetaProperty(html, "og:description", meta.description)
-  html = replaceMetaProperty(html, "og:url", canonical)
-  html = replaceMetaProperty(html, "og:type", meta.ogType)
-  html = replaceMetaProperty(html, "og:image", OG_IMAGE)
-  html = replaceMetaName(html, "twitter:title", meta.title)
-  html = replaceMetaName(html, "twitter:description", meta.description)
-  html = replaceMetaName(html, "twitter:image", OG_IMAGE)
-  html = injectJsonLd(html, meta.jsonLd)
-  return html
+  return applyPageMeta(template, {
+    title: meta.title,
+    description: meta.description,
+    canonical,
+    ogType: meta.ogType,
+    ogImage: meta.ogImage || OG_IMAGE,
+    robots: "index, follow",
+    crawlableHtml: meta.crawlableHtml,
+    jsonLd: buildRouteJsonLd(route),
+  })
+}
+
+function buildArchiveProjectHtml(template, project) {
+  const pathName = `/projects/${project.slug}`
+  if (routeMeta[pathName]) {
+    return buildRouteHtml(template, pathName)
+  }
+
+  const title = `${project.title} | ${SITE_NAME}`
+  const description =
+    project.description?.trim() ||
+    `${project.title} is listed in Theodoros Mentis's public project archive.`
+  const canonical = `${SITE_URL}${pathName}`
+  const crawlableHtml = `<article id="static-crawl-fallback"><h1>${escapeText(project.title)}</h1><p>${escapeText(description)}</p></article>`
+
+  return applyPageMeta(template, {
+    title,
+    description: description.slice(0, 160),
+    canonical,
+    ogType: "article",
+    crawlableHtml,
+    jsonLd: buildProjectPageJsonLd({
+      name: project.title,
+      description: description.slice(0, 160),
+      path: pathName,
+    }),
+  })
+}
+
+function buildNotFoundHtml(template) {
+  const title = `Page not found | ${SITE_NAME}`
+  const description = "The page you requested is not in this portfolio."
+  const canonical = `${SITE_URL}/404`
+  const crawlableHtml = `<article id="static-crawl-fallback"><h1>This page is not here.</h1><p>${escapeText(description)}</p><nav aria-label="Primary links"><a href="/">Home</a><a href="/services">Services</a><a href="/contact">Contact</a></nav></article>`
+
+  return applyPageMeta(template, {
+    title,
+    description,
+    canonical,
+    ogType: "website",
+    robots: "noindex,follow",
+    crawlableHtml,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: title,
+      description,
+      url: canonical,
+    },
+  })
+}
+
+function writeHtml(relativePath, html) {
+  const outFile = path.join(distDir, relativePath)
+  fs.mkdirSync(path.dirname(outFile), { recursive: true })
+  fs.writeFileSync(outFile, html, "utf8")
+  return path.relative(distDir, outFile)
 }
 
 function main() {
   if (!fs.existsSync(templatePath)) {
-    console.error(`prerender: dist/index.html not found at ${templatePath}. Run \`vite build\` first.`)
+    console.error(
+      `prerender: dist/index.html not found at ${templatePath}. Run \`vite build\` first.`
+    )
     process.exit(1)
   }
 
@@ -105,16 +202,35 @@ function main() {
       process.exit(1)
     }
 
-    const html = buildRouteHtml(template, meta)
-    const outDir = path.join(distDir, route.replace(/^\//, ""))
-    fs.mkdirSync(outDir, { recursive: true })
-    const outFile = path.join(outDir, "index.html")
-    fs.writeFileSync(outFile, html, "utf8")
-    written.push(path.relative(distDir, outFile))
+    const html = buildRouteHtml(template, route)
+
+    if (route === "/") {
+      fs.writeFileSync(templatePath, html, "utf8")
+      written.push("index.html")
+      continue
+    }
+
+    written.push(
+      writeHtml(path.join(route.replace(/^\//, ""), "index.html"), html)
+    )
   }
+
+  const projects = listPublicProjectPages()
+  for (const project of projects) {
+    const routePath = `/projects/${project.slug}`
+    if (routeMeta[routePath]) continue
+    const html = buildArchiveProjectHtml(template, project)
+    written.push(
+      writeHtml(path.join("projects", project.slug, "index.html"), html)
+    )
+  }
+
+  written.push(writeHtml("404.html", buildNotFoundHtml(template)))
 
   console.log("✅ Prerendered routes:")
   written.forEach((file) => console.log(` - dist/${file}`))
+  console.log(`✅ Archive project shells: ${projects.length}`)
+  console.log("✅ Wrote dist/404.html (noindex,follow)")
 }
 
 main()

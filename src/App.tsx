@@ -18,19 +18,28 @@ const VercelIntegrations = createLazyComponent(
   {}
 )
 
-const ServicesPage = createLazyComponent(
-  () => import("./pages/ServicesPage"),
-  {}
-)
+const lazyPage = (loader: () => Promise<{ default: React.ComponentType }>) =>
+  createLazyComponent(loader, {})
 
-const EmergencyHelpPage = createLazyComponent(
-  () => import("./pages/EmergencyHelpPage"),
-  {}
-)
+const ServicesPage = lazyPage(() => import("./pages/ServicesPage"))
+const EmergencyHelpPage = lazyPage(() => import("./pages/EmergencyHelpPage"))
+const ServiceLandingPage = lazyPage(() => import("./pages/ServiceLandingPage"))
+const ProjectsPage = lazyPage(() => import("./pages/ProjectsPage"))
+const ProjectDetailPage = lazyPage(() => import("./pages/ProjectDetailPage"))
+const EngineeringPage = lazyPage(() => import("./pages/EngineeringPage"))
+const ExperiencePage = lazyPage(() => import("./pages/ExperiencePage"))
+const CertificationsPage = lazyPage(() => import("./pages/CertificationsPage"))
+const AboutPage = lazyPage(() => import("./pages/AboutPage"))
+const ContactPage = lazyPage(() => import("./pages/ContactPage"))
+const NotFoundPage = lazyPage(() => import("./pages/NotFoundPage"))
 
 if (process.env.NODE_ENV === "development") {
   import("./utils/schemaTesting")
 }
+
+const Page: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <Suspense fallback={null}>{children}</Suspense>
+)
 
 const App: React.FC = () => {
   return (
@@ -44,20 +53,95 @@ const App: React.FC = () => {
                 <Route
                   path="services"
                   element={
-                    <Suspense fallback={null}>
+                    <Page>
                       <ServicesPage />
-                    </Suspense>
+                    </Page>
                   }
                 />
                 <Route
                   path="services/emergency-website-help"
                   element={
-                    <Suspense fallback={null}>
+                    <Page>
                       <EmergencyHelpPage />
-                    </Suspense>
+                    </Page>
                   }
                 />
-                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route
+                  path="services/:serviceSlug"
+                  element={
+                    <Page>
+                      <ServiceLandingPage />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="projects"
+                  element={
+                    <Page>
+                      <ProjectsPage />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="projects/technical-rescue"
+                  element={<Navigate to="/services#rescue" replace />}
+                />
+                <Route
+                  path="projects/:slug"
+                  element={
+                    <Page>
+                      <ProjectDetailPage />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="engineering"
+                  element={
+                    <Page>
+                      <EngineeringPage />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="experience"
+                  element={
+                    <Page>
+                      <ExperiencePage />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="certifications"
+                  element={
+                    <Page>
+                      <CertificationsPage />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="about"
+                  element={
+                    <Page>
+                      <AboutPage />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="contact"
+                  element={
+                    <Page>
+                      <ContactPage />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="*"
+                  element={
+                    <Page>
+                      <NotFoundPage />
+                    </Page>
+                  }
+                />
               </Route>
             </Routes>
             <Suspense fallback={null}>

@@ -1,10 +1,21 @@
 {
     "cleanUrls": true,
     "trailingSlash": false,
-    "rewrites": [
+    "redirects": [
         {
-            "source": "/((?!api/|sw\\.js$).*)",
-            "destination": "/index.html"
+            "source": "/projects/technical-rescue",
+            "destination": "/services#rescue",
+            "permanent": true
+        }
+    ],
+    "routes": [
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*)",
+            "status": 404,
+            "dest": "/404.html"
         }
     ],
     "headers": [
@@ -14,6 +25,19 @@
                 {
                     "key": "Cache-Control",
                     "value": "public, max-age=0, must-revalidate"
+                }
+            ]
+        },
+        {
+            "source": "/404.html",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=0, must-revalidate"
+                },
+                {
+                    "key": "X-Robots-Tag",
+                    "value": "noindex, follow"
                 }
             ]
         },

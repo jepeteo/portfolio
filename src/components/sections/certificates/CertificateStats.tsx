@@ -1,5 +1,6 @@
 import React from "react"
 import { Award, Calendar, Users, TrendingUp } from "lucide-react"
+import { certificateHighlight } from "../../../content/certificateModel"
 import { CertificateStats } from "../../../hooks/useCertificatesData"
 
 interface CertificateStatsProps {
@@ -10,6 +11,7 @@ interface CertificateStatsProps {
 export const CertificateStatsComponent: React.FC<CertificateStatsProps> = ({
   stats,
 }) => {
+  const highlight = certificateHighlight(stats)
   const statItems = [
     {
       icon: Award,
@@ -18,8 +20,8 @@ export const CertificateStatsComponent: React.FC<CertificateStatsProps> = ({
     },
     {
       icon: Calendar,
-      label: "Recent (This Year)",
-      value: stats.recentCount.toString(),
+      label: highlight.label,
+      value: highlight.value,
     },
     {
       icon: TrendingUp,

@@ -5,7 +5,7 @@ import { ThemeProvider } from "../../context/ThemeContext"
 import { navLinks } from "../../config/navigation"
 
 describe("Nav", () => {
-  it("renders the core navigation links in scroll order", () => {
+  it("renders core navigation as real links in the confirmed order", () => {
     render(
       <MemoryRouter>
         <ThemeProvider>
@@ -16,24 +16,18 @@ describe("Nav", () => {
 
     for (const link of navLinks) {
       expect(
-        screen.getByRole("button", { name: link.ariaLabel })
-      ).toBeInTheDocument()
+        screen.getByRole("link", { name: link.ariaLabel })
+      ).toHaveAttribute("href", link.href)
     }
 
     expect(
-      screen.getByRole("button", { name: /navigate to skills section/i })
+      screen.getByRole("link", { name: /navigate to engineering page/i })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole("button", { name: /navigate to projects section/i })
+      screen.getByRole("link", { name: /navigate to certifications page/i })
     ).toBeInTheDocument()
     expect(
-      screen.getByRole("button", { name: /navigate to experience section/i })
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole("button", { name: /navigate to services page/i })
-    ).toBeInTheDocument()
-    expect(
-      screen.queryByRole("button", { name: /web projects/i })
+      screen.queryByRole("button", { name: /navigate to skills section/i })
     ).not.toBeInTheDocument()
   })
 })

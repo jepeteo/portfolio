@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { ArrowUpRight, Clock } from "lucide-react"
 import type { ServiceItem } from "../../content/services"
 import { mapServiceIdToRequestType } from "../../content/services"
+import { serviceLandingPath } from "../../content/serviceLandings"
 import { useMotionConfig } from "../../hooks/useMotionConfig"
 
 type ServiceCardProps = {
@@ -18,7 +19,8 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   index = 0,
 }) => {
   const requestType = mapServiceIdToRequestType(service.id)
-  const contactHref = `/?type=${requestType}#contact`
+  const contactHref = `/contact?type=${requestType}`
+  const landingPath = serviceLandingPath(service.id)
   const { stagger } = useMotionConfig()
 
   return (
@@ -78,12 +80,22 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             )}
           </div>
 
-          <Link
-            to={contactHref}
-            className="inline-flex rounded-sm text-sm font-bold text-[var(--v2-brand)] transition-transform group-hover:translate-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-          >
-            Ask about this →
-          </Link>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            {landingPath ? (
+              <Link
+                to={landingPath}
+                className="inline-flex rounded-sm text-sm font-bold text-[var(--v2-text)] underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
+              >
+                Learn more
+              </Link>
+            ) : null}
+            <Link
+              to={contactHref}
+              className="inline-flex rounded-sm text-sm font-bold text-[var(--v2-brand)] transition-transform group-hover:translate-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+            >
+              Ask about this →
+            </Link>
+          </div>
         </div>
       </article>
     </motion.div>

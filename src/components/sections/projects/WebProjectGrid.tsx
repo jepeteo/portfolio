@@ -14,23 +14,14 @@ import {
   getWebProjectInitials,
   type WebProject,
 } from "../../../content/projects"
-import { generateWebProjectSchema } from "../../../content/schemas/projectsSchema"
 import type { ProjectTab } from "../../../config/navigation"
 import ProjectServiceTags from "../../services/ProjectServiceTags"
 import SurfaceCard from "../../ui/SurfaceCard"
 import ProjectCardOverlay from "./ProjectCardOverlay"
 import { BlurImage } from "../../system/loading/LoadingStates"
-import { useMotionConfig } from "../../../hooks/useMotionConfig"
+import { MotionCard } from "../../motion"
+import useMotionConfig from "../../../hooks/useMotionConfig"
 import { cn } from "../../../utils/styles"
-
-const ProjectSchema: React.FC<{ project: WebProject }> = ({ project }) => (
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{
-      __html: JSON.stringify(generateWebProjectSchema(project), null, 2),
-    }}
-  />
-)
 
 const v2Chip =
   "border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/60 text-[var(--v2-muted)]"
@@ -108,26 +99,27 @@ const WebProjectGrid: React.FC<WebProjectGridProps> = ({ type }) => {
   return (
     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {projects.map((project: WebProject, index: number) => (
-        <motion.div
+        <MotionCard
           key={project.id}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: stagger(index) }}
-          viewport={{ once: true, margin: "-40px" }}
+          index={index}
           className="group relative"
         >
-          <ProjectSchema project={project} />
-
           {project.featured && (
-            <div className="absolute -right-3 -top-3 z-20 flex items-center gap-1 rounded-full bg-[var(--v2-acid)] px-3 py-1.5 text-xs font-bold text-[var(--v2-acid-ink)] shadow-lg">
+            <motion.span
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: stagger(index) }}
+              className={`absolute -right-3 -top-3 z-20 flex items-center gap-1 rounded-full bg-[var(--v2-acid)] px-3 py-1.5 text-xs font-bold text-[var(--v2-acid-ink)] shadow-lg ${pulseClass}`}
+            >
               <Star className="h-3.5 w-3.5" aria-hidden="true" />
               Featured
-            </div>
+            </motion.span>
           )}
 
           <SurfaceCard
             interactive
-            className="h-full overflow-hidden p-0"
+            className="h-full overflow-hidden p-0 transition-shadow duration-300 hover:shadow-[var(--v2-shadow)] hover:ring-1 hover:ring-[var(--v2-acid)]/20 motion-reduce:transition-none"
           >
             <WebProjectThumbnail project={project} />
 
@@ -245,7 +237,7 @@ const WebProjectGrid: React.FC<WebProjectGridProps> = ({ type }) => {
               </div>
             </div>
           </SurfaceCard>
-        </motion.div>
+        </MotionCard>
       ))}
     </div>
   )

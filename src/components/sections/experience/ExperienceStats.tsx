@@ -2,6 +2,7 @@ import React from "react"
 import { Users, Activity, Briefcase, Code } from "lucide-react"
 import { ExperienceStats } from "../../../hooks/useExperienceData"
 import { Tooltip } from "../../ui/Tooltip"
+import { site } from "../../../config/site"
 
 interface StatItem {
   icon: React.ElementType
@@ -22,17 +23,17 @@ export const ExperienceStatsComponent: React.FC<ExperienceStatsProps> = ({
     {
       icon: Activity,
       label: "Total Experience",
-      value: `${stats.totalYears} Years`,
+      value: site.stats.yearsExperienceLabel,
     },
     {
       icon: Briefcase,
       label: "Projects Delivered",
-      value: `${stats.totalProjects}+`,
+      value: site.stats.projectCountLabel,
     },
     {
       icon: Users,
       label: "Clients Served",
-      value: `${stats.totalClients}+`,
+      value: site.stats.clientCountLabel,
     },
     {
       icon: Code,

@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { AlertTriangle, ArrowRight } from "lucide-react"
+import { MotionSection } from "../motion"
 
 const issues = [
   "WordPress critical errors",
@@ -12,7 +13,7 @@ const issues = [
 
 const EmergencyCTA: React.FC = () => {
   return (
-    <section
+    <MotionSection
       aria-labelledby="emergency-heading"
       className="relative py-12 md:py-16"
     >
@@ -32,7 +33,7 @@ const EmergencyCTA: React.FC = () => {
               </h2>
               <p className="mt-4 max-w-xl text-[var(--v2-muted)]">
                 If something is down or costing you leads, I can help diagnose and
-                fix it — fast turnaround when available, depending on scope. No
+                fix it. Fast turnaround when available, depending on scope. No
                 guesswork, no surprise invoices.
               </p>
 
@@ -57,7 +58,7 @@ const EmergencyCTA: React.FC = () => {
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <a
-                href="#contact"
+                href="/contact"
                 className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] px-6 py-3.5 text-center font-bold tracking-tight text-[var(--v2-text)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 Describe the problem
@@ -66,7 +67,7 @@ const EmergencyCTA: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
+    </MotionSection>
   )
 }
 

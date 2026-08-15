@@ -60,6 +60,12 @@ export const ExperienceSidebar: React.FC<ExperienceSidebarProps> = ({
                       title="Freelance"
                     />
                   )}
+                  {experience.overlapsFreelance && !experience.isFreelance && (
+                    <div
+                      className="h-1.5 w-1.5 rounded-full bg-[var(--v2-soft)]"
+                      title="Overlaps freelance practice"
+                    />
+                  )}
                   {experience.status === "current" && (
                     <div
                       className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--v2-ok)]"
