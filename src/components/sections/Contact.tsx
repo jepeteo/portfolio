@@ -39,10 +39,7 @@ const fieldErrorOrder = ["name", "email", "websiteUrl", "message"] as const
 const focusFirstInvalidField = (fieldErrors: ContactFormErrors) => {
   const firstId = fieldErrorOrder.find((id) => fieldErrors[id])
   if (!firstId) return
-  // Wait for React to flush aria-invalid / error text before focusing.
-  queueMicrotask(() => {
-    document.getElementById(firstId)?.focus()
-  })
+  document.getElementById(firstId)?.focus()
 }
 interface FormFieldProps {
   id: string
@@ -248,6 +245,16 @@ const Contact: React.FC = memo(() => {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle")
+  const pendingFocusRef = React.useRef(false)
+
+  useEffect(() => {
+    if (!pendingFocusRef.current) return
+    if (!Object.keys(errors).some((key) => Boolean(errors[key as keyof ContactFormErrors]))) {
+      return
+    }
+    pendingFocusRef.current = false
+    focusFirstInvalidField(errors)
+  }, [errors])
 
   const [csrfToken, setCsrfToken] = useState("")
   const [honeypot, setHoneypot] = useState("")
@@ -362,7 +369,7 @@ const Contact: React.FC = memo(() => {
 
       const fieldErrors = validateForm()
       if (fieldErrors) {
-        focusFirstInvalidField(fieldErrors)
+        pendingFocusRef.current = true
         return
       }
 

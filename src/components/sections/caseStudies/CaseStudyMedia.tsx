@@ -1,6 +1,10 @@
-import React, { useState } from "react"
+import React from "react"
 import type { CaseStudy } from "../../../content/caseStudies"
-import { projectImageSrc } from "../../../content/caseStudies"
+import {
+  projectImageSizes,
+  projectImageSrc,
+  projectImageSrcSet,
+} from "../../../content/caseStudies"
 
 type CaseStudyMediaProps = {
   study: CaseStudy
@@ -14,40 +18,31 @@ const CaseStudyMedia: React.FC<CaseStudyMediaProps> = ({
   variant = "embedded",
 }) => {
   const src = projectImageSrc(study.imageSlug)
-  const [status, setStatus] = useState<"pending" | "ready" | "failed">(
-    src ? "pending" : "failed"
-  )
+  const srcSet = projectImageSrcSet(study.imageSlug)
+  const [failed, setFailed] = React.useState(false)
   const frameClass =
     variant === "standalone"
       ? "rounded-3xl border border-[var(--v2-line)]"
       : "border-b border-[var(--v2-line)]"
 
-  if (src && status !== "failed") {
-    const image = (
-      <img
-        src={src}
-        alt={`${study.title} website screenshot`}
-        width={1280}
-        height={720}
-        loading={eager ? "eager" : "lazy"}
-        decoding="async"
-        className={
-          status === "ready"
-            ? "h-full w-full object-cover object-top"
-            : "hidden"
-        }
-        onLoad={() => setStatus("ready")}
-        onError={() => setStatus("failed")}
-      />
-    )
-
-    if (status !== "ready") return image
-
+  if (src && !failed) {
     return (
       <div
         className={`relative aspect-video overflow-hidden bg-[var(--v2-panel-2)] ${frameClass}`}
       >
-        {image}
+        <img
+          src={src}
+          srcSet={srcSet}
+          sizes={projectImageSizes}
+          alt={`${study.title} website screenshot`}
+          width={1280}
+          height={720}
+          loading={eager ? "eager" : "lazy"}
+          decoding={eager ? "sync" : "async"}
+          fetchPriority={eager ? "high" : "auto"}
+          className="h-full w-full object-cover object-top"
+          onError={() => setFailed(true)}
+        />
       </div>
     )
   }

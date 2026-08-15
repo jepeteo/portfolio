@@ -3,6 +3,8 @@ import { Link, useSearchParams } from "react-router-dom"
 import {
   allNormalizedProjects,
   archiveImageSrc,
+  archiveImageSrcSet,
+  archiveImageSizes,
   engineeringProjects,
   projectTaxonomyLabel,
   publicProjectDescription,
@@ -30,6 +32,7 @@ const labelize = projectTaxonomyLabel
 
 const ArchiveCard: React.FC<{ project: NormalizedProject }> = ({ project }) => {
   const src = archiveImageSrc(project)
+  const srcSet = archiveImageSrcSet(project)
   const [failed, setFailed] = React.useState(false)
   const showImage = Boolean(src) && !failed
 
@@ -42,6 +45,8 @@ const ArchiveCard: React.FC<{ project: NormalizedProject }> = ({ project }) => {
         <div className="aspect-video overflow-hidden bg-[var(--v2-panel-2)]">
           <img
             src={src}
+            srcSet={srcSet}
+            sizes={archiveImageSizes}
             alt={`${project.title} screenshot`}
             width={1280}
             height={720}

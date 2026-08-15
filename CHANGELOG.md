@@ -26,7 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Homepage certifications preview is an 8-item cross-disciplinary selection. All 69 credentials remain on /certifications.
 - Page and section reveals complete in about 350ms. Header navigation no longer fades in over a long delay.
 - Contact form sets `aria-invalid` only when a field has a validation error. Valid or untouched fields omit the attribute.
-- Analytics (PostHog, Vercel Analytics / Speed Insights) stay off in local DEV. Unknown SPA paths keep client `noindex` because the Vercel rewrite serves `index.html` for all routes.
+- Analytics (PostHog, Vercel Analytics / Speed Insights) stay off in local DEV and localhost previews.
+- Unknown URLs now serve `dist/404.html` with HTTP 404 and `noindex,follow` before JavaScript. Valid archive project pages are prerendered as static shells.
+- Homepage H1 paints without framer-motion. Below-fold homepage sections load after the first idle/frame so they do not compete with LCP.
+- Critical Inter 400 / Space Grotesk 700 faces are served once from `/fonts` (preloaded) instead of duplicating fontsource copies.
+- Fixed Vite `manualChunks` so `react/jsx-runtime` stays in `react-vendor` instead of the framer-motion chunk (which previously forced motion on every route before paint).
+- Prerendered LCP heading shells sit outside `#root` and are adopted into the React tree as the same DOM node so hydration does not reset LCP.
+- Oversized project screenshots are recompressed with responsive `-480` / `-768` WebP variants.
 
 ### Confirmed still outstanding
 

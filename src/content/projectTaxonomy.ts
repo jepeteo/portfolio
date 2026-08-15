@@ -56,6 +56,17 @@ export const archiveImageSrc = (
   return REACT_ARCHIVE_IMAGES[project.id]
 }
 
+export const archiveImageSrcSet = (
+  project: Pick<NormalizedProject, "id" | "imageSlug">
+) => {
+  if (!project.imageSlug) return undefined
+  const base = `/images/projects/${project.imageSlug}`
+  return `${base}-480.webp 480w, ${base}-768.webp 768w, ${base}.webp 1280w`
+}
+
+export const archiveImageSizes =
+  "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+
 export type ProjectSource = "wordpress" | "web" | "react"
 
 export type EngineeringTrack =

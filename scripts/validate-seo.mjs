@@ -122,7 +122,7 @@ function validatePrerender() {
       errors.push(`prerender: ${route} missing Open Graph title or image`)
     }
 
-    if (meta.crawlableHtml && !html.includes("<h1>")) {
+    if (meta.crawlableHtml && !/<h1[\s>]/.test(html)) {
       errors.push(`prerender: ${route} missing crawlable h1`)
     }
 
@@ -130,7 +130,7 @@ function validatePrerender() {
       if (!html.includes('id="static-crawl-fallback"')) {
         errors.push("prerender: home missing static-crawl-fallback article")
       }
-      if (!html.includes("<h1>")) {
+      if (!/<h1[\s>]/.test(html)) {
         errors.push("prerender: home missing crawlable h1")
       }
       if (html.includes('"@type": "FAQPage"')) {
@@ -194,6 +194,29 @@ function validatePrerender() {
       if (!html.includes('"@type": "BreadcrumbList"')) {
         errors.push(`prerender: ${route} missing BreadcrumbList JSON-LD`)
       }
+    }
+  }
+
+  const notFound = path.join(distDir, "404.html")
+  if (!fs.existsSync(notFound)) {
+    errors.push("prerender: missing dist/404.html")
+  } else {
+    const html = fs.readFileSync(notFound, "utf8")
+    if (!/noindex/i.test(html)) {
+      errors.push("prerender: 404.html missing noindex robots")
+    }
+    if (
+      !html.includes("Page not found") &&
+      !html.includes("This page is not here")
+    ) {
+      errors.push("prerender: 404.html missing not-found title/copy")
+    }
+    if (
+      html.includes(
+        'rel="canonical" href="https://www.theodorosmentis.com/"'
+      )
+    ) {
+      errors.push("prerender: 404.html must not use homepage canonical")
     }
   }
 }

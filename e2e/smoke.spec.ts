@@ -60,9 +60,52 @@ test("service card learn more navigates to landing page", async ({ page }) => {
   await expect(page).toHaveURL(/\/services\/technical-seo-audit/)
 })
 
-test("unknown routes render a real 404", async ({ page }) => {
+test("unknown routes render a real 404", async ({ page, request }) => {
+  const response = await request.get("/this-page-does-not-exist")
+  expect(response.status()).toBe(404)
+  const html = await response.text()
+  expect(html).toMatch(/noindex/i)
+  expect(html).toMatch(/Page not found|This page is not here/i)
+  expect(html).not.toMatch(/<h1>I build and rescue reliable digital systems/i)
+
   await page.goto("/this-page-does-not-exist")
   await expect(page.locator("h1")).toContainText(/not here/i)
+})
+
+test("known routes return HTTP 200 with route-specific static meta", async ({
+  request,
+}) => {
+  const checks = [
+    {
+      path: "/",
+      title: /Theodoros Mentis \| Senior Full-Stack Engineer/,
+      robots: /index/i,
+    },
+    {
+      path: "/projects",
+      title: /Projects and Case Studies/,
+      robots: /index/i,
+    },
+    {
+      path: "/projects/mtx-clinic-app",
+      title: /MTX Clinic App/,
+      robots: /index/i,
+    },
+    {
+      path: "/services/emergency-website-help",
+      title: /Emergency WordPress Help/,
+      robots: /index/i,
+    },
+  ]
+
+  for (const check of checks) {
+    const response = await request.get(check.path)
+    expect(response.status(), check.path).toBe(200)
+    const html = await response.text()
+    expect(html).toMatch(check.title)
+    expect(html).toMatch(/rel="canonical"/)
+    expect(html).toMatch(check.robots)
+  }
 })
 
 test("in-app navigation starts at the top of the next page", async ({

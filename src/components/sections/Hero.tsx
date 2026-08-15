@@ -1,10 +1,9 @@
 import React, { memo } from "react"
 import { Link } from "react-router-dom"
-import { motion } from "framer-motion"
-import { ArrowRight, Wrench } from "lucide-react"
 import useReducedMotion from "../../hooks/useReducedMotion"
-import useMotionConfig from "../../hooks/useMotionConfig"
-import { AnimatedTerminal, TiltCard } from "../motion"
+import { useAdoptedLcpHeading } from "../../hooks/useAdoptedLcpHeading"
+import AnimatedTerminal from "../motion/AnimatedTerminal"
+import TiltCard from "../motion/TiltCard"
 import HeroSystemNodes from "./HeroSystemNodes"
 import { site } from "../../config/site"
 
@@ -23,6 +22,39 @@ const terminalLines = [
   { text: "→ fixed quote before work starts" },
 ]
 
+const heroHeadingClassName =
+  "font-display text-[clamp(2.6rem,7vw,5.25rem)] font-extrabold leading-[0.95] tracking-tight text-[var(--v2-text)] [text-wrap:balance]"
+
+const IconWrench: React.FC = () => (
+  <svg
+    className="h-4 w-4"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+  </svg>
+)
+
+const IconArrowRight: React.FC = () => (
+  <svg
+    className="h-4 w-4"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M5 12h14" />
+    <path d="m12 5 7 7-7 7" />
+  </svg>
+)
 const HeroDiagnosticConsole: React.FC = () => (
   <TiltCard className="group h-full" enableGlow>
     <aside
@@ -85,16 +117,10 @@ const HeroDiagnosticConsole: React.FC = () => (
 
 const Hero: React.FC = memo(() => {
   const prefersReducedMotion = useReducedMotion()
-  const { stagger } = useMotionConfig()
-
-  const fadeIn = (index: number) =>
-    prefersReducedMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 12 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.35, delay: stagger(index) },
-        }
+  const { slotRef, renderReactHeading } = useAdoptedLcpHeading(
+    "hero-heading",
+    heroHeadingClassName
+  )
 
   return (
     <section
@@ -107,8 +133,7 @@ const Hero: React.FC = memo(() => {
       <div className="container relative z-10">
         <div className="grid items-stretch gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           <div className="min-w-0">
-            <motion.ul
-              {...fadeIn(0)}
+            <ul
               className="mb-7 flex flex-wrap gap-2"
               aria-label="Availability and focus"
             >
@@ -127,37 +152,30 @@ const Hero: React.FC = memo(() => {
               <li className="inline-flex items-center rounded-full border border-[var(--v2-line)] bg-[var(--v2-panel)] px-3 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--v2-muted)]">
                 WordPress · Woo · React · DNS
               </li>
-            </motion.ul>
+            </ul>
 
-            <motion.h1
-              {...fadeIn(1)}
-              id="hero-heading"
-              className="font-display text-[clamp(2.6rem,7vw,5.25rem)] font-extrabold leading-[0.95] tracking-tight text-[var(--v2-text)] [text-wrap:balance]"
-            >
-              I build and rescue{" "}
-              <span className="bg-[linear-gradient(120deg,var(--v2-brand),var(--v2-brand-2)_55%,var(--v2-acid))] bg-clip-text text-transparent">
-                reliable digital systems.
-              </span>
-            </motion.h1>
+            <div ref={slotRef} />
+            {renderReactHeading ? (
+              <h1 id="hero-heading" className={heroHeadingClassName}>
+                I build and rescue{" "}
+                <span className="bg-[linear-gradient(120deg,var(--v2-brand),var(--v2-brand-2)_55%,var(--v2-acid))] bg-clip-text text-transparent">
+                  reliable digital systems.
+                </span>
+              </h1>
+            ) : null}
 
-            <motion.p
-              {...fadeIn(2)}
-              className="mt-7 max-w-xl text-lg text-[var(--v2-muted)] md:text-xl"
-            >
+            <p className="mt-7 max-w-xl text-lg text-[var(--v2-muted)] md:text-xl">
               {site.title} with {site.stats.yearsExperienceLabel} years across
               WordPress, WooCommerce, React, infrastructure and automation.
               Now expanding into fintech.
-            </motion.p>
+            </p>
 
-            <motion.div
-              {...fadeIn(3)}
-              className="mt-8 flex flex-col gap-3 md:flex-row md:flex-nowrap"
-            >
+            <div className="mt-8 flex flex-col gap-3 md:flex-row md:flex-nowrap">
               <Link
                 to="/services"
                 className="inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-full bg-[var(--v2-acid)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-acid-ink)] shadow-[0_18px_48px_-12px_var(--v2-acid)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_56px_-10px_var(--v2-acid)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
-                <Wrench className="h-4 w-4" aria-hidden="true" />
+                <IconWrench />
                 I need help with a website
               </Link>
               <Link
@@ -165,17 +183,14 @@ const Hero: React.FC = memo(() => {
                 className="inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-text)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--v2-shadow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 Explore my engineering portfolio
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                <IconArrowRight />
               </Link>
-            </motion.div>
+            </div>
           </div>
 
-          <motion.div
-            {...fadeIn(2)}
-            className="min-w-0"
-          >
+          <div className="min-w-0">
             <HeroDiagnosticConsole />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

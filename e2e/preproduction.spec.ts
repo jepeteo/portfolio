@@ -83,19 +83,24 @@ test("contact aria-invalid follows custom errors after empty submit", async ({
   page,
 }) => {
   await page.goto("/contact")
-  // Timing bot check requires 3s after mount before custom validation runs.
-  await page.waitForTimeout(3100)
-  // Dispatch submit so custom validation runs (native required would block a click).
+  // startTime is set when Contact mounts (after hydration). Wait for the form,
+  // then wait past the 3s bot-timing gate before submitting.
+  await page.locator("#name").waitFor({ state: "visible" })
+  await page.waitForTimeout(3200)
+  // Bypass native constraint validation so the React submit handler runs.
   await page.locator("form").evaluate((form) => {
-    form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }))
+    ;(form as HTMLFormElement).noValidate = true
+    ;(form as HTMLFormElement).requestSubmit()
   })
 
-  await expect(page.locator("#name")).toBeFocused()
   await expect(page.locator("#name")).toHaveAttribute("aria-invalid", "true")
   await expect(page.locator("#name")).toHaveAttribute(
     "aria-describedby",
     "name-error"
   )
+  await expect
+    .poll(async () => page.locator("#name").evaluate((el) => el === document.activeElement))
+    .toBe(true)
   await expect(page.locator("#email")).toHaveAttribute("aria-invalid", "true")
   await expect(page.locator("#message")).toHaveAttribute("aria-invalid", "true")
 

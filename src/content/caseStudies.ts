@@ -31,6 +31,16 @@ export type CaseStudy = {
 export const projectImageSrc = (imageSlug?: string) =>
   imageSlug ? `/images/projects/${imageSlug}.webp` : undefined
 
+/** Responsive candidates for project screenshots (primary + optional variants). */
+export const projectImageSrcSet = (imageSlug?: string) => {
+  if (!imageSlug) return undefined
+  const base = `/images/projects/${imageSlug}`
+  return `${base}-480.webp 480w, ${base}-768.webp 768w, ${base}.webp 1280w`
+}
+
+export const projectImageSizes =
+  "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 640px"
+
 /**
  * Featured case studies for the homepage.
  * Only named, verified work. Do not add composite examples here.

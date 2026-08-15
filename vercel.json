@@ -8,10 +8,14 @@
             "permanent": true
         }
     ],
-    "rewrites": [
+    "routes": [
         {
-            "source": "/((?!api/|sw\\.js$).*)",
-            "destination": "/index.html"
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*)",
+            "status": 404,
+            "dest": "/404.html"
         }
     ],
     "headers": [
@@ -21,6 +25,19 @@
                 {
                     "key": "Cache-Control",
                     "value": "public, max-age=0, must-revalidate"
+                }
+            ]
+        },
+        {
+            "source": "/404.html",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=0, must-revalidate"
+                },
+                {
+                    "key": "X-Robots-Tag",
+                    "value": "noindex, follow"
                 }
             ]
         },

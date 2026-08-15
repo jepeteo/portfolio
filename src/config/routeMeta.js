@@ -41,8 +41,12 @@ function serviceJsonLd({ path, name, description, serviceType }) {
   }
 }
 
-const homeCrawlableHtml = `<article id="static-crawl-fallback" aria-label="Page summary">
-  <h1>I build and rescue reliable digital systems.</h1>
+const homeCrawlableHtml = `<div id="lcp-static-shell" class="v2-grid-bg relative overflow-hidden pt-20 pb-12 md:pt-24 md:pb-16">
+  <div class="container relative z-10">
+    <h1 id="lcp-static-heading" class="font-display text-[clamp(2.6rem,7vw,5.25rem)] font-extrabold leading-[0.95] tracking-tight text-[var(--v2-text)] [text-wrap:balance]">I build and rescue <span class="bg-[linear-gradient(120deg,var(--v2-brand),var(--v2-brand-2)_55%,var(--v2-acid))] bg-clip-text text-transparent">reliable digital systems.</span></h1>
+  </div>
+</div>
+<article id="static-crawl-fallback" class="sr-only" aria-label="Page summary">
   <p>Senior full-stack engineer with 18+ years across WordPress, WooCommerce, React, infrastructure and automation. Now expanding into fintech.</p>
   <nav aria-label="Primary links">
     <a href="/services">I need help with a website</a>
@@ -210,8 +214,14 @@ export const routeMeta = {
       "Client websites, WordPress and WooCommerce work, React apps, and technical rescues. Archive of delivered projects with filters and case studies.",
     canonicalPath: "/projects",
     ogType: "website",
-    crawlableHtml: `<article id="static-crawl-fallback" aria-label="Page summary">
-  <h1>Projects and case studies.</h1>
+    crawlableHtml: `<div id="lcp-static-shell" class="v2-grid-bg relative overflow-hidden pt-28 pb-12 md:pt-32 md:pb-16">
+  <div class="container relative z-10 mx-auto max-w-6xl px-6">
+    <p class="m-0 font-mono text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--v2-acid)]">Projects</p>
+    <h1 id="lcp-static-heading" class="mt-4 max-w-4xl font-display text-[clamp(2.2rem,5.5vw,4.25rem)] font-bold leading-[0.95] tracking-tight text-[var(--v2-text)] [text-wrap:balance]">Client delivery, WordPress, and product work in one archive.</h1>
+    <p id="lcp-static-subtitle" class="mt-5 max-w-2xl text-lg text-[var(--v2-muted)] md:text-xl">Explore selected client delivery, product work and technical experiments by domain, role and technology.</p>
+  </div>
+</div>
+<article id="static-crawl-fallback" class="sr-only" aria-label="Page summary">
   <p>WordPress, WooCommerce, React, and technical rescue work for businesses and agencies.</p>
   <nav aria-label="Primary links"><a href="/">Home</a><a href="/engineering">Engineering</a></nav>
 </article>`,
@@ -410,7 +420,16 @@ export const routeMeta = {
       "Request a quote or emergency website help. Name, email, and a short description of the problem is enough to start.",
     canonicalPath: "/contact",
     ogType: "website",
-    crawlableHtml: `<article id="static-crawl-fallback"><h1>Contact</h1><p>Request a quote or emergency website help.</p></article>`,
+    crawlableHtml: `<div id="lcp-static-shell" class="v2-grid-bg relative overflow-hidden pt-24 pb-6 md:pt-28 md:pb-8">
+  <div class="container relative z-10 mx-auto max-w-6xl px-6">
+    <p class="m-0 font-mono text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--v2-acid)]">Contact</p>
+    <h1 id="lcp-static-heading" class="mt-3 max-w-4xl font-display text-[clamp(1.85rem,4.5vw,3.25rem)] font-bold leading-[0.95] tracking-tight text-[var(--v2-text)] [text-wrap:balance]">Name, email, and what you need.</h1>
+    <p id="lcp-static-subtitle" class="mt-3 max-w-2xl text-base text-[var(--v2-muted)] md:text-lg">A website URL helps for fixes, DNS, and SEO. Optional selectors stay collapsed until you need them.</p>
+  </div>
+</div>
+<article id="static-crawl-fallback" class="sr-only" aria-label="Page summary">
+  <p>Request a quote or emergency website help.</p>
+</article>`,
     jsonLd: [
       {
         "@type": "ContactPage",
