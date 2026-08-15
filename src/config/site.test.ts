@@ -8,7 +8,7 @@ describe("site identity", () => {
     expect(site.url).toBe(SITE_URL)
     expect(site.social.github).toBe("https://github.com/jepeteo")
     expect(site.social.linkedin).toBe(
-      "https://www.linkedin.com/in/theodorosmentis/"
+      "https://www.linkedin.com/in/thmentis/"
     )
     expect(site.cvPath).toBe("/cv/Theodoros-Mentis-CV.pdf")
   })

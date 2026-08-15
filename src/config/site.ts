@@ -29,7 +29,7 @@ export const site = {
   originCountry: "GR",
   social: {
     github: "https://github.com/jepeteo",
-    linkedin: "https://www.linkedin.com/in/theodorosmentis/",
+    linkedin: "https://www.linkedin.com/in/thmentis/",
   },
   ogImageSocial: "/social-card.webp",
   personImage: "/images/teo-square.webp",

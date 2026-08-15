@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed Vite `manualChunks` so `react/jsx-runtime` stays in `react-vendor` instead of the framer-motion chunk (which previously forced motion on every route before paint).
 - Prerendered LCP heading shells sit outside `#root` and are adopted into the React tree as the same DOM node so hydration does not reset LCP.
 - Oversized project screenshots are recompressed with responsive `-480` / `-768` WebP variants.
+- Public LinkedIn profile URL is `https://www.linkedin.com/in/thmentis/`.
 
 ### Confirmed still outstanding
 

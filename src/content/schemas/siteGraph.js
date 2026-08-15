@@ -37,7 +37,7 @@ const person = {
   },
   sameAs: [
     "https://github.com/jepeteo",
-    "https://www.linkedin.com/in/theodorosmentis/",
+    "https://www.linkedin.com/in/thmentis/",
   ],
   jobTitle: "Senior Full-Stack Engineer",
   description:

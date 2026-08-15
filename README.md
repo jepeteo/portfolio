@@ -283,7 +283,7 @@ This is a personal portfolio project, but suggestions and feedback are welcome! 
 - Email: [contact@theodorosmentis.com](mailto:contact@theodorosmentis.com)
 - Website: [theodorosmentis.com](https://www.theodorosmentis.com)
 - GitHub: [@jepeteo](https://github.com/jepeteo)
-- LinkedIn: [theodorosmentis](https://www.linkedin.com/in/theodorosmentis/)
+- LinkedIn: [thmentis](https://www.linkedin.com/in/thmentis/)
 
 ## 📄 License
 
