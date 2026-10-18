@@ -792,7 +792,7 @@ var CANONICAL_ORIGINS = /* @__PURE__ */ new Set([
   "https://www.theodorosmentis.com",
   "https://theodorosmentis.com"
 ]);
-var DEFAULT_FROM = "Portfolio <notifications@send.theodorosmentis.com>";
+var DEFAULT_FROM = "Theodoros Mentis <notifications@theodorosmentis.com>";
 var DEFAULT_TO = "contact@theodorosmentis.com";
 function isAllowedOrigin(origin) {
   if (!origin) return false;

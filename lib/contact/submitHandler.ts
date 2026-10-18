@@ -130,7 +130,7 @@ const CANONICAL_ORIGINS = new Set([
   "https://theodorosmentis.com",
 ])
 
-const DEFAULT_FROM = "Portfolio <notifications@send.theodorosmentis.com>"
+const DEFAULT_FROM = "Theodoros Mentis <notifications@theodorosmentis.com>"
 const DEFAULT_TO = "contact@theodorosmentis.com"
 
 function isAllowedOrigin(origin: string): boolean {

@@ -120,7 +120,7 @@ cp .env.example .env
 
 # Add your API keys to .env
 # RESEND_API_KEY=re_your_api_key
-# RESEND_FROM=Portfolio <notifications@send.theodorosmentis.com>
+# RESEND_FROM=Theodoros Mentis <notifications@theodorosmentis.com>
 # CONTACT_EMAIL=your_email@example.com
 # PUBLIC_SITE_ORIGIN=https://www.theodorosmentis.com
 # CSRF_SECRET=a-long-random-string
@@ -228,7 +228,7 @@ The project uses a modern design system with:
 
 - Contact form sends through Resend from `/api/contact`, with an HTML notification and a plain-text copy.
 - Production needs `RESEND_API_KEY`, `RESEND_FROM`, `CONTACT_EMAIL`, `PUBLIC_SITE_ORIGIN`, and `CSRF_SECRET`. See [Setup Guide](SETUP.md).
-- Sending address is `notifications@send.theodorosmentis.com` after that domain is verified in Resend.
+- Sending address is `notifications@theodorosmentis.com` on the verified domain.
 
 ## 🔄 Recent Improvements (October 2025)
 
@@ -249,11 +249,11 @@ Create a `.env` file in the root directory:
 
 ```env
 # Contact API / Resend (server-side)
-# Verify send.theodorosmentis.com in Resend, then set the same values in Vercel.
-# Until that domain is verified, test mail only delivers from onboarding@resend.dev
-# to the Resend account email.
+# Verify theodorosmentis.com in Resend, then set the same values in Vercel.
+# The DNS record named "send" is the return path. The From address stays on
+# the verified domain.
 RESEND_API_KEY=re_your_api_key
-RESEND_FROM=Portfolio <notifications@send.theodorosmentis.com>
+RESEND_FROM=Theodoros Mentis <notifications@theodorosmentis.com>
 CONTACT_EMAIL=your_email@example.com
 PUBLIC_SITE_ORIGIN=https://www.theodorosmentis.com
 CSRF_SECRET=a-long-random-string

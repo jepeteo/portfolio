@@ -42,18 +42,18 @@
 The form posts to `/api/contact`, which sends mail with Resend. `npm run dev` serves that route locally.
 
 1. **Create a Resend API key** at [resend.com/api-keys](https://resend.com/api-keys).
-2. **Verify a sending subdomain**, `send.theodorosmentis.com`, and add the DNS records Resend shows. Keeping them on `send.` leaves the domain that already receives `contact@theodorosmentis.com` alone.
+2. **Verify `theodorosmentis.com` in Resend** and add the DNS records it shows. The record named `send` is the return path. Mail is sent from `notifications@theodorosmentis.com`, which is on the verified domain.
 3. **Set the same variables locally and in the Vercel project:**
 
    ```bash
    RESEND_API_KEY=re_your_api_key
-   RESEND_FROM=Portfolio <notifications@send.theodorosmentis.com>
+   RESEND_FROM=Theodoros Mentis <notifications@theodorosmentis.com>
    CONTACT_EMAIL=contact@theodorosmentis.com
    PUBLIC_SITE_ORIGIN=https://www.theodorosmentis.com
    CSRF_SECRET=a-long-random-string
    ```
 
-Until `send.theodorosmentis.com` is verified, Resend only delivers test mail from `onboarding@resend.dev` to the Resend account email. The public mailto on the site stays `contact@theodorosmentis.com`.
+The public mailto on the site stays `contact@theodorosmentis.com`.
 
 ### Optional: Analytics
 
