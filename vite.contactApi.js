@@ -93,14 +93,14 @@ export function contactApiPlugin() {
           const vercelRes = toVercelResponse(res)
           if (url === "/api/contact/csrf") {
             const csrf = await server.ssrLoadModule(
-              path.resolve(server.config.root, "api/contact/csrf.ts")
+              path.resolve(server.config.root, "lib/contact/csrfHandler.ts")
             )
             csrf.default(vercelReq, vercelRes)
             return
           }
 
           const contact = await server.ssrLoadModule(
-            path.resolve(server.config.root, "api/contact/index.ts")
+            path.resolve(server.config.root, "lib/contact/submitHandler.ts")
           )
           await contact.default(vercelReq, vercelRes)
         } catch (error) {

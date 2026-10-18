@@ -1,6 +1,6 @@
 import crypto from "node:crypto"
 import { Resend } from "resend"
-import { verifyCsrf } from "../../lib/contactCsrf"
+import { verifyCsrf } from "../contactCsrf"
 import {
   detectBot,
   sanitizeContactFormData,

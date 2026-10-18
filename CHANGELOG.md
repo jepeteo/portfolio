@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Contact submissions send through Resend at `/api/contact` instead of EmailJS. The inbox message is an HTML layout with a matching plain-text copy. Reply-To is the visitor's address. `npm run dev` serves the contact routes locally.
-- The contact function imports CSRF helpers from `lib/contactCsrf.ts`, then the Vercel build bundles `/api/contact` into one file. A bare `./csrf` import crashed the sender with `ERR_MODULE_NOT_FOUND`.
+- Contact routes are bundled to `api/contact/*.js` before deploy. Vercel compiles a TypeScript entry in place and does not resolve extensionless local imports, which crashed `/api/contact` with `ERR_MODULE_NOT_FOUND`.
 - Production contact mail needs `RESEND_API_KEY`, `RESEND_FROM`, `CONTACT_EMAIL`, `PUBLIC_SITE_ORIGIN`, and `CSRF_SECRET`. Mail is sent from `notifications@send.theodorosmentis.com` after that domain is verified in Resend. The public address stays `contact@theodorosmentis.com`.
 - Public copy no longer uses em dashes. Sentences use periods, commas, or "to" instead.
 - Visitor-facing copy no longer explains redesign decisions. Identity is consistently Senior Full-Stack Engineer. Public archive size is distinguished from 390+ delivered projects.

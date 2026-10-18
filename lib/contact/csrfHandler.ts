@@ -2,7 +2,7 @@ import {
   buildCsrfCookie,
   createCsrfToken,
   requestIsHttps,
-} from "../../lib/contactCsrf"
+} from "../contactCsrf"
 
 type VercelRequest = {
   method?: string
