@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Contact submissions send through Resend at `/api/contact` instead of EmailJS. The inbox message is an HTML layout with a matching plain-text copy. Reply-To is the visitor's address. `npm run dev` serves the contact routes locally.
+- Production contact mail needs `RESEND_API_KEY`, `RESEND_FROM`, `CONTACT_EMAIL`, `PUBLIC_SITE_ORIGIN`, and `CSRF_SECRET`. Mail is sent from `notifications@send.theodorosmentis.com` after that domain is verified in Resend. The public address stays `contact@theodorosmentis.com`.
 - Public copy no longer uses em dashes. Sentences use periods, commas, or "to" instead.
 - Visitor-facing copy no longer explains redesign decisions. Identity is consistently Senior Full-Stack Engineer. Public archive size is distinguished from 390+ delivered projects.
 - SPA route changes start at the top, restore back/forward scroll, and align hash targets below the sticky header.
@@ -42,11 +44,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Dual-audience information architecture: homepage is a decision page; archives live on dedicated routes (`/projects`, `/engineering`, `/experience`, `/certifications`, `/about`, `/contact`).
 - Services grouped as Rescue / Improve / Build, with the emergency route unchanged.
-- Contact form requires name, email, and message; optional selectors are collapsed. EmailJS / `api/contact` is unchanged.
+- Contact form requires name, email, and message; optional selectors are collapsed. Submissions go through Resend at `/api/contact`.
 - Certifications and projects use URL-backed search, filters, and pagination. All 69 certificates remain in the dataset.
 - Experience timeline states freelance overlap as concurrent work and uses identity stats from `src/config/site.ts`.
 - Skills are described by evidence of use, not percentage bars.
 - Homepage JSON-LD is WebSite + Person + ProfessionalService. FAQPage schema is only on `/about`. Per-page PortfolioSchema JSON-LD was removed from the layout.
+
+### Removed
+
+- Unused one-off scripts: `add-tech-to-projects`, `analyze-sites`, `interactive-tech-update`, `simple-categorize`, and `site-analysis-results.json`.
 
 ### Added
 

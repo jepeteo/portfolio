@@ -17,7 +17,7 @@ A high-performance, accessible portfolio website built with modern web technolog
 - **Experience Timeline**: Interactive work history with detailed descriptions
 - **Skills Matrix**: Categorized technical skills with proficiency indicators
 - **Certificates Gallery**: Professional certifications with filtering and stats
-- **Contact Form**: Email integration via EmailJS with real-time validation and rate limiting
+- **Contact Form**: Email via Resend with real-time validation and rate limiting
 - **Dark/Light Mode**: Seamless theme switching with system preference detection
 
 ### UX Enhancements (v0.1.0)
@@ -79,7 +79,7 @@ A high-performance, accessible portfolio website built with modern web technolog
 
 ### Integration & Analytics
 
-- **EmailJS** - Contact form integration
+- **Resend** - Contact form email
 - **PostHog** - Product analytics
 - **Vercel Analytics** - Performance tracking
 - **Service Workers** - Offline functionality
@@ -87,7 +87,7 @@ A high-performance, accessible portfolio website built with modern web technolog
 ### Deployment Header Notes
 
 - **Cross-Origin-Embedder-Policy**: Uses `credentialless` in production headers.
-- **Why not `require-corp`**: The site loads third-party analytics and contact-provider resources that may not return compatible CORP/CORS headers in every path.
+- **Why not `require-corp`**: The site loads third-party analytics resources that may not return compatible CORP/CORS headers in every path.
 - **Security stance**: Keep strict CSP and other security headers, but avoid unnecessary cross-origin isolation requirements that can block analytics/contact behavior.
 
 ### Development Tools
@@ -119,11 +119,11 @@ npm install
 cp .env.example .env
 
 # Add your API keys to .env
-# EMAILJS_SERVICE_ID=your_service_id
-# EMAILJS_TEMPLATE_ID=your_template_id
-# EMAILJS_PUBLIC_KEY=your_public_key
+# RESEND_API_KEY=re_your_api_key
+# RESEND_FROM=Portfolio <notifications@send.theodorosmentis.com>
 # CONTACT_EMAIL=your_email@example.com
-# PUBLIC_SITE_ORIGIN=https://theodorosmentis.com
+# PUBLIC_SITE_ORIGIN=https://www.theodorosmentis.com
+# CSRF_SECRET=a-long-random-string
 # VITE_POSTHOG_API_KEY=your_posthog_key
 # VITE_POSTHOG_HOST=https://eu.i.posthog.com
 ```
@@ -224,6 +224,12 @@ The project uses a modern design system with:
 - **Cumulative Layout Shift**: < 0.1
 - **Bundle Size**: 391KB (117KB gzipped)
 
+## Contact mail (October 2026)
+
+- Contact form sends through Resend from `/api/contact`, with an HTML notification and a plain-text copy.
+- Production needs `RESEND_API_KEY`, `RESEND_FROM`, `CONTACT_EMAIL`, `PUBLIC_SITE_ORIGIN`, and `CSRF_SECRET`. See [Setup Guide](SETUP.md).
+- Sending address is `notifications@send.theodorosmentis.com` after that domain is verified in Resend.
+
 ## 🔄 Recent Improvements (October 2025)
 
 - ✅ Migrated to Node.js 22
@@ -242,12 +248,15 @@ The project uses a modern design system with:
 Create a `.env` file in the root directory:
 
 ```env
-# Contact API / EmailJS configuration (server-side)
-EMAILJS_SERVICE_ID=your_service_id
-EMAILJS_TEMPLATE_ID=your_template_id
-EMAILJS_PUBLIC_KEY=your_public_key
+# Contact API / Resend (server-side)
+# Verify send.theodorosmentis.com in Resend, then set the same values in Vercel.
+# Until that domain is verified, test mail only delivers from onboarding@resend.dev
+# to the Resend account email.
+RESEND_API_KEY=re_your_api_key
+RESEND_FROM=Portfolio <notifications@send.theodorosmentis.com>
 CONTACT_EMAIL=your_email@example.com
-PUBLIC_SITE_ORIGIN=https://theodorosmentis.com
+PUBLIC_SITE_ORIGIN=https://www.theodorosmentis.com
+CSRF_SECRET=a-long-random-string
 
 # PostHog Analytics
 VITE_POSTHOG_API_KEY=your_posthog_key

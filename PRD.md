@@ -67,7 +67,7 @@ A comprehensive portfolio website designed to showcase expertise, experience, an
 ### Backend & Services
 
 - **Hosting**: Vercel
-- **Forms**: EmailJS + Formspree (dual backup)
+- **Forms**: Resend via `/api/contact` (CSRF, honeypot, and rate limit). Public mailto stays `contact@theodorosmentis.com`.
 - **Analytics**: Vercel Analytics + Speed Insights
 - **Domain**: Custom domain (theodorosmentis.com)
 
@@ -90,7 +90,7 @@ A comprehensive portfolio website designed to showcase expertise, experience, an
 - [x] **Experience Section** - Professional timeline with filtering
 - [x] **Projects Section** - Portfolio projects with pagination
 - [x] **Certificates Section** - Professional certifications
-- [x] **Contact Section** - Secure contact form with validation
+- [x] **Contact Section** - Secure contact form with validation. Submissions send through Resend.
 
 ### 🔧 Technical Features
 

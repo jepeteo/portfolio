@@ -2,10 +2,11 @@ import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import path from "path"
 import { previewNotFoundPlugin } from "./vite.previewNotFound.js"
+import { contactApiPlugin } from "./vite.contactApi.js"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), previewNotFoundPlugin()],
+  plugins: [react(), previewNotFoundPlugin(), contactApiPlugin()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

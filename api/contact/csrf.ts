@@ -49,9 +49,31 @@ function createToken(): string {
   return `${payload}.${sign(payload)}`
 }
 
-function buildCookie(token: string): string {
+function requestIsHttps(req: VercelRequest): boolean {
+  const forwarded = req.headers["x-forwarded-proto"]
+  const proto = Array.isArray(forwarded) ? forwarded[0] : forwarded
+  if (proto) {
+    return proto.split(",")[0].trim() === "https"
+  }
+
+  const hostHeader = req.headers.host
+  const host = (Array.isArray(hostHeader) ? hostHeader[0] : hostHeader) || ""
+  if (
+    host.startsWith("localhost:") ||
+    host.startsWith("127.0.0.1:") ||
+    host === "localhost" ||
+    host === "127.0.0.1"
+  ) {
+    return false
+  }
+
+  return true
+}
+
+function buildCookie(token: string, secure: boolean): string {
   const maxAge = TOKEN_TTL_MS / 1000
-  return `${CSRF_COOKIE_NAME}=${token}; Max-Age=${maxAge}; Path=/; HttpOnly; Secure; SameSite=Strict`
+  const secureFlag = secure ? "; Secure" : ""
+  return `${CSRF_COOKIE_NAME}=${token}; Max-Age=${maxAge}; Path=/; HttpOnly${secureFlag}; SameSite=Strict`
 }
 
 function extractCookieValue(cookieHeader: string | undefined, name: string): string {
@@ -119,6 +141,6 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   const token = createToken()
 
   res.setHeader("Cache-Control", "no-store")
-  res.setHeader("Set-Cookie", buildCookie(token))
+  res.setHeader("Set-Cookie", buildCookie(token, requestIsHttps(req)))
   res.status(200).json({ csrfToken: token })
 }

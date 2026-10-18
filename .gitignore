@@ -37,6 +37,7 @@ updateDescriptions.js
 .env.development
 .env.production
 .env.*
+!.env.example
 /src/docs/
 
 # Ignore root docs folder (except README)
@@ -57,6 +58,10 @@ nul
 # Test artifacts
 test-results/
 playwright-report/
+
+# Chrome user-data dirs written into the repo by Lighthouse on WSL
+*lighthouse.*
+undefined:
 
 # Local AI / automation artifacts
 .codex/

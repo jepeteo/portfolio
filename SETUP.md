@@ -39,21 +39,21 @@
 
 ### Required for Contact Form
 
-To enable the contact form, you need EmailJS credentials:
+The form posts to `/api/contact`, which sends mail with Resend. `npm run dev` serves that route locally.
 
-1. **Create EmailJS Account**
+1. **Create a Resend API key** at [resend.com/api-keys](https://resend.com/api-keys).
+2. **Verify a sending subdomain**, `send.theodorosmentis.com`, and add the DNS records Resend shows. Keeping them on `send.` leaves the domain that already receives `contact@theodorosmentis.com` alone.
+3. **Set the same variables locally and in the Vercel project:**
 
-   - Go to [EmailJS](https://www.emailjs.com/)
-   - Sign up for free account
-   - Create an email service
-   - Create an email template
-
-2. **Configure `.env.local`**
    ```bash
-   VITE_EMAILJS_SERVICE_ID=your_service_id_here
-   VITE_EMAILJS_TEMPLATE_ID=your_template_id_here
-   VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
+   RESEND_API_KEY=re_your_api_key
+   RESEND_FROM=Portfolio <notifications@send.theodorosmentis.com>
+   CONTACT_EMAIL=contact@theodorosmentis.com
+   PUBLIC_SITE_ORIGIN=https://www.theodorosmentis.com
+   CSRF_SECRET=a-long-random-string
    ```
+
+Until `send.theodorosmentis.com` is verified, Resend only delivers test mail from `onboarding@resend.dev` to the Resend account email. The public mailto on the site stays `contact@theodorosmentis.com`.
 
 ### Optional: Analytics
 

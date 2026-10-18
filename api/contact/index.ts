@@ -1,3 +1,5 @@
+import crypto from "node:crypto"
+import { Resend } from "resend"
 import { verifyCsrf } from "./csrf"
 import {
   detectBot,
@@ -123,8 +125,17 @@ function recordAttempt(fingerprint: string, shouldBlock = false) {
   })
 }
 
+const CANONICAL_ORIGINS = new Set([
+  "https://www.theodorosmentis.com",
+  "https://theodorosmentis.com",
+])
+
+const DEFAULT_FROM = "Portfolio <notifications@send.theodorosmentis.com>"
+const DEFAULT_TO = "contact@theodorosmentis.com"
+
 function isAllowedOrigin(origin: string): boolean {
   if (!origin) return false
+  if (CANONICAL_ORIGINS.has(origin)) return true
   const productionOrigin = process.env.PUBLIC_SITE_ORIGIN
   if (productionOrigin && origin === productionOrigin) {
     return true
@@ -132,45 +143,164 @@ function isAllowedOrigin(origin: string): boolean {
   return origin.startsWith("http://localhost:") || origin.startsWith("http://127.0.0.1:")
 }
 
-async function sendViaEmailJs(data: SecureContactFormData) {
-  const serviceId = process.env.EMAILJS_SERVICE_ID || process.env.VITE_EMAILJS_SERVICE_ID
-  const templateId = process.env.EMAILJS_TEMPLATE_ID || process.env.VITE_EMAILJS_TEMPLATE_ID
-  const publicKey = process.env.EMAILJS_PUBLIC_KEY || process.env.VITE_EMAILJS_PUBLIC_KEY
-  const toEmail = process.env.CONTACT_EMAIL || process.env.VITE_CONTACT_EMAIL
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+}
 
-  if (!serviceId || !templateId || !publicKey) {
+type DetailRow = {
+  label: string
+  text: string
+  href?: string
+}
+
+function present(value: string | undefined): string {
+  return value?.trim() ?? ""
+}
+
+function formatSubmittedAt(date: Date): string {
+  const formatted = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Berlin",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).format(date)
+  return `${formatted} Europe/Berlin`
+}
+
+function websiteHref(value: string): string | undefined {
+  const withProtocol = /^https?:\/\//i.test(value) ? value : `https://${value}`
+  try {
+    const url = new URL(withProtocol)
+    if (url.protocol !== "http:" && url.protocol !== "https:") return undefined
+    return url.href
+  } catch {
+    return undefined
+  }
+}
+
+function contactDetailRows(data: SecureContactFormData, submittedAt: string): DetailRow[] {
+  const rows: DetailRow[] = [
+    { label: "Name", text: data.name },
+    { label: "Email", text: data.email, href: `mailto:${data.email}` },
+  ]
+
+  const requestType = present(data.requestType)
+  const urgency = present(data.urgency)
+  const budget = present(data.budget)
+  const website = present(data.websiteUrl)
+  const sourcePage = present(data.sourcePage)
+
+  if (requestType) rows.push({ label: "Request type", text: requestType })
+  if (urgency) rows.push({ label: "Urgency", text: urgency })
+  if (budget) rows.push({ label: "Budget", text: budget })
+  if (website) rows.push({ label: "Website", text: website, href: websiteHref(website) })
+  if (sourcePage) rows.push({ label: "Source page", text: sourcePage })
+  rows.push({ label: "Submitted", text: submittedAt })
+
+  return rows
+}
+
+function renderContactText(data: SecureContactFormData, rows: DetailRow[]): string {
+  const details = rows.map((row) => `${row.label}: ${row.text}`).join("\n")
+  return [
+    "New enquiry",
+    "Theodoros Mentis",
+    "",
+    data.subject,
+    "",
+    data.message,
+    "",
+    details,
+    "",
+    "Reply to this email to reach the visitor.",
+  ].join("\n")
+}
+
+function renderDetailValue(row: DetailRow): string {
+  const text = escapeHtml(row.text)
+  if (!row.href) return text
+  return `<a href="${escapeHtml(row.href)}" style="color:#0369a1;text-decoration:underline;">${text}</a>`
+}
+
+function renderContactHtml(data: SecureContactFormData, rows: DetailRow[]): string {
+  const message = escapeHtml(data.message).replace(/\r\n|\n|\r/g, "<br />")
+  const detailRows = rows
+    .map(
+      (row) => `<tr>
+        <td style="padding:8px 16px 8px 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.4;color:#64748b;vertical-align:top;width:120px;">${escapeHtml(row.label)}</td>
+        <td style="padding:8px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.4;color:#0f172a;vertical-align:top;">${renderDetailValue(row)}</td>
+      </tr>`
+    )
+    .join("")
+
+  return `<!DOCTYPE html>
+<html lang="en">
+  <body style="margin:0;padding:0;background:#f4f6f8;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f8;">
+      <tr>
+        <td align="center" style="padding:24px 12px;">
+          <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="width:100%;max-width:560px;background:#ffffff;border-radius:4px;">
+            <tr>
+              <td style="background:#0369a1;padding:16px 24px;border-radius:4px 4px 0 0;">
+                <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:0.04em;text-transform:uppercase;color:#e0f2fe;">New enquiry</p>
+                <p style="margin:4px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.3;font-weight:bold;color:#ffffff;">Theodoros Mentis</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:24px;">
+                <h1 style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:20px;line-height:1.3;font-weight:bold;color:#0f172a;">${escapeHtml(data.subject)}</h1>
+                <div style="margin:0 0 24px;padding:16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.5;color:#0f172a;">${message}</div>
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${detailRows}</table>
+                <p style="margin:24px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.4;color:#64748b;">Reply to this email to reach the visitor.</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`
+}
+
+async function sendViaResend(data: SecureContactFormData, csrfToken: string) {
+  const apiKey = process.env.RESEND_API_KEY
+  const from = process.env.RESEND_FROM || DEFAULT_FROM
+  const toEmail = process.env.CONTACT_EMAIL || DEFAULT_TO
+
+  if (!apiKey) {
+    console.error("Contact email is not configured: RESEND_API_KEY is missing")
     throw new Error("Email provider is not configured")
   }
 
-  // NOTE: The EmailJS template must reference these variables so lead
-  // qualification fields appear in notification emails:
-  //   request_type, urgency, budget, website_url, source_page, submitted_at
-  const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      service_id: serviceId,
-      template_id: templateId,
-      user_id: publicKey,
-      template_params: {
-        from_name: data.name,
-        from_email: data.email,
-        subject: data.subject,
-        message: data.message,
-        request_type: data.requestType || "Not provided",
-        urgency: data.urgency || "Not provided",
-        budget: data.budget || "Not provided",
-        website_url: data.websiteUrl || "Not provided",
-        source_page: data.sourcePage || "Not provided",
-        submitted_at: new Date().toISOString(),
-        to_email: toEmail || "contact@theodorosmentis.com",
-        reply_to: data.email,
-      },
-    }),
-  })
+  const submittedAt = formatSubmittedAt(new Date())
+  const rows = contactDetailRows(data, submittedAt)
+  const text = renderContactText(data, rows)
+  const html = renderContactHtml(data, rows)
+  const idempotencyKey = `contact-form/${crypto.createHash("sha256").update(csrfToken).digest("hex")}`
 
-  if (!response.ok) {
-    throw new Error(`EmailJS request failed with status ${response.status}`)
+  const resend = new Resend(apiKey)
+  const { error } = await resend.emails.send(
+    {
+      from,
+      to: [toEmail],
+      replyTo: data.email,
+      subject: data.subject,
+      text,
+      html,
+    },
+    { idempotencyKey }
+  )
+
+  if (error) {
+    console.error("Resend rejected contact email", error)
+    throw new Error(error.message)
   }
 }
 
@@ -236,9 +366,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const sanitized = sanitizeContactFormData(secureData)
 
   try {
-    await sendViaEmailJs(sanitized)
+    await sendViaResend(sanitized, csrfToken)
     res.status(200).json({ success: true })
-  } catch {
+  } catch (error) {
+    console.error("Contact email failed", error)
     res.status(502).json({ error: "Email provider rejected the request" })
   }
 }
