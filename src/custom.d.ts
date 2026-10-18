@@ -36,5 +36,6 @@ interface ImportMeta {
     VITE_ENABLE_POSTHOG?: string
     VITE_POSTHOG_API_KEY?: string
     VITE_POSTHOG_HOST?: string
+    VITE_TURNSTILE_SITE_KEY?: string
   }
 }

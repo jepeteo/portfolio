@@ -52,6 +52,41 @@ function verifyCsrf(req, providedToken) {
   );
 }
 
+// lib/turnstile.ts
+var SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+async function verifyTurnstileToken(token, remoteIp) {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret || !token.trim()) {
+    return false;
+  }
+  const body = new URLSearchParams();
+  body.set("secret", secret);
+  body.set("response", token);
+  if (remoteIp && remoteIp !== "unknown") {
+    body.set("remoteip", remoteIp);
+  }
+  try {
+    const response = await fetch(SITEVERIFY_URL, {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body
+    });
+    if (!response.ok) {
+      console.error("Turnstile siteverify HTTP error", response.status);
+      return false;
+    }
+    const result = await response.json();
+    if (!result.success) {
+      console.error("Turnstile rejected contact submission", result["error-codes"] || []);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error("Turnstile siteverify failed", error);
+    return false;
+  }
+}
+
 // src/utils/validation.ts
 var sanitizeInput = (input) => {
   if (!input || typeof input !== "string") {
@@ -957,6 +992,17 @@ async function handler(req, res) {
     res.status(429).json({
       error: "Too many submissions. Please try again later.",
       retryAfterSeconds: rateLimit.retryAfterSec
+    });
+    return;
+  }
+  const turnstileOk = await verifyTurnstileToken(
+    payload.turnstileToken || "",
+    getClientIp(req)
+  );
+  if (!turnstileOk) {
+    recordAttempt(fingerprint, false);
+    res.status(400).json({
+      error: "Security check failed. Please try again."
     });
     return;
   }

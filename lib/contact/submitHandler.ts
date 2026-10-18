@@ -1,6 +1,7 @@
 import crypto from "node:crypto"
 import { Resend } from "resend"
 import { verifyCsrf } from "../contactCsrf"
+import { verifyTurnstileToken } from "../turnstile"
 import {
   detectBot,
   sanitizeContactFormData,
@@ -22,6 +23,7 @@ type VercelResponse = {
 
 type ContactPayload = SecureContactFormData & {
   csrfToken?: string
+  turnstileToken?: string
 }
 
 type RateLimitEntry = {
@@ -35,12 +37,9 @@ const RATE_LIMIT_MAX = 5
 const RATE_LIMIT_BLOCK_MS = 30 * 60 * 1000
 
 // Best-effort, per-instance rate limiting. This Map lives in the memory of a
-// single serverless instance and is NOT shared across instances or cold starts,
-// so it cannot guarantee a global limit. It is a cheap first line of defense
-// against bursts; combined with the CSRF double-submit token, honeypot, and
-// timing checks it is sufficient for a low-traffic contact form. For a hard
-// global guarantee, back this with a shared store (e.g. Upstash Redis / Vercel
-// KV) keyed by the request fingerprint.
+// single serverless instance and is not shared across instances or cold starts.
+// Cloudflare Turnstile is the bot gate. This limit only slows repeated submits
+// from the same IP and browser on one warm instance.
 const rateLimitStore = new Map<string, RateLimitEntry>()
 
 function getHeader(req: VercelRequest, key: string): string {
@@ -329,6 +328,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.status(429).json({
       error: "Too many submissions. Please try again later.",
       retryAfterSeconds: rateLimit.retryAfterSec,
+    })
+    return
+  }
+
+  const turnstileOk = await verifyTurnstileToken(
+    payload.turnstileToken || "",
+    getClientIp(req)
+  )
+  if (!turnstileOk) {
+    recordAttempt(fingerprint, false)
+    res.status(400).json({
+      error: "Security check failed. Please try again.",
     })
     return
   }

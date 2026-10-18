@@ -7,6 +7,7 @@ const CONTACT_ENV_KEYS = [
   "CONTACT_EMAIL",
   "PUBLIC_SITE_ORIGIN",
   "CSRF_SECRET",
+  "TURNSTILE_SECRET_KEY",
 ]
 
 function applyContactEnv(server) {

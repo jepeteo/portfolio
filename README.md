@@ -124,6 +124,8 @@ cp .env.example .env
 # CONTACT_EMAIL=your_email@example.com
 # PUBLIC_SITE_ORIGIN=https://www.theodorosmentis.com
 # CSRF_SECRET=a-long-random-string
+# VITE_TURNSTILE_SITE_KEY=your_turnstile_site_key
+# TURNSTILE_SECRET_KEY=your_turnstile_secret_key
 # VITE_POSTHOG_API_KEY=your_posthog_key
 # VITE_POSTHOG_HOST=https://eu.i.posthog.com
 ```
@@ -227,7 +229,8 @@ The project uses a modern design system with:
 ## Contact mail (October 2026)
 
 - Contact form sends through Resend from `/api/contact`, with an HTML notification and a plain-text copy.
-- Production needs `RESEND_API_KEY`, `RESEND_FROM`, `CONTACT_EMAIL`, `PUBLIC_SITE_ORIGIN`, and `CSRF_SECRET`. See [Setup Guide](SETUP.md).
+- Production needs `RESEND_API_KEY`, `RESEND_FROM`, `CONTACT_EMAIL`, `PUBLIC_SITE_ORIGIN`, `CSRF_SECRET`, `VITE_TURNSTILE_SITE_KEY`, and `TURNSTILE_SECRET_KEY`. See [Setup Guide](SETUP.md).
+- Submissions must pass Cloudflare Turnstile before mail is sent.
 - Sending address is `notifications@theodorosmentis.com` on the verified domain.
 
 ## 🔄 Recent Improvements (October 2025)
@@ -257,6 +260,8 @@ RESEND_FROM=Theodoros Mentis <notifications@theodorosmentis.com>
 CONTACT_EMAIL=your_email@example.com
 PUBLIC_SITE_ORIGIN=https://www.theodorosmentis.com
 CSRF_SECRET=a-long-random-string
+VITE_TURNSTILE_SITE_KEY=your_turnstile_site_key
+TURNSTILE_SECRET_KEY=your_turnstile_secret_key
 
 # PostHog Analytics
 VITE_POSTHOG_API_KEY=your_posthog_key

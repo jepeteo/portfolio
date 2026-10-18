@@ -25,6 +25,7 @@ export interface SecureContactFormData {
   csrfToken?: string
   timestamp?: number
   honeypot?: string // Bot detection
+  turnstileToken?: string
   sourcePage?: string // Page path the request was submitted from
 }
 

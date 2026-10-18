@@ -28,6 +28,10 @@ import {
 import { useToast } from "../ui/Toast"
 import ContactRequestFields from "../services/ContactRequestFields"
 import DiagnosticSummary from "./contact/DiagnosticSummary"
+import {
+  TurnstileField,
+  type TurnstileFieldHandle,
+} from "./contact/TurnstileField"
 import { site } from "../../config/site"
 import {
   requestTypeOptions,
@@ -258,6 +262,9 @@ const Contact: React.FC = memo(() => {
 
   const [csrfToken, setCsrfToken] = useState("")
   const [honeypot, setHoneypot] = useState("")
+  const [turnstileToken, setTurnstileToken] = useState("")
+  const turnstileRef = React.useRef<TurnstileFieldHandle>(null)
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || ""
   const [startTime] = useState(() => Date.now())
   const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set())
 
@@ -325,6 +332,10 @@ const Contact: React.FC = memo(() => {
     setTouchedFields((prev) => new Set(prev).add(fieldName))
   }, [])
 
+  const handleTurnstileToken = useCallback((token: string) => {
+    setTurnstileToken(token)
+  }, [])
+
   const resolvedSubject = useMemo(() => {
     if (formData.subject.trim().length >= 3) return formData.subject.trim()
     const typeLabel = requestTypeOptions.find(
@@ -382,6 +393,13 @@ const Contact: React.FC = memo(() => {
         return
       }
 
+      if (!turnstileToken) {
+        setErrors({
+          general: "Complete the security check before sending.",
+        })
+        return
+      }
+
       setIsSubmitting(true)
       setSubmitStatus("idle")
 
@@ -394,6 +412,7 @@ const Contact: React.FC = memo(() => {
           csrfToken: token,
           timestamp: startTime, // Use the form's start time for bot detection
           honeypot,
+          turnstileToken,
           sourcePage:
             typeof window !== "undefined"
               ? window.location.pathname + window.location.search
@@ -423,6 +442,7 @@ const Contact: React.FC = memo(() => {
                 "Something went wrong. Please try again or email me directly.",
             })
           }
+          turnstileRef.current?.reset()
           setSubmitStatus("error")
           return
         }
@@ -440,6 +460,7 @@ const Contact: React.FC = memo(() => {
         setErrors({})
         setSubmitStatus("success")
         setCsrfToken("")
+        turnstileRef.current?.reset()
         addToast({
           type: "success",
           title: "Message Sent!",
@@ -449,6 +470,7 @@ const Contact: React.FC = memo(() => {
 
         setTimeout(() => setSubmitStatus("idle"), 5000)
       } catch {
+        turnstileRef.current?.reset()
         setSubmitStatus("error")
         addToast({
           type: "error",
@@ -471,6 +493,7 @@ const Contact: React.FC = memo(() => {
       addToast,
       honeypot,
       resolvedSubject,
+      turnstileToken,
     ]
   )
 
@@ -757,6 +780,13 @@ const Contact: React.FC = memo(() => {
                 />
               </div>
 
+              <TurnstileField
+                ref={turnstileRef}
+                siteKey={turnstileSiteKey}
+                theme={isDark ? "dark" : "light"}
+                onToken={handleTurnstileToken}
+              />
+
               {errors.general && (
                 <div
                   role="alert"
@@ -770,7 +800,7 @@ const Contact: React.FC = memo(() => {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !turnstileToken}
                 className="flex w-full items-center justify-center gap-3 rounded-full bg-[var(--v2-acid)] px-8 py-4 font-bold tracking-tight text-[var(--v2-acid-ink)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 {isSubmitting ? (

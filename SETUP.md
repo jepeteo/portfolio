@@ -51,9 +51,13 @@ The form posts to `/api/contact`, which sends mail with Resend. `npm run dev` se
    CONTACT_EMAIL=contact@theodorosmentis.com
    PUBLIC_SITE_ORIGIN=https://www.theodorosmentis.com
    CSRF_SECRET=a-long-random-string
+   VITE_TURNSTILE_SITE_KEY=your_turnstile_site_key
+   TURNSTILE_SECRET_KEY=your_turnstile_secret_key
    ```
 
-The public mailto on the site stays `contact@theodorosmentis.com`.
+4. **Create a Cloudflare Turnstile widget** at [Turnstile](https://dash.cloudflare.com/?to=/:account/turnstile). Use managed mode and allow `theodorosmentis.com` and `www.theodorosmentis.com`. The site key is public (`VITE_TURNSTILE_SITE_KEY`). The secret stays on the server (`TURNSTILE_SECRET_KEY`). `/api/contact` rejects the submission when the token is missing or Cloudflare says it is invalid.
+
+The public mailto on the site stays `contact@theodorosmentis.com`. Local development can use Cloudflare's always-pass dummy keys from the [Turnstile testing docs](https://developers.cloudflare.com/turnstile/troubleshooting/testing/).
 
 ### Optional: Analytics
 
