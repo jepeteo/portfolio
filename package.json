@@ -20,7 +20,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/generate-sitemap.mjs && npm run prerender && npm run validate:seo",
+    "build": "vite build && node scripts/generate-sitemap.mjs && npm run prerender && npm run validate:seo && node scripts/bundle-contact-api.mjs",
     "prerender": "node scripts/prerender.mjs",
     "preview": "vite preview",
     "lint": "eslint .",

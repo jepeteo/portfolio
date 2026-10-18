@@ -13,6 +13,7 @@ dist
 dist-ssr
 *.local
 bundle-report.html
+/api/contact/*.js
 .lighthouseci
 lighthouse-report.html
 lighthouse-*.html
