@@ -25,8 +25,18 @@ export default tseslint.config(
       '.lighthouseci/**',
       'clean-comments.cjs',
       'clean-console.js',
-      'scripts/**'
+      'scripts/**',
+      // esbuild output committed for the Vercel contact routes
+      'api/**'
     ]
+  },
+  {
+    files: ['vite.contactApi.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node
+      }
+    }
   },
   {
     files: ['src/**/*.{js,jsx,ts,tsx}'],
