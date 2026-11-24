@@ -20,7 +20,7 @@
   </url>
   <url>
     <loc>https://www.theodorosmentis.com/contact</loc>
-    <lastmod>2026-10-18</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -35,6 +35,12 @@
     <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.theodorosmentis.com/privacy</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.theodorosmentis.com/projects</loc>
