@@ -935,7 +935,7 @@
     "issuer": "Lynda.com",
     "issueDate": "2016-05-01",
     "category": "Security & Compliance",
-    "credentialUrl": "http://www.lynda.com/ViewCertificate/133FB7",
+    "credentialUrl": "https://www.lynda.com/ViewCertificate/133FB7",
     "description": "Foundational ethical hacking concepts and methodologies for cybersecurity professionals.",
     "skills": [
       "Ethical Hacking",
@@ -966,7 +966,7 @@
     "issuer": "Lynda.com",
     "issueDate": "2016-01-01",
     "category": "DevOps & Infrastructure",
-    "credentialUrl": "http://www.lynda.com/ViewCertificate/E1D48F",
+    "credentialUrl": "https://www.lynda.com/ViewCertificate/E1D48F",
     "description": "CentOS Linux server administration including installation, configuration, and management.",
     "skills": [
       "Server Administration",
