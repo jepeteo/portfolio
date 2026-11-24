@@ -12,7 +12,8 @@ on:
 jobs:
   ci:
     name: Type-check, lint, test, and build
-    runs-on: ubuntu-latest
+    # Playwright 1.59.1 has no Chromium build for Ubuntu 26.04, which is what ubuntu-latest is.
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
