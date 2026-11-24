@@ -25,7 +25,8 @@ export default tseslint.config(
       '.lighthouseci/**',
       'clean-comments.cjs',
       'clean-console.js',
-      'scripts/**'
+      'scripts/**',
+      'api/**'
     ]
   },
   {
@@ -63,6 +64,16 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': 'warn',
       'no-empty': 'warn',
       'no-useless-escape': 'warn'
+    }
+  },
+  {
+    files: ['vite.contactApi.js'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      globals: {
+        ...globals.node
+      }
     }
   }
 );
