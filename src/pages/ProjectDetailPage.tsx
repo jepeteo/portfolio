@@ -10,7 +10,7 @@ import {
   publicProjectDescription,
 } from "../content/projectTaxonomy"
 import { featuredCaseStudies } from "../content/caseStudies"
-import { v2SecondaryButton } from "../components/ui/v2Styles"
+import { v2PrimaryButton, v2SecondaryButton } from "../components/ui/v2Styles"
 
 const ProjectDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -127,9 +127,19 @@ const ProjectDetailPage: React.FC = () => {
             ) : null}
           </>
         )}
-        <Link to="/projects" className="inline-block font-bold text-[var(--v2-muted)]">
-          Back to projects
-        </Link>
+        <div className="flex flex-col items-start gap-4 border-t border-[var(--v2-line)] pt-8">
+          <p className="m-0 text-lg font-semibold text-[var(--v2-text)]">
+            Want something in this vein?
+          </p>
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <Link to="/contact" className={v2PrimaryButton}>
+              Contact me about a project
+            </Link>
+            <Link to="/projects" className={v2SecondaryButton}>
+              Back to projects
+            </Link>
+          </div>
+        </div>
       </section>
     </div>
   )

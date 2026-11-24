@@ -31,8 +31,10 @@ describe("featured case studies", () => {
     expect(mtx?.confidential).toBe(true)
     expect(mtx?.url).toBeUndefined()
     expect(stoney?.url).toContain("stoneyholidaylets")
-    expect(adjacentCaseStudies("mtx-clinic-app").next?.id).toBe(
-      "stoney-holiday-lets"
+    expect(stoney?.imageSlug).toBeTruthy()
+    expect(featuredCaseStudies[0]?.id).toBe("stoney-holiday-lets")
+    expect(adjacentCaseStudies("stoney-holiday-lets").next?.id).toBe(
+      "mtx-clinic-app"
     )
   })
 })

@@ -35,26 +35,22 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
   }, [])
 
   return (
-    <motion.header
+    <header
       className={cn(
         "sticky top-0 left-0 right-0 z-[9999]",
-        "border-b backdrop-blur-xl",
-        "transition-all duration-300 ease-in-out",
-        "supports-[backdrop-filter]:bg-surface-primary/60",
+        "border-b transition-shadow duration-300 ease-in-out",
+        "bg-[var(--v2-surface)]",
         isScrolled
-          ? "bg-surface-primary/95 shadow-lg shadow-black/10 border-border/80 backdrop-blur-xl"
-          : "bg-surface-primary/80 border-border/30 backdrop-blur-sm",
+          ? "border-[var(--v2-line-strong)] shadow-[0_10px_28px_rgba(0,0,0,0.55)]"
+          : "border-[var(--v2-line)] shadow-none",
         className
       )}
-      initial={false}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: "easeOut" }}
       role="banner"
       style={{
         position: "sticky",
         top: 0,
         zIndex: 9999,
-        willChange: "transform",
+        backgroundColor: "var(--v2-surface)",
       }}
     >
       {" "}
@@ -126,7 +122,7 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
         className="absolute bottom-0 left-0 h-0.5 origin-left bg-[var(--v2-acid)]"
         style={prefersReducedMotion ? { scaleX: scrollYProgress } : { scaleX }}
       />
-    </motion.header>
+    </header>
   )
 }
 

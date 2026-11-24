@@ -4,7 +4,7 @@ import { useRoutePageMeta } from "../hooks/useRoutePageMeta"
 import EmergencyHelpCTA from "../components/services/EmergencyHelpCTA"
 import V2PageHero from "../components/ui/V2PageHero"
 import V2SectionHead from "../components/ui/V2SectionHead"
-import { v2Panel } from "../components/ui/v2Styles"
+import { v2Panel, v2PrimaryButton } from "../components/ui/v2Styles"
 import ServiceCard from "../components/services/ServiceCard"
 import { emergencyServices } from "../content/services"
 import { site } from "../config/site"
@@ -45,17 +45,24 @@ const trustStats = [
   { value: "Fixed quote", label: "Before work starts" },
 ]
 
+const emergencyContactHref = "/contact?type=wordpress-emergency&urgency=today"
+
 const EmergencyHelpPage: React.FC = () => {
   useRoutePageMeta("/services/emergency-website-help")
 
   return (
-    <div>
+    <div className="pb-24 md:pb-0">
       <V2PageHero
         id="emergency-hero"
         eyebrow="Emergency support"
         title="Website broken or losing enquiries?"
         subtitle="I can help diagnose and fix urgent website, WordPress, WooCommerce, DNS, email, SSL, and performance issues. Fast turnaround when available, depending on scope."
       >
+        <div className="mb-8">
+          <Link to={emergencyContactHref} className={`${v2PrimaryButton} w-full sm:w-auto`}>
+            Request emergency help
+          </Link>
+        </div>
         <dl className="grid gap-4 sm:grid-cols-3">
           {trustStats.map((stat) => (
             <div key={stat.label} className={`${v2Panel} p-5`}>
@@ -69,6 +76,12 @@ const EmergencyHelpPage: React.FC = () => {
           ))}
         </dl>
       </V2PageHero>
+
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-[var(--v2-line-strong)] bg-[var(--v2-surface)] p-3 shadow-[0_-12px_40px_rgba(0,0,0,0.45)] md:hidden">
+        <Link to={emergencyContactHref} className={`${v2PrimaryButton} w-full`}>
+          Request emergency help
+        </Link>
+      </div>
 
       <div className="container mx-auto max-w-6xl space-y-16 px-6 py-16 md:py-20">
         <section aria-labelledby="common-problems-heading">

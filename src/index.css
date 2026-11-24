@@ -557,6 +557,15 @@ html {
     scroll-padding-top: var(--header-scroll-offset);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    scroll-margin-top: var(--header-scroll-offset);
+}
+
 /* Smooth scrolling for all elements */
 * {
     scroll-behavior: smooth;
