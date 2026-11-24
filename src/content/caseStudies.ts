@@ -47,6 +47,25 @@ export const projectImageSizes =
  */
 export const featuredCaseStudies: CaseStudy[] = [
   {
+    id: "stoney-holiday-lets",
+    title: "Stoney Holiday Lets",
+    label: "WordPress",
+    projectType: "Client WordPress website",
+    problem:
+      "Holiday let business needed a trustworthy booking-focused site for The Lodge and The Nook, with clear property info, direct enquiries, and a polished countryside brand.",
+    approach:
+      "Delivered a WordPress site with property-led structure, mobile-first layout, booking CTAs, and technical SEO foundations for local search.",
+    outcome:
+      "Live site presenting both properties clearly, supporting direct bookings and giving the business a stable platform to maintain.",
+    stack: ["WordPress", "PHP", "Responsive UI", "Technical SEO"],
+    solution:
+      "Delivered a WordPress site with property-led structure, mobile-first layout, booking CTAs, and technical SEO foundations for local search.",
+    responsibility: "WordPress implementation, structure, and technical SEO foundations.",
+    url: "https://www.stoneyholidaylets.co.uk/",
+    imageSlug: "stoneyholidaylets",
+    sourceProjectId: "stoney-holiday-lets",
+  },
+  {
     id: "mtx-clinic-app",
     title: "MTX Clinic App",
     label: "Web App",
@@ -67,25 +86,6 @@ export const featuredCaseStudies: CaseStudy[] = [
     constraints:
       "Operational data stays inside the clinic environment. The application is not a public product.",
     sourceProjectId: "mtx-clinic-app",
-  },
-  {
-    id: "stoney-holiday-lets",
-    title: "Stoney Holiday Lets",
-    label: "WordPress",
-    projectType: "Client WordPress website",
-    problem:
-      "Holiday let business needed a trustworthy booking-focused site for The Lodge and The Nook, with clear property info, direct enquiries, and a polished countryside brand.",
-    approach:
-      "Delivered a WordPress site with property-led structure, mobile-first layout, booking CTAs, and technical SEO foundations for local search.",
-    outcome:
-      "Live site presenting both properties clearly, supporting direct bookings and giving the business a stable platform to maintain.",
-    stack: ["WordPress", "PHP", "Responsive UI", "Technical SEO"],
-    solution:
-      "Delivered a WordPress site with property-led structure, mobile-first layout, booking CTAs, and technical SEO foundations for local search.",
-    responsibility: "WordPress implementation, structure, and technical SEO foundations.",
-    url: "https://www.stoneyholidaylets.co.uk/",
-    imageSlug: "stoneyholidaylets",
-    sourceProjectId: "stoney-holiday-lets",
   },
 ]
 

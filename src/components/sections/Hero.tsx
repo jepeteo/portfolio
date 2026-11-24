@@ -164,26 +164,41 @@ const Hero: React.FC = memo(() => {
               </h1>
             ) : null}
 
-            <p className="mt-7 max-w-xl text-lg text-[var(--v2-muted)] md:text-xl">
+            <p className="mt-5 max-w-xl text-lg text-[var(--v2-muted)] md:mt-7 md:text-xl">
               {site.title} with {site.stats.yearsExperienceLabel} years across
               WordPress, WooCommerce, React, infrastructure and automation.
               Now expanding into fintech.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 md:flex-row md:flex-nowrap">
+            <div className="mt-6 flex flex-col gap-3 md:mt-8 md:flex-row md:flex-nowrap">
               <Link
-                to="/services"
+                to="/contact"
                 className="inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-full bg-[var(--v2-acid)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-acid-ink)] shadow-[0_18px_48px_-12px_var(--v2-acid)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_56px_-10px_var(--v2-acid)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 <IconWrench />
                 I need help with a website
               </Link>
               <Link
-                to="/engineering"
+                to="/projects"
                 className="inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] px-6 py-3.5 font-bold tracking-tight text-[var(--v2-text)] transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--v2-shadow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
-                Explore my engineering portfolio
+                See selected projects
                 <IconArrowRight />
+              </Link>
+            </div>
+
+            <div className="mt-3 flex gap-2">
+              <Link
+                to="/contact"
+                className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-full bg-[var(--v2-acid)] px-4 py-2 text-sm font-bold tracking-tight text-[var(--v2-acid-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] sm:flex-none sm:px-5"
+              >
+                Contact
+              </Link>
+              <Link
+                to="/services/emergency-website-help"
+                className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-panel)] px-4 py-2 text-center text-sm font-bold tracking-tight text-[var(--v2-text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--v2-surface)] sm:flex-none sm:px-5"
+              >
+                Emergency help
               </Link>
             </div>
           </div>

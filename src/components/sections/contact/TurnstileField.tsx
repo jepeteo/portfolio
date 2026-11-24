@@ -2,6 +2,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "re
 
 const SCRIPT_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
 const SCRIPT_ID = "cf-turnstile-api"
+const LOAD_TIMEOUT_MS = 4000
 
 type TurnstileApi = {
   render: (container: HTMLElement, options: Record<string, unknown>) => string
@@ -13,10 +14,14 @@ export type TurnstileFieldHandle = {
   reset: () => void
 }
 
+export type TurnstileStatus = "loading" | "ready" | "passed" | "unavailable"
+
 type TurnstileFieldProps = {
   siteKey: string
   theme: "light" | "dark"
   onToken: (token: string) => void
+  onStatus?: (status: TurnstileStatus) => void
+  fallbackEmail?: string
 }
 
 function getTurnstile(): TurnstileApi | undefined {
@@ -60,14 +65,18 @@ function loadTurnstileScript(): Promise<void> {
 }
 
 export const TurnstileField = forwardRef<TurnstileFieldHandle, TurnstileFieldProps>(
-  function TurnstileField({ siteKey, theme, onToken }, ref) {
+  function TurnstileField({ siteKey, theme, onToken, onStatus, fallbackEmail }, ref) {
     const containerRef = useRef<HTMLDivElement>(null)
     const widgetIdRef = useRef("")
-    const [status, setStatus] = useState<"pending" | "passed" | "error">("pending")
+    const readyRef = useRef(false)
+    const [status, setStatus] = useState<TurnstileStatus>(siteKey ? "loading" : "unavailable")
 
     useImperativeHandle(ref, () => ({
       reset() {
-        setStatus("pending")
+        readyRef.current = Boolean(widgetIdRef.current)
+        const next = widgetIdRef.current ? "ready" : "loading"
+        setStatus(next)
+        onStatus?.(next)
         onToken("")
         const widgetId = widgetIdRef.current
         if (widgetId) getTurnstile()?.reset(widgetId)
@@ -76,60 +85,108 @@ export const TurnstileField = forwardRef<TurnstileFieldHandle, TurnstileFieldPro
 
     useEffect(() => {
       const container = containerRef.current
-      if (!container || !siteKey) return
+      if (!siteKey) {
+        readyRef.current = false
+        setStatus("unavailable")
+        onStatus?.("unavailable")
+        return
+      }
+      if (!container) return
 
       let cancelled = false
-      setStatus("pending")
+      readyRef.current = false
+      setStatus("loading")
+      onStatus?.("loading")
+
+      const markUnavailable = () => {
+        if (cancelled || readyRef.current) return
+        setStatus("unavailable")
+        onStatus?.("unavailable")
+      }
+
+      const timer = window.setTimeout(markUnavailable, LOAD_TIMEOUT_MS)
 
       loadTurnstileScript()
         .then(() => {
           const turnstile = getTurnstile()
           if (cancelled || !containerRef.current) return
           if (!turnstile) {
-            setStatus("error")
+            markUnavailable()
             return
           }
           widgetIdRef.current = turnstile.render(containerRef.current, {
             sitekey: siteKey,
             theme,
             size: "flexible",
-            appearance: "interaction-only",
+            appearance: "always",
             callback: (token: string) => {
               setStatus("passed")
+              onStatus?.("passed")
               onToken(token)
             },
             "expired-callback": () => {
-              setStatus("pending")
+              setStatus("ready")
+              onStatus?.("ready")
               onToken("")
             },
             "error-callback": () => {
-              setStatus("error")
+              readyRef.current = false
+              setStatus("unavailable")
+              onStatus?.("unavailable")
               onToken("")
             },
           })
+          readyRef.current = true
+          window.clearTimeout(timer)
+          setStatus("ready")
+          onStatus?.("ready")
         })
         .catch(() => {
-          if (!cancelled) setStatus("error")
+          markUnavailable()
         })
 
       return () => {
         cancelled = true
+        window.clearTimeout(timer)
         const widgetId = widgetIdRef.current
         widgetIdRef.current = ""
+        readyRef.current = false
         if (widgetId) getTurnstile()?.remove(widgetId)
       }
-    }, [onToken, siteKey, theme])
+    }, [onStatus, onToken, siteKey, theme])
 
-    const message = !siteKey
-      ? "Security check is unavailable."
-      : status === "error"
-        ? "Security check could not load. Refresh the page and try again."
+    const unavailableMessage = fallbackEmail ? (
+      <>
+        The security check didn&apos;t load. Email{" "}
+        <a
+          href={`mailto:${fallbackEmail}`}
+          className="font-bold text-[var(--v2-acid)] underline underline-offset-2"
+        >
+          {fallbackEmail}
+        </a>{" "}
+        and I&apos;ll reply directly.
+      </>
+    ) : (
+      "The security check didn't load. Refresh the page and try again."
+    )
+
+    const message =
+      status === "unavailable"
+        ? unavailableMessage
         : status === "passed"
           ? "Security check passed."
-          : "Confirming this is a person."
+          : status === "ready"
+            ? "Tick the check, then send your message."
+            : "Confirming this is a person."
 
     return (
-      <div className="space-y-2" role="group" aria-label="Security check">
+      <div
+        id="security-check"
+        tabIndex={-1}
+        className="space-y-2 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
+        role="group"
+        aria-label="Security check"
+      >
         <p className="text-sm text-[var(--v2-muted)]" aria-live="polite">
           {message}
         </p>

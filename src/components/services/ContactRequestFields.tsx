@@ -40,56 +40,57 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
   const [isOpen, setIsOpen] = React.useState(defaultOpen)
 
   return (
-    <details
-      className="rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/40 p-4"
-      open={isOpen}
-      onToggle={(event) =>
-        setIsOpen((event.currentTarget as HTMLDetailsElement).open)
-      }
-    >
-      <summary className="cursor-pointer font-bold text-[var(--v2-text)]">
-        Optional details
-      </summary>
-      <div className="mt-6 space-y-6">
-        <div>
-          <label htmlFor="websiteUrl" className={labelClass}>
-            Website URL
-          </label>
-          <p id="websiteUrl-help" className="mb-2 mt-1 text-xs text-[var(--v2-soft)]">
-            Include this for fixes, DNS, or SEO work.
+    <div className="space-y-6">
+      <div>
+        <label htmlFor="websiteUrl" className={labelClass}>
+          Website URL
+        </label>
+        <p id="websiteUrl-help" className="mb-2 mt-1 text-xs text-[var(--v2-soft)]">
+          Include this for fixes, DNS, or SEO work.
+        </p>
+        <input
+          type="url"
+          id="websiteUrl"
+          name="websiteUrl"
+          value={websiteUrl}
+          onChange={(e) => onWebsiteUrlChange(e.target.value)}
+          disabled={disabled}
+          placeholder="https://yourwebsite.com"
+          maxLength={500}
+          autoComplete="url"
+          inputMode="url"
+          className={`${selectClass} ${
+            websiteUrlError ? "border-red-500 focus:ring-red-500" : ""
+          }`}
+          aria-invalid={websiteUrlError ? true : undefined}
+          aria-describedby={
+            websiteUrlError
+              ? "websiteUrl-help websiteUrl-error"
+              : "websiteUrl-help"
+          }
+        />
+        {websiteUrlError && (
+          <p
+            id="websiteUrl-error"
+            role="alert"
+            className="mt-2 text-sm text-red-600 dark:text-red-400"
+          >
+            {websiteUrlError}
           </p>
-          <input
-            type="url"
-            id="websiteUrl"
-            name="websiteUrl"
-            value={websiteUrl}
-            onChange={(e) => onWebsiteUrlChange(e.target.value)}
-            disabled={disabled}
-            placeholder="https://yourwebsite.com"
-            maxLength={500}
-            autoComplete="url"
-            inputMode="url"
-            className={`${selectClass} ${
-              websiteUrlError ? "border-red-500 focus:ring-red-500" : ""
-            }`}
-            aria-invalid={websiteUrlError ? true : undefined}
-            aria-describedby={
-              websiteUrlError
-                ? "websiteUrl-help websiteUrl-error"
-                : "websiteUrl-help"
-            }
-          />
-          {websiteUrlError && (
-            <p
-              id="websiteUrl-error"
-              role="alert"
-              className="mt-2 text-sm text-red-600 dark:text-red-400"
-            >
-              {websiteUrlError}
-            </p>
-          )}
-        </div>
+        )}
+      </div>
 
+      <details
+        className="rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)]/40 p-4"
+        open={isOpen}
+        onToggle={(event) =>
+          setIsOpen((event.currentTarget as HTMLDetailsElement).open)
+        }
+      >
+        <summary className="cursor-pointer font-bold text-[var(--v2-text)]">
+          Optional details
+        </summary>
+        <div className="mt-6 space-y-6">
         <div className="grid gap-6 sm:grid-cols-2">
           <div>
             <label htmlFor="requestType" className={labelClass}>
@@ -154,8 +155,9 @@ const ContactRequestFields: React.FC<ContactRequestFieldsProps> = ({
             ))}
           </select>
         </div>
-      </div>
-    </details>
+        </div>
+      </details>
+    </div>
   )
 }
 

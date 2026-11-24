@@ -15,7 +15,7 @@ const EmergencyHelpCTA: React.FC<EmergencyHelpCTAProps> = ({
   title = "Need urgent website help?",
   description = "Send your website URL and a short description of the issue. I will review the scope and reply with a clear quote.",
   primaryLabel = "Request emergency help",
-  primaryHref = "/contact?type=wordpress-emergency",
+  primaryHref = "/contact?type=wordpress-emergency&urgency=today",
   secondaryLabel,
   secondaryHref,
 }) => {

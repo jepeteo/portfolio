@@ -4,12 +4,14 @@ test("homepage is a decision page with dual-audience CTAs", async ({ page }) => 
   await page.goto("/")
   await expect(page).toHaveTitle(/Senior Full-Stack Engineer/i)
   await expect(page.locator("h1")).toContainText(/reliable digital systems/i)
+  const hero = page.locator("#top")
   await expect(
-    page.getByRole("link", { name: /i need help with a website/i })
-  ).toBeVisible()
+    hero.getByRole("link", { name: /i need help with a website/i })
+  ).toHaveAttribute("href", "/contact")
   await expect(
-    page.getByRole("link", { name: /explore my engineering portfolio/i })
-  ).toBeVisible()
+    hero.getByRole("link", { name: /see selected projects/i })
+  ).toHaveAttribute("href", "/projects")
+  await expect(hero.getByRole("link", { name: /^contact$/i })).toBeVisible()
   await expect(page.locator("#faq")).toHaveCount(0)
   await expect(page.locator("form")).toHaveCount(0)
 })

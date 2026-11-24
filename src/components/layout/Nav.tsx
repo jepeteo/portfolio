@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { Link } from "react-router-dom"
-import { motion, AnimatePresence, PanInfo } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "../../context/ThemeContext"
 import { Icon, icons } from "../ui/icons/Icons"
 import { Button } from "../ui/Button"
@@ -31,16 +32,6 @@ const Nav: React.FC<NavProps> = ({ className }) => {
   const closeMenu = useCallback(() => {
     setIsOpen(false)
   }, [])
-
-  const handleDragEnd = useCallback(
-    (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-      if (info.offset.y < -100 || info.velocity.y < -500) {
-        triggerHaptic()
-        closeMenu()
-      }
-    },
-    [closeMenu, triggerHaptic]
-  )
 
   const handleNavClick = useCallback(() => {
     triggerHaptic()
@@ -223,62 +214,84 @@ const Nav: React.FC<NavProps> = ({ className }) => {
         </Button>
       </div>
 
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <motion.div
-              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm xl:hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={closeMenu}
-              aria-hidden="true"
-            />
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {isOpen && (
+              <>
+                <motion.div
+                  className="fixed inset-0 z-[10040] bg-[#02040a] xl:hidden"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  onClick={closeMenu}
+                  aria-hidden="true"
+                />
 
-            <motion.div
-              id="mobile-menu"
-              className={cn(
-                "fixed top-20 right-4 left-4 z-50 xl:hidden",
-                "overflow-hidden rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] shadow-2xl"
-              )}
-              initial={{ opacity: 0, y: -20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.95 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              drag="y"
-              dragConstraints={{ top: 0, bottom: 0 }}
-              dragElastic={0.2}
-              onDragEnd={handleDragEnd}
-              role="menu"
-            >
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="h-1 w-12 rounded-full bg-[var(--v2-line-strong)]" />
-              </div>
+                <motion.div
+                  id="mobile-menu"
+                  className="fixed inset-0 z-[10050] flex flex-col bg-[var(--v2-surface)] text-[var(--v2-text)] xl:hidden"
+                  style={{ backgroundColor: "var(--v2-surface)" }}
+                  initial={{ opacity: 0, x: 24 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 24 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Mobile navigation"
+                >
+                  <div className="flex items-center justify-between border-b border-[var(--v2-line-strong)] px-5 py-4">
+                    <p className="m-0 font-display text-lg font-bold tracking-tight">
+                      Menu
+                    </p>
+                    <button
+                      type="button"
+                      onClick={closeMenu}
+                      className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-[var(--v2-line-strong)] text-[var(--v2-text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
+                      aria-label="Close navigation menu"
+                    >
+                      <Icon icon={icons.navigation.close} size="md" className="text-current" />
+                    </button>
+                  </div>
 
-              <div className="px-4 pb-4 space-y-1 max-h-[70vh] overflow-y-auto">
-                {links.map((link, index) => (
-                  <motion.div
-                    key={link.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05, duration: 0.2 }}
-                    role="none"
-                  >
-                    <NavLink
-                      link={link}
-                      isMobile
-                      isActive={isLinkActive(link)}
-                    />
-                  </motion.div>
-                ))}
-              </div>
+                  <div className="flex flex-1 flex-col gap-2 overflow-y-auto px-5 py-6">
+                    {links
+                      .filter((link) => link.href !== "/contact")
+                      .map((link, index) => (
+                        <motion.div
+                          key={link.href}
+                          initial={{ opacity: 0, x: 12 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.04, duration: 0.2 }}
+                        >
+                          <NavLink
+                            link={link}
+                            isMobile
+                            isActive={isLinkActive(link)}
+                          />
+                        </motion.div>
+                      ))}
+                  </div>
 
-              <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[var(--v2-panel)] to-transparent" />
-            </motion.div>
-          </>
+                  <div className="border-t border-[var(--v2-line-strong)] bg-[var(--v2-surface)] p-5">
+                    {links
+                      .filter((link) => link.href === "/contact")
+                      .map((link) => (
+                        <NavLink
+                          key={link.href}
+                          link={link}
+                          isMobile
+                          isActive={isLinkActive(link)}
+                        />
+                      ))}
+                  </div>
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </nav>
   )
 }

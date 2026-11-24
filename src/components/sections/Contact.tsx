@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback, useMemo, useEffect } from "react"
-import { useSearchParams } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import { useTheme } from "../../context/ThemeContext"
 import { motion, AnimatePresence } from "framer-motion"
 import {
@@ -31,11 +31,14 @@ import DiagnosticSummary from "./contact/DiagnosticSummary"
 import {
   TurnstileField,
   type TurnstileFieldHandle,
+  type TurnstileStatus,
 } from "./contact/TurnstileField"
 import { site } from "../../config/site"
 import {
   requestTypeOptions,
+  urgencyOptions,
   type RequestType,
+  type Urgency,
 } from "../../content/services"
 
 const fieldErrorOrder = ["name", "email", "websiteUrl", "message"] as const
@@ -231,16 +234,23 @@ const Contact: React.FC = memo(() => {
 
   useEffect(() => {
     const typeParam = searchParams.get("type")
-    if (!typeParam) return
-
+    const urgencyParam = searchParams.get("urgency")
     const isValidType = requestTypeOptions.some(
       (option) => option.value === typeParam
     )
-    if (!isValidType) return
+    const isValidUrgency = urgencyOptions.some(
+      (option) => option.value === urgencyParam
+    )
+    if (!isValidType && !isValidUrgency) return
 
     setFormData((prev) => ({
       ...prev,
-      requestType: typeParam as RequestType,
+      ...(isValidType ? { requestType: typeParam as RequestType } : {}),
+      ...(isValidUrgency
+        ? { urgency: urgencyParam as Urgency }
+        : typeParam === "wordpress-emergency"
+          ? { urgency: "today" as Urgency }
+          : {}),
     }))
   }, [searchParams])
 
@@ -263,6 +273,9 @@ const Contact: React.FC = memo(() => {
   const [csrfToken, setCsrfToken] = useState("")
   const [honeypot, setHoneypot] = useState("")
   const [turnstileToken, setTurnstileToken] = useState("")
+  const [turnstileStatus, setTurnstileStatus] = useState<TurnstileStatus>(
+    import.meta.env.VITE_TURNSTILE_SITE_KEY ? "loading" : "unavailable"
+  )
   const turnstileRef = React.useRef<TurnstileFieldHandle>(null)
   const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || ""
   const [startTime] = useState(() => Date.now())
@@ -336,6 +349,26 @@ const Contact: React.FC = memo(() => {
     setTurnstileToken(token)
   }, [])
 
+  const handleTurnstileStatus = useCallback((status: TurnstileStatus) => {
+    setTurnstileStatus(status)
+  }, [])
+
+  const submitLabel = useMemo(() => {
+    const labels: Record<string, string> = {
+      "wordpress-emergency": "Request emergency help",
+      "woocommerce-issue": "Request WooCommerce help",
+      "email-dns-problem": "Request email or DNS help",
+      "website-speed": "Request a speed review",
+      "technical-seo": "Request an SEO review",
+      "landing-page": "Request a landing page",
+      "website-redesign": "Request a redesign",
+      "maintenance-plan": "Request maintenance",
+      "internal-tool-dashboard": "Request a build",
+      "not-sure": "Send a message",
+    }
+    return labels[formData.requestType || ""] ?? "Send project request"
+  }, [formData.requestType])
+
   const resolvedSubject = useMemo(() => {
     if (formData.subject.trim().length >= 3) return formData.subject.trim()
     const typeLabel = requestTypeOptions.find(
@@ -395,8 +428,12 @@ const Contact: React.FC = memo(() => {
 
       if (!turnstileToken) {
         setErrors({
-          general: "Complete the security check before sending.",
+          general:
+            turnstileStatus === "unavailable"
+              ? `Please complete the check before sending. If it does not load, email ${site.email}.`
+              : "Please complete the check before sending.",
         })
+        document.getElementById("security-check")?.focus()
         return
       }
 
@@ -494,16 +531,31 @@ const Contact: React.FC = memo(() => {
       honeypot,
       resolvedSubject,
       turnstileToken,
+      turnstileStatus,
     ]
   )
 
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: site.email,
-      href: `mailto:${site.email}`,
-    },
+  const emailCard = (
+    <a
+      href={`mailto:${site.email}`}
+      className="flex items-center gap-4 rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-4 transition-all hover:-translate-y-0.5 hover:border-[var(--v2-acid)]/40 motion-reduce:hover:translate-y-0"
+    >
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-acid)]">
+        <Mail className="w-6 h-6" />
+      </div>
+      <div>
+        <div className="text-sm font-medium text-[var(--v2-soft)]">Email</div>
+        <div className="font-semibold text-[var(--v2-text)]">{site.email}</div>
+      </div>
+    </a>
+  )
+
+  const contactInfo: {
+    icon: typeof MapPin
+    label: string
+    value: string
+    href?: string
+  }[] = [
     {
       icon: MapPin,
       label: "Location",
@@ -526,6 +578,7 @@ const Contact: React.FC = memo(() => {
 
   const supportingContent = (
     <div className="space-y-8">
+      {emailCard}
       <div>
         <h3 className="mb-4 text-xl font-semibold tracking-tight text-[var(--v2-text)] md:text-2xl">
           What to include
@@ -609,8 +662,8 @@ const Contact: React.FC = memo(() => {
             Send a message.
           </h2>
           <p className="mt-2 max-w-2xl text-base text-[var(--v2-muted)]">
-            Name, email, and a short description is enough. Optional details
-            stay collapsed.
+            Name, email, and a short description is enough. Add the website
+            URL if you have one. Other details stay optional.
           </p>
         </header>
 
@@ -785,6 +838,8 @@ const Contact: React.FC = memo(() => {
                 siteKey={turnstileSiteKey}
                 theme={isDark ? "dark" : "light"}
                 onToken={handleTurnstileToken}
+                onStatus={handleTurnstileStatus}
+                fallbackEmail={site.email}
               />
 
               {errors.general && (
@@ -800,8 +855,8 @@ const Contact: React.FC = memo(() => {
 
               <button
                 type="submit"
-                disabled={isSubmitting || !turnstileToken}
-                className="flex w-full items-center justify-center gap-3 rounded-full bg-[var(--v2-acid)] px-8 py-4 font-bold tracking-tight text-[var(--v2-acid-ink)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                disabled={isSubmitting}
+                className="flex w-full items-center justify-center gap-3 rounded-full bg-[var(--v2-acid)] px-8 py-4 font-bold tracking-tight text-[var(--v2-acid-ink)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-acid)] disabled:cursor-wait motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 {isSubmitting ? (
                   <>
@@ -811,20 +866,77 @@ const Contact: React.FC = memo(() => {
                 ) : (
                   <>
                     <Send className="h-5 w-5" />
-                    Send project request
+                    {submitLabel}
                   </>
                 )}
               </button>
+              <p className="m-0 text-center text-sm text-[var(--v2-muted)]">
+                I use these details only to reply.{" "}
+                <Link
+                  to="/privacy"
+                  className="font-bold text-[var(--v2-acid)] underline underline-offset-2"
+                >
+                  Privacy
+                </Link>
+              </p>
             </form>
           </div>
 
-          <aside className="min-w-0">
+          <aside className="min-w-0 space-y-4">
             <div className="hidden lg:block">{supportingContent}</div>
+            <div className="lg:hidden">{emailCard}</div>
             <details className="rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-4 lg:hidden">
               <summary className="cursor-pointer font-bold text-[var(--v2-text)]">
-                Contact details
+                More contact details
               </summary>
-              <div className="mt-6">{supportingContent}</div>
+              <div className="mt-6 space-y-8">
+                <div>
+                  <h3 className="mb-4 text-xl font-semibold tracking-tight text-[var(--v2-text)]">
+                    What to include
+                  </h3>
+                  <p className="m-0 text-base text-[var(--v2-muted)]">
+                    A link to the site, a short description of what is broken or
+                    what you want to build, and your timeline.
+                  </p>
+                </div>
+                {contactInfo.map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center gap-4 rounded-2xl border border-[var(--v2-line)] bg-[var(--v2-panel)] p-4"
+                  >
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-acid)]">
+                      <item.icon className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-[var(--v2-soft)]">
+                        {item.label}
+                      </div>
+                      <div className="font-semibold text-[var(--v2-text)]">
+                        {item.value}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div>
+                  <h4 className="mb-4 text-lg font-semibold tracking-tight text-[var(--v2-text)]">
+                    Follow me
+                  </h4>
+                  <div className="flex gap-4">
+                    {socialLinks.map((social) => (
+                      <a
+                        key={social.label}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--v2-line)] bg-[var(--v2-panel-2)] text-[var(--v2-muted)] transition-all hover:bg-[var(--v2-acid)] hover:text-[var(--v2-acid-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--v2-brand)]"
+                        aria-label={social.label}
+                      >
+                        <social.icon className="w-5 h-5" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </details>
           </aside>
         </div>
