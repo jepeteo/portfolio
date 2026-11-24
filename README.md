@@ -86,9 +86,13 @@ A high-performance, accessible portfolio website built with modern web technolog
 
 ### Deployment Header Notes
 
+- **Content-Security-Policy**: Sent as `Content-Security-Policy-Report-Only` so Turnstile, PostHog EU, Vercel Analytics, and Speed Insights can be watched before the policy is enforced. `connect-src 'self'` covers `/api/contact`.
+- **Why headers are also on `routes`**: This project uses legacy `routes` for real HTTP 404s. While that key is set, Vercel does not apply the top-level `headers` or `redirects` entries, which is why production was missing CSP and why `/projects/technical-rescue` returned 404. The same policy and the rescue redirect are declared on `routes`.
+- **HSTS**: `max-age=63072000; includeSubDomains`. Preload is intentionally not set.
+- **CORS**: Static HTML was served with `Access-Control-Allow-Origin: *` by the platform, not by this repo. The route config deletes that header. Nothing on the site needs cross-origin reads of the documents.
 - **Cross-Origin-Embedder-Policy**: Uses `credentialless` in production headers.
 - **Why not `require-corp`**: The site loads third-party analytics resources that may not return compatible CORP/CORS headers in every path.
-- **Security stance**: Keep strict CSP and other security headers, but avoid unnecessary cross-origin isolation requirements that can block analytics/contact behavior.
+- **Security stance**: Keep the report-only CSP and the other security headers, but avoid unnecessary cross-origin isolation requirements that can block analytics/contact behavior.
 
 ### Development Tools
 

@@ -11,29 +11,87 @@ import {
   absoluteUrl,
 } from "../src/config/routeMeta.js"
 import { homeFaq } from "../src/content/homeFaq.js"
+import { listPublicProjectPages } from "./listPublicProjectPages.mjs"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = path.resolve(__dirname, "..")
 const errors = []
 
-function validateSitemap() {
-  const file = path.join(root, "public", "sitemap.xml")
-  const xml = fs.readFileSync(file, "utf8")
+function locsFrom(xml) {
+  return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim())
+}
 
-  const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim())
+function validateSitemapFile(file, label) {
+  const xml = fs.readFileSync(file, "utf8")
+  const locs = locsFrom(xml)
+  const lastmods = [
+    ...xml.matchAll(/<lastmod>([^<]*)<\/lastmod>/g),
+  ].map((m) => m[1].trim())
+
+  if (new Set(locs).size !== locs.length) {
+    errors.push(`${label}: duplicate <loc> entries`)
+  }
+
+  if (locs.length !== lastmods.length) {
+    errors.push(`${label}: every URL needs a lastmod`)
+  }
+
+  for (const lastmod of lastmods) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod)) {
+      errors.push(`${label}: lastmod is not YYYY-MM-DD (${lastmod})`)
+    }
+  }
 
   for (const loc of locs) {
-    if (loc.includes("#")) errors.push(`sitemap.xml: hash fragment URL not allowed: ${loc}`)
-    if (!loc.startsWith(SITE_URL)) {
-      errors.push(`sitemap.xml: URL does not use canonical host: ${loc}`)
+    if (loc.includes("#")) errors.push(`${label}: hash fragment URL not allowed: ${loc}`)
+    if (!loc.startsWith(`${SITE_URL}/`) && loc !== `${SITE_URL}/`) {
+      errors.push(`${label}: URL does not use canonical host: ${loc}`)
+    }
+    if (loc.includes("/projects/technical-rescue")) {
+      errors.push(`${label}: redirect URL must not be listed: ${loc}`)
     }
   }
 
   for (const route of prerenderRoutes) {
-    const expected =
-      route === "/" ? `${SITE_URL}/` : `${SITE_URL}${route}`
+    const expected = route === "/" ? `${SITE_URL}/` : `${SITE_URL}${route}`
     if (!locs.includes(expected)) {
-      errors.push(`sitemap.xml: missing required URL: ${expected}`)
+      errors.push(`${label}: missing required URL: ${expected}`)
+    }
+  }
+
+  for (const project of listPublicProjectPages()) {
+    const expected = `${SITE_URL}/projects/${project.slug}`
+    if (!locs.includes(expected)) {
+      errors.push(`${label}: missing project URL: ${expected}`)
+    }
+  }
+
+  for (const example of [
+    "/projects/christos-mentis",
+    "/projects/notes-app",
+    "/projects/project-81-coffeetrade",
+  ]) {
+    if (!locs.includes(`${SITE_URL}${example}`)) {
+      errors.push(`${label}: missing live archive URL ${example}`)
+    }
+  }
+
+  return locs
+}
+
+function validateSitemap() {
+  const publicFile = path.join(root, "public", "sitemap.xml")
+  const publicLocs = validateSitemapFile(publicFile, "public/sitemap.xml")
+
+  const distFile = path.join(root, "dist", "sitemap.xml")
+  if (!fs.existsSync(distFile)) return
+
+  const distLocs = validateSitemapFile(distFile, "dist/sitemap.xml")
+  for (const loc of publicLocs) {
+    if (!distLocs.includes(loc)) {
+      errors.push(
+        `dist/sitemap.xml missing ${loc}. Generate the sitemap before vite build so the copied file is current.`
+      )
     }
   }
 }
@@ -70,6 +128,15 @@ function validateIndexHtmlBaseline() {
   const html = fs.readFileSync(file, "utf8")
   if (!html.includes(OG_IMAGE)) {
     errors.push(`index.html: og:image does not reference OG_IMAGE (${OG_IMAGE})`)
+  }
+  if (!html.includes('property="og:site_name" content="Theodoros Mentis"')) {
+    errors.push("index.html: missing og:site_name")
+  }
+  if (!html.includes('property="og:image:width" content="1250"')) {
+    errors.push("index.html: og:image:width should be 1250")
+  }
+  if (!html.includes('property="og:image:height" content="675"')) {
+    errors.push("index.html: og:image:height should be 675")
   }
 }
 
@@ -127,6 +194,15 @@ function validatePrerender() {
     }
 
     if (route === "/") {
+      if (!html.includes('property="og:image:width" content="1250"')) {
+        errors.push("prerender: home og:image:width should be 1250")
+      }
+      if (!html.includes('property="og:image:height" content="675"')) {
+        errors.push("prerender: home og:image:height should be 675")
+      }
+      if (!html.includes('property="og:site_name" content="Theodoros Mentis"')) {
+        errors.push("prerender: home missing og:site_name")
+      }
       if (!html.includes('id="static-crawl-fallback"')) {
         errors.push("prerender: home missing static-crawl-fallback article")
       }
@@ -172,6 +248,12 @@ function validatePrerender() {
       }
       if (!html.includes("/images/projects/stoneyholidaylets.webp")) {
         errors.push("prerender: Stoney missing project OG image")
+      }
+      if (!html.includes('property="og:image:width" content="1280"')) {
+        errors.push("prerender: Stoney og:image:width should be 1280")
+      }
+      if (!html.includes('property="og:image:height" content="720"')) {
+        errors.push("prerender: Stoney og:image:height should be 720")
       }
     }
 

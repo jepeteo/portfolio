@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback, useMemo, useEffect } from "react"
-import { useSearchParams } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import { useTheme } from "../../context/ThemeContext"
 import { motion, AnimatePresence } from "framer-motion"
 import {
@@ -786,6 +786,16 @@ const Contact: React.FC = memo(() => {
                 theme={isDark ? "dark" : "light"}
                 onToken={handleTurnstileToken}
               />
+
+              <p className="text-center text-sm text-[var(--v2-soft)]">
+                Your name and email are used to reply to this request.{" "}
+                <Link
+                  to="/privacy"
+                  className="font-bold text-[var(--v2-brand)] underline-offset-2 hover:underline"
+                >
+                  Privacy notice
+                </Link>
+              </p>
 
               {errors.general && (
                 <div

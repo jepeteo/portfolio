@@ -8,6 +8,8 @@ import { siteGraph } from "../content/schemas/siteGraph.js"
 export const SITE_URL = "https://www.theodorosmentis.com"
 export const SITE_EMAIL = "contact@theodorosmentis.com"
 export const OG_IMAGE = `${SITE_URL}/social-card.webp`
+export const OG_IMAGE_WIDTH = "1250"
+export const OG_IMAGE_HEIGHT = "675"
 export const SITE_NAME = "Theodoros Mentis"
 export const TWITTER_CREATOR = "@jepeteo"
 export const TWITTER_SITE = "@jepeteo"
@@ -284,6 +286,8 @@ export const routeMeta = {
     canonicalPath: "/projects/stoney-holiday-lets",
     ogType: "article",
     ogImage: `${SITE_URL}/images/projects/stoneyholidaylets.webp`,
+    ogImageWidth: "1280",
+    ogImageHeight: "720",
     crawlableHtml: `<article id="static-crawl-fallback"><h1>Stoney Holiday Lets</h1><p>WordPress holiday-let website.</p></article>`,
     jsonLd: [
       {
@@ -441,6 +445,37 @@ export const routeMeta = {
       breadcrumb([
         { name: "Home", path: "/" },
         { name: "Contact", path: "/contact" },
+      ]),
+    ],
+  },
+  "/privacy": {
+    title: "Privacy Notice | Theodoros Mentis",
+    description:
+      "Draft notice for contact details, Resend, Turnstile, PostHog EU, and Vercel Analytics. Not legal advice.",
+    canonicalPath: "/privacy",
+    ogType: "website",
+    crawlableHtml: `<div id="lcp-static-shell" class="v2-grid-bg relative overflow-hidden pt-24 pb-6 md:pt-28 md:pb-8">
+  <div class="container relative z-10 mx-auto max-w-6xl px-6">
+    <p class="m-0 font-mono text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--v2-acid)]">Privacy</p>
+    <h1 id="lcp-static-heading" class="mt-3 max-w-4xl font-display text-[clamp(1.85rem,4.5vw,3.25rem)] font-bold leading-[0.95] tracking-tight text-[var(--v2-text)] [text-wrap:balance]">Privacy notice</h1>
+    <p id="lcp-static-subtitle" class="mt-3 max-w-2xl text-base text-[var(--v2-muted)] md:text-lg">Draft for the site owner to review. This is not legal advice.</p>
+  </div>
+</div>
+<article id="static-crawl-fallback" class="sr-only" aria-label="Page summary">
+  <p>Draft privacy notice for the contact form, Resend, Cloudflare Turnstile, PostHog EU, and Vercel Analytics.</p>
+</article>`,
+    jsonLd: [
+      {
+        "@type": "WebPage",
+        "@id": `${SITE_URL}/privacy#page`,
+        url: `${SITE_URL}/privacy`,
+        name: "Privacy notice",
+        description:
+          "Draft notice for contact details, Resend, Turnstile, PostHog EU, and Vercel Analytics. Not legal advice.",
+      },
+      breadcrumb([
+        { name: "Home", path: "/" },
+        { name: "Privacy notice", path: "/privacy" },
       ]),
     ],
   },

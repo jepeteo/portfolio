@@ -12,6 +12,8 @@ import {
   prerenderRoutes,
   absoluteUrl,
   OG_IMAGE,
+  OG_IMAGE_WIDTH,
+  OG_IMAGE_HEIGHT,
   TWITTER_SITE,
   SITE_URL,
   SITE_NAME,
@@ -58,6 +60,13 @@ function replaceMetaProperty(html, property, content) {
   return re.test(html) ? html.replace(re, tag) : html
 }
 
+function replaceOgImageSize(html, property, content) {
+  const re = new RegExp(`\\n\\s*<meta\\s+property="${property}"[\\s\\S]*?/>`)
+  if (!content) return html.replace(re, "")
+  const tag = `<meta property="${property}" content="${escapeAttr(content)}" />`
+  return re.test(html) ? html.replace(re, `\n    ${tag}`) : html
+}
+
 function replaceCanonical(html, href) {
   const re = /<link\s+rel="canonical"[\s\S]*?\/>/
   const tag = `<link rel="canonical" href="${escapeAttr(href)}" />`
@@ -89,6 +98,8 @@ function applyPageMeta(html, {
   canonical,
   ogType = "website",
   ogImage = OG_IMAGE,
+  ogImageWidth,
+  ogImageHeight,
   robots = "index, follow",
   crawlableHtml,
   jsonLd,
@@ -103,6 +114,12 @@ function applyPageMeta(html, {
   next = replaceMetaProperty(next, "og:url", canonical)
   next = replaceMetaProperty(next, "og:type", ogType)
   next = replaceMetaProperty(next, "og:image", ogImage)
+  const width =
+    ogImageWidth || (ogImage === OG_IMAGE ? OG_IMAGE_WIDTH : "")
+  const height =
+    ogImageHeight || (ogImage === OG_IMAGE ? OG_IMAGE_HEIGHT : "")
+  next = replaceOgImageSize(next, "og:image:width", width)
+  next = replaceOgImageSize(next, "og:image:height", height)
   next = replaceMetaName(next, "twitter:title", title)
   next = replaceMetaName(next, "twitter:description", description)
   next = replaceMetaName(next, "twitter:image", ogImage)
@@ -121,6 +138,8 @@ function buildRouteHtml(template, route) {
     canonical,
     ogType: meta.ogType,
     ogImage: meta.ogImage || OG_IMAGE,
+    ogImageWidth: meta.ogImageWidth,
+    ogImageHeight: meta.ogImageHeight,
     robots: "index, follow",
     crawlableHtml: meta.crawlableHtml,
     jsonLd: buildRouteJsonLd(route),

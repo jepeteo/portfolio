@@ -31,6 +31,7 @@ const ExperiencePage = lazyPage(() => import("./pages/ExperiencePage"))
 const CertificationsPage = lazyPage(() => import("./pages/CertificationsPage"))
 const AboutPage = lazyPage(() => import("./pages/AboutPage"))
 const ContactPage = lazyPage(() => import("./pages/ContactPage"))
+const PrivacyPage = lazyPage(() => import("./pages/PrivacyPage"))
 const NotFoundPage = lazyPage(() => import("./pages/NotFoundPage"))
 
 if (process.env.NODE_ENV === "development") {
@@ -131,6 +132,14 @@ const App: React.FC = () => {
                   element={
                     <Page>
                       <ContactPage />
+                    </Page>
+                  }
+                />
+                <Route
+                  path="privacy"
+                  element={
+                    <Page>
+                      <PrivacyPage />
                     </Page>
                   }
                 />

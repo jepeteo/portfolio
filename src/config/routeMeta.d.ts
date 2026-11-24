@@ -3,6 +3,8 @@
 export const SITE_URL: "https://www.theodorosmentis.com"
 export const SITE_EMAIL: "contact@theodorosmentis.com"
 export const OG_IMAGE: string
+export const OG_IMAGE_WIDTH: string
+export const OG_IMAGE_HEIGHT: string
 export const SITE_NAME: string
 export const TWITTER_CREATOR: string
 export const TWITTER_SITE: string
@@ -13,6 +15,8 @@ export interface RouteMeta {
   canonicalPath: string
   ogType: "website" | "article" | "profile"
   ogImage?: string
+  ogImageWidth?: string
+  ogImageHeight?: string
   crawlableHtml?: string
   jsonLd: Record<string, unknown>[]
 }
