@@ -842,6 +842,16 @@ const Contact: React.FC = memo(() => {
                 fallbackEmail={site.email}
               />
 
+              <p className="text-center text-sm text-[var(--v2-soft)]">
+                Your name and email are used to reply to this request.{" "}
+                <Link
+                  to="/privacy"
+                  className="font-bold text-[var(--v2-brand)] underline-offset-2 hover:underline"
+                >
+                  Privacy notice
+                </Link>
+              </p>
+
               {errors.general && (
                 <div
                   role="alert"
@@ -870,15 +880,6 @@ const Contact: React.FC = memo(() => {
                   </>
                 )}
               </button>
-              <p className="m-0 text-center text-sm text-[var(--v2-muted)]">
-                I use these details only to reply.{" "}
-                <Link
-                  to="/privacy"
-                  className="font-bold text-[var(--v2-acid)] underline underline-offset-2"
-                >
-                  Privacy
-                </Link>
-              </p>
             </form>
           </div>
 

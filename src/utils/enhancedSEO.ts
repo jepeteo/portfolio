@@ -1,6 +1,13 @@
 import { useEffect } from "react"
 import { site } from "../config/site"
-import { routeMeta, OG_IMAGE, TWITTER_SITE, buildRouteJsonLd } from "../config/routeMeta.js"
+import {
+  routeMeta,
+  OG_IMAGE,
+  OG_IMAGE_WIDTH,
+  OG_IMAGE_HEIGHT,
+  TWITTER_SITE,
+  buildRouteJsonLd,
+} from "../config/routeMeta.js"
 
 export interface EnhancedSEOConfig {
   title?: string
@@ -11,6 +18,8 @@ export interface EnhancedSEOConfig {
   ogTitle?: string
   ogDescription?: string
   ogImage?: string
+  ogImageWidth?: string
+  ogImageHeight?: string
   ogUrl?: string
   ogType?: "website" | "article" | "profile"
   ogSiteName?: string
@@ -68,6 +77,8 @@ class SEOManager {
       true
     )
     this.setMetaTag("og:image", config.ogImage, true)
+    this.setMetaTag("og:image:width", config.ogImageWidth, true)
+    this.setMetaTag("og:image:height", config.ogImageHeight, true)
     this.setMetaTag("og:url", config.ogUrl || window.location.href, true)
     this.setMetaTag("og:type", config.ogType || "website", true)
     this.setMetaTag("og:site_name", config.ogSiteName, true)
@@ -510,6 +521,8 @@ export const defaultSEOConfig: EnhancedSEOConfig = {
   ogDescription: routeMeta["/"].description,
   ogUrl: `${site.url}/`,
   ogImage: OG_IMAGE,
+  ogImageWidth: OG_IMAGE_WIDTH,
+  ogImageHeight: OG_IMAGE_HEIGHT,
   ogType: "website",
   ogSiteName: site.name,
   twitterCard: "summary_large_image",

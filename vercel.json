@@ -10,6 +10,67 @@
     ],
     "routes": [
         {
+            "src": "/projects/technical-rescue",
+            "status": 308,
+            "headers": {
+                "Location": "/services#rescue"
+            }
+        },
+        {
+            "src": "/(.*)",
+            "headers": {
+                "X-Frame-Options": "DENY",
+                "X-Content-Type-Options": "nosniff",
+                "X-XSS-Protection": "1; mode=block",
+                "Referrer-Policy": "strict-origin-when-cross-origin",
+                "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                "Content-Security-Policy-Report-Only": "default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu-assets.i.posthog.com https://eu.i.posthog.com https://app.posthog.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://challenges.cloudflare.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://app.posthog.com; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests",
+                "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), magnetometer=(), gyroscope=(), accelerometer=()",
+                "Cross-Origin-Embedder-Policy": "credentialless",
+                "Cross-Origin-Opener-Policy": "same-origin",
+                "Cross-Origin-Resource-Policy": "same-origin"
+            },
+            "transforms": [
+                {
+                    "type": "response.headers",
+                    "op": "delete",
+                    "target": {
+                        "key": "access-control-allow-origin"
+                    }
+                }
+            ],
+            "continue": true
+        },
+        {
+            "src": "/index.html",
+            "headers": {
+                "Cache-Control": "public, max-age=0, must-revalidate"
+            },
+            "continue": true
+        },
+        {
+            "src": "/404.html",
+            "headers": {
+                "Cache-Control": "public, max-age=0, must-revalidate",
+                "X-Robots-Tag": "noindex, follow"
+            },
+            "continue": true
+        },
+        {
+            "src": "/assets/(.*)",
+            "headers": {
+                "Cache-Control": "public, max-age=31536000, immutable"
+            },
+            "continue": true
+        },
+        {
+            "src": "/images/(.*)",
+            "headers": {
+                "Cache-Control": "public, max-age=31536000, immutable"
+            },
+            "continue": true
+        },
+        {
             "handle": "filesystem"
         },
         {
@@ -79,8 +140,12 @@
                     "value": "strict-origin-when-cross-origin"
                 },
                 {
-                    "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu-assets.i.posthog.com https://app.posthog.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://challenges.cloudflare.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://app.posthog.com https://fonts.googleapis.com https://fonts.gstatic.com; frame-src https://challenges.cloudflare.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests;"
+                    "key": "Strict-Transport-Security",
+                    "value": "max-age=63072000; includeSubDomains"
+                },
+                {
+                    "key": "Content-Security-Policy-Report-Only",
+                    "value": "default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu-assets.i.posthog.com https://eu.i.posthog.com https://app.posthog.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://challenges.cloudflare.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://app.posthog.com; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
                 },
                 {
                     "key": "Permissions-Policy",

@@ -59,6 +59,12 @@ export const footerLinks: AppNavigationLink[] = [
     kind: "route",
   },
   {
+    href: "/privacy",
+    text: "Privacy",
+    ariaLabel: "Navigate to privacy notice",
+    kind: "route",
+  },
+  {
     href: "/services/emergency-website-help",
     text: "Emergency Help",
     ariaLabel: "Navigate to emergency website help page",

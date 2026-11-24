@@ -70,7 +70,6 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
             e.preventDefault()
             navigate("/")
           }}
-          aria-label="Theodoros Mentis"
           title="Go to homepage"
         >
           <motion.div

@@ -26,8 +26,17 @@ export default tseslint.config(
       'clean-comments.cjs',
       'clean-console.js',
       'scripts/**',
+      // esbuild output committed for the Vercel contact routes
       'api/**'
     ]
+  },
+  {
+    files: ['vite.contactApi.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node
+      }
+    }
   },
   {
     files: ['src/**/*.{js,jsx,ts,tsx}'],
@@ -64,16 +73,6 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': 'warn',
       'no-empty': 'warn',
       'no-useless-escape': 'warn'
-    }
-  },
-  {
-    files: ['vite.contactApi.js'],
-    languageOptions: {
-      ecmaVersion: 2022,
-      sourceType: 'module',
-      globals: {
-        ...globals.node
-      }
     }
   }
 );
