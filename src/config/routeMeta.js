@@ -8,6 +8,8 @@ import { siteGraph } from "../content/schemas/siteGraph.js"
 export const SITE_URL = "https://www.theodorosmentis.com"
 export const SITE_EMAIL = "contact@theodorosmentis.com"
 export const OG_IMAGE = `${SITE_URL}/social-card.webp`
+export const OG_IMAGE_WIDTH = "1250"
+export const OG_IMAGE_HEIGHT = "675"
 export const SITE_NAME = "Theodoros Mentis"
 export const TWITTER_CREATOR = "@jepeteo"
 export const TWITTER_SITE = "@jepeteo"
@@ -284,6 +286,8 @@ export const routeMeta = {
     canonicalPath: "/projects/stoney-holiday-lets",
     ogType: "article",
     ogImage: `${SITE_URL}/images/projects/stoneyholidaylets.webp`,
+    ogImageWidth: "1280",
+    ogImageHeight: "720",
     crawlableHtml: `<article id="static-crawl-fallback"><h1>Stoney Holiday Lets</h1><p>WordPress holiday-let website.</p></article>`,
     jsonLd: [
       {

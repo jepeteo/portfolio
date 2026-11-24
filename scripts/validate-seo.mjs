@@ -129,6 +129,15 @@ function validateIndexHtmlBaseline() {
   if (!html.includes(OG_IMAGE)) {
     errors.push(`index.html: og:image does not reference OG_IMAGE (${OG_IMAGE})`)
   }
+  if (!html.includes('property="og:site_name" content="Theodoros Mentis"')) {
+    errors.push("index.html: missing og:site_name")
+  }
+  if (!html.includes('property="og:image:width" content="1250"')) {
+    errors.push("index.html: og:image:width should be 1250")
+  }
+  if (!html.includes('property="og:image:height" content="675"')) {
+    errors.push("index.html: og:image:height should be 675")
+  }
 }
 
 function validatePrerender() {
@@ -185,6 +194,15 @@ function validatePrerender() {
     }
 
     if (route === "/") {
+      if (!html.includes('property="og:image:width" content="1250"')) {
+        errors.push("prerender: home og:image:width should be 1250")
+      }
+      if (!html.includes('property="og:image:height" content="675"')) {
+        errors.push("prerender: home og:image:height should be 675")
+      }
+      if (!html.includes('property="og:site_name" content="Theodoros Mentis"')) {
+        errors.push("prerender: home missing og:site_name")
+      }
       if (!html.includes('id="static-crawl-fallback"')) {
         errors.push("prerender: home missing static-crawl-fallback article")
       }
@@ -230,6 +248,12 @@ function validatePrerender() {
       }
       if (!html.includes("/images/projects/stoneyholidaylets.webp")) {
         errors.push("prerender: Stoney missing project OG image")
+      }
+      if (!html.includes('property="og:image:width" content="1280"')) {
+        errors.push("prerender: Stoney og:image:width should be 1280")
+      }
+      if (!html.includes('property="og:image:height" content="720"')) {
+        errors.push("prerender: Stoney og:image:height should be 720")
       }
     }
 
